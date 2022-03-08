@@ -27,17 +27,7 @@
        http://www.springframework.org/schema/util/spring-util.xsd
    		http://www.springframework.org/schema/websocket
 		http://www.springframework.org/schema/websocket/spring-websocket.xsd" >
-	<!-- springweb 하위에 있는 패키지는 자동 등록 처리..
-		Component  controller, service, 
 		
-		springweb 하위 패키지에 있는 @Controller,
-		@Service, @Repository가 선언되어 있으면 객체를 선언하여 로딩이
-		된 상황과 동일하다..
-		
-		웹서버가 기동이 되면 모든 springweb에 있는 객체가 로딩이 된다.
-		 (A01_StartController)      (A01_StartService)
-		 
-	 -->
 	<context:component-scan base-package="com.project.pms">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
@@ -89,21 +79,9 @@
 	 -->	
 	<!-- jsp view는 기본적으로 설정이 되어 있지만, 우선순위 때문에 선언한다. -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<!-- 
-		접두어/접미어 매핑
-		이 내용을 선언하면 controller의 view호출의 마지막 부분을
-		접두어와 접미어가 생략가능하다.
-		return "WEB-INF\\views\\a02_mvc\\a01_empList.jsp"
-		==> return "\\a02_mvc\\a01_empList"
-		<property name="prefix" value="WEB-INF\views"/>	 
+		<property name="prefix" value="/WEB-INF/views/"/>	 
 		<property name="suffix" value=".jsp"/>	 
-		 -->
-		<property name="order" value="1"/>
 	</bean> 
-	<!-- 정의한 bean viewer 선언 우선순위 첫번째로 지정. -->
-	<bean id="btnViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<property name="order" value="0"/>
-	</bean>
 	<!-- 다운로드 viewer 등록
 		컨트롤러에서 아래와 같이 viewer를 호출 처리..
 		return "download"

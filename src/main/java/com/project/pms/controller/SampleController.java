@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SampleController {
 	
-	@RequestMapping("/")
+	@RequestMapping("/index.do")
 	public String main() {
-	
-		return "";
+		
+		return "index";
 	}
 }
