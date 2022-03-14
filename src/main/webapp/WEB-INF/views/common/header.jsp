@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PMS</title>
 <script src="${path}/resources/js/jquery.min.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -47,11 +47,19 @@
                     <ul class="menu">
                         <!-- <li class="sidebar-title">Menu</li> -->
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>대시보드</span>
                             </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="#">종합 대시보드</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="#">개인 대시보드</a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="sidebar-item  has-sub">
@@ -61,16 +69,13 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">전체 프로젝트</a>
+                                    <a href="#">프로젝트 현황</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">새 프로젝트</a>
+                                    <a href="#">프로젝트 산출물</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">산출물</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="#">작업 승인</a>
+                                    <a href="#">프로젝트 작업승인</a>
                                 </li>
                             </ul>
                         </li>
@@ -78,31 +83,27 @@
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
-                                <span>마이페이지</span>
+                                <span>내 작업</span>
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
                                     <a href="#">내 작업</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">내 일정</a>
+                                    <a href="#">내 결재</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">내 정보</a>
+                                    <a href="#">일정 관리</a>
                                 </li>
                             </ul>
                         </li>
 
-                        <li class="sidebar-item active has-sub">
+                        <li class="sidebar-item  ">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>리스크 관리</span>
                             </a>
-                            <ul class="submenu active">
-                                <li class="submenu-item ">
-                                    <a href="#">리스크 목록</a>
-                                </li>
-                            </ul>
+
                         </li>
 
                         <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->
@@ -113,6 +114,9 @@
                                 <span>커뮤니티</span>
                             </a>
                             <ul class="submenu ">
+                                 <li class="submenu-item ">
+                                    <a href="#">공지사항</a>
+                                </li>
                                 <li class="submenu-item ">
                                     <a href="#">팀챗</a>
                                 </li>
@@ -133,10 +137,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">회원 목록</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="#">회원 등록</a>
+                                    <a href="#">사용자 관리</a>
                                 </li>
                             </ul>
                         </li>
