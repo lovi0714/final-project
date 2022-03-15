@@ -1,8 +1,8 @@
-package com.project.pms.repository;
+package com.project.pms.task.repository;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SampleDAO {
+public class TaskDAO {
 
 }

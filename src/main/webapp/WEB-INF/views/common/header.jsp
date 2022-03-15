@@ -54,10 +54,10 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">종합 대시보드</a>
+                                    <a href="${path}/dashboard/general.do">종합 대시보드</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">개인 대시보드</a>
+                                    <a href="${path}/dashboard/personal.do">개인 대시보드</a>
                                 </li>
                             </ul>
                         </li>
@@ -87,13 +87,13 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">내 작업</a>
+                                    <a href="${path}/task/list.do">내 작업</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">내 결재</a>
+                                    <a href="${path}/task/approval.do">내 결재</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">일정 관리</a>
+                                    <a href="${path}/task/calendar.do">일정 관리</a>
                                 </li>
                             </ul>
                         </li>
@@ -115,7 +115,7 @@
                             </a>
                             <ul class="submenu ">
                                  <li class="submenu-item ">
-                                    <a href="#">공지사항</a>
+                                    <a href="${path}/community/notice.do">공지사항</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="#">팀챗</a>
