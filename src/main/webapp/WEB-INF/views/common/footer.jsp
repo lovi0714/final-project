@@ -18,7 +18,10 @@
     </div>
     <script src="${path}/resources/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="${path}/resources/js/bootstrap.bundle.min.js"></script>
-
-    <script src="${path}/resources/js/main.js"></script>
+    
+	<script src="${path}/resources/vendors/apexcharts/apexcharts.js"></script>
+	<script src="${path}/resources/js/pages/dashboard.js"></script>
+	
+    <script src="${path}/resources/js/mazer.js"></script>
     </body>
 </html>
