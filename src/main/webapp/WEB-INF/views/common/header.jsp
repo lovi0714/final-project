@@ -99,7 +99,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="#" class='sidebar-link'>
+                            <a href="${path}/risk/riskBoard.do" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>리스크 관리</span>
                             </a>
