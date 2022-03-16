@@ -21,8 +21,9 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <h4>리스크 목록</h4>
-                <select class="form-select" style="width:150px">
+            <h4>리스크 목록</h4>
+            <div class="form-inline" style="display:inline;">
+                <select class="form-select" style="width:150px; margin-top:7px; margin-right:10px; display:inline-block; float:left;">
 					  <option selected>진행상태</option>
 					  <option value="1">오픈</option>
 					  <option value="2">진행</option>
@@ -30,6 +31,21 @@
 					  <option value="4">홀드</option>
 					  <option value="5">조치완료</option>
 				</select>
+				<select class="form-select" style="width:150px; margin-top:7px; margin-right:10px; display:inline-block; float:left;">
+					  <option selected>프로젝트</option>
+					  <option value="1">오픈</option>
+					  <option value="2">진행</option>
+					  <option value="3">취소</option>
+					  <option value="4">홀드</option>
+					  <option value="5">조치완료</option>
+				</select>
+<div class="input-group mb-3" style="width:300px; float:left; margin-top:7px; margin-right:10px;">
+  <input type="text" class="form-control" placeholder="검색할 내용을 입력하세요">
+  <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+</div>
+			
+				<button type="button" class="btn btn-primary" style="float:right">리스크 등록</button>
+              </div>  
             </div>
             
             <div class="card-body">
@@ -95,7 +111,6 @@
             </div>
         </div>
     </section>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
    
     
