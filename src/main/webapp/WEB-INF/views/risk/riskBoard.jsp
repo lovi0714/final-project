@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>
+<link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <div id="main-content">
@@ -47,7 +48,7 @@
 				<button type="button" class="btn btn-primary" style="float:right">리스크 등록</button>
               </div>  
             </div>
-            
+          
             <div class="card-body">
                 <table class="table" id="table1">
                     <thead>
@@ -63,54 +64,32 @@
                         </tr>
                     </thead>
                     <tbody>
+                      <%for(int i=0; i<100; i++){ %> 
                         <tr>
                             <td>4</td>
-                            <td>일정 관련 문제입니다.</td>
-                            <td>PMS프로젝트</td>
-                            <td>일정</td>
-                            <td>Offenburg</td>
-                            <td>New Quay</td>
+                            <td>일정 관련 문제입니다.<%=i %></td>
+                            <td>PMS프로젝트<%=i %></td>
+                            <td>일정<%=i %></td>
+                            <td>Offenburg<%=i %></td>
+                            <td>New Quay<%=i %></td>
                             <td>22-10-10</td>
                             <td>22-10-10</td>
 
                         </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>일정 관련 문제입니다.</td>
-                            <td>PMS프로젝트</td>
-                            <td>일정</td>
-                            <td>New Quay</td>
-                            <td>Offenburg</td>
-                            <td>22-10-10</td>
-                            <td>22-10-10</td>
-
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>일정 관련 문제입니다.</td>
-                            <td>PMS프로젝트</td>
-                            <td>일정</td>
-                            <td>Grumo Appula</td>
-                            <td>Ways</td>
-                            <td>22-10-10</td>
-                            <td>22-10-10</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>일정 관련 문제입니다.</td>
-                            <td>PMS프로젝트</td>
-                            <td>일정</td>
-                            <td>Ways</td>
-                            <td>Grumo Appula</td>
-                            <td>22-10-10</td>
-                            <td>22-10-10</td>
-                        </tr>
+                        <%} %>
+                      
                   
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
+    <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+    <script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script>
+    // Jquery Datatable
+    let jquery_datatable = $("#table1").DataTable()
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
    
     
