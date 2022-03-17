@@ -8,8 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user/*")
 public class UserController {
 	
+	/* 로그인 화면 */
 	@GetMapping("/login.do")
 	public String login() {
 		return "user/login";
+	}
+	
+	/* 프로필 화면 */
+	@GetMapping("/profile.do")
+	public String profile() {
+		return "user/profile";
 	}
 }
