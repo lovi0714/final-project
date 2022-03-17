@@ -93,7 +93,7 @@
                                     <a href="${path}/task/approval.do">내 결재</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/task/calendar.do">일정 관리</a>
+                                    <a href="${path}/task/calendar.do">일정관리</a>
                                 </li>
                             </ul>
                         </li>

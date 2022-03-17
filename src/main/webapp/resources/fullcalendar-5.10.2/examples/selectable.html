@@ -1,16 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath }" />
-<fmt:requestEncoding value="utf-8" />
-<script src="${path}/resources/fullcalendar-5.10.2//lib/main.js"></script>
-<script src="${path}/resources/fullcalendar-5.10.2/lib/locales-all.js"></script>
-<link href="${path}/resources/fullcalendar-5.10.2/lib/main.css" rel='stylesheet' />
-<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
-<link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href='../lib/main.css' rel='stylesheet' />
+<script src='../lib/main.js'></script>
 <script>
+
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
@@ -20,8 +15,6 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      locale: "ko",
-      themeSystem: 'bootstrap5',
       initialDate: '2020-09-12',
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
@@ -102,38 +95,30 @@
         }
       ]
     });
+
     calendar.render();
   });
 
 </script>
-
-<!-- 
 <style>
-#calendar {
-	max-width: 1100px;
-	margin: 0 auto;
-}
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
 </style>
--->
- 
-<div id="main-content">
-	<div class="page-heading">
-		<div class="page-title">
-			<div class="row">
-				<div class="col-12 col-md-6 order-md-1 order-last">
-					<h3>내 작업</h3>
-				</div>
-			</div>
-		</div>
-	</div>
-	<section class="section">
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title">일정관리</h4><hr>
-			</div>
-			<div class="card-body">
-				<div id='calendar'></div>
-			</div>
-		</div>
-	</section>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+</head>
+<body>
+
+  <div id='calendar'></div>
+
+</body>
+</html>
