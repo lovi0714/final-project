@@ -25,14 +25,7 @@
 
 <link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-	});
-</script>
 </head>
-
 <body>
     <div id="app">
         <div id="sidebar" class="active">
@@ -66,20 +59,20 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item ${param.isProjectSide}  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>프로젝트</span>
                             </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="#">프로젝트 현황</a>
+                            <ul class="submenu ${param.isList}">
+                                <li class="submenu-item">
+                                    <a href="${path}/project/list.do">프로젝트 현황</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="${path}/project/fileList.do">프로젝트 산출물</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">프로젝트 산출물</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="#">프로젝트 작업승인</a>
+                                    <a href="${path}/project/approvalList.do">프로젝트 작업승인</a>
                                 </li>
                             </ul>
                         </li>
