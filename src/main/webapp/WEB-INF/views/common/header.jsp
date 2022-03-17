@@ -134,7 +134,10 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">사용자 관리</a>
+                                    <a href="#">사용자 정보</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="${path}/admin/signUp.do">사용자 추가</a>
                                 </li>
                             </ul>
                         </li>
