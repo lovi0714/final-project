@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-3">
    	                        <div class="input-group mb-3 justify-content-end">
-                            	<button class="btn btn-primary" type="button" id="regBtn">산출물 등록</button>
+                            	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary" id="regBtn">산출물 등록</button>
                             </div>
                         </div>
                         
@@ -90,6 +90,92 @@
 	    </section>
 	    <!-- Basic Tables end -->
 	</div>
+
+<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="myModalLabel160" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title white" id="myModalLabel160">산출물 등록
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical" class="form-label">파일</label>
+                                            <input type="file" id="first-name-vertical" class="form-control" placeholder="산출물 제목을 입력하세요." name="pname" maxlength="120">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                            <label for="basicSelect">프로젝트</label>
+		                                    <fieldset class="form-group mt-2">
+		                                        <select class="form-select" id="basicSelect">
+		                                            <option>공공SI 프로젝트</option>
+		                                        </select>
+		                                    </fieldset>
+                                        </div>
+                                	</div>
+                                	<div class="col-md-6 col-12">
+                                    	<div class="form-group">
+                                            <label for="basicSelect">작업</label>
+		                                    <fieldset class="form-group mt-2">
+		                                        <select class="form-select" id="basicSelect">
+		                                            <option>공공SI 사업 기획서 작성</option>
+		                                        </select>
+		                                    </fieldset>
+                                        </div>
+                                	</div>
+                                	<div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                            <label for="basicSelect">산출물 카테고리</label>
+		                                    <fieldset class="form-group mt-2">
+		                                        <select class="form-select" id="basicSelect">
+		                                            <option>필수 산출물</option>
+		                                            <option>추가 산출물</option>
+		                                        </select>
+		                                    </fieldset>
+                                        </div>
+                                	</div>
+                                	<div class="col-md-6 col-12">
+                                    	<div class="form-group">
+                                            <label for="basicSelect">산출물 종류</label>
+		                                    <fieldset class="form-group mt-2">
+		                                        <select class="form-select" id="basicSelect">
+		                                            <option>사업기획서</option>
+		                                            <option>프로그램 메뉴얼</option>
+		                                            <option>프로젝트 리소스</option>
+		                                            <option>테스트 메뉴얼</option>
+		                                        </select>
+		                                    </fieldset>
+                                        </div>
+                                	</div>
+                                    <div class="col-12">
+                                    	<div class="form-group">
+                                            <label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+                                	</div>
+                                </div>
+                            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary ml-1">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">등록</span>
+                </button>
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">취소</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
@@ -105,9 +191,7 @@
 	});
 	
 	$(function() {
-		$('#regBtn').click(function() {
-			location.href = '${path}/project/create.do';
-		});
+		
 	});
     
 </script>
