@@ -16,7 +16,7 @@
 	            </div>
 	        </div>
 	    </div>
-	</div>
+	
 	
     <!-- Basic Tables start -->
     <section class="section">
@@ -81,10 +81,10 @@
         </div>
     </section>
     <!-- Basic Tables end -->
-
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
-
+    </div>
+<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>    
 <script>
 // Jquery Datatable
 let jquery_datatable = $("#table1").DataTable({
@@ -93,7 +93,9 @@ let jquery_datatable = $("#table1").DataTable({
 	"info" : false,
 });
 </script>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
+ 
 
 
    
