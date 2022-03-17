@@ -22,6 +22,10 @@
 <link rel="stylesheet" href="${path}/resources/vendors/bootstrap-icons/bootstrap-icons.css">
 <link rel="stylesheet" href="${path}/resources/css/app.css">
 <link rel="shortcut icon" href="${path}/resources/images/favicon.svg" type="image/x-icon">
+
+<link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		

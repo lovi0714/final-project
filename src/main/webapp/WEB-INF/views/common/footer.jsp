@@ -21,6 +21,11 @@
     
 	<script src="${path}/resources/vendors/apexcharts/apexcharts.js"></script>
 	<script src="${path}/resources/js/pages/dashboard.js"></script>
+	<script src="${path}/resources/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	
+	<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+	<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+	<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 	
     <script src="${path}/resources/js/mazer.js"></script>
     </body>
