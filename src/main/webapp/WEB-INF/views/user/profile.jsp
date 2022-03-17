@@ -23,36 +23,37 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="first-name" class="form-control" name="fname"
-                                                placeholder="홍길동">
+                                                value="홍길동">
                                         </div>
                                         <div class="col-md-4">
                                             <label>부서</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="email" id="email-id" class="form-control" name="email-id"
-                                                placeholder="인사">
+                                                value="인사">
                                         </div>
                                         <div class="col-md-4">
                                             <label>직급</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" id="contact-info" class="form-control" name="contact"
-                                                placeholder="사원">
+                                            <input type="email" id="email-id" class="form-control" name="email-id"
+                                                value="사원">
                                         </div>
-                                           <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <label>이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" id="contact-info" class="form-control" name="contact"
-                                                placeholder="test.gmail.com">
+                                            <input type="email" id="email-id" class="form-control" name="email-id"
+                                                value="test@gmail.com">
                                         </div>
                                         <div class="col-md-4">
                                             <label>번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" id="contact-info" class="form-control" name="contact"
-                                                placeholder="010-1234-1234">
-                                        </div>                                       
+                                            <input type="email" id="email-id" class="form-control" name="email-id"
+                                                value="010-1234-1234">
+                                        </div>
+                                                                            
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary me-1 mb-1">수정</button>
                                             
