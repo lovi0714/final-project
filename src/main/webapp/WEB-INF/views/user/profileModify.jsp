@@ -15,7 +15,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-horizontal" action="${path}/user/profileModify.do" method="post">
+                            <form class="form form-horizontal">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -43,19 +43,19 @@
                                             <label>이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="email-id" class="form-control" name="email-id"
-                                                value="test@gmail.com">
+                                            <input type="email" id="email-id" class="form-control" name="email-id"
+                                                placeholder="이메일을 입력해주세요.">
                                         </div>
                                         <div class="col-md-4">
                                             <label>번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="email-id" class="form-control" name="email-id"
-                                                value="010-1234-1234">
+                                                placeholder="번호를 입력해주세요.">
                                         </div>
                                                                             
                                         <div class="col-sm-12 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">수정</button>
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">완료</button>
                                             
                                         </div>
                                     </div>
