@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>PMS</title>
+<title>CPMS</title>
 <script src="${path}/resources/js/jquery.min.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -44,12 +44,12 @@
                     <ul class="menu">
                         <!-- <li class="sidebar-title">Menu</li> -->
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item ${param.isDashboardSide} has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>대시보드</span>
                             </a>
-                            <ul class="submenu ">
+                            <ul class="submenu" ${param.isDashboardList}>
                                 <li class="submenu-item ">
                                     <a href="${path}/dashboard/general.do">종합 대시보드</a>
                                 </li>
@@ -77,12 +77,12 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item ${param.isTaskSide}  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
                                 <span>내 작업</span>
                             </a>
-                            <ul class="submenu ">
+                            <ul class="submenu ${param.isTaskList} ">
                                 <li class="submenu-item ">
                                     <a href="${path}/task/list.do">내 작업</a>
                                 </li>
@@ -105,12 +105,12 @@
 
                         <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item ${param.isCommunitySide}   has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-hexagon-fill"></i>
                                 <span>커뮤니티</span>
                             </a>
-                            <ul class="submenu ">
+                            <ul class="submenu ${param.isCommunityList} ">
                                  <li class="submenu-item ">
                                     <a href="${path}/community/notice.do">공지사항</a>
                                 </li>
