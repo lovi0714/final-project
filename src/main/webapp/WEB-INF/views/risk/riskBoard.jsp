@@ -6,8 +6,13 @@
 <fmt:requestEncoding value="utf-8"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-
-<div id="main-content">
+<style>
+	a{
+		text-decoration: none;
+		color: inherit;
+	}
+</style>
+<div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 	    <div class="page-title">
 	        <div class="row">
@@ -16,36 +21,52 @@
 	            </div>
 	        </div>
 	    </div>
-	
-	
+
     <!-- Basic Tables start -->
     <section class="section">
         <div class="card">
             <div class="card-header">
-	            <h4>리스크 목록</h4>
-	            <div class="form-inline" style="display:inline;">
-	                <select class="form-select" style="width:150px; margin-top:7px; margin-right:10px; display:inline-block; float:left;">
-						  <option selected>진행상태</option>
-						  <option value="1">오픈</option>
-						  <option value="2">진행</option>
-						  <option value="3">취소</option>
-						  <option value="4">홀드</option>
-						  <option value="5">조치완료</option>
-					</select>
-					<select class="form-select" style="width:150px; margin-top:7px; margin-right:10px; display:inline-block; float:left;">
-						  <option selected>프로젝트</option>
-						  <option value="1">프로젝트1</option>
-						  <option value="2">프로젝트2</option>
-						  <option value="3">프로젝트3</option>
-						  <option value="4">프로젝트4</option>
-						  <option value="5">프로젝트5</option>
-					</select>
-					<div class="input-group mb-3" style="width:300px; float:left; margin-top:7px; margin-right:10px;">
-						<input type="text" class="form-control" placeholder="검색할 내용을 입력하세요">
-						<button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
-					</div>
-					<button type="button" class="btn btn-primary" style="float:right">리스크 등록</button>
-            	</div>  
+	            <p class="fw-bold">리스크 목록</p>
+	        </div>
+	        <div class="card-body">
+	                  <div class="row pt-3" style="background-color: #f2f7ff;">
+		                <div class="col-md-3">
+		                    <fieldset class="form-group">
+		                        <select class="form-select" id="basicSelect">
+		                            <option>프로젝트를 선택하세요.</option>
+		                            <option>CPMS</option>
+		                            <option>프로젝트 1</option>
+		                            <option>프로젝트 2</option>
+		                            <option>프로젝트 3</option>
+		                        </select>
+		                    </fieldset>
+		                </div>
+                         <div class="col-md-3">
+		                    <fieldset class="form-group">
+		                        <select class="form-select" id="basicSelect">
+   		                            <option>진행상황을 선택하세요.</option>
+                                    <option>오픈</option>
+                                    <option>진행</option>
+                                    <option>취소</option>
+                                    <option>홀드</option>
+                                    <option>조치완료</option>
+                                </select>
+		                    </fieldset>
+		                </div>
+   		                <div class="col-md-3">
+	                        <div class="input-group mb-3">
+	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요">
+   	                            <button class="btn btn-primary" type="button" id="searchBtn">검색</button>
+	                        </div>
+                        </div>
+                        <div class="col-md-3">
+   	                        <div class="input-group mb-3 justify-content-end">
+                            	<button class="btn btn-primary" type="button" id="regBtn" 
+                            	onclick=location.href="write.do">프로젝트 등록</button>
+                            </div>
+                        </div>
+                        
+            		</div>
             </div>
           
             <div class="card-body">
@@ -66,7 +87,7 @@
                       <%for(int i=0; i<100; i++){ %> 
                         <tr>
                             <td><%=i+1%></td>
-                            <td>일정 관련 문제입니다.<%=i %></td>
+                            <td><a href="${path}/risk/detail.do">일정 관련 문제입니다.<%=i %></a></td>
                             <td>PMS프로젝트<%=i %></td>
                             <td>일정<%=i %></td>
                             <td>Offenburg<%=i %></td>

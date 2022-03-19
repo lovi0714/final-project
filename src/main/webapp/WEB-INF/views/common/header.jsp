@@ -115,7 +115,7 @@
                                     <a href="${path}/community/noticeList.do">공지사항</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">팀챗</a>
+                                    <a href="${path}/community/chat.do">팀챗</a>
                                 </li>
                             </ul>
                         </li>

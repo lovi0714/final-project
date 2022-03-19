@@ -2,4 +2,10 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<typeAliases>
+		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
+	</mappers>
 </configuration>

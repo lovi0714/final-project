@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+ <mapper namespace="com.project.pms.risk.repository.RiskDAO">
+    	
+ 	<resultMap type="riskBoard" id="riskListMap">
+ 		<result column="risk_id" property="riskId"/>
+ 		<result column="title" property="title"/>
+ 		<result column="p_name" property="pName"/>
+ 		<result column="r_type_name" property="rType"/>
+ 		<result column="presenter" property="presenter"/>
+ 		<result column="activator" property="activator"/>
+ 		<result column="due_at" property="due_at"/>
+ 		<result column="com_at" property="com_at"/>
+ 	</resultMap>
+ 	 
+ 	 <select id="getRiskList" resultMap="riskListMap">
+ 	 	SELECT  tr.RISK_ID,
+ 	 			tr.TITLE,
+ 	 			tr.P_NAME,
+ 	 			trt.R_TYPE_NAME as rType,
+ 	 			tr.PRESENTER,
+ 	 			tr.ACTIVATOR,
+ 	 			tr.DUE_AT,
+ 	 			tr.COM_AT 
+ 	 	FROM SCOTT.TBL_RISK tr , SCOTT.TBL_R_TYPE trt
+ 	 	WHERE tr.R_TYPE_ID = trt.R_TYPE_ID
+ 	 </select>
+ 	
+ </mapper>
