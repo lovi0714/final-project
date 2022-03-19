@@ -4,10 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <fmt:requestEncoding value="utf-8" />
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div id="main-content">
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param name="isDashboardSide" value="active" />
+	<jsp:param name="isDashboardList" value="active" />
+</jsp:include>
+
+<div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 		<div class="page-title">
 			<div class="row">
@@ -16,253 +20,282 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Basic Tables start -->
-	<section class="section">
-		<div class="card">
-			<div class="card-header"
-				style="display: flex; justify-content: space-between;">
-				<h4>공지사항</h4>
-				<a href="${path}/community/notice.do">더보기</a>
-			</div>
-			<div class="card-body">
-				<table style="width: 100%;" class="table" id="table1">
-					<thead>
-						<tr>
-							<th style="width: 60%">제목</th>
-							<th style="width: 20%">작성자</th>
-							<th style="width: 20%">등록일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="i" begin="1" end="5" step="1">
+		<!-- Basic Tables start -->
+		<section class="section">
+			<div class="card">
+				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
+					<p class="fw-bold">공지사항</p>
+					<a href="${path}/community/noticeList.do">더보기</a>
+				</div>
+				<div class="card-body">
+					<table class="table" id="table1">
+						<thead>
 							<tr>
-								<td>제목${i}</td>
-								<td>작성자${i}</td>
-								<td>등록일${i}</td>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>등록일</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</section>
-	<!-- Basic Tables end -->
-
-	<!-- Basic Tables start -->
-	<section class="section">
-		<div class="card">
-			<div class="card-header"
-				style="display: flex; justify-content: space-between;">
-				<h4>프로젝트 현황</h4>
-				<div style="display: flex; justify-content: flex-end;">
-					<select class="form-select" style="width: 150px;">
-						<option selected>부서</option>
-						<option value="1">인사</option>
-						<option value="2">회계</option>
-						<option value="3">경영지원</option>
-						<option value="4">생산관리</option>
-						<option value="5">기술지원</option>
-						<option value="6">연구개발</option>
-					</select> <select class="form-select" style="width: 150px; margin: 0 10px;">
-						<option selected>상태</option>
-						<option value="1">시작전</option>
-						<option value="2">정상진행</option>
-						<option value="3">지연진행</option>
-						<option value="4">완료</option>
-						<option value="5">중단</option>
-					</select> <a href="#" style="margin-top: 7px">더보기</a>
+						</thead>
+						<tbody>
+							<c:forEach var="i" begin="1" end="5" step="1">
+								<tr>
+									<td>제목${i}</td>
+									<td>작성자${i}</td>
+									<td>등록일${i}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 			</div>
-			<div class="card-body">
-				<table style="width: 100%" class="table" id="table2">
-					<thead>
-						<tr>
-							<th style="width: 15%">프로젝트코드</th>
-							<th style="width: 25%">프로젝트명</th>
-							<th style="width: 10%">부서</th>
-							<th style="width: 10%">PM</th>
-							<th style="width: 10%">상태</th>
-							<th style="width: 15%">시작일</th>
-							<th style="width: 15%">완료일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="i" begin="1" end="10" step="1">
-							<tr>
-								<td>프로젝트코드${i}</td>
-								<td>프로젝트명${i}</td>
-								<td>부서${i}</td>
-								<td>PM${i}</td>
-								<td><span class="badge bg-success">상태${i}</span></td>
-								<td>시작일${i}</td>
-								<td>완료일${i}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-	</section>
-	<!-- Basic Tables end -->
-
-	<section id="basic-horizontal-layouts">
-		<div class="row match-height">
-			<div class="col-md-6 col-12">
-				<div class="card">
-					<div class="card-header"
-						style="display: flex; justify-content: space-between;">
-						<h4 class="card-title">월별 프로젝트</h4>
+		</section>
+		<!-- Basic Tables end -->
+	
+		<!-- Basic Tables start -->
+		<section class="section">
+			<div class="card">
+				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
+					<p class="fw-bold">프로젝트 현황</p>
+					<div style="display: flex; justify-content: flex-end;">
 						<select class="form-select" style="width: 150px;">
-							<option value="1">종합</option>
-							<option value="2">선행개발</option>
-							<option value="3">고객선행</option>
-							<option value="4">양산개발</option>
-						</select>
+							<option selected>부서</option>
+							<option value="1">인사</option>
+							<option value="2">회계</option>
+							<option value="3">경영지원</option>
+							<option value="4">생산관리</option>
+							<option value="5">기술지원</option>
+							<option value="6">연구개발</option>
+						</select> 
+						<select class="form-select" style="width: 150px; margin: 0 10px;">
+							<option selected>상태</option>
+							<option value="1">시작전</option>
+							<option value="2">정상진행</option>
+							<option value="3">지연진행</option>
+							<option value="4">완료</option>
+							<option value="5">중단</option>
+						</select> 
+						<a href="${path}/project/list.do" style="margin-top: 7px">더보기</a>
 					</div>
-					<div class="card-content">
-						<div class="card-body">
-							<form class="form form-horizontal">
-								<div class="form-body">
-									<div class="row"></div>
-									<div style="height: 300px">
-										<canvas id="myChart" width="200px" height="200px"></canvas>
-									</div>
-									<script>
-										const ctx = document
-												.getElementById('myChart');
-										const myChart = new Chart(
-												ctx,
-												{
-													type : 'bar',
-													data : {
-														labels : [ 'Red',
-																'Blue',
-																'Yellow',
-																'Green',
-																'Purple',
-																'Orange',
-																'Red', 'Blue',
-																'Yellow',
-																'Green',
-																'Purple',
-																'Orange' ],
-														datasets : [ {
-															label : '# of Votes',
-															data : [ 12, 19, 3,
-																	5, 2, 3,
-																	12, 19, 3,
-																	5, 2, 3 ],
-															backgroundColor : [
-																	'rgba(255, 99, 132, 0.2)',
-																	'rgba(54, 162, 235, 0.2)',
-																	'rgba(255, 206, 86, 0.2)',
-																	'rgba(75, 192, 192, 0.2)',
-																	'rgba(153, 102, 255, 0.2)',
-																	'rgba(255, 159, 64, 0.2)',
-																	'rgba(255, 99, 132, 0.2)',
-																	'rgba(54, 162, 235, 0.2)',
-																	'rgba(255, 206, 86, 0.2)',
-																	'rgba(75, 192, 192, 0.2)',
-																	'rgba(153, 102, 255, 0.2)',
-																	'rgba(255, 159, 64, 0.2)' ],
-															borderColor : [
-																	'rgba(255, 99, 132, 1)',
-																	'rgba(54, 162, 235, 1)',
-																	'rgba(255, 206, 86, 1)',
-																	'rgba(75, 192, 192, 1)',
-																	'rgba(153, 102, 255, 1)',
-																	'rgba(255, 159, 64, 1)',
-																	'rgba(255, 99, 132, 1)',
-																	'rgba(54, 162, 235, 1)',
-																	'rgba(255, 206, 86, 1)',
-																	'rgba(75, 192, 192, 1)',
-																	'rgba(153, 102, 255, 1)',
-																	'rgba(255, 159, 64, 1)', ],
-															borderWidth : 1
-														} ]
-													},
-													options : {
-														responsive : true,
-														maintainAspectRatio : false,
-														scales : {
-															y : {
-																beginAtZero : true
-															}
+				</div>
+				<div class="card-body">
+					<table class="table" id="table2">
+						<thead>
+							<tr>
+								<th>프로젝트코드</th>
+								<th>프로젝트명</th>
+								<th>부서</th>
+								<th>PM</th>
+								<th>상태</th>
+								<th>시작일</th>
+								<th>완료일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="i" begin="1" end="10" step="1">
+								<tr>
+									<td>프로젝트코드${i}</td>
+									<td>프로젝트명${i}</td>
+									<td>부서${i}</td>
+									<td>PM${i}</td>
+									<td><span class="badge bg-success">상태${i}</span></td>
+									<td>시작일${i}</td>
+									<td>완료일${i}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	
+		</section>
+		<!-- Basic Tables end -->
+	
+		<section id="basic-horizontal-layouts">
+			<div class="row match-height">
+				<div class="col-md-6 col-12">
+					<div class="card">
+						<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
+							<p class="fw-bold">월별 프로젝트</p>
+							<select class="form-select" style="width: 150px;">
+								<option value="1">종합</option>
+								<option value="2">선행개발</option>
+								<option value="3">고객선행</option>
+								<option value="4">양산개발</option>
+							</select>
+						</div>
+						<div class="card-content">
+							<div class="card-body">
+								<form class="form form-horizontal">
+									<div class="form-body">
+										<div class="row"></div>
+										<div style="height: 300px">
+											<canvas id="myChart" width="200px" height="200px"></canvas>
+										</div>
+										<script>
+											const ctx = document
+													.getElementById('myChart');
+											const myChart = new Chart(
+													ctx,
+													{
+														type : 'bar',
+														data : {
+															labels : [ 'Red',
+																	'Blue',
+																	'Yellow',
+																	'Green',
+																	'Purple',
+																	'Orange',
+																	'Red', 'Blue',
+																	'Yellow',
+																	'Green',
+																	'Purple',
+																	'Orange' ],
+															datasets : [ {
+																label : '# of Votes',
+																data : [ 12, 19, 3,
+																		5, 2, 3,
+																		12, 19, 3,
+																		5, 2, 3 ],
+																backgroundColor : [
+																		'rgba(255, 99, 132, 0.2)',
+																		'rgba(54, 162, 235, 0.2)',
+																		'rgba(255, 206, 86, 0.2)',
+																		'rgba(75, 192, 192, 0.2)',
+																		'rgba(153, 102, 255, 0.2)',
+																		'rgba(255, 159, 64, 0.2)',
+																		'rgba(255, 99, 132, 0.2)',
+																		'rgba(54, 162, 235, 0.2)',
+																		'rgba(255, 206, 86, 0.2)',
+																		'rgba(75, 192, 192, 0.2)',
+																		'rgba(153, 102, 255, 0.2)',
+																		'rgba(255, 159, 64, 0.2)' ],
+																borderColor : [
+																		'rgba(255, 99, 132, 1)',
+																		'rgba(54, 162, 235, 1)',
+																		'rgba(255, 206, 86, 1)',
+																		'rgba(75, 192, 192, 1)',
+																		'rgba(153, 102, 255, 1)',
+																		'rgba(255, 159, 64, 1)',
+																		'rgba(255, 99, 132, 1)',
+																		'rgba(54, 162, 235, 1)',
+																		'rgba(255, 206, 86, 1)',
+																		'rgba(75, 192, 192, 1)',
+																		'rgba(153, 102, 255, 1)',
+																		'rgba(255, 159, 64, 1)', ],
+																borderWidth : 1
+															} ]
 														},
-														plugins : {
-															legend : {
-																position : 'bottom'
+														options : {
+															responsive : true,
+															maintainAspectRatio : false,
+															scales : {
+																y : {
+																	beginAtZero : true
+																}
+															},
+															plugins : {
+																legend : {
+																	position : 'bottom'
+																}
 															}
 														}
-													}
-												});
-									</script>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-12">
-				<div class="card">
-					<div class="card-header"
-						style="display: flex; justify-content: space-between;">
-						<h4 class="card-title">리스크 현황</h4>
-						<select class="form-select" style="width: 150px;">
-							<option value="1">상태별</option>
-							<option value="2">유형별</option>
-						</select>
-					</div>
-					<div class="card-content">
-						<div class="card-body">
-							<form class="form form-horizontal">
-								<div class="form-body">
-									<div class="row"></div>
-									<div style="height: 300px">
-										<canvas id="douChart"></canvas>
+													});
+										</script>
 									</div>
-									<script>
-										const ctx2 = document
-												.getElementById('douChart');
-										const douChart = new Chart(
-												ctx2,
-												{
-													type : 'doughnut',
-													data : {
-														labels : [ 'Red',
-																'Blue',
-																'Yellow' ],
-														datasets : [ {
-															label : 'My First Dataset',
-															data : [ 300, 50,
-																	100 ],
-															backgroundColor : [
-																	'rgb(255, 99, 132)',
-																	'rgb(54, 162, 235)',
-																	'rgb(255, 205, 86)' ],
-															hoverOffset : 4
-														} ],
-													},
-													options : {
-														responsive : true,
-														maintainAspectRatio : false,
-														plugins : {
-															legend : {
-																position : 'bottom'
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-12">
+					<div class="card">
+						<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
+							<p class="fw-bold">리스크 현황</p>
+							<select class="form-select" style="width: 150px;">
+								<option value="1">상태별</option>
+								<option value="2">유형별</option>
+							</select>
+						</div>
+						<div class="card-content">
+							<div class="card-body">
+								<form class="form form-horizontal">
+									<div class="form-body">
+										<div class="row"></div>
+										<div style="height: 300px">
+											<canvas id="douChart"></canvas>
+										</div>
+										<script>
+											const ctx2 = document.getElementById('douChart');
+											const douChart = new Chart(
+													ctx2,
+													{
+														type : 'doughnut',
+														data : {
+															labels : [ 'Red',
+																	'Blue',
+																	'Yellow' ],
+															datasets : [ {
+																label : 'My First Dataset',
+																data : [ 300, 50,
+																		100 ],
+																backgroundColor : [
+																		'rgb(255, 99, 132)',
+																		'rgb(54, 162, 235)',
+																		'rgb(255, 205, 86)' ],
+																hoverOffset : 4
+															} ],
+														},
+														options : {
+															responsive : true,
+															maintainAspectRatio : false,
+															plugins : {
+																legend : {
+																	position : 'bottom'
+																}
 															}
 														}
-													}
-												});
-									</script>
-								</div>
-							</form>
+													});
+										</script>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+		</section>
+	</div>	
+
+<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
+
+<script>
+	// Jquery Datatable
+	$("#table1").DataTable({
+		"searching": false,
+		"info": false,
+		"lengthChange": false, 
+		"paging": false,
+		"autoWidth" : false,
+		"columnDefs": [
+		    {"className": "dt-center", "targets": "_all"},
+		    {"width": "50%", "targets": 0},
+		],
+		"order": [2, 'desc']
+	});
+	
+	$("#table2").DataTable({
+		"searching": false,
+		"info": false,
+		"lengthChange": false, 
+		"paging": false,
+		"columnDefs": [
+		    {"className": "dt-center", "targets": "_all"}
+		],
+		"order": [5, 'desc']
+	});
+</script>
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
