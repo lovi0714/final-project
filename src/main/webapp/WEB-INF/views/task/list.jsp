@@ -9,10 +9,8 @@
 	<jsp:param name="isTaskList" value="active" />
 </jsp:include>
 
-<link rel="stylesheet"
-	href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
-<link rel="stylesheet"
-	href="${path}/resources/vendors/fontawesome/all.min.css">
+<link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
 
 <style>
 .nav-tabs .nav-link.active {
@@ -71,8 +69,7 @@
 						</li>
 					</ul>
 					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="home" role="tabpanel"
-							aria-labelledby="home-tab">
+						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
@@ -95,39 +92,41 @@
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" class="form-control"
-											placeholder="검색어를 입력하세요">
+										<input type="text" class="form-control" placeholder="검색어를 입력하세요">
 										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3 justify-content-end">
-										<button type="button" class="btn btn-primary"
-											data-bs-toggle="modal" data-bs-target="#primary2" id="regBtn">승인요청</button>
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" id="regBtn">승인요청</button>
 									</div>
 								</div>
-
 							</div>
 
 							<!-- Basic Tables start -->
 							<table class="table" id="table1">
 								<thead>
 									<tr>
-										<th>작업명</th>
-										<th>프로젝트명</th>
+										<th>
+											<input type="checkbox" id="cbx_chkAll" class="form-check-input">
+										</th>
+										<th>작업</th>
+										<th>프로젝트</th>
 										<th>승인자</th>
 										<th>상태</th>
 										<th>시작일</th>
 										<th>완료일</th>
 										<th>진행률(%)</th>
-										<th><input type="checkbox" id="cbx_chkAll"
-											class="form-check-input"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td><a href="#primary" data-bs-toggle="modal"
-											data-bs-target="#primary">시장 환경 조사</a></td>
+										<td>
+											<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
+										</td>
+										<td>
+											<a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">시장 환경 조사</a>
+										</td>
 										<td>빌링서비스 개발</td>
 										<td>홍길동</td>
 										<td><span class="badge bg-secondary">시작전</span></td>
@@ -135,15 +134,15 @@
 										<td>2022-04-28</td>
 										<td>
 											<div class="progress progress-primary">
-												<div class="progress-bar progress-bar-striped"
-													role="progressbar" style="width: 0%" aria-valuenow="0"
+												<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0"
 													aria-valuemin="0" aria-valuemax="1000"></div>
 											</div>
 										</td>
-										<td><input type="checkbox" id="checkbox1" name="chk"
-											class="form-check-input"></td>
 									</tr>
 									<tr>
+										<td>
+											<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
+										</td>
 										<td>사업 모델 검토</td>
 										<td>5G 수신환경</td>
 										<td>김길동</td>
@@ -152,13 +151,11 @@
 										<td>2022-04-01</td>
 										<td>
 											<div class="progress progress-primary">
-												<div class="progress-bar progress-bar-striped"
-													role="progressbar" style="width: 50%" aria-valuenow="50"
+												<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="50"
 													aria-valuemin="0" aria-valuemax="100"></div>
 											</div>
 										</td>
-										<td><input type="checkbox" id="checkbox1" name="chk"
-											class="form-check-input"></td>
+
 									</tr>
 								</tbody>
 							</table>
@@ -298,7 +295,7 @@
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column" style="padding-bottom: 6px;">완료율</label>
+											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
                                             <input type="number" style="background-color: white;" id="first-name-column" class="form-control"
                                                 value="0" name="fname-column">
 										</div>
@@ -547,11 +544,14 @@
 		"searching": false,
 		"info": false,
 		"lengthChange": false,
+		"autoWidth" : false,
 		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"},
-		    {"orderable": false, "targets": [-1]},
+		    {"orderable": false, "targets": 0},
+		    {"width": "20%", "targets": 1},
+		    {"width": "20%", "targets": 2},
+		    {"className": "dt-center", "targets": "_all"}
 		],
-		"order": [4, 'desc']
+		"order": [5, 'desc']
 	});
 
 	$("#table2").DataTable({
@@ -561,7 +561,7 @@
 		"autoWidth" : false,
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"},
-		    { "width": "55%", "targets": 1 }
+		    {"width": "55%", "targets": 1}
 		]
 	});
 </script>

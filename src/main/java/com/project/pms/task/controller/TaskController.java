@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/task/*")
 public class TaskController {
 
-	// ³» ÀÛ¾÷
+	// ë‚´ ì‘ì—…
 	@GetMapping("/list.do")
 	public String getTaskList() {
 		System.out.println("getTaskList getController called...");
@@ -16,15 +16,15 @@ public class TaskController {
 		return "task/list";
 	}
 	
-	// ³» °áÀç
-	@GetMapping("/approval.do")
+	// ë‚´ ê²°ì¬
+	@GetMapping("/approvalList.do")
 	public String getApprovalList() {
 		System.out.println("getApprovalList getController called...");
 		
-		return "task/approval";
+		return "task/approvalList";
 	}
 	
-	// ÀÏÁ¤ °ü¸®
+	// ì¼ì •ê´€ë¦¬
 	@GetMapping("/calendar.do")
 	public String getCalendarList() {
 		System.out.println("getCalendarList getController called...");
