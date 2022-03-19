@@ -2,14 +2,18 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath }" />
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="utf-8" />
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param name="isTaskSide" value="active" />
+	<jsp:param name="isTaskList" value="active" />
+</jsp:include>
+
+<link href="${path}/resources/fullcalendar-5.10.2/lib/main.css" rel='stylesheet' />
+
 <script src="${path}/resources/fullcalendar-5.10.2//lib/main.js"></script>
 <script src="${path}/resources/fullcalendar-5.10.2/lib/locales-all.js"></script>
-<link href="${path}/resources/fullcalendar-5.10.2/lib/main.css" rel='stylesheet' />
-<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
-<link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -116,7 +120,7 @@
 </style>
 -->
  
-<div id="main-content">
+<div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 		<div class="page-title">
 			<div class="row">
@@ -125,15 +129,16 @@
 				</div>
 			</div>
 		</div>
+		<section class="section">
+			<div class="card">
+				<div class="card-header">
+					<p class="fw-bold">일정관리</p>
+				</div>
+				<div class="card-body">
+					<div id='calendar'></div>
+				</div>
+			</div>
+		</section>
 	</div>
-	<section class="section">
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title">일정관리</h4><hr>
-			</div>
-			<div class="card-body">
-				<div id='calendar'></div>
-			</div>
-		</div>
-	</section>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

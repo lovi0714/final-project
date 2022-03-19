@@ -49,7 +49,7 @@
                                 <i class="bi bi-grid-fill"></i>
                                 <span>대시보드</span>
                             </a>
-                            <ul class="submenu" ${param.isDashboardList}>
+                            <ul class="submenu ${param.isDashboardList}">
                                 <li class="submenu-item ">
                                     <a href="${path}/dashboard/general.do">종합 대시보드</a>
                                 </li>
@@ -112,7 +112,7 @@
                             </a>
                             <ul class="submenu ${param.isCommunityList} ">
                                  <li class="submenu-item ">
-                                    <a href="${path}/community/notice.do">공지사항</a>
+                                    <a href="${path}/community/noticeList.do">공지사항</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="#">팀챗</a>
