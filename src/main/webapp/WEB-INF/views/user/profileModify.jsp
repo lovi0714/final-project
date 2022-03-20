@@ -6,12 +6,21 @@
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
+<div id="main-content" style="padding-top: 0">
+	<div class="page-heading">
+	    <div class="page-title">
+	        <div class="row">
+	            <div class="col-12 col-md-6 order-md-1 order-last">
+	                <h3>프로필</h3>
+	            </div>
+	        </div>
+	    </div>
 	<section id="basic-horizontal-layouts">
-        <div class="row match-height">
+        <div class="row match-height" style="margin-left: -62px;">
             <div class="col-md-6 col-12" style="margin-left: 50px">
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title">프로필</h6>
+                        <h6 class="card-title">프로필 수정</h6>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -65,4 +74,18 @@
                     </div>
                 </div>
             </div>
+         </div>
+      </section>
+     </div>
+<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>    
+<script>
+// Jquery Datatable
+let jquery_datatable = $("#table1").DataTable({
+	"searching" : false,
+	"lengthChange" : false,
+	"info" : false,
+});     
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 

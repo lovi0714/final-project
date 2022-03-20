@@ -12,4 +12,11 @@ public class AdminController {
 	public String signUp() {
 		return "admin/signUp";
 	}
+	
+	@GetMapping("/userInfo.do") 
+	public String userInfo() {
+		return "admin/userInfo";
+	}
+			
+		
 }

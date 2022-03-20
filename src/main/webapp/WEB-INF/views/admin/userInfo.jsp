@@ -16,7 +16,7 @@
 	    <div class="page-title">
 	        <div class="row"> 
 	            <div class="col-12 col-md-6 order-md-1 order-last">
-	                <h3>사용자 현황</h3>
+	                <h3>관리자</h3>
 	            </div>
 	        </div>
 	    </div>
@@ -25,7 +25,7 @@
 	    <section class="section">
 	        <div class="card">
 	            <div class="card-header">
-	                <p class="fw-bold">사용자 현황</p>
+	                <p class="fw-bold">사용자 정보</p>
 	            </div>
 	          
 	            <div class="card-body">
@@ -66,56 +66,48 @@
 	                <table class="table" id="table1">
 	                    <thead>
 	                        <tr>
-	                            <th>이름</th>
+	                            <th>사용자 번호</th>
+	                            <th>권한</th>
 	                            <th>부서</th>
+	                            <th>이름</th>
 	                            <th>직급</th>
-	                            <th>번호</th>
-	                            <th>프로젝트 참여수</th>	                            
+	                            <th>최근 접속일</th>	                            
 	                        </tr>
 	                    </thead>
 	                    <tbody>
 	                        <tr>
-	                            <td>홍길동</td>
+	                            <td>001</td>
+	                            <td>실무진</td>
 	                            <td>인사</td>
+	                            <td>홍길동</td>
 	                            <td>대리</td>
-	                            <td>010-1234-1234</td>                          
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">4</span>
-					                </div>
-                				</td>
+	                            <td>2022.03.20</td>                          	                        
 	                        </tr>
 	                         <tr>
-	                            <td>김길동</td>
-	                            <td>경영관리</td>
-	                            <td>사원</td>
-	                            <td>010-1234-4321</td>	                            	                           
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">2</span>
-					                </div>
-                				</td>
-	                        </tr>
-	                        <tr>
+	                            <td>002</td>
+	                            <td>관리자</td>
+	                            <td>기술지원</td>
 	                            <td>신길동</td>
-	                            <td>인사</td>
+	                            <td>대리</td>
+	                            <td>2022.03.22</td>                          	                        
+	                        </tr>
+	                         <tr>
+	                            <td>003</td>
 	                            <td>PM</td>
-	                            <td>010-1234-1345</td>	                            	                           
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">2</span>
-					                </div>
-                				</td>
-	                        </tr>	      
+	                            <td>연구개발</td>
+	                            <td>김길동</td>
+	                            <td>PM</td>
+	                            <td>2022.03.20</td>                          	                        
+	                        </tr>	                        	                            
 	                    </tbody>
 	          
 	                </table>
 	            </div>
 	        </div>
 		</section>		
-	
-	    <!-- Basic Tables end -->
 	</div>
+	    <!-- Basic Tables end -->
+	
 <script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
