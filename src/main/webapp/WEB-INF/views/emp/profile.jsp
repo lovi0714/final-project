@@ -24,7 +24,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-horizontal" action="${path}/user/profileModify.do" method="post">
+                            <form class="form form-horizontal" action="${path}/emp/profileModify.do" method="post">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">

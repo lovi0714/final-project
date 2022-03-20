@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+ <mapper namespace="com.project.pms.user.repository.EmpDAO"> 	
+ 	<resultMap type="emp" id="emptMap">
+ 		<result column="emp_id" property="empId"/>
+ 		<result column="dept_id" property="deptId"/>
+ 		<result column="auth_id" property="authId"/>
+ 		<result column="pos_id" property="posId"/> 		
+ 		<result column="account" property="account"/>
+ 		<result column="password" property="password"/>
+ 		<result column="name" property="name"/>
+ 		<result column="email" property="email"/>
+ 		<result column="phone" property="phone"/>
+ 		<result column="join_at" property="joinAt"/>
+ 		<result column="leave_at" property="leaveAt"/>
+ 		<result column="is_leave" property="isLeave"/>
+ 		<result column="create_at" property="createAt"/>
+ 		<result column="update_at" property="updateAt"/>
+ 	</resultMap>
+ 	 
+ 	<resultMap type="dept" id="deptMap">
+ 		<result column="dept_id" property="deptId"/>
+ 		<result column="dept_name" property="deptName"/>
+	</resultMap>
+	
+	<resultMap type="auth" id="authMap">
+ 		<result column="auth_id" property="authId"/>
+ 		<result column="auth_name" property="authName"/>
+	</resultMap>
+	
+	<resultMap type="pos" id="posMap">
+ 		<result column="pos_id" property="posId"/>
+ 		<result column="pos_name" property="posName"/>
+	</resultMap>
+	
+	<!-- 직원정보조회 -->
+	<select id="empInfo" resultMap="empMap">
+		SELECT *
+		FROM TBL_EMP
+		WHERE account = #{account}
+	</select>
+	
+	
+ 	 
+ 	
+ </mapper>

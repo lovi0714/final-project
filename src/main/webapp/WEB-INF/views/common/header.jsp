@@ -121,7 +121,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="${path}/user/status.do" class='sidebar-link'>
+                            <a href="${path}/emp/status.do" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-medical-fill"></i>
                                 <span>사용자 현황</span>
                             </a>
@@ -206,7 +206,7 @@
                                     <li>
                                         <h6 class="dropdown-header">Hello, John!</h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="${path}/user/profile.do"><i class="icon-mid bi bi-person me-2"></i> My
+                                    <li><a class="dropdown-item" href="${path}/emp/profile.do"><i class="icon-mid bi bi-person me-2"></i> My
                                             Profile</a></li>
                                     <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
                                             Settings</a></li>
