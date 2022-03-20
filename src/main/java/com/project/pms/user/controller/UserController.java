@@ -26,4 +26,10 @@ public class UserController {
 	public String profileModify() {
 		return "user/profileModify";
 	}
+	
+	/* 사용자 현황 */
+	@GetMapping("/status.do")
+	public String status() {
+		return "user/status";
+	}
 }
