@@ -2,84 +2,96 @@ package com.project.pms.risk.vo;
 
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 public class RiskBoard {
-	private int risk_id;
+	private int riskId;
 	private String title;
-	private String p_name;
-	private String t_name;
+	private String pName;
+	private String tName;
 	private String presenter;
 	private String activator;
-	private LocalDateTime due_at;
-	private LocalDateTime com_at;
+	private LocalDateTime dueAt;
+	private LocalDateTime comAt;
 	
 	public RiskBoard() {
 
 	}
-	
-	public RiskBoard(int risk_id, String title, String p_name, String t_name, String presenter, String activator,
-			LocalDateTime due_at, LocalDateTime com_at) {
 
-		this.risk_id = risk_id;
+	public RiskBoard(int riskId, String title, String pName, String tName, String presenter, String activator,
+			LocalDateTime dueAt, LocalDateTime comAt) {
+		super();
+		this.riskId = riskId;
 		this.title = title;
-		this.p_name = p_name;
-		this.t_name = t_name;
+		this.pName = pName;
+		this.tName = tName;
 		this.presenter = presenter;
 		this.activator = activator;
-		this.due_at = due_at;
-		this.com_at = com_at;
+		this.dueAt = dueAt;
+		this.comAt = comAt;
 	}
-	
-	public int getRisk_id() {
-		return risk_id;
+
+	public int getRiskId() {
+		return riskId;
 	}
-	public void setRisk_id(int risk_id) {
-		this.risk_id = risk_id;
+
+	public void setRiskId(int riskId) {
+		this.riskId = riskId;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getP_name() {
-		return p_name;
+
+	public String getpName() {
+		return pName;
 	}
-	public void setP_name(String p_name) {
-		this.p_name = p_name;
+
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
-	public String getT_name() {
-		return t_name;
+
+	public String gettName() {
+		return tName;
 	}
-	public void setT_name(String t_name) {
-		this.t_name = t_name;
+
+	public void settName(String tName) {
+		this.tName = tName;
 	}
+
 	public String getPresenter() {
 		return presenter;
 	}
+
 	public void setPresenter(String presenter) {
 		this.presenter = presenter;
 	}
+
 	public String getActivator() {
 		return activator;
 	}
+
 	public void setActivator(String activator) {
 		this.activator = activator;
 	}
-	public LocalDateTime getDue_at() {
-		return due_at;
+
+	public LocalDateTime getDueAt() {
+		return dueAt;
 	}
-	public void setDue_at(LocalDateTime due_at) {
-		this.due_at = due_at;
+
+	public void setDueAt(LocalDateTime dueAt) {
+		this.dueAt = dueAt;
 	}
-	public LocalDateTime getCom_at() {
-		return com_at;
+
+	public LocalDateTime getComAt() {
+		return comAt;
 	}
-	public void setCom_at(LocalDateTime com_at) {
-		this.com_at = com_at;
+
+	public void setComAt(LocalDateTime comAt) {
+		this.comAt = comAt;
 	}
+	
+
 }
