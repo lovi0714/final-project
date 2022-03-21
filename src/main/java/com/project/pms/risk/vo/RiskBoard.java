@@ -1,28 +1,29 @@
 package com.project.pms.risk.vo;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class RiskBoard {
 	private int riskId;
 	private String title;
 	private String pName;
-	private String tName;
+	private String rType;
 	private String presenter;
 	private String activator;
-	private LocalDateTime dueAt;
-	private LocalDateTime comAt;
+	private Date dueAt;
+	private Date comAt;
 	
 	public RiskBoard() {
 
 	}
 
-	public RiskBoard(int riskId, String title, String pName, String tName, String presenter, String activator,
-			LocalDateTime dueAt, LocalDateTime comAt) {
+	public RiskBoard(int riskId, String title, String pName, String rType, String presenter, String activator,
+			Date dueAt, Date comAt) {
 		super();
 		this.riskId = riskId;
 		this.title = title;
 		this.pName = pName;
-		this.tName = tName;
+		this.rType = rType;
 		this.presenter = presenter;
 		this.activator = activator;
 		this.dueAt = dueAt;
@@ -53,12 +54,12 @@ public class RiskBoard {
 		this.pName = pName;
 	}
 
-	public String gettName() {
-		return tName;
+	public String getrType() {
+		return rType;
 	}
 
-	public void settName(String tName) {
-		this.tName = tName;
+	public void setrType(String rType) {
+		this.rType = rType;
 	}
 
 	public String getPresenter() {
@@ -77,19 +78,19 @@ public class RiskBoard {
 		this.activator = activator;
 	}
 
-	public LocalDateTime getDueAt() {
+	public Date getDueAt() {
 		return dueAt;
 	}
 
-	public void setDueAt(LocalDateTime dueAt) {
+	public void setDueAt(Date dueAt) {
 		this.dueAt = dueAt;
 	}
 
-	public LocalDateTime getComAt() {
+	public Date getComAt() {
 		return comAt;
 	}
 
-	public void setComAt(LocalDateTime comAt) {
+	public void setComAt(Date comAt) {
 		this.comAt = comAt;
 	}
 	

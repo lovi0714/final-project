@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>
 
@@ -86,20 +87,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                      <%for(int i=0; i<100; i++){ %> 
-                        <tr>
-                            <td><%=i+1%></td>
-                            <td><a href="${path}/risk/detail.do">일정 관련 문제입니다.<%=i %></a></td>
-                            <td>PMS프로젝트<%=i %></td>
-                            <td>일정<%=i %></td>
-                            <td>Offenburg<%=i %></td>
-                            <td>New Quay<%=i %></td>
-                            <td>22-10-10</td>
-                            <td>22-10-10</td>
-                        </tr>
-                        <%} %>
+						<c:forEach items="${riskList }" var="list">
+                        	<tr>
+	                            <td>${list.riskId }</td>
+	                            <td><a href="${path}/risk/detail.do">${list.title}</a></td>
+	                            <td>${list.pName }</td>
+	                            <td>${list.rType }</td>
+	                            <td>${list.presenter}</td>
+	                            <td>${list.activator}</td>
+	                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.dueAt}" /></td>
+	                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.comAt}" /></td>
+                        	</tr>
+                       </c:forEach>
                     </tbody>
-                </table>
+                </table>           
             </div>
         </div>
     </section>

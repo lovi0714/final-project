@@ -12,15 +12,15 @@
  		<result column="r_type_name" property="rType"/>
  		<result column="presenter" property="presenter"/>
  		<result column="activator" property="activator"/>
- 		<result column="due_at" property="due_at"/>
- 		<result column="com_at" property="com_at"/>
+ 		<result column="due_at" property="dueAt"/>
+ 		<result column="com_at" property="comAt"/>
  	</resultMap>
  	 
  	 <select id="getRiskList" resultMap="riskListMap">
  	 	SELECT  tr.RISK_ID,
  	 			tr.TITLE,
  	 			tr.P_NAME,
- 	 			trt.R_TYPE_NAME as rType,
+ 	 			trt.R_TYPE_NAME,
  	 			tr.PRESENTER,
  	 			tr.ACTIVATOR,
  	 			tr.DUE_AT,

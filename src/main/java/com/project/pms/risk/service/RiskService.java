@@ -14,9 +14,14 @@ public class RiskService {
 	@Autowired
 	private RiskDAO dao;
 	
+	private final static java.util.logging.Logger LOGGER = java.util.logging.Logger.getGlobal();
+	
 	// 전체 목록 가져오기
 	public List<RiskBoard> getRiskList() {
-	
+		
+		List<RiskBoard> result = dao.getRiskList();
+		LOGGER.info(result.toString());
+		
 		return dao.getRiskList(); 
 	}
 }
