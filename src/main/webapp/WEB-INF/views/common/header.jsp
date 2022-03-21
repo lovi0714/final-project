@@ -95,7 +95,7 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item ${param.isRiskSide} ">
                             <a href="${path}/risk/riskBoard.do" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>리스크 관리</span>

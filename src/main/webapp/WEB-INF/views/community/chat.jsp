@@ -12,7 +12,10 @@
     <link rel="stylesheet" href="${path}/resources/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="${path}/resources/css/app.css">
     <link rel="shortcut icon" href="a${path}/resources/images/favicon.svg" type="image/x-icon"> 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+		<jsp:param name="isCommunitySide" value="active"/>
+		<jsp:param name="isCommunityList" value="active"/>
+</jsp:include>
 
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">

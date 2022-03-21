@@ -5,7 +5,9 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param name="isRiskSide" value="active"/>
+</jsp:include>
 <style>
 	a{
 		text-decoration: none;
@@ -62,7 +64,7 @@
                         <div class="col-md-3">
    	                        <div class="input-group mb-3 justify-content-end">
                             	<button class="btn btn-primary" type="button" id="regBtn" 
-                            	onclick=location.href="write.do">프로젝트 등록</button>
+                            	onclick=location.href="write.do">리스크 등록</button>
                             </div>
                         </div>
                         
@@ -70,7 +72,7 @@
             </div>
           
             <div class="card-body">
-                <table class="table" id="table1">
+                <table class="table" id="table1" style="text-align:center">
                     <thead>
                         <tr>
                             <th>번호</th>
