@@ -3,9 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias alias="project" type="com.project.pms.project.vo.Project"/>
 		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
+		<mapper resource="resource/ProjectMapper.xml"/>
 	</mappers>
 </configuration>

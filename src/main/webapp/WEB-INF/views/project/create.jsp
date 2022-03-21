@@ -22,19 +22,19 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form">
+                            <form class="form" id="prjForm">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">프로젝트 제목</label>
-                                            <input type="text" id="first-name-vertical" class="form-control" placeholder="프로젝트 제목을 입력하세요." name="pname" maxlength="120">
+                                            <input type="text" id="first-name-vertical" class="form-control" placeholder="프로젝트 제목을 입력하세요." name="title" maxlength="120">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
                                     <div class="form-group">
                                             <label for="basicSelect">프로젝트 유형</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect">
+		                                        <select class="form-select" id="basicSelect" name="typeId">
 		                                            <option>선행개발</option>
 		                                            <option>고객개발</option>
 		                                            <option>양산개발</option>
@@ -46,7 +46,7 @@
                                     	<div class="form-group">
                                             <label for="basicSelect">R&D 구분</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect">
+		                                        <select class="form-select" id="basicSelect" name="rndId">
 		                                            <option>장비개발</option>
 		                                            <option>SW 개발</option>
 		                                            <option>플랫폼 개발</option>
@@ -59,7 +59,7 @@
                                     	<div class="form-group">
                                             <label for="basicSelect">프로젝트 관리자</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect">
+		                                        <select class="form-select" id="basicSelect" name="deptId">
 		                                            <option>인사</option>
 		                                            <option>회계</option>
 		                                            <option>경영지원</option>
@@ -74,7 +74,7 @@
                                     	<div class="form-group">
                                             <label for="basicSelect"></label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect">
+		                                        <select class="form-select" id="basicSelect" name="pmId">
 		                                            <option>홍길동 사원</option>
 		                                            <option>김길동 대리</option>
 		                                            <option>고길동 팀장</option>
@@ -101,7 +101,7 @@
                                     	<div class="form-group">
                                             <label for="basicSelect"></label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect">
+		                                        <select class="form-select" id="basicSelect" name="pmoId">
 		                                            <option>홍길동 사원</option>
 		                                            <option>김길동 대리</option>
 		                                            <option>고길동 팀장</option>
@@ -112,23 +112,23 @@
                                 	<div class="col-md-3 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">프로젝트 시작일</label>
-                                   			<input type="date" id="first-name-vertical" class="form-control mt-2" name="start_at">
+                                   			<input type="date" id="first-name-vertical" class="form-control mt-2" name="startAt">
                                         </div>
                                 	</div>
                                 	<div class="col-md-3 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">프로젝트 완료일</label>
-                                          	<input type="date" id="first-name-vertical" class="form-control mt-2" name="end_at">
+                                          	<input type="date" id="first-name-vertical" class="form-control mt-2" name="endAt">
                                         </div>
                                 	</div>
                                     <div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">프로젝트 설명</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
                                         </div>
                                 	</div>
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary me-1 mb-1">등록</button>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1" id="regBtn">등록</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
                                     </div>
                                 </div>
@@ -140,4 +140,14 @@
         </div>
     </section>
                 </div>
+<script type="text/javascript">
+	$(function() {
+		$('#regBtn').click(function(e) {
+		
+			e.preventDefault();
+			console.log($('#prjForm').serialize());
+			console.log('dsd');
+		});
+	});
+</script>
                 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

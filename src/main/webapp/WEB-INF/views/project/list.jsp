@@ -83,7 +83,7 @@
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr>
+	                        <!-- <tr>
 	                            <td>BP-2022-019</td>
 	                            <td>SI사업 진행 프로젝트</td>
 	                            <td>2022-03-16</td>
@@ -98,23 +98,32 @@
 					                    <span class="avatar-content">4</span>
 					                </div>
                 				</td>
-	                        </tr>
-	                         <tr>
-	                            <td>BP-2022-020</td>
-	                            <td>2022년 SI사업 진행 프로젝트</td>
-	                            <td>2022-03-16</td>
-	                            <td>2022-04-12</td>
-	                            <td>
-	                            	<div class="progress progress-primary">
-				                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-				                	</div>			
-                				</td>
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">5</span>
-					                </div>
-                				</td>
-	                        </tr>
+	                        </tr> -->
+	                      	<c:choose>
+	                      		<c:when test="${list.size() > 0}">
+	                      			<c:forEach var="project" items="${list}">
+									<tr>
+			                            <td>${project.projectId}</td>
+			                            <td>${project.title}</td>
+			                            <td>${project.startAt}</td>
+			                            <td>${project.endAt}</td>
+			                            <td>
+			                            	<div class="progress progress-primary">
+						                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+						                	</div>			
+		                				</td>
+			                            <td>
+			                            	<div class="avatar bg-info me-3">
+							                    <span class="avatar-content">4</span>
+							                </div>
+		                				</td>
+	                        		</tr>
+	                       			</c:forEach>
+	                      		</c:when>
+	                      		<c:otherwise>
+	                      			<tr><td colspan="6" style="text-align: center;"><h6>등록된 프로젝가 없습니다.</h6></td></tr>
+	                      		</c:otherwise>
+	                      	</c:choose>
 	                    </tbody>
 	                </table>
 	            </div>
@@ -127,18 +136,23 @@
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 <script>
-	//Jquery Datatable
-	$("#table1").DataTable({
-		"searching": false,
-		"info" : false,
-		"lengthChange": false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"}
-		]
-	});
-	
 	$(function() {
+		//Jquery Datatable
+		let listSize = ${list.size()};
+		
+		if (listSize > 0) {
+			$("#table1").DataTable({
+				"searching": false,
+				"info" : false,
+				"lengthChange": false,
+				"columnDefs": [
+				    {"className": "dt-center", "targets": "_all"}
+				]
+			});
+		}
+			
 		$('#regBtn').click(function() {
+			console.log('click')
 			location.href = '${path}/project/create.do';
 		});
 	});
