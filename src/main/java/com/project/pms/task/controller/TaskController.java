@@ -24,11 +24,4 @@ public class TaskController {
 		return "task/approvalList";
 	}
 	
-	// 일정관리
-	@GetMapping("/calendar.do")
-	public String getCalendarList() {
-		System.out.println("getCalendarList getController called...");
-		
-		return "task/calendar";
-	}
 }

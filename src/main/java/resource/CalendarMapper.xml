@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="com.project.pms.task.repository.CalendarDAO">
+	<resultMap type="calendar" id="calendarMap">
+		<result column="sch_id" property="id"/>
+		<result column="emp_id" property="empId"/>
+		<result column="title" property="title"/>
+		<result column="start_at" property="start"/>
+		<result column="end_at" property="end"/>
+		<result column="is_all_day" property="allDay"/>
+		<result column="content" property="content"/>
+		<result column="bg_color" property="backgroundColor"/>
+		<result column="t_color" property="textColor"/> 	
+	</resultMap>
+	
+	<!-- 캘린더 목록 -->
+	<select id="getCalendarList" resultMap="calendarMap" parameterType="int">
+		SELECT *
+		FROM TBL_SCHEDULE
+		WHERE emp_id = #{empId}
+	</select>
+	
+	<!-- 캘린더 등록 -->
+	<insert id="insertCalendar" parameterType="calendar">
+		INSERT INTO TBL_SCHEDULE
+		VALUES (schedule_seq.nextval, #{empId}, #{title}, #{start}, #{end},  
+				#{allDay}, #{content}, #{backgroundColor}, #{textColor})	
+	</insert> 
+	
+	<!-- 캘린더 수정 -->
+	<update id="updateCalendar" parameterType="calendar">
+		UPDATE TBL_SCHEDULE
+		SET title = #{title},
+			start_at = #{start},
+			end_at = #{end},
+			is_all_day = #{allDay},
+			content = #{content},
+			bg_color = #{backgroundColor},
+			t_color = #{textColor}
+		WHERE emp_id = #{empId}
+	</update>
+	
+	<!-- 캘린더 삭제 -->
+	<delete id="deleteCalendar" parameterType="int">
+		DELETE FROM TBL_SCHEDULE
+		WHERE emp_id = #{empId}
+	</delete>
+		
+</mapper>

@@ -4,10 +4,12 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="project" type="com.project.pms.project.vo.Project"/>
+		<typeAlias alias="calendar" type="com.project.pms.task.vo.Calendar"/>
 		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
 	</typeAliases>
 	<mappers>
-		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
 		<mapper resource="resource/ProjectMapper.xml"/>
+		<mapper resource="resource/CalendarMapper.xml"/>
+		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
 	</mappers>
 </configuration>
