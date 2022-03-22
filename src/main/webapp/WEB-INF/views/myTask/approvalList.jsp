@@ -116,7 +116,7 @@ $(document).ready(function() {
 								
 							<!-- Basic Tables start -->
 							<table class="table" id="table1">
-								<thead>
+								<thead>	
 									<tr>
 										<th>
 											<input type="checkbox" id="cbx_chkAll1" class="form-check-input">
@@ -129,17 +129,28 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>
-											<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input">
-										</td>
-										<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">사업 모델 검토</a></td>
-										<td>OTP 개발</td>
-										<td>홍길동</td>
-										<td><span class="badge bg-secondary">승인대기</span></td>
-										<td>2022-03-20</td>
-									</tr>
-								</tbody>
+									<c:choose>
+			                      		<c:when test="${WaitingList.size() > 0}">
+			                      			<c:forEach var="wait" items="${WaitingList}">
+												<tr>
+													<td>
+														<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input">
+ 													</td>
+														<td>${wait.taskName}</td>
+														<td>${wait.pTitle}</td>
+														<td>${wait.approver}</td>
+														<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
+														<td><fmt:formatDate value="${wait.createAt}" pattern="yyyy-MM-dd"/></td>
+													</tr>
+			                       			</c:forEach>
+			                      		</c:when>
+			                      		<c:otherwise>
+			                      			<tr>
+			                      				<td colspan="6" style="text-align: center;"><h6>승인 대기중인 결재가 없습니다.</h6></td>
+			                      			</tr>
+			                      		</c:otherwise>
+			                      	</c:choose>		
+			                    </tbody>				
 							</table>
 							<!-- Basic Tables end -->
 						</div>
@@ -175,14 +186,25 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">사업 모델 검토</a></td>
-										<td>시장 환경 조사</td>
-										<td>홍길동</td>
-										<td><span class="badge bg-success">승인완료</span></td>
-										<td>2022-03-01</td>
-										<td>2022-03-15</td>
-									</tr>
+									<c:choose>
+			                      		<c:when test="${CompletedList.size() > 0}">
+			                      			<c:forEach var="complete" items="${CompletedList}">
+												<tr>
+													<td>${complete.taskName}</td>
+													<td>${complete.pTitle}</td>
+													<td>${complete.approver}</td>
+													<td><span class="badge bg-secondary">${complete.apStatus}</span></td>
+													<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd"/></td>
+													<td><fmt:formatDate value="${complete.approvalAt}" pattern="yyyy-MM-dd"/></td>
+												</tr>
+			                       			</c:forEach>
+			                      		</c:when>
+			                      		<c:otherwise>
+			                      			<tr>
+			                      				<td colspan="6" style="text-align: center;"><h6>승인 완료된 결재가 없습니다.</h6></td>
+			                      			</tr>
+			                      		</c:otherwise>
+			                      	</c:choose>		
 								</tbody>
 							</table>
 							<!-- Basic Tables end -->			
@@ -227,17 +249,28 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>
-											<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input">
-										</td>
-										<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">사업 모델 검토</a></td>
-										<td>고주파수 영역 연구</td>
-										<td>홍길동</td>
-										<td><span class="badge bg-danger">반려</span></td>
-										<td>2022-03-01</td>
-										<td>2022-03-05</td>
-									</tr>
+									<c:choose>
+			                      		<c:when test="${RejectedList.size() > 0}">
+			                      			<c:forEach var="reject" items="${RejectedList}">
+												<tr>
+													<td>
+														<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input">
+ 													</td>
+														<td>${reject.taskName}</td>
+														<td>${reject.pTitle}</td>
+														<td>${reject.approver}</td>
+														<td><span class="badge bg-secondary">${reject.apStatus}</span></td>
+														<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd"/></td>
+														<td><fmt:formatDate value="${reject.rejectAt}" pattern="yyyy-MM-dd"/></td>
+													</tr>
+			                       			</c:forEach>
+			                      		</c:when>
+			                      		<c:otherwise>
+			                      			<tr>
+			                      				<td colspan="12" style="text-align: center;"><h6>반려된 결재가 없습니다.</h6></td>
+			                      			</tr>
+			                      		</c:otherwise>
+			                      	</c:choose>		
 								</tbody>
 							</table>
 							<!-- Basic Tables end -->

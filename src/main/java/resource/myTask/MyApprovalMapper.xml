@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="com.project.pms.myTask.repository.MyApprovalDAO">
+	<resultMap type="myApproval" id="myApprovalMap">
+		<result column="task_name" property="taskName"/>
+		<result column="prj_name" property="pTitle"/>
+		<result column="approver" property="approver"/>
+		<result column="ap_status" property="apStatus"/>
+		<result column="create_at" property="createAt"/>
+		<result column="approval_at" property="approvalAt"/>
+		<result column="reject_at" property="rejectAt"/>
+	</resultMap>
+	
+	<!-- 승인 대기 -->
+	<select id="getMyApprovalWaitingList" resultMap="myApprovalMap" parameterType="int">
+		SELECT tt.task_name,
+				tp.name AS prj_name,
+				(SELECT name FROM TBL_EMP WHERE emp_id = ta.approver) AS approver,
+				tas.ap_status,
+				ta.create_at
+		FROM TBL_TASK tt,
+				TBL_EMP te,
+				TBL_RESOURCE tr,
+				TBL_PROJECT tp,
+				TBL_APPROVAL ta,
+				TBL_AP_STATUS tas
+		WHERE tt.task_id = ta.task_id AND
+				te.emp_ID = tr.emp_ID AND 
+				tr.res_id = tt.res_id AND
+				ta.ap_status_id = tas.ap_status_id AND
+				tt.prj_id = tp.prj_id AND
+				ta.ap_status_id = 1 AND
+				te.emp_id = #{empId}
+	</select>		
+	
+	<!-- 승인 완료 -->
+	<select id="getMyApprovalCompletedList" resultMap="myApprovalMap" parameterType="int">
+		SELECT tt.task_name,
+				tp.name AS prj_name,
+				(SELECT name FROM TBL_EMP WHERE emp_id = ta.approver) AS approver,
+				tas.ap_status,
+				ta.create_at,
+				ta.approval_at
+		FROM TBL_TASK tt,
+				TBL_EMP te,
+				TBL_RESOURCE tr,
+				TBL_PROJECT tp,
+				TBL_APPROVAL ta,
+				TBL_AP_STATUS tas
+		WHERE tt.task_id = ta.task_id AND
+				te.emp_ID = tr.emp_ID AND 
+				tr.res_id = tt.res_id AND
+				ta.ap_status_id = tas.ap_status_id AND
+				tt.prj_id = tp.prj_id AND
+				ta.ap_status_id = 2 AND
+				te.emp_id = #{empId}
+	</select>		
+	
+	<!-- 반려 -->
+	<select id="getMyApprovalRejectedList" resultMap="myApprovalMap" parameterType="int">
+		SELECT tt.task_name,
+				tp.name AS prj_name,
+				(SELECT name FROM TBL_EMP WHERE emp_id = ta.approver) AS approver,
+				tas.ap_status,
+				ta.create_at,
+				ta.reject_at
+		FROM TBL_TASK tt,
+				TBL_EMP te,
+				TBL_RESOURCE tr,
+				TBL_PROJECT tp,
+				TBL_APPROVAL ta,
+				TBL_AP_STATUS tas
+		WHERE tt.task_id = ta.task_id AND
+				te.emp_ID = tr.emp_ID AND 
+				tr.res_id = tt.res_id AND
+				ta.ap_status_id = tas.ap_status_id AND
+				tt.prj_id = tp.prj_id AND
+				ta.ap_status_id = 3 AND
+				te.emp_id = #{empId}
+	</select>		
+</mapper>

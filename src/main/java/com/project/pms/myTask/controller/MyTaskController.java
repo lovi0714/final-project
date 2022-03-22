@@ -15,7 +15,7 @@ public class MyTaskController {
 	@Autowired
 	private MyTaskService service;
 	
-	// 내 작업
+	// 내 작업 조회
 	@GetMapping("/list.do")
 	public String getMyTaskList(Model d) {
 		System.out.println("getMyTaskList Controller called...");

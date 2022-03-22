@@ -1,25 +1,27 @@
 package com.project.pms.myTask.vo;
 
+import java.util.Date;
+
 public class MyApproval {
 	private String taskName;
 	private String pTitle;
-	private String pmName;
+	private String approver;
 	private String apStatus;
-	private String createAt;
-	private String approvalAt;
-	private String rejectAt;
+	private Date createAt;
+	private Date approvalAt;
+	private Date rejectAt;
 	
 	public MyApproval() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MyApproval(String taskName, String pTitle, String pmName, String apStatus, String createAt,
-			String approvalAt, String rejectAt) {
+	public MyApproval(String taskName, String pTitle, String approver, String apStatus, Date createAt, Date approvalAt,
+			Date rejectAt) {
 		super();
 		this.taskName = taskName;
 		this.pTitle = pTitle;
-		this.pmName = pmName;
+		this.approver = approver;
 		this.apStatus = apStatus;
 		this.createAt = createAt;
 		this.approvalAt = approvalAt;
@@ -42,12 +44,12 @@ public class MyApproval {
 		this.pTitle = pTitle;
 	}
 
-	public String getPmName() {
-		return pmName;
+	public String getApprover() {
+		return approver;
 	}
 
-	public void setPmName(String pmName) {
-		this.pmName = pmName;
+	public void setApprover(String approver) {
+		this.approver = approver;
 	}
 
 	public String getApStatus() {
@@ -58,28 +60,29 @@ public class MyApproval {
 		this.apStatus = apStatus;
 	}
 
-	public String getCreateAt() {
+	public Date getCreateAt() {
 		return createAt;
 	}
 
-	public void setCreateAt(String createAt) {
+	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 
-	public String getApprovalAt() {
+	public Date getApprovalAt() {
 		return approvalAt;
 	}
 
-	public void setApprovalAt(String approvalAt) {
+	public void setApprovalAt(Date approvalAt) {
 		this.approvalAt = approvalAt;
 	}
 
-	public String getRejectAt() {
+	public Date getRejectAt() {
 		return rejectAt;
 	}
 
-	public void setRejectAt(String rejectAt) {
+	public void setRejectAt(Date rejectAt) {
 		this.rejectAt = rejectAt;
 	}
+	
 	
 }

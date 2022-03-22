@@ -7,7 +7,13 @@ import com.project.pms.myTask.vo.MyApproval;
 @Repository
 public interface MyApprovalDAO {
 
-	// 내 결재 조회
-	public List<MyApproval> getMyApprovalList(int empId);
+	// 승인 대기
+	public List<MyApproval> getMyApprovalWaitingList(int empId);
 	
+	// 승인 완료
+	public List<MyApproval> getMyApprovalCompletedList(int empId);
+	
+	// 반려
+	public List<MyApproval> getMyApprovalRejectedList(int empId);
+
 }
