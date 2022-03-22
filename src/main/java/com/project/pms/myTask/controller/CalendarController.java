@@ -11,7 +11,7 @@ import com.project.pms.myTask.service.CalendarService;
 import com.project.pms.myTask.vo.Calendar;
 
 @Controller
-@RequestMapping("/task/*")
+@RequestMapping("/myTask/*")
 public class CalendarController {
 
 	@Autowired
@@ -22,7 +22,7 @@ public class CalendarController {
 	public String getCalendar() {
 		System.out.println("getCalendar controller called...");
 
-		return "task/calendar";
+		return "myTask/calendar";
 	}
 
 	@PostMapping("calendarList.do")
@@ -41,7 +41,7 @@ public class CalendarController {
 		calendar.setEmpId(1);
 		service.insertCalendar(calendar);
 
-		return "redirect:/calendar.do";
+		return "redirect:/myTask/calendar.do";
 	}
 
 	// 캘린더 수정
@@ -51,7 +51,7 @@ public class CalendarController {
 		calendar.setEmpId(1);
 		service.updateCalendar(calendar);
 		
-		return "redirect:/calendar.do";
+		return "redirect:/myTask/calendar.do";
 	}
 	
 	// 캘린더 삭제
@@ -61,6 +61,6 @@ public class CalendarController {
 		empId = 1;
 		service.deleteCalendar(empId);
 		
-		return "redirect:/calendar.do";		
+		return "redirect:/myTask/calendar.do";		
 	}	
 }

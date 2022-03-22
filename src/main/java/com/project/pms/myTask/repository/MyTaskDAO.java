@@ -1,16 +1,13 @@
 package com.project.pms.myTask.repository;
 
 import java.util.List;
-
-import com.project.pms.myTask.vo.Calendar;
+import org.springframework.stereotype.Repository;
 import com.project.pms.myTask.vo.MyTask;
 
+@Repository
 public interface MyTaskDAO {
 
 	// 내 작업 조회
-	public List<MyTask> getTaskList(int empId);
-
-	// 내 작업 수정
-	public void updateCalendar(Calendar calendar);
+	public List<MyTask> getMyTaskList(int empId);
 	
 }

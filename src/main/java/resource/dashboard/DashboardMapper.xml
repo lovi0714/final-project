@@ -12,9 +12,9 @@
 	
 	<resultMap type="dashboardProject" id="dashboardProjectMap">
 		<result column="prj_id" property="projectId"/>
-		<result column="pname" property="title"/>
+		<result column="prj_name" property="title"/>
 		<result column="dept_name" property="pmDeptName"/>
-		<result column="name" property="pmName"/>
+		<result column="pm_name" property="pmName"/>
 		<result column="prj_status" property="status"/>
 		<result column="start_at" property="startAt"/>
 		<result column="end_at" property="endAt"/>
@@ -32,9 +32,9 @@
 	<!-- 프로젝트 현황: 최근 등록 프로젝트 10개 조회 -->
 	<select id="getProjectList" resultMap="dashboardProjectMap">
 		SELECT tp.prj_id,
-		      	tp.name AS pname,
+		      	tp.name AS prj_name,
 		      	td.dept_name,
-		      	te.name,
+		      	te.name AS pm_name,
 		      	tps.prj_status, 
 		     	tp.start_at, 
 		     	tp.end_at
@@ -60,9 +60,9 @@
 	<!-- 참여 프로젝트 -->
 	<select id="getMyProjectList" resultMap="dashboardProjectMap" parameterType="int">
 		SELECT tp.prj_id,
-		      tp.name AS pname,
+		      tp.name AS prj_name,
 		      td.dept_name,
-		      te.name,
+		      te.name AS pm_name,
 		      tps.prj_status, 
 		      tp.start_at, 
 		      tp.end_at

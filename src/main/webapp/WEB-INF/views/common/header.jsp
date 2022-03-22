@@ -84,13 +84,13 @@
                             </a>
                             <ul class="submenu ${param.isTaskList} ">
                                 <li class="submenu-item ">
-                                    <a href="${path}/task/list.do">내 작업</a>
+                                    <a href="${path}/myTask/list.do">내 작업</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/task/approvalList.do">내 결재</a>
+                                    <a href="${path}/myTask/approvalList.do">내 결재</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/task/calendar.do">일정관리</a>
+                                    <a href="${path}/myTask/calendar.do">일정관리</a>
                                 </li>
                             </ul>
                         </li>

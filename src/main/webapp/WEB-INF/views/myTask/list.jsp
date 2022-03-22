@@ -120,43 +120,44 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>
-											<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
-										</td>
-										<td>
-											<a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">시장 환경 조사</a>
-										</td>
-										<td>빌링서비스 개발</td>
-										<td>홍길동</td>
-										<td><span class="badge bg-secondary">시작전</span></td>
-										<td>2022-04-15</td>
-										<td>2022-04-28</td>
-										<td>
-											<div class="progress progress-primary">
-												<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0"
-													aria-valuemin="0" aria-valuemax="1000"></div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
-										</td>
-										<td>사업 모델 검토</td>
-										<td>5G 수신환경</td>
-										<td>김길동</td>
-										<td><span class="badge bg-success">정상진행</span></td>
-										<td>2022-03-18</td>
-										<td>2022-04-01</td>
-										<td>
-											<div class="progress progress-primary">
-												<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="50"
-													aria-valuemin="0" aria-valuemax="100"></div>
-											</div>
-										</td>
-
-									</tr>
+									<c:choose>
+			                      		<c:when test="${MyTaskList.size() > 0}">
+			                      			<c:forEach var="mytask" items="${MyTaskList}">
+												<tr>
+													<td>
+														<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
+ 													</td>
+						                            <td>${mytask.taskName}</td>
+						                            <td>${mytask.title}</td>
+						                            <td>${mytask.pmName}</td>
+						                            <c:choose>
+						                            	 <c:when test = "${mytask.status eq '시작전'}">
+						                           			<td><span class="badge bg-secondary">${mytask.status}</span></td>
+						                            	 </c:when>
+						                            	 <c:when test = "${mytask.status eq '정상진행'}">
+						                            	 	<td><span class="badge bg-success">${mytask.status}</span></td>
+						                           		 </c:when>
+						                            	 <c:when test = "${mytask.status eq '지연진행'}">
+						                            	 	<td><span class="badge bg-danger">${mytask.status}</span></td>
+						                           		 </c:when>
+						                            </c:choose>
+						                            <td><fmt:formatDate value="${mytask.startAt}" pattern="yyyy-MM-dd"/></td>
+						                            <td><fmt:formatDate value="${mytask.endAt}" pattern="yyyy-MM-dd"/></td>
+						                            <td>
+														<div class="progress progress-primary">
+															<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="${mytask.progress}"
+																aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</td>
+				                        		</tr>
+			                       			</c:forEach>
+			                      		</c:when>
+			                      		<c:otherwise>
+			                      			<tr>
+			                      				<td colspan="6" style="text-align: center;"><h6>등록된 작업이 없습니다.</h6></td>
+			                      			</tr>
+			                      		</c:otherwise>
+			                      	</c:choose>
 								</tbody>
 							</table>
 							<!-- Basic Tables end -->
