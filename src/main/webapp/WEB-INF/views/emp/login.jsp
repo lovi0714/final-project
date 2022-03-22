@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath }" />
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="utf-8" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,24 +14,38 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${path}/resources/css/bootstrap.css">
-
 <link rel="stylesheet" href="${path}/resources/vendors/iconly/bold.css">
 <link rel="stylesheet" href="${path}/resources/css/pages/auth.css">
 <link rel="stylesheet" href="${path}/resources/vendors/perfect-scrollbar/perfect-scrollbar.css">
 <link rel="stylesheet" href="${path}/resources/vendors/bootstrap-icons/bootstrap-icons.css">
 <link rel="stylesheet" href="${path}/resources/css/app.css">
 <link rel="shortcut icon" href="${path}/resources/images/favicon.svg" type="image/x-icon">
-    
+
 <title>Login</title>    
-<script type="text/javascript">
-	$(document).ready(function(){
-		
+<script>
+$(document).ready(function(){
+	$(".btn btn-primary btn-block btn-lg shadow-lg mt-5").click(function() {
+		// 태그.val() : 태그에 입력된 값
+		// 태그.val("값") : 태그의 값을 변경
+		var account = $("#account").val();
+		var password = $("#password").val();
+		if(account == "") {
+			alert("아이디를 입력해주세요.");
+			$("#account").focus(); // 입력 포커스로 이동
+			return;
+		}
+		if(password == "") {
+			alert("비밀번호를 입력해주세요.");
+			$("#password").focus(); 
+			return;
+		}	
 	});
+});
 </script>
+</head>
 
 <body>
-    <div id="auth">
-        
+    <div id="auth">   
 <div class="row h-100">
     <div class="col-lg-5 col-12">
         <div id="auth-left">
@@ -41,15 +55,15 @@
             <h1 class="auth-title">로그인</h1>
             
 
-            <form action="index.html">
+            <form id=loginForm action="${path}/emp/loginCheck.do" method="post">
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" placeholder="Username">
+                    <input type="text" class="form-control form-control-xl" name="account" id="account" placeholder="Username">
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" placeholder="Password">
+                    <input type="password" class="form-control form-control-xl" name="password" id="password" placeholder="Password">
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>

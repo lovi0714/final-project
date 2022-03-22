@@ -4,8 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param name="isDashboardSide" value="active" />
+	<jsp:param name="isDashboardList" value="active" />
+</jsp:include>
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 	    <div class="page-title">

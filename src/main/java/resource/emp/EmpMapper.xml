@@ -3,8 +3,8 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
 
- <mapper namespace="com.project.pms.user.repository.EmpDAO"> 	
- 	<resultMap type="emp" id="emptMap">
+ <mapper namespace="com.project.pms.emp.repository.EmpDAO"> 	
+ 	<resultMap type="emp" id="empMap">
  		<result column="emp_id" property="empId"/>
  		<result column="dept_id" property="deptId"/>
  		<result column="auth_id" property="authId"/>
@@ -20,7 +20,7 @@
  		<result column="create_at" property="createAt"/>
  		<result column="update_at" property="updateAt"/>
  	</resultMap>
- 	 
+ 	<!-- 
  	<resultMap type="dept" id="deptMap">
  		<result column="dept_id" property="deptId"/>
  		<result column="dept_name" property="deptName"/>
@@ -35,15 +35,21 @@
  		<result column="pos_id" property="posId"/>
  		<result column="pos_name" property="posName"/>
 	</resultMap>
+
+	-->
+	<!-- 로그인 체크 -->
+	<select id="loginCheck" resultMap="empMap" parameterType="emp">
+		SELECT *
+		FROM TBL_EMP
+		WHERE account = #{account}
+	</select>	
 	
 	<!-- 직원정보조회 -->
 	<select id="empInfo" resultMap="empMap">
 		SELECT *
 		FROM TBL_EMP
-		WHERE account = #{account}
+		WHERE account = #{account} AND password = #{password}
 	</select>
 	
 	
- 	 
- 	
  </mapper>

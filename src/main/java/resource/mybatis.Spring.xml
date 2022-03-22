@@ -13,6 +13,7 @@
 		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
 		<typeAlias alias="notice" type="com.project.pms.community.vo.Notice"/>
 		<typeAlias alias="noticeFile" type="com.project.pms.community.vo.NoticeFile"/>
+		<typeAlias alias="emp" type="com.project.pms.emp.vo.Emp"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="resource/dashboard/DashboardMapper.xml"/>
@@ -21,5 +22,6 @@
 		<mapper resource="resource/myTask/MyApprovalMapper.xml"/>
 		<mapper resource="resource/myTask/CalendarMapper.xml"/>
 		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
+		<mapper resource="resource/emp/EmpMapper.xml"/>
 	</mappers>
 </configuration>
