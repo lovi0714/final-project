@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.project.pms.project.repository.ProjectDAO">
+	<resultMap type="project" id="projectMap">
+		<result column="prj_id" property="projectId"/>
+		<result column="prj_status_id" property="statusId"/>
+		<result column="prj_type_id" property="typeId"/>
+		<result column="rd_type_id" property="rndTypeId"/>
+		<result column="name" property="title"/>
+		<result column="content" property="content"/>
+		<result column="pm_id" property="pmId"/>
+		<result column="start_at" property="startAt"/>
+		<result column="end_at" property="endAt"/>
+		<result column="create_at" property="createdAt"/>
+		<result column="update_at" property="updatedAt"/>
+	</resultMap>
+	
+	<resultMap type="rndType" id="rndTypeMap">
+		<result column="rd_type_id" property="rndId"/>
+		<result column="rd_type" property="rndType"/>
+	</resultMap>
+	
+	<resultMap type="projectType" id="projectTypeMap">
+		<result column="prj_type_id" property="projectTypeId"/>
+		<result column="prj_type" property="projectType"/>
+	</resultMap>
+	
+	<resultMap type="pm" id="pmListMap">
+		<result column="emp_id" property="pmId"/>
+		<result column="name" property="pmName"/>
+	</resultMap>
+	
+	<resultMap type="deptType" id="deptTypeMap">
+		<result column="dept_id" property="deptId"/>
+		<result column="dept_name" property="deptName"/>
+	</resultMap>
+	
+	<select id="getList" resultMap="projectMap">
+		SELECT *
+		FROM TBL_PROJECT
+	</select>
+	
+	<insert id="insertProject" parameterType="project" >
+		INSERT INTO TBL_PROJECT(prj_status_id, prj_type_id, rd_type_id, name, content, pm_id, start_at, end_at, create_at, update_at)
+		VALUES (#{statusId}, #{typeId}, #{rndTypeId}, #{title}, #{content}, #{pmId}, #{startAt}, #{endAt}, sysdate, sysdate)
+	</insert>
+	
+	<select id="getProjectById" resultMap="projectMap" parameterType="int">
+		SELECT *
+		FROM TBL_PROJECT
+		WHERE prj_id = #{id}
+	</select>
+	
+	<select id="getRndType" resultMap="rndTypeMap">
+		SELECT *
+		FROM TBL_RND_TYPE
+		ORDER BY rd_type_id asc
+	</select>
+	
+	<select id="getProjectType" resultMap="projectTypeMap">
+		SELECT *
+		FROM TBL_PRJ_TYPE
+		ORDER BY prj_type_id asc
+	</select>
+	
+	<select id="getDeptType" resultMap="deptTypeMap">
+		SELECT *
+		FROM TBL_DEPT
+	</select>
+	
+	<select id="getPmByDeptId" resultMap="pmListMap" parameterType="int">
+		SELECT emp_id, name
+		FROM TBL_EMP
+		WHERE dept_Id = #{deptId}
+	</select>
+	
+	<select id="getPmoByDeptId" resultMap="pmListMap" parameterType="int">
+		SELECT emp_id, name
+		FROM TBL_EMP
+		WHERE dept_Id = #{deptId}
+	</select>
+</mapper>

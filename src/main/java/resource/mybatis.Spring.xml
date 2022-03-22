@@ -10,18 +10,28 @@
 		<typeAlias alias="myTask" type="com.project.pms.myTask.vo.MyTask"/>
 		<typeAlias alias="myApproval" type="com.project.pms.myTask.vo.MyApproval"/>
 		<typeAlias alias="calendar" type="com.project.pms.myTask.vo.Calendar"/>
+		<typeAlias alias="rndType" type="com.project.pms.project.vo.RndType"/>
+		<typeAlias alias="pm" type="com.project.pms.project.vo.Pm"/>
+		<typeAlias alias="deptType" type="com.project.pms.project.vo.DeptType"/>
+		<typeAlias alias="projectType" type="com.project.pms.project.vo.ProjectType"/>
 		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
 		<typeAlias alias="notice" type="com.project.pms.community.vo.Notice"/>
 		<typeAlias alias="noticeFile" type="com.project.pms.community.vo.NoticeFile"/>
 		<typeAlias alias="emp" type="com.project.pms.emp.vo.Emp"/>
 	</typeAliases>
+	
+	<typeHandlers>
+        <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" javaType="java.time.LocalDate"/>
+    </typeHandlers>
+    
 	<mappers>
 		<mapper resource="resource/dashboard/DashboardMapper.xml"/>
-		<mapper resource="resource/ProjectMapper.xml"/>
 		<mapper resource="resource/myTask/MyTaskMapper.xml"/>
 		<mapper resource="resource/myTask/MyApprovalMapper.xml"/>
 		<mapper resource="resource/myTask/CalendarMapper.xml"/>
+		<mapper resource="resource/project/ProjectMapper.xml"/>
 		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
 		<mapper resource="resource/emp/EmpMapper.xml"/>
 	</mappers>
+	
 </configuration>
