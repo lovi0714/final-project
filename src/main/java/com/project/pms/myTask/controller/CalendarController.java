@@ -1,4 +1,4 @@
-package com.project.pms.task.controller;
+package com.project.pms.myTask.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.project.pms.task.service.CalendarService;
-import com.project.pms.task.vo.Calendar;
+import com.project.pms.myTask.service.CalendarService;
+import com.project.pms.myTask.vo.Calendar;
 
 @Controller
 @RequestMapping("/task/*")

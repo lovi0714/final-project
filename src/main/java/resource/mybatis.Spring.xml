@@ -3,13 +3,20 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias alias="dashboardNotice" type="com.project.pms.dashboard.vo.DashboardNotice"/>
+		<typeAlias alias="dashboardProject" type="com.project.pms.dashboard.vo.DashboardProject"/>
+		<typeAlias alias="dashboardRisk" type="com.project.pms.dashboard.vo.DashboardRisk"/>
 		<typeAlias alias="project" type="com.project.pms.project.vo.Project"/>
-		<typeAlias alias="calendar" type="com.project.pms.task.vo.Calendar"/>
+		<typeAlias alias="myTask" type="com.project.pms.myTask.vo.MyTask"/>
+		<typeAlias alias="calendar" type="com.project.pms.myTask.vo.Calendar"/>
 		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
+		<typeAlias alias="notice" type="com.project.pms.community.vo.Notice"/>
+		<typeAlias alias="noticeFile" type="com.project.pms.community.vo.NoticeFile"/>
 	</typeAliases>
 	<mappers>
+		<mapper resource="resource/dashboard/DashboardMapper.xml"/>
 		<mapper resource="resource/ProjectMapper.xml"/>
-		<mapper resource="resource/CalendarMapper.xml"/>
+		<mapper resource="resource/myTask/CalendarMapper.xml"/>
 		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
 	</mappers>
 </configuration>

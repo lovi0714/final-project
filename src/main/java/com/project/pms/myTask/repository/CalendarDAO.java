@@ -1,10 +1,10 @@
-package com.project.pms.task.repository;
+package com.project.pms.myTask.repository;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.project.pms.task.vo.Calendar;
+import com.project.pms.myTask.vo.Calendar;
 
 @Repository
 public interface CalendarDAO {

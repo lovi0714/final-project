@@ -1,5 +1,5 @@
 package com.project.pms.dashboard.vo;
 
-public class DashboardVO {
+public class DashboardRisk {
 
 }

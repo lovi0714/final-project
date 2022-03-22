@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="com.project.pms.dashboard.repository.DashboardDAO">
+	<resultMap type="dashboardNotice" id="dashboardNoticeMap">
+		<result column="title" property="title"/>
+		<result column="writer" property="writer"/>
+		<result column="create_at" property="createAt"/>
+	</resultMap>
+	
+	<resultMap type="dashboardProject" id="dashboardProjectMap">
+		<result column="prj_id" property="projectId"/>
+		<result column="pname" property="title"/>
+		<result column="dept_name" property="pmDeptName"/>
+		<result column="name" property="pmName"/>
+		<result column="prj_status" property="status"/>
+		<result column="start_at" property="startAt"/>
+		<result column="end_at" property="endAt"/>
+	</resultMap>
+	
+	<!-- ***종합 대시보드*** -->
+	<!-- 공지사항: 최신 등록 공지사항 5개 조회 --> 
+	<select id="getNoticeList" resultMap="dashboardNoticeMap">
+		SELECT title, writer, create_at
+		FROM TBL_NOTICE
+		WHERE <![CDATA[rownum<=5]]>
+		ORDER BY create_at DESC
+	</select>
+	
+	<!-- 프로젝트 현황: 최근 등록 프로젝트 10개 조회 -->
+	<select id="getProjectList" resultMap="dashboardProjectMap">
+		SELECT tp.prj_id,
+		      	tp.name AS pname,
+		      	td.dept_name,
+		      	te.name,
+		      	tps.prj_status, 
+		     	tp.start_at, 
+		     	tp.end_at
+		FROM TBL_PROJECT tp,
+		      TBL_RESOURCE tr,
+		      TBL_EMP te,
+		      TBL_DEPT td,
+		      TBL_PRJ_STATUS tps 
+		WHERE tp.prj_id = tr.prj_id AND
+				tr.emp_id = te.emp_id AND
+				te.dept_id = td.dept_id AND
+				tp.prj_status_id = tps.prj_status_id AND
+				tp.pm_id = tr.emp_id AND
+				<![CDATA[rownum<=10]]>
+		ORDER BY tp.create_at DESC
+	</select>
+	
+	<!-- 월별 프로젝트 -->
+	
+	<!-- 리스크 현황 -->
+	
+	<!-- ***개인 대시보드*** -->
+	<!-- 참여 프로젝트 -->
+	<select id="getMyProjectList" resultMap="dashboardProjectMap" parameterType="int">
+		SELECT tp.prj_id,
+		      tp.name AS pname,
+		      td.dept_name,
+		      te.name,
+		      tps.prj_status, 
+		      tp.start_at, 
+		      tp.end_at
+		FROM TBL_PROJECT tp,
+		      TBL_RESOURCE tr,
+		      TBL_EMP te,
+		      TBL_DEPT td,
+		      TBL_PRJ_STATUS tps 
+		WHERE tp.prj_id = tr.prj_id AND
+		      tr.emp_id = te.emp_id AND
+		      te.dept_id = td.dept_id AND
+		      tp.prj_status_id = tps.prj_status_id AND
+		      tp.pm_id = tr.emp_id AND 
+		      tp.PRJ_ID IN (SELECT tr.prj_id FROM tbl_emp te, tbl_resource tr WHERE te.emp_id = tr.emp_id AND tr.emp_id = #{empId}) AND
+		      <![CDATA[rownum<=10]]>
+		ORDER BY tp.create_at DESC
+	</select>
+	
+	<!-- 작업 진행상태 -->
+	
+	<!-- 리스크 현황 -->
+
+</mapper>

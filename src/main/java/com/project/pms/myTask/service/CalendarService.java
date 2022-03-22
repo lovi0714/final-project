@@ -1,12 +1,12 @@
-package com.project.pms.task.service;
+package com.project.pms.myTask.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.pms.task.repository.CalendarDAO;
-import com.project.pms.task.vo.Calendar;
+import com.project.pms.myTask.repository.CalendarDAO;
+import com.project.pms.myTask.vo.Calendar;
 
 @Service
 public class CalendarService {

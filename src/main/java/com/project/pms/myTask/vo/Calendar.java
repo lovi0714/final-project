@@ -1,4 +1,4 @@
-package com.project.pms.task.vo;
+package com.project.pms.myTask.vo;
 
 public class Calendar {
 	private int id;

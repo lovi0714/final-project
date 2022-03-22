@@ -42,17 +42,26 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="i" begin="1" end="10" step="1">
-							<tr>
-								<td>프로젝트코드${i}</td>
-								<td>프로젝트명${i}</td>
-								<td>부서${i}</td>
-								<td>PM${i}</td>
-								<td><span class="badge bg-success">상태${i}</span></td>
-								<td>시작일${i}</td>
-								<td>완료일${i}</td>
-							</tr>
-							</c:forEach>
+							<c:choose>
+	                      		<c:when test="${MyProjectList.size() > 0}">
+	                      			<c:forEach var="project" items="${MyProjectList}">
+										<tr>
+				                            <td>${project.projectId}</td>
+				                            <td>${project.title}</td>
+				                            <td>${project.pmDeptName}</td>
+				                            <td>${project.pmName}</td>
+				                            <td>${project.status}</td>
+				                            <td><fmt:formatDate value="${project.startAt}" pattern="yyyy-MM-dd"/></td>
+				                            <td><fmt:formatDate value="${project.endAt}" pattern="yyyy-MM-dd"/></td>
+		                        		</tr>
+	                       			</c:forEach>
+	                      		</c:when>
+	                      		<c:otherwise>
+	                      			<tr>
+	                      				<td colspan="6" style="text-align: center;"><h6>등록된 프로젝트가 없습니다.</h6></td>
+	                      			</tr>
+	                      		</c:otherwise>
+	                      	</c:choose>
 						</tbody>
 					</table>
 				</div>

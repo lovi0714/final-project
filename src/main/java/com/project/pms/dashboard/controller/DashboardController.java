@@ -1,28 +1,38 @@
 package com.project.pms.dashboard.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.project.pms.dashboard.service.DashboardService;
 
 @Controller
 @RequestMapping("/dashboard/*")
 public class DashboardController {
 
-	// Á¾ÇÕ ´ë½Ãº¸µå
+	@Autowired
+	private DashboardService service;
+	
+	// ì¢…í•© ëŒ€ì‹œë³´ë“œ
 	@GetMapping("/general.do")
-	public String getDashboardGeneral() {
-		System.out.println("getDashboardGeneral getController called...");
+	public String getDashboardGeneral(Model d) {
+		System.out.println("getDashboardGeneral controller called...");
+		d.addAttribute("NoticeList", service.getNoticeList());
+		d.addAttribute("ProjectList", service.getProjectList());
 		
 		return "dashboard/general";
 	}
 	
-	// °³ÀÎ ´ë½Ãº¸µå 
+	
+	// ê°œì¸ ëŒ€ì‹œë³´ë“œ
 	@GetMapping("/personal.do")
-	public String getDashboardPersonal() {
-		System.out.println("getDashboardPersonal getController called...");
+	public String getDashboardPersonal(Model d) {
+		System.out.println("getDashboardPersonal controller called...");
+		int empId = 1;
+		d.addAttribute("MyProjectList", service.getMyProjectList(empId));
 		
 		return "dashboard/personal";
 	}
-	
-	
 }

@@ -1,4 +1,4 @@
-package com.project.pms.task.controller;
+package com.project.pms.myTask.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
