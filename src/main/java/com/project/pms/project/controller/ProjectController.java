@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.pms.project.service.ProjectService;
 import com.project.pms.project.vo.Project;
+import com.project.pms.resource.service.ResourceService;
 
 @Controller
 @RequestMapping("/project/*")
@@ -25,6 +26,9 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService service;
+	
+	@Autowired
+	private ResourceService resourceService;
 	
 	@GetMapping("/list.do")
 	public String getList(Model model) {
@@ -68,6 +72,11 @@ public class ProjectController {
 		return "project/approvalList";
 	}
 	
-	
+	@GetMapping("/resource.do")
+	public String getResource(@RequestParam("projectId") String projectId, Model m) {
+		
+		m.addAttribute("projectMember", resourceService.getResourceList(projectId));
+		return "project/resource";
+	}
 	
 }

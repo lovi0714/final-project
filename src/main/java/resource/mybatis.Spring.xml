@@ -21,6 +21,7 @@
 		<typeAlias alias="notice" type="com.project.pms.community.vo.Notice"/>
 		<typeAlias alias="noticeFile" type="com.project.pms.community.vo.NoticeFile"/>
 		<typeAlias alias="emp" type="com.project.pms.emp.vo.Emp"/>
+		<typeAlias alias="resource" type="com.project.pms.resource.vo.Resource"/>
 	</typeAliases>
 	
 	<typeHandlers>
@@ -33,6 +34,7 @@
 		<mapper resource="resource/myTask/MyApprovalMapper.xml"/>
 		<mapper resource="resource/myTask/CalendarMapper.xml"/>
 		<mapper resource="resource/project/ProjectMapper.xml"/>
+		<mapper resource="resource/resource/ResourceMapper.xml"/>
 		<mapper resource="resource/risk/RiskMapper.xml"/>
 		<mapper resource="resource/emp/EmpMapper.xml"/>
 	</mappers>

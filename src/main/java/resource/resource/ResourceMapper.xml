@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.project.pms.resource.repository.ResourceDAO">
+	<resultMap type="resource" id="resourceMap">
+		<result column="res_id" property="resourceId"/>
+		<result column="prj_id" property="projectId"/>
+		<result column="emp_id" property="empId"/>
+		<result column="name" property="empName"/>
+		<result column="pos_id" property="positionId"/>
+		<result column="pos_name" property="position"/>
+	</resultMap>
+	
+	<select id="getResourceList" resultMap="resourceMap" parameterType="string">
+	SELECT tr.*, te.NAME, tp.POS_ID, tp.POS_NAME 
+	FROM TBL_RESOURCE tr, TBL_EMP te, TBL_POS tp
+	WHERE tr.EMP_ID = te.EMP_ID 
+	AND te.POS_ID = tp.POS_ID 
+	AND PRJ_ID = #{projectId}
+	</select>
+</mapper>
