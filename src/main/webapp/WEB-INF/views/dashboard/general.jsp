@@ -158,7 +158,7 @@
 					<div class="card">
 						<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
 							<p class="fw-bold">리스크 현황</p>
-							<select class="form-select" style="width: 150px;">
+							<select class="form-select" id="riskChart" style="width: 150px;">
 								<option value="1">상태별</option>
 								<option value="2">유형별</option>
 							</select>
@@ -324,6 +324,7 @@
 			}
 		}
 	});
+	
 </script>
 										
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

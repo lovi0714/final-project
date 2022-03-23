@@ -169,13 +169,15 @@
 						<div class="col-md-6 col-12">
 							<div class="form-group">
 								<label for="start" class="form-label">시작일</label> 
-								<input type="text" id="start" class="form-control">
+								<input type="datetime-local" id="start1" class="form-control">
+								<input type="date" id="start2" class="form-control">
 							</div>
 						</div>
 						<div class="col-md-6 col-12">
 							<div class="form-group">
 								<label for="end" class="form-label">종료일</label> 
-								<input type="text" id="end" class="form-control">
+								<input type="datetime-local" id="end1" class="form-control">
+								<input type="date" id="end2" class="form-control">
 							</div>
 						</div>
 						<div class="col-12">

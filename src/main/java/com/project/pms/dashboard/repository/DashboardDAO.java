@@ -28,6 +28,9 @@ public interface DashboardDAO {
 	// 작업 진행상태
 	public List<DashboardChart> getMyTaskStatusChart(int empId);
 	
-	// 리스크 현황
-	public List<DashboardChart> getMyRiskStatusChart(int empId);
+	// 리스크 현황: 상태별
+	public List<DashboardChart> getMyRiskStatusChart1(int empId);
+	
+	// 리스크 현황: 유형별
+	public List<DashboardChart> getMyRiskStatusChart2(int empId);
 }

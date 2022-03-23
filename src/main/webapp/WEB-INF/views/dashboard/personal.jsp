@@ -101,7 +101,7 @@
 					<div class="card">
 						<div class="card-header" style="display: flex; justify-content: space-between;">
 							<p class="fw-bold">리스크 현황</p>
-							<select class="form-select" style="width: 150px;">
+							<select class="form-select" id="riskChart" style="width: 150px;">
 								<option value="1">상태별</option>
 								<option value="2">유형별</option>
 							</select>
@@ -111,8 +111,11 @@
 								<form class="form form-horizontal">
 									<div class="form-body">
 										<div class="row"></div>
-										<div style="height: 300px">
+										<div id="chart1" style="height: 300px">
 											<canvas id="douChart4"></canvas>
+										</div>
+										<div id="chart2" style="display: none; height: 300px">
+											<canvas id="douChart5"></canvas>
 										</div>
 									</div>
 								</form>
@@ -141,15 +144,35 @@
 		"order": [5, 'desc'],
 		"language": {
 	        "zeroRecords": "참여중인 프로젝트가 없습니다."
-	    },
-	
+	    }
 	});
-
+</script>
+<script>
+	$(document).ready(function(){
+		$("#chart2").hide()
+		$("#douChart5").hide()
+		
+		$("#riskChart").change(function(){
+		    if($(this).val() == 1) {
+		    	$("#chart1").show()
+		    	$("#chart2").hide()
+		    	$("#douChart4").show()
+		    	$("#douChart5").hide()
+		    	
+		    } else if ($(this).val() == 2) {
+		    	$("#chart1").hide()
+		    	$("#chart2").show()
+		    	$("#douChart4").hide()
+		    	$("#douChart5").show()   
+		    }   
+		 });
+	});
+	
 	// 작업 진행상태
 	var statusList = [];
 	var countList = [];
 	
-	<c:forEach var="task" items="${TaskStatusChart}" >		
+	<c:forEach var="task" items="${MyTaskStatusChart}" >		
 		statusList.push('${task.status}');
 		countList.push(${task.count});
 	</c:forEach>
@@ -183,11 +206,11 @@
 		}
 	});
 
-	// 리스크 현황
+	// 리스크 현황: 상태별
 	var statusList2 = [];
 	var countList2 = [];
 	
-	<c:forEach var="risk" items="${MyRiskStatusChart}" >		
+	<c:forEach var="risk" items="${MyRiskStatusChart1}" >		
 		statusList2.push('${risk.status}');
 		countList2.push(${risk.count});
 	</c:forEach>
@@ -220,6 +243,44 @@
 			}
 		}
 	});
+	
+	// 리스크 현황: 유형별
+	var statusList3 = [];
+	var countList3 = [];
+	
+	<c:forEach var="risk" items="${MyRiskStatusChart2}" >		
+		statusList3.push('${risk.status}');
+		countList3.push(${risk.count});
+	</c:forEach>
+
+	const ctx5 = document.getElementById('douChart5');
+	const douChart5 = new Chart(ctx5, {
+		type : 'doughnut',
+		data : {
+			labels : statusList3,
+			datasets : [ {
+				label : 'My First Dataset',
+				data : countList3,
+				backgroundColor : [
+					'rgba(54, 162, 235, 0.5)',
+					'rgba(153, 102, 255, 0.5)',
+					'rgba(255, 99, 132, 0.5)',
+					'rgba(255, 206, 86, 0.5)',
+					'rgba(75, 192, 192, 0.5)'
+				],
+				hoverOffset : 4
+			} ],
+		},
+		options : {
+			responsive : true,
+			maintainAspectRatio : false,
+			plugins : {
+				legend : {
+					position : 'bottom'
+				}
+			}
+		}
+	});	
 </script>
 	
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

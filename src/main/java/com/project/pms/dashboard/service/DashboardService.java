@@ -48,9 +48,15 @@ public class DashboardService {
 		return dao.getMyTaskStatusChart(empId);
 	}
 	
-	// 리스크 현황
-	public List<DashboardChart> getMyRiskStatusChart(int empId) {
+	// 리스크 현황: 상태별
+	public List<DashboardChart> getMyRiskStatusChart1(int empId) {
 			
-		return dao.getMyRiskStatusChart(empId);
+		return dao.getMyRiskStatusChart1(empId);
+	}
+	
+	// 리스크 현황: 유형별
+	public List<DashboardChart> getMyRiskStatusChart2(int empId) {
+			
+		return dao.getMyRiskStatusChart2(empId);
 	}
 }

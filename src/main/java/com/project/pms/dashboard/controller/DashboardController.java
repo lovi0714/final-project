@@ -34,8 +34,9 @@ public class DashboardController {
 		int empId = 3; // 세션 처리 예정
 		
 		d.addAttribute("MyProjectList", service.getMyProjectList(empId));
-		d.addAttribute("TaskStatusChart", service.getMyTaskStatusChart(empId));
-		d.addAttribute("MyRiskStatusChart", service.getMyRiskStatusChart(empId));
+		d.addAttribute("MyTaskStatusChart", service.getMyTaskStatusChart(empId));
+		d.addAttribute("MyRiskStatusChart1", service.getMyRiskStatusChart1(empId));
+		d.addAttribute("MyRiskStatusChart2", service.getMyRiskStatusChart2(empId));
 		
 		return "dashboard/personal";
 	}

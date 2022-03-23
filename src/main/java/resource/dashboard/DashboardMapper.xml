@@ -104,7 +104,7 @@
 	</select>
 	
 	<!-- 리스크 현황: 상태별 -->
-	<select id="getMyRiskStatusChart" resultMap="dashboardChartMap" parameterType="int">
+	<select id="getMyRiskStatusChart1" resultMap="dashboardChartMap" parameterType="int">
 		SELECT r_status AS status, count(*) AS count
 		FROM (SELECT r_status
 				FROM TBL_RISK tr, TBL_PROJECT tp, TBL_RESOURCE tr2, TBL_R_STATUS trs 
@@ -113,5 +113,17 @@
 						tr.r_status_id = trs.r_status_id AND
 						tr2.emp_id = #{empId})
 		GROUP BY r_status
+	</select>
+	
+	<!-- 리스크 현황: 유형별 -->
+	<select id="getMyRiskStatusChart2" resultMap="dashboardChartMap" parameterType="int">
+		SELECT r_type_name AS status, count(*) AS count
+		FROM (SELECT r_type_name
+				FROM TBL_RISK tr, TBL_PROJECT tp, TBL_RESOURCE tr2, TBL_R_TYPE rt 
+				WHERE tr.prj_id = tp.prj_id AND 
+						tr2.prj_id = tp.prj_id AND
+						tr.r_type_id = rt.r_type_id AND
+						tr2.emp_id = #{empId})
+		GROUP BY r_type_name
 	</select>
 </mapper>
