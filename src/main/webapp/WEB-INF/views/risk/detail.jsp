@@ -86,8 +86,9 @@
 					                    </fieldset>
 					                </div>
                                     <div class="col-12 d-flex justify-content-end">
-                                    
+                                    <c:if test="${detail.rStatus!='조치완료'}">
                                         <button type="button" class="btn btn-primary me-1 mb-1" onclick="location='modify.do?riskId='+${detail.riskId}">수정</button>
+                                    </c:if>
                                         <button type="button" class="btn btn-danger me-1 mb-1" onclick="location='delete.do?riskId='+${detail.riskId}">삭제</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
                                     </div>
@@ -100,4 +101,4 @@
         </div>
     </section>
                 </div>
-                <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
