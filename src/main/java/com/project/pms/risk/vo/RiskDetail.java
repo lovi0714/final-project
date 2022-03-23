@@ -11,14 +11,14 @@ public class RiskDetail {
 	private String rContent;
 	private String activator;
 	private Date dueAt;
-	private Date aContent;
+	private String aContent;
 	private String rStatus;
 	public RiskDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public RiskDetail(int riskId, String title, String rType, String pName, String tName, String rContent,
-			String activator, Date dueAt, Date aContent, String rStatus) {
+			String activator, Date dueAt, String aContent, String rStatus) {
 		super();
 		this.riskId = riskId;
 		this.title = title;
@@ -79,10 +79,10 @@ public class RiskDetail {
 	public void setDueAt(Date dueAt) {
 		this.dueAt = dueAt;
 	}
-	public Date getaContent() {
+	public String getaContent() {
 		return aContent;
 	}
-	public void setaContent(Date aContent) {
+	public void setaContent(String aContent) {
 		this.aContent = aContent;
 	}
 	public String getrStatus() {
