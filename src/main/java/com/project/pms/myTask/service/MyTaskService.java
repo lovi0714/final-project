@@ -14,9 +14,15 @@ public class MyTaskService {
 	@Autowired
 	private MyTaskDAO dao;
 
-	// 내 작업 조회
+	// 작업 목록
 	public List<MyTask> getMyTaskList(int empId) {
 		
 		return dao.getMyTaskList(empId);
+	}
+	
+	// 작업정보 조회
+	public MyTask getMyTaskDetail(int taskId) {
+		
+		return dao.getMyTaskDetail(taskId); 
 	}
 }

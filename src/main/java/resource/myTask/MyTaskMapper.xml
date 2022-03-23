@@ -5,6 +5,7 @@
 
 <mapper namespace="com.project.pms.myTask.repository.MyTaskDAO">
 	<resultMap type="myTask" id="myTaskMap">
+		<result column="task_id" property="taskId"/>
 		<result column="task_name" property="taskName"/>
 		<result column="prj_name" property="title"/>
 		<result column="pm_name" property="pmName"/>
@@ -12,11 +13,13 @@
 		<result column="start_at" property="startAt"/>
 		<result column="end_at" property="endAt"/>
 		<result column="progress" property="progress"/>
+		<result column="content" property="content"/>
 	</resultMap>
 		
 	<!-- 작업 목록 -->
 	<select id="getMyTaskList" resultMap="myTaskMap" parameterType="int">
-		SELECT tt.task_name,
+		SELECT tt.task_id,
+				tt.task_name,
 				tp.name AS prj_name,
 				(SELECT name FROM TBL_EMP WHERE emp_id = tp.pm_id) AS pm_name,			
 				tts.t_status,
@@ -28,11 +31,30 @@
 			TBL_TASK tt,
 			TBL_PROJECT tp,
 			TBL_T_STATUS tts
-		WHERE te.EMP_ID = tr.EMP_ID AND 
+		WHERE te.emp_id = tr.emp_id AND 
 				tr.res_id = tt.res_id AND 
-				tt.prj_id = tp.PRJ_ID AND
+				tt.prj_id = tp.prj_id AND
 				tt.t_status_id = tts.t_status_id AND
-				tt.IS_APPROVAL = 0 AND 
+				tt.is_approval = 0 AND 
 				te.emp_id = #{empId}
 	</select>		
+	
+	<!-- 작업정보 조회 -->
+	<select id="getMyTaskDetail" resultMap="myTaskMap" parameterType="int">
+		SELECT tt.task_name,
+				tp.name AS prj_name,
+				tt.start_at,
+				tt.end_at,
+				tt.progress, 	
+				(SELECT name FROM TBL_EMP WHERE emp_id = tp.pm_id) AS pm_name,			
+				tt.content
+		FROM TBL_EMP te,
+			TBL_RESOURCE tr,
+			TBL_TASK tt,
+			TBL_PROJECT tp
+		WHERE  te.emp_id = tr.emp_id AND 
+				tr.res_id = tt.res_id AND 
+				tt.prj_id = tp.prj_id AND
+				tt.task_id = #{taskId} 
+	</select>
 </mapper>

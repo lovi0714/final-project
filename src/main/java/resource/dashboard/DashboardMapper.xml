@@ -20,6 +20,11 @@
 		<result column="end_at" property="endAt"/>
 	</resultMap>
 	
+	<resultMap type="dashboardChart" id="dashboardChartMap">
+		<result column="status" property="status"/>
+		<result column="count" property="count"/>
+	</resultMap>
+	
 	<!-- ***종합 대시보드*** -->
 	<!-- 공지사항: 최신 등록 공지사항 5개 조회 --> 
 	<select id="getNoticeList" resultMap="dashboardNoticeMap">
@@ -54,7 +59,14 @@
 	
 	<!-- 월별 프로젝트 -->
 	
-	<!-- 리스크 현황 -->
+	<!-- 리스크 현황: 상태별 -->
+	<select id="getRiskStatusChart" resultMap="dashboardChartMap">
+		SELECT r_status AS status, count(*) AS count 
+		FROM (SELECT tr.r_status_id AS status_count, trs.R_STATUS 
+				FROM TBL_R_STATUS trs,TBL_RISK tr 
+				WHERE tr.R_STATUS_ID = trs.R_STATUS_ID) 
+		GROUP BY r_status
+	</select>
 	
 	<!-- ***개인 대시보드*** -->
 	<!-- 참여 프로젝트 -->
@@ -82,7 +94,24 @@
 	</select>
 	
 	<!-- 작업 진행상태 -->
+	<select id="getMyTaskStatusChart" resultMap="dashboardChartMap" parameterType="int">		
+		SELECT t_status AS status, count(*) AS count
+		FROM (SELECT tt.t_status_id
+				FROM TBL_RESOURCE tr, TBL_TASK tt 
+				WHERE tr.res_id = tt.res_id AND emp_id = #{empId}) tr, tbl_t_status tts
+		WHERE tr.t_status_id = tts.t_status_id
+		GROUP BY t_status
+	</select>
 	
-	<!-- 리스크 현황 -->
-
+	<!-- 리스크 현황: 상태별 -->
+	<select id="getMyRiskStatusChart" resultMap="dashboardChartMap" parameterType="int">
+		SELECT r_status AS status, count(*) AS count
+		FROM (SELECT r_status
+				FROM TBL_RISK tr, TBL_PROJECT tp, TBL_RESOURCE tr2, TBL_R_STATUS trs 
+				WHERE tr.prj_id = tp.prj_id AND 
+						tr2.prj_id = tp.prj_id AND
+						tr.r_status_id = trs.r_status_id AND
+						tr2.emp_id = #{empId})
+		GROUP BY r_status
+	</select>
 </mapper>

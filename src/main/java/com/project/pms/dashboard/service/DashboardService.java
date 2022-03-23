@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.pms.dashboard.repository.DashboardDAO;
 import com.project.pms.dashboard.vo.DashboardNotice;
 import com.project.pms.dashboard.vo.DashboardProject;
+import com.project.pms.dashboard.vo.DashboardChart;
 
 @Service
 public class DashboardService {
@@ -28,10 +29,28 @@ public class DashboardService {
 		return dao.getProjectList();
 	}
 	
+	// 리스크 현황
+	public List<DashboardChart> getRiskStatusChart() {
+		
+		return dao.getRiskStatusChart();
+	}
+	
 	// *** 개인 대시보드 ***
 	// 참여 프로젝트 
 	public List<DashboardProject> getMyProjectList(int empId) {
 		
 		return dao.getMyProjectList(empId);
 	}	
+	
+	// 작업 진행상태
+	public List<DashboardChart> getMyTaskStatusChart(int empId) {
+		
+		return dao.getMyTaskStatusChart(empId);
+	}
+	
+	// 리스크 현황
+	public List<DashboardChart> getMyRiskStatusChart(int empId) {
+			
+		return dao.getMyRiskStatusChart(empId);
+	}
 }

@@ -125,7 +125,7 @@
 											<td>
 												<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
 											</td>
-				                            <td>${mytask.taskName}</td>
+				                            <td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">${mytask.taskName}</a></td>
 				                            <td>${mytask.title}</td>
 				                            <td>${mytask.pmName}</td>
 				                            <c:choose>
@@ -261,7 +261,7 @@
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">작업</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="시장 환경 조사" name="fname-column" readonly>
+                                                value="작업명" name="fname-column" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
@@ -403,6 +403,7 @@
 	</div>
 
 	<!-- 승인요청 modal -->
+	
 	<div class="modal fade text-left" id="primary2" tabindex="-1"
 		role="dialog" data-bs-backdrop="static"
 		aria-labelledby="myModalLabel160" aria-hidden="true">

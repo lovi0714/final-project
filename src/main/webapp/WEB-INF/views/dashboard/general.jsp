@@ -148,76 +148,6 @@
 										<div style="height: 300px">
 											<canvas id="myChart" width="200px" height="200px"></canvas>
 										</div>
-										<script>
-											const ctx = document
-													.getElementById('myChart');
-											const myChart = new Chart(
-													ctx,
-													{
-														type : 'bar',
-														data : {
-															labels : [ 'Red',
-																	'Blue',
-																	'Yellow',
-																	'Green',
-																	'Purple',
-																	'Orange',
-																	'Red', 'Blue',
-																	'Yellow',
-																	'Green',
-																	'Purple',
-																	'Orange' ],
-															datasets : [ {
-																label : '# of Votes',
-																data : [ 12, 19, 3,
-																		5, 2, 3,
-																		12, 19, 3,
-																		5, 2, 3 ],
-																backgroundColor : [
-																		'rgba(255, 99, 132, 0.2)',
-																		'rgba(54, 162, 235, 0.2)',
-																		'rgba(255, 206, 86, 0.2)',
-																		'rgba(75, 192, 192, 0.2)',
-																		'rgba(153, 102, 255, 0.2)',
-																		'rgba(255, 159, 64, 0.2)',
-																		'rgba(255, 99, 132, 0.2)',
-																		'rgba(54, 162, 235, 0.2)',
-																		'rgba(255, 206, 86, 0.2)',
-																		'rgba(75, 192, 192, 0.2)',
-																		'rgba(153, 102, 255, 0.2)',
-																		'rgba(255, 159, 64, 0.2)' ],
-																borderColor : [
-																		'rgba(255, 99, 132, 1)',
-																		'rgba(54, 162, 235, 1)',
-																		'rgba(255, 206, 86, 1)',
-																		'rgba(75, 192, 192, 1)',
-																		'rgba(153, 102, 255, 1)',
-																		'rgba(255, 159, 64, 1)',
-																		'rgba(255, 99, 132, 1)',
-																		'rgba(54, 162, 235, 1)',
-																		'rgba(255, 206, 86, 1)',
-																		'rgba(75, 192, 192, 1)',
-																		'rgba(153, 102, 255, 1)',
-																		'rgba(255, 159, 64, 1)', ],
-																borderWidth : 1
-															} ]
-														},
-														options : {
-															responsive : true,
-															maintainAspectRatio : false,
-															scales : {
-																y : {
-																	beginAtZero : true
-																}
-															},
-															plugins : {
-																legend : {
-																	position : 'bottom'
-																}
-															}
-														}
-													});
-										</script>
 									</div>
 								</form>
 							</div>
@@ -241,38 +171,6 @@
 										<div style="height: 300px">
 											<canvas id="douChart"></canvas>
 										</div>
-										<script>
-											const ctx2 = document.getElementById('douChart');
-											const douChart = new Chart(
-													ctx2,
-													{
-														type : 'doughnut',
-														data : {
-															labels : [ 'Red',
-																	'Blue',
-																	'Yellow' ],
-															datasets : [ {
-																label : 'My First Dataset',
-																data : [ 300, 50,
-																		100 ],
-																backgroundColor : [
-																		'rgb(255, 99, 132)',
-																		'rgb(54, 162, 235)',
-																		'rgb(255, 205, 86)' ],
-																hoverOffset : 4
-															} ],
-														},
-														options : {
-															responsive : true,
-															maintainAspectRatio : false,
-															plugins : {
-																legend : {
-																	position : 'bottom'
-																}
-															}
-														}
-													});
-										</script>
 									</div>
 								</form>
 							</div>
@@ -287,8 +185,9 @@
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 
+
 <script>
-	// Jquery Datatable
+	// 공지사항
 	$("#table1").DataTable({
 		"searching": false,
 		"info": false,
@@ -305,6 +204,7 @@
 		"order": [2, 'desc']
 	});
 	
+	// 프로젝트 현황
 	$("#table2").DataTable({
 		"searching": false,
 		"info": false,
@@ -318,6 +218,112 @@
 	    },
 		"order": [5, 'desc']
 	});
+	
+	// 월별 프로젝트
+										
+	const ctx = document.getElementById('myChart');
+	const myChart = new Chart(ctx, {
+		type : 'bar',
+		data : {
+			labels : [ 'Red',
+					'Blue',
+					'Yellow',
+					'Green',
+					'Purple',
+					'Orange',
+					'Red', 'Blue',
+					'Yellow',
+					'Green',
+					'Purple',
+					'Orange' ],
+			datasets : [ {
+				label : '# of Votes',
+				data : [ 12, 19, 3,
+						5, 2, 3,
+						12, 19, 3,
+						5, 2, 3 ],
+				backgroundColor : [
+						'rgba(255, 99, 132, 0.2)',
+						'rgba(54, 162, 235, 0.2)',
+						'rgba(255, 206, 86, 0.2)',
+						'rgba(75, 192, 192, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)',
+						'rgba(255, 99, 132, 0.2)',
+						'rgba(54, 162, 235, 0.2)',
+						'rgba(255, 206, 86, 0.2)',
+						'rgba(75, 192, 192, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)' ],
+				borderColor : [
+						'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 206, 86, 1)',
+						'rgba(75, 192, 192, 1)',
+						'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)',
+						'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 206, 86, 1)',
+						'rgba(75, 192, 192, 1)',
+						'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)', ],
+				borderWidth : 1
+			} ]
+		},
+		options : {
+			responsive : true,
+			maintainAspectRatio : false,
+			scales : {
+				y : {
+					beginAtZero : true
+				}
+			},
+			plugins : {
+				legend : {
+					position : 'bottom'
+				}
+			}
+		}
+	});
+										
+	// 리스크 현황
+	var statusList = [];
+	var countList = [];
+	
+	<c:forEach var="risk" items="${RiskStatusChart}" >		
+		statusList.push('${risk.status}');
+		countList.push(${risk.count});
+	</c:forEach>
+	
+	const ctx2 = document.getElementById('douChart');
+	const douChart = new Chart(ctx2, {
+		type: 'doughnut',
+		data: {
+			labels: statusList,
+			datasets: [ {
+				label: 'My First Dataset',
+				data: countList,
+				backgroundColor: [
+					'rgba(54, 162, 235, 0.5)',
+					'rgba(153, 102, 255, 0.5)',
+					'rgba(255, 99, 132, 0.5)',
+					'rgba(255, 206, 86, 0.5)',
+					'rgba(75, 192, 192, 0.5)'
+				],
+				hoverOffset: 4
+			} ],
+		},
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					position : 'bottom'
+				}
+			}
+		}
+	});
 </script>
-
+										
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

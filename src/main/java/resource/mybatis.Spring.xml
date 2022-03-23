@@ -5,7 +5,7 @@
 	<typeAliases>
 		<typeAlias alias="dashboardNotice" type="com.project.pms.dashboard.vo.DashboardNotice"/>
 		<typeAlias alias="dashboardProject" type="com.project.pms.dashboard.vo.DashboardProject"/>
-		<typeAlias alias="dashboardRisk" type="com.project.pms.dashboard.vo.DashboardRisk"/>
+		<typeAlias alias="dashboardChart" type="com.project.pms.dashboard.vo.DashboardChart"/>
 		<typeAlias alias="project" type="com.project.pms.project.vo.Project"/>
 		<typeAlias alias="myTask" type="com.project.pms.myTask.vo.MyTask"/>
 		<typeAlias alias="myApproval" type="com.project.pms.myTask.vo.MyApproval"/>

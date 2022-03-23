@@ -176,7 +176,7 @@ function MyApprovalCancel2() {
 											<td>
 												<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${wait.taskId}">
 											</td>
-											<td>${wait.taskName}</td>
+											<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">${wait.taskName}</a></td>
 											<td>${wait.pTitle}</td>
 											<td>${wait.approver}</td>
 											<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
@@ -221,7 +221,7 @@ function MyApprovalCancel2() {
 								<tbody>
 	                      			<c:forEach var="complete" items="${CompletedList}">
 										<tr>
-											<td>${complete.taskName}</td>
+											<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">${complete.taskName}</a></td>
 											<td>${complete.pTitle}</td>
 											<td>${complete.approver}</td>
 											<td><span class="badge bg-success">${complete.apStatus}</span></td>
@@ -278,7 +278,7 @@ function MyApprovalCancel2() {
 											<td>
 												<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${reject.taskId}">
 											</td>
-											<td>${reject.taskName}</td>
+											<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">${reject.taskName}</a></td>
 											<td>${reject.pTitle}</td>
 											<td>${reject.approver}</td>
 											<td><span class="badge bg-danger">${reject.apStatus}</span></td>
@@ -289,7 +289,6 @@ function MyApprovalCancel2() {
 								</tbody>
 							</table>
 							<!-- Basic Tables end -->
-	                        </div>
 						</div>
 					</div>
 				</div>

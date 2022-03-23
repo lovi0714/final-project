@@ -26,7 +26,7 @@
 			<div class="card">
 				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
 					<p class="fw-bold">참여 프로젝트</p>
-					<a href="${path}/community/task/list.do">더보기</a>
+					<a href="${path}/myTask/list.do">더보기</a>
 				</div>
 				<div class="card-body">
 					<table class="table" id="table1">
@@ -75,7 +75,7 @@
 			</div>
 		</section>
 		<!-- Basic Tables end -->
-	
+		
 		<section id="basic-horizontal-layouts">
 			<div class="row match-height">
 				<div class="col-md-6 col-12">
@@ -91,39 +91,6 @@
 										<div style="height: 300px">
 											<canvas id="douChart3"></canvas>
 										</div>
-										<script>
-											const ctx3 = document
-													.getElementById('douChart3');
-											const douChart3 = new Chart(
-													ctx3,
-													{
-														type : 'doughnut',
-														data : {
-															labels : [ 'Red',
-																	'Blue',
-																	'Yellow' ],
-															datasets : [ {
-																label : 'My First Dataset',
-																data : [ 300, 50,
-																		100 ],
-																backgroundColor : [
-																		'rgb(255, 99, 132)',
-																		'rgb(54, 162, 235)',
-																		'rgb(255, 205, 86)' ],
-																hoverOffset : 4
-															} ],
-														},
-														options : {
-															responsive : true,
-															maintainAspectRatio : false,
-															plugins : {
-																legend : {
-																	position : 'bottom'
-																}
-															}
-														}
-													});
-										</script>
 									</div>
 								</form>
 							</div>
@@ -147,39 +114,6 @@
 										<div style="height: 300px">
 											<canvas id="douChart4"></canvas>
 										</div>
-										<script>
-											const ctx4 = document
-													.getElementById('douChart4');
-											const douChart4 = new Chart(
-													ctx4,
-													{
-														type : 'doughnut',
-														data : {
-															labels : [ 'Red',
-																	'Blue',
-																	'Yellow' ],
-															datasets : [ {
-																label : 'My First Dataset',
-																data : [ 300, 50,
-																		100 ],
-																backgroundColor : [
-																		'rgb(255, 99, 132)',
-																		'rgb(54, 162, 235)',
-																		'rgb(255, 205, 86)' ],
-																hoverOffset : 4
-															} ],
-														},
-														options : {
-															responsive : true,
-															maintainAspectRatio : false,
-															plugins : {
-																legend : {
-																	position : 'bottom'
-																}
-															}
-														}
-													});
-										</script>
 									</div>
 								</form>
 							</div>
@@ -194,8 +128,8 @@
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 
-<script>
-	// Jquery Datatable
+<script>	
+	// 참여 프로젝트
 	$("#table1").DataTable({
 		"searching": false,
 		"info": false,
@@ -209,6 +143,82 @@
 	        "zeroRecords": "참여중인 프로젝트가 없습니다."
 	    },
 	
+	});
+
+	// 작업 진행상태
+	var statusList = [];
+	var countList = [];
+	
+	<c:forEach var="task" items="${TaskStatusChart}" >		
+		statusList.push('${task.status}');
+		countList.push(${task.count});
+	</c:forEach>
+
+	const ctx3 = document.getElementById('douChart3');
+	const douChart3 = new Chart(ctx3, {
+		type : 'doughnut',
+		data : {
+			labels : statusList,
+			datasets : [ {
+				label : 'My First Dataset',
+				data : countList,
+				backgroundColor : [
+					'rgba(54, 162, 235, 0.5)',
+					'rgba(153, 102, 255, 0.5)',
+					'rgba(255, 99, 132, 0.5)',
+					'rgba(255, 206, 86, 0.5)',
+					'rgba(75, 192, 192, 0.5)'
+				],
+				hoverOffset : 4
+			} ],
+		},
+		options : {
+			responsive : true,
+			maintainAspectRatio : false,
+			plugins : {
+				legend : {
+					position : 'bottom'
+				}
+			}
+		}
+	});
+
+	// 리스크 현황
+	var statusList2 = [];
+	var countList2 = [];
+	
+	<c:forEach var="risk" items="${MyRiskStatusChart}" >		
+		statusList2.push('${risk.status}');
+		countList2.push(${risk.count});
+	</c:forEach>
+
+	const ctx4 = document.getElementById('douChart4');
+	const douChart4 = new Chart(ctx4, {
+		type : 'doughnut',
+		data : {
+			labels : statusList2,
+			datasets : [ {
+				label : 'My First Dataset',
+				data : countList2,
+				backgroundColor : [
+					'rgba(54, 162, 235, 0.5)',
+					'rgba(153, 102, 255, 0.5)',
+					'rgba(255, 99, 132, 0.5)',
+					'rgba(255, 206, 86, 0.5)',
+					'rgba(75, 192, 192, 0.5)'
+				],
+				hoverOffset : 4
+			} ],
+		},
+		options : {
+			responsive : true,
+			maintainAspectRatio : false,
+			plugins : {
+				legend : {
+					position : 'bottom'
+				}
+			}
+		}
 	});
 </script>
 	

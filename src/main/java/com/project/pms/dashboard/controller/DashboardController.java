@@ -15,23 +15,27 @@ public class DashboardController {
 	@Autowired
 	private DashboardService service;
 	
-	// 종합 대시보드
+	// *** 종합 대시보드 ***
 	@GetMapping("/general.do")
 	public String getDashboardGeneral(Model d) {
 		System.out.println("getDashboardGeneral controller called...");
+		
 		d.addAttribute("NoticeList", service.getNoticeList());
 		d.addAttribute("ProjectList", service.getProjectList());
+		d.addAttribute("RiskStatusChart", service.getRiskStatusChart());
 		
 		return "dashboard/general";
 	}
 	
-	
-	// 개인 대시보드
+	// *** 개인 대시보드 ***
 	@GetMapping("/personal.do")
 	public String getDashboardPersonal(Model d) {
 		System.out.println("getDashboardPersonal controller called...");
-		int empId = 1;
+		int empId = 3; // 세션 처리 예정
+		
 		d.addAttribute("MyProjectList", service.getMyProjectList(empId));
+		d.addAttribute("TaskStatusChart", service.getMyTaskStatusChart(empId));
+		d.addAttribute("MyRiskStatusChart", service.getMyRiskStatusChart(empId));
 		
 		return "dashboard/personal";
 	}
