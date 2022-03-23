@@ -31,4 +31,17 @@ public class MyApprovalService {
 		
 		return dao.getMyApprovalRejectedList(empId);
 	}
+	
+	// 회수 요청
+	public boolean uptApprovalCancel(int taskId) {		
+		dao.uptApprovalCancel(taskId);
+		
+		return true;
+	}
+	
+	public boolean uptApprovalStatus(int taskId) {
+		dao.uptApprovalStatus(taskId);
+		
+		return true;
+	}
 }

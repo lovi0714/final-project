@@ -3,6 +3,7 @@ package com.project.pms.myTask.vo;
 import java.util.Date;
 
 public class MyApproval {
+	private int taskId;
 	private String taskName;
 	private String pTitle;
 	private String approver;
@@ -16,9 +17,10 @@ public class MyApproval {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MyApproval(String taskName, String pTitle, String approver, String apStatus, Date createAt, Date approvalAt,
-			Date rejectAt) {
+	public MyApproval(int taskId, String taskName, String pTitle, String approver, String apStatus, Date createAt,
+			Date approvalAt, Date rejectAt) {
 		super();
+		this.taskId = taskId;
 		this.taskName = taskName;
 		this.pTitle = pTitle;
 		this.approver = approver;
@@ -26,6 +28,14 @@ public class MyApproval {
 		this.createAt = createAt;
 		this.approvalAt = approvalAt;
 		this.rejectAt = rejectAt;
+	}
+
+	public int getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
 	}
 
 	public String getTaskName() {
@@ -83,6 +93,8 @@ public class MyApproval {
 	public void setRejectAt(Date rejectAt) {
 		this.rejectAt = rejectAt;
 	}
+	
+	
 	
 	
 }

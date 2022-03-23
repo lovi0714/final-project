@@ -19,7 +19,7 @@ public class MyTaskController {
 	@GetMapping("/list.do")
 	public String getMyTaskList(Model d) {
 		System.out.println("getMyTaskList Controller called...");
-		int empId = 1;
+		int empId = 3;
 		d.addAttribute("MyTaskList", service.getMyTaskList(empId));
 		
 		return "myTask/list";

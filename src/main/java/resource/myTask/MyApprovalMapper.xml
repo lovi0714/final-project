@@ -5,6 +5,7 @@
 
 <mapper namespace="com.project.pms.myTask.repository.MyApprovalDAO">
 	<resultMap type="myApproval" id="myApprovalMap">
+		<result column="task_id" property="taskId"/>
 		<result column="task_name" property="taskName"/>
 		<result column="prj_name" property="pTitle"/>
 		<result column="approver" property="approver"/>
@@ -16,7 +17,8 @@
 	
 	<!-- 승인 대기 -->
 	<select id="getMyApprovalWaitingList" resultMap="myApprovalMap" parameterType="int">
-		SELECT tt.task_name,
+		SELECT tt.task_id,
+				tt.task_name,
 				tp.name AS prj_name,
 				(SELECT name FROM TBL_EMP WHERE emp_id = ta.approver) AS approver,
 				tas.ap_status,
@@ -61,7 +63,8 @@
 	
 	<!-- 반려 -->
 	<select id="getMyApprovalRejectedList" resultMap="myApprovalMap" parameterType="int">
-		SELECT tt.task_name,
+		SELECT tt.task_id,
+				tt.task_name,
 				tp.name AS prj_name,
 				(SELECT name FROM TBL_EMP WHERE emp_id = ta.approver) AS approver,
 				tas.ap_status,
@@ -81,4 +84,17 @@
 				ta.ap_status_id = 3 AND
 				te.emp_id = #{empId}
 	</select>		
+	
+	<!-- 회수 요청 -->
+	<update id="uptApprovalCancel" parameterType="int">
+		UPDATE TBL_task
+		SET is_approval = 0 
+		WHERE task_id = #{taskId}
+	</update>
+	
+	<update id="uptApprovalStatus" parameterType="int">
+		UPDATE TBL_APPROVAL 
+		SET ap_status_id = 4, cancel_at = sysdate, update_at = sysdate
+		WHERE task_id = #{taskId}
+	</update>
 </mapper>

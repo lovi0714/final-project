@@ -16,4 +16,8 @@ public interface MyApprovalDAO {
 	// 반려
 	public List<MyApproval> getMyApprovalRejectedList(int empId);
 
+	// 회수 요청
+	public void uptApprovalCancel(int taskId);
+	
+	public void uptApprovalStatus(int taskId);
 }

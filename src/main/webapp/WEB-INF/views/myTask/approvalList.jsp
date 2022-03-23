@@ -60,6 +60,48 @@ $(document).ready(function() {
 			$("#cbx_chkAll2").prop("checked", true); 
 	});
 });
+
+function MyApprovalCancel1() {
+	
+	var taskIdValues = []
+	$("input[name=chk1]:checked").each(function(i) {
+		taskIdValues.push($(this).val());
+	});	
+	
+	var taskIdData = {"taskId": taskIdValues};
+	
+	$.ajax({
+		url: "${path}/myTask/approvalCancel.do",
+		type: 'GET',
+		data: taskIdData,
+		success: function(result) {
+			if(result == "success") {
+				location.href = "${path}/myTask/list.do"
+			}
+		}
+	});
+}
+
+function MyApprovalCancel2() {
+	
+	var taskIdValues = []
+	$("input[name=chk2]:checked").each(function(i) {
+		taskIdValues.push($(this).val());
+	});	
+	
+	var taskIdData = {"taskId": taskIdValues};
+	
+	$.ajax({
+		url: "${path}/myTask/approvalCancel.do",
+		type: 'GET',
+		data: taskIdData,
+		success: function(result) {
+			if(result == "success") {
+				location.href = "${path}/myTask/list.do"
+			}
+		}
+	});
+}
 </script>
 
 <div id="main-content" style="padding-top: 0">
@@ -109,7 +151,7 @@ $(document).ready(function() {
 								</div>
 								<div class="col-md-6">
 									<div class="input-group mb-3 justify-content-end">
-										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" id="regBtn">회수</button>
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" id="cancelBtn" onclick="MyApprovalCancel1();">회수</button>
 									</div>
 								</div>
 							</div>
@@ -134,7 +176,7 @@ $(document).ready(function() {
 			                      			<c:forEach var="wait" items="${WaitingList}">
 												<tr>
 													<td>
-														<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input">
+														<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${wait.taskId}">
  													</td>
 														<td>${wait.taskName}</td>
 														<td>${wait.pTitle}</td>
@@ -193,7 +235,7 @@ $(document).ready(function() {
 													<td>${complete.taskName}</td>
 													<td>${complete.pTitle}</td>
 													<td>${complete.approver}</td>
-													<td><span class="badge bg-secondary">${complete.apStatus}</span></td>
+													<td><span class="badge bg-success">${complete.apStatus}</span></td>
 													<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd"/></td>
 													<td><fmt:formatDate value="${complete.approvalAt}" pattern="yyyy-MM-dd"/></td>
 												</tr>
@@ -228,7 +270,7 @@ $(document).ready(function() {
 								</div>
 								<div class="col-md-6">
 									<div class="input-group mb-3 justify-content-end">
-										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" id="regBtn">회수</button>
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" onclick="MyApprovalCancel2();">회수</button>
 									</div>
 								</div>
 							</div>
@@ -254,12 +296,12 @@ $(document).ready(function() {
 			                      			<c:forEach var="reject" items="${RejectedList}">
 												<tr>
 													<td>
-														<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input">
+														<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${reject.taskId}">
  													</td>
 														<td>${reject.taskName}</td>
 														<td>${reject.pTitle}</td>
 														<td>${reject.approver}</td>
-														<td><span class="badge bg-secondary">${reject.apStatus}</span></td>
+														<td><span class="badge bg-danger">${reject.apStatus}</span></td>
 														<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd"/></td>
 														<td><fmt:formatDate value="${reject.rejectAt}" pattern="yyyy-MM-dd"/></td>
 													</tr>
