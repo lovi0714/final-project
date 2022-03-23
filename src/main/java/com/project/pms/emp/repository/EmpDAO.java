@@ -14,5 +14,6 @@ public interface EmpDAO {
 	public Emp empInfo(Emp emp);
 	
 	// 로그아웃
-	//public void logout(HttpSession session);
+	public void logout(HttpSession session);
+	
 }

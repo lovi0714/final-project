@@ -22,26 +22,7 @@
 <link rel="shortcut icon" href="${path}/resources/images/favicon.svg" type="image/x-icon">
 
 <title>Login</title>    
-<script>
-$(document).ready(function(){
-	$(".btn btn-primary btn-block btn-lg shadow-lg mt-5").click(function() {
-		// 태그.val() : 태그에 입력된 값
-		// 태그.val("값") : 태그의 값을 변경
-		var account = $("#account").val();
-		var password = $("#password").val();
-		if(account == "") {
-			alert("아이디를 입력해주세요.");
-			$("#account").focus(); // 입력 포커스로 이동
-			return;
-		}
-		if(password == "") {
-			alert("비밀번호를 입력해주세요.");
-			$("#password").focus(); 
-			return;
-		}	
-	});
-});
-</script>
+
 </head>
 
 <body>
@@ -55,7 +36,7 @@ $(document).ready(function(){
             <h1 class="auth-title">로그인</h1>
             
 
-            <form id=loginForm action="${path}/emp/loginCheck.do" method="post">
+            <form name=loginForm action="${path}/emp/loginCheck.do" method="post">
                 <div class="form-group position-relative has-icon-left mb-4">
                     <input type="text" class="form-control form-control-xl" name="account" id="account" placeholder="Username">
                     <div class="form-control-icon">
@@ -74,7 +55,9 @@ $(document).ready(function(){
                         로그인 유지하기
                     </label>
                 </div>
-                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">로그인</button>
+                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" onclick="btnLogin()">로그인</button>
+            	
+            	
             </form>
 
         </div>
@@ -87,6 +70,7 @@ $(document).ready(function(){
 </div>
 
     </div>
+
 </body>
 
 </html>

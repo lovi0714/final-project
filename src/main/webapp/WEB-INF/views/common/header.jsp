@@ -189,14 +189,16 @@
                                 </li>
                             </ul>
                             <div class="dropdown">
+                            	
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <c:if test="${msg == 'success'}">
-                                            <h6 class="mb-0 text-gray-600">${sessionScope.account}</h6>
-                                  
-                                            <p class="mb-0 text-sm text-gray-600">${sessionScope.authId}</p>
-                                            </c:if>
+                                            <c:if test="${sessionScope.account != null}">
+                                            <h6 class="mb-0 text-gray-600">${sessionScope.account}</h6>                               
+                                            <p class="mb-0 text-sm text-gray-600">${sessionScope.name}</p>
+                                           	</c:if> 
+                                           	
+                                           	
                                         </div>
                                         <!-- 프로필 이미지 사용 X
                                         <div class="user-img d-flex align-items-center">
@@ -207,23 +209,26 @@
                                         -->
                                     </div>
                                 </a>
+                                
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                                     <li>
-                                        <c:if test="${msg == 'success'}">
+                                        <c:if test="${sessionScope.account != null}">
                                         <h6 class="dropdown-header">${sessionScope.account}</h6>
+                                        <h6 class="dropdown-header">${sessionScope.name}</h6>
                                         </c:if>
+                                           
                                     </li>
-                                    <li><a class="dropdown-item" href="${path}/emp/profile.do"><i class="icon-mid bi bi-person me-2"></i> My
-                                            Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-wallet me-2"></i>
-                                            Wallet</a></li>
+                                    <li><a class="dropdown-item" href="${path}/emp/profile.do"><i class="icon-mid bi bi-person me-2"></i> 프로필</a></li>
+                                    
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                    
+                                    <li>
+                                    
+                                    <a class="dropdown-item" href="${path}/emp/logout.do"><i
+                                                class="icon-mid bi bi-box-arrow-left me-2"></i>로그아웃</a>
+                                                </li>
                                 </ul>
                             </div>
                         </div>
