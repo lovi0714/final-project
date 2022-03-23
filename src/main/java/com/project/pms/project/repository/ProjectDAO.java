@@ -14,10 +14,13 @@ import com.project.pms.project.vo.RndType;
 public interface ProjectDAO {
 	public List<Project> getList();
 	public void insertProject(Project project);
+	public void modifyProject(Project project);
+	public Project getProjectByProjectId(String projectId);
 	public List<RndType> getRndType();
 	public List<ProjectType> getProjectType();
 	public List<DeptType> getDeptType();
 	public List<Pm> getPmByDeptId(Integer deptId);
 	public List<Pm> getPmoByDeptId(Integer deptId);
-
+	public Pm getPmByProjectId(String projectId);
+	public Pm getPmoByProjectId(String projectId);
 }

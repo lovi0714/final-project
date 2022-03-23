@@ -117,8 +117,6 @@
                 </div>
 <script type="text/javascript">
 	$(function() {
-		
-		
 		$('#pmDeptType').change(() => {
 			$.ajax({
 				  url: "${path}/project/api/pm/" + $('#pmDeptType').val() +".do",
@@ -221,10 +219,8 @@
 					statusId: '1',
 					typeId: $('#projectTypeId').val(),
 		            rndTypeId: $('#rndTypeId').val(),
-		            projectDept: $('#projectDept').val(),
 		            pmId: $('#projectPmId').val(),
 		            pmoId: $('#projectPmoId').val(),
-		            projectPmoId: $('#projectPmoId').val(),
 		            startAt: $('#projectStartAt').val(),
 		            endAt: $('#projectEndAt').val(),
 		            content: $('#projectContent').val()

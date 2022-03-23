@@ -83,27 +83,11 @@
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <!-- <tr>
-	                            <td>BP-2022-019</td>
-	                            <td>SI사업 진행 프로젝트</td>
-	                            <td>2022-03-16</td>
-	                            <td>2022-04-12</td>
-	                            <td>
-	                            	<div class="progress progress-primary">
-				                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-				                	</div>			
-                				</td>
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">4</span>
-					                </div>
-                				</td>
-	                        </tr> -->
 	                      	<c:choose>
 	                      		<c:when test="${list.size() > 0}">
 	                      			<c:forEach var="project" items="${list}">
 									<tr>
-			                            <td>${project.projectId}</td>
+			                            <td><a href="${path}/project/detail.do?projectId=${project.projectId}">${project.projectId}</a></td>
 			                            <td>${project.title}</td>
 			                            <td>${project.startAt}</td>
 			                            <td>${project.endAt}</td>

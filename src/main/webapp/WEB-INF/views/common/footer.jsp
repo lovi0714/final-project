@@ -22,7 +22,10 @@
 	<script src="${path}/resources/vendors/apexcharts/apexcharts.js"></script>
 	<script src="${path}/resources/js/pages/dashboard.js"></script>
 	<script src="${path}/resources/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-		
+	
+	<script src="${path}/resources/js/extensions/sweetalert2.js"></script>
+	<script src="${path}/resources/vendors/sweetalert2/sweetalert2.all.min.js"></script>
+	
     <script src="${path}/resources/js/mazer.js"></script>
     </body>
 </html>

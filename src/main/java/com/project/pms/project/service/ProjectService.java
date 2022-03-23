@@ -46,4 +46,24 @@ public class ProjectService {
 		return dao.getPmoByDeptId(deptId);
 	}
 
+	public Project getProjectByProjectId(String projectId) {
+		
+		return dao.getProjectByProjectId(projectId);
+	}
+
+	public Pm getPmByProjectId(String projectId) {
+		
+		return dao.getPmByProjectId(projectId);
+	}
+
+	public Pm getPmoByProjectId(String projectId) {
+		
+		return dao.getPmoByProjectId(projectId);
+	}
+
+	public void modifyProject(Project project) {
+		
+		dao.modifyProject(project);
+	}
+
 }

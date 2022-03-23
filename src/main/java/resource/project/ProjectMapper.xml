@@ -30,7 +30,9 @@
 	
 	<resultMap type="pm" id="pmListMap">
 		<result column="emp_id" property="pmId"/>
+		<result column="dept_id" property="deptId"/>
 		<result column="name" property="pmName"/>
+		<result column="auth_id" property="authId"/>
 	</resultMap>
 	
 	<resultMap type="deptType" id="deptTypeMap">
@@ -48,7 +50,7 @@
 		VALUES (#{statusId}, #{typeId}, #{rndTypeId}, #{title}, #{content}, #{pmId}, #{startAt}, #{endAt}, sysdate, sysdate)
 	</insert>
 	
-	<select id="getProjectById" resultMap="projectMap" parameterType="int">
+	<select id="getProjectByProjectId" resultMap="projectMap" parameterType="string">
 		SELECT *
 		FROM TBL_PROJECT
 		WHERE prj_id = #{id}
@@ -72,14 +74,40 @@
 	</select>
 	
 	<select id="getPmByDeptId" resultMap="pmListMap" parameterType="int">
-		SELECT emp_id, name
+		SELECT emp_id, dept_id, name
 		FROM TBL_EMP
 		WHERE dept_Id = #{deptId}
 	</select>
 	
 	<select id="getPmoByDeptId" resultMap="pmListMap" parameterType="int">
-		SELECT emp_id, name
+		SELECT emp_id, dept_id, name
 		FROM TBL_EMP
 		WHERE dept_Id = #{deptId}
 	</select>
+	
+	<select id="getPmByProjectId" resultMap="pmListMap" parameterType="string">
+		SELECT te.emp_id, te.DEPT_ID, te.NAME, te.AUTH_ID
+		FROM TBL_PROJECT tp, TBL_EMP te
+		WHERE tp.PRJ_ID = #{projectId} AND tp.PM_ID = te.EMP_ID
+	</select>
+	
+	<select id="getPmoByProjectId" resultMap="pmListMap" parameterType="string">
+		SELECT te.EMP_ID, te.DEPT_ID, te.NAME, te.AUTH_ID
+		FROM TBL_RESOURCE tr, TBL_EMP te 
+		WHERE tr.PRJ_ID = #{projectId} AND tr.EMP_ID = te.EMP_ID AND te.AUTH_ID = 1
+	</select>
+	
+	<update id="modifyProject" parameterType="project">
+		UPDATE TBL_PROJECT 
+		SET PRJ_STATUS_ID = #{statusId},
+		 	PRJ_TYPE_ID = #{typeId},
+		  	RD_TYPE_ID = #{rndTypeId},
+		   	NAME = #{title},
+		    CONTENT = #{content},
+		    PM_ID = #{pmId},
+		    START_AT = #{startAt},
+		    END_AT = #{endAt},
+		    UPDATE_AT = sysdate
+		WHERE PRJ_ID = #{projectId}
+	</update>
 </mapper>
