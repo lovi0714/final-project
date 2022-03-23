@@ -42,26 +42,33 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:choose>
-	                      		<c:when test="${MyProjectList.size() > 0}">
-	                      			<c:forEach var="project" items="${MyProjectList}">
-										<tr>
-				                            <td>${project.projectId}</td>
-				                            <td>${project.title}</td>
-				                            <td>${project.pmDeptName}</td>
-				                            <td>${project.pmName}</td>
-				                            <td>${project.status}</td>
-				                            <td><fmt:formatDate value="${project.startAt}" pattern="yyyy-MM-dd"/></td>
-				                            <td><fmt:formatDate value="${project.endAt}" pattern="yyyy-MM-dd"/></td>
-		                        		</tr>
-	                       			</c:forEach>
-	                      		</c:when>
-	                      		<c:otherwise>
-	                      			<tr>
-	                      				<td colspan="6" style="text-align: center;"><h6>등록된 프로젝트가 없습니다.</h6></td>
-	                      			</tr>
-	                      		</c:otherwise>
-	                      	</c:choose>
+                   			<c:forEach var="project" items="${MyProjectList}">
+								<tr>
+		                            <td>${project.projectId}</td>
+		                            <td>${project.title}</td>
+		                            <td>${project.pmDeptName}</td>
+		                            <td>${project.pmName}</td>
+		                            <c:choose>
+		                            	 <c:when test = "${project.status eq '시작전'}">
+		                           			<td><span class="badge bg-secondary">${project.status}</span></td>
+		                            	 </c:when>
+		                            	 <c:when test = "${project.status eq '정상진행'}">
+		                            	 	<td><span class="badge bg-success">${project.status}</span></td>
+		                           		 </c:when>
+		                            	 <c:when test = "${project.status eq '지연진행'}">
+		                            	 	<td><span class="badge bg-danger">${project.status}</span></td>
+		                           		 </c:when>
+		                            	 <c:when test = "${project.status eq '완료'}">
+		                            	 	<td><span class="badge bg-primary">${project.status}</span></td>
+		                           		 </c:when>
+		                            	 <c:when test = "${project.status eq '중단'}">
+		                            	 	<td><span class="badge bg-warning">${project.status}</span></td>
+		                           		 </c:when>
+		                            </c:choose>
+		                            <td><fmt:formatDate value="${project.startAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${project.endAt}" pattern="yyyy-MM-dd"/></td>
+                      			</tr>
+                    		</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -197,7 +204,11 @@
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"}
 		],
-		"order": [5, 'desc']
+		"order": [5, 'desc'],
+		"language": {
+	        "zeroRecords": "참여중인 프로젝트가 없습니다."
+	    },
+	
 	});
 </script>
 	

@@ -38,22 +38,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:choose>
-	                      		<c:when test="${NoticeList.size() > 0}">
-	                      			<c:forEach var="notice" items="${NoticeList}">
-										<tr>
-				                            <td>${notice.title}</td>
-				                            <td>${notice.writer}</td>
-				                            <td><fmt:formatDate value="${notice.createAt}" pattern="yyyy-MM-dd"/></td>
-		                        		</tr>
-	                       			</c:forEach>
-	                      		</c:when>
-	                      		<c:otherwise>
-	                      			<tr>
-	                      				<td colspan="6" style="text-align: center;"><h6>등록된 공지사항이 없습니다.</h6></td>
-	                      			</tr>
-	                      		</c:otherwise>
-	                      	</c:choose>
+	                      	<c:forEach var="notice" items="${NoticeList}">
+								<tr>
+				                	<td>${notice.title}</td>
+				                	<td>${notice.writer}</td>
+				                    <td><fmt:formatDate value="${notice.createAt}" pattern="yyyy-MM-dd"/></td>
+		                        </tr>
+	                       	</c:forEach>	
 						</tbody>
 					</table>
 				</div>
@@ -101,26 +92,33 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:choose>
-	                      		<c:when test="${ProjectList.size() > 0}">
-	                      			<c:forEach var="project" items="${ProjectList}">
-										<tr>
-				                            <td>${project.projectId}</td>
-				                            <td>${project.title}</td>
-				                            <td>${project.pmDeptName}</td>
-				                            <td>${project.pmName}</td>
-				                            <td>${project.status}</td>
-				                            <td><fmt:formatDate value="${project.startAt}" pattern="yyyy-MM-dd"/></td>
-				                            <td><fmt:formatDate value="${project.endAt}" pattern="yyyy-MM-dd"/></td>
-		                        		</tr>
-	                       			</c:forEach>
-	                      		</c:when>
-	                      		<c:otherwise>
-	                      			<tr>
-	                      				<td colspan="6" style="text-align: center;"><h6>등록된 프로젝트가 없습니다.</h6></td>
-	                      			</tr>
-	                      		</c:otherwise>
-	                      	</c:choose>
+                    		<c:forEach var="project" items="${ProjectList}">
+								<tr>
+		                            <td>${project.projectId}</td>
+		                            <td>${project.title}</td>
+		                            <td>${project.pmDeptName}</td>
+		                            <td>${project.pmName}</td>
+		                            <c:choose>
+		                            	 <c:when test = "${project.status eq '시작전'}">
+		                           			<td><span class="badge bg-secondary">${project.status}</span></td>
+		                            	 </c:when>
+		                            	 <c:when test = "${project.status eq '정상진행'}">
+		                            	 	<td><span class="badge bg-success">${project.status}</span></td>
+		                           		 </c:when>
+		                            	 <c:when test = "${project.status eq '지연진행'}">
+		                            	 	<td><span class="badge bg-danger">${project.status}</span></td>
+		                           		 </c:when>
+		                            	 <c:when test = "${project.status eq '완료'}">
+		                            	 	<td><span class="badge bg-primary">${project.status}</span></td>
+		                           		 </c:when>
+		                            	 <c:when test = "${project.status eq '중단'}">
+		                            	 	<td><span class="badge bg-warning">${project.status}</span></td>
+		                           		 </c:when>
+		                            </c:choose>
+		                            <td><fmt:formatDate value="${project.startAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${project.endAt}" pattern="yyyy-MM-dd"/></td>
+                       			</tr>
+                     		</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -301,6 +299,9 @@
 		    {"className": "dt-center", "targets": "_all"},
 		    {"width": "50%", "targets": 0},
 		],
+		"language": {
+	        "zeroRecords": "등록된 공지사항이 없습니다."
+	    },
 		"order": [2, 'desc']
 	});
 	
@@ -312,6 +313,9 @@
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"}
 		],
+		"language": {
+	        "zeroRecords": "등록된 프로젝트가 없습니다."
+	    },
 		"order": [5, 'desc']
 	});
 </script>

@@ -171,27 +171,18 @@ function MyApprovalCancel2() {
 									</tr>
 								</thead>
 								<tbody>
-									<c:choose>
-			                      		<c:when test="${WaitingList.size() > 0}">
-			                      			<c:forEach var="wait" items="${WaitingList}">
-												<tr>
-													<td>
-														<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${wait.taskId}">
- 													</td>
-														<td>${wait.taskName}</td>
-														<td>${wait.pTitle}</td>
-														<td>${wait.approver}</td>
-														<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
-														<td><fmt:formatDate value="${wait.createAt}" pattern="yyyy-MM-dd"/></td>
-													</tr>
-			                       			</c:forEach>
-			                      		</c:when>
-			                      		<c:otherwise>
-			                      			<tr>
-			                      				<td colspan="6" style="text-align: center;"><h6>승인 대기중인 결재가 없습니다.</h6></td>
-			                      			</tr>
-			                      		</c:otherwise>
-			                      	</c:choose>		
+	                      			<c:forEach var="wait" items="${WaitingList}">
+										<tr>
+											<td>
+												<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${wait.taskId}">
+											</td>
+											<td>${wait.taskName}</td>
+											<td>${wait.pTitle}</td>
+											<td>${wait.approver}</td>
+											<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
+											<td><fmt:formatDate value="${wait.createAt}" pattern="yyyy-MM-dd"/></td>
+										</tr>
+	                       			</c:forEach>	
 			                    </tbody>				
 							</table>
 							<!-- Basic Tables end -->
@@ -228,25 +219,16 @@ function MyApprovalCancel2() {
 									</tr>
 								</thead>
 								<tbody>
-									<c:choose>
-			                      		<c:when test="${CompletedList.size() > 0}">
-			                      			<c:forEach var="complete" items="${CompletedList}">
-												<tr>
-													<td>${complete.taskName}</td>
-													<td>${complete.pTitle}</td>
-													<td>${complete.approver}</td>
-													<td><span class="badge bg-success">${complete.apStatus}</span></td>
-													<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd"/></td>
-													<td><fmt:formatDate value="${complete.approvalAt}" pattern="yyyy-MM-dd"/></td>
-												</tr>
-			                       			</c:forEach>
-			                      		</c:when>
-			                      		<c:otherwise>
-			                      			<tr>
-			                      				<td colspan="6" style="text-align: center;"><h6>승인 완료된 결재가 없습니다.</h6></td>
-			                      			</tr>
-			                      		</c:otherwise>
-			                      	</c:choose>		
+	                      			<c:forEach var="complete" items="${CompletedList}">
+										<tr>
+											<td>${complete.taskName}</td>
+											<td>${complete.pTitle}</td>
+											<td>${complete.approver}</td>
+											<td><span class="badge bg-success">${complete.apStatus}</span></td>
+											<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd"/></td>
+											<td><fmt:formatDate value="${complete.approvalAt}" pattern="yyyy-MM-dd"/></td>
+										</tr>
+	                       			</c:forEach>	
 								</tbody>
 							</table>
 							<!-- Basic Tables end -->			
@@ -291,28 +273,19 @@ function MyApprovalCancel2() {
 									</tr>
 								</thead>
 								<tbody>
-									<c:choose>
-			                      		<c:when test="${RejectedList.size() > 0}">
-			                      			<c:forEach var="reject" items="${RejectedList}">
-												<tr>
-													<td>
-														<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${reject.taskId}">
- 													</td>
-														<td>${reject.taskName}</td>
-														<td>${reject.pTitle}</td>
-														<td>${reject.approver}</td>
-														<td><span class="badge bg-danger">${reject.apStatus}</span></td>
-														<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd"/></td>
-														<td><fmt:formatDate value="${reject.rejectAt}" pattern="yyyy-MM-dd"/></td>
-													</tr>
-			                       			</c:forEach>
-			                      		</c:when>
-			                      		<c:otherwise>
-			                      			<tr>
-			                      				<td colspan="12" style="text-align: center;"><h6>반려된 결재가 없습니다.</h6></td>
-			                      			</tr>
-			                      		</c:otherwise>
-			                      	</c:choose>		
+	                      			<c:forEach var="reject" items="${RejectedList}">
+										<tr>
+											<td>
+												<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${reject.taskId}">
+											</td>
+											<td>${reject.taskName}</td>
+											<td>${reject.pTitle}</td>
+											<td>${reject.approver}</td>
+											<td><span class="badge bg-danger">${reject.apStatus}</span></td>
+											<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd"/></td>
+											<td><fmt:formatDate value="${reject.rejectAt}" pattern="yyyy-MM-dd"/></td>
+										</tr>
+	                       			</c:forEach>
 								</tbody>
 							</table>
 							<!-- Basic Tables end -->
@@ -497,6 +470,9 @@ function MyApprovalCancel2() {
 		    {"width": "25%", "targets": 1},
 		    {"width": "25%", "targets": 2}
 		],
+		"language": {
+	        "zeroRecords": "승인 대기중인 결재가 없습니다."
+	    },
 		"order": [5, 'desc']
 	});
 
@@ -510,6 +486,9 @@ function MyApprovalCancel2() {
 		    {"width": "25%", "targets": 0},
 		    {"width": "25%", "targets": 1}
 		],
+		"language": {
+	        "zeroRecords": "승인 완료된 결재가 없습니다."
+	    },
 		"order": [5, 'desc']
 	});
 	
@@ -525,6 +504,9 @@ function MyApprovalCancel2() {
 		    {"width": "25%", "targets": 1},
 		    {"width": "25%", "targets": 2}
 		],
+		"language": {
+	        "zeroRecords": "반려된 결재가 없습니다."
+	    },
 		"order": [6, 'desc']
 	});
 </script>

@@ -120,44 +120,35 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:choose>
-			                      		<c:when test="${MyTaskList.size() > 0}">
-			                      			<c:forEach var="mytask" items="${MyTaskList}">
-												<tr>
-													<td>
-														<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
- 													</td>
-						                            <td>${mytask.taskName}</td>
-						                            <td>${mytask.title}</td>
-						                            <td>${mytask.pmName}</td>
-						                            <c:choose>
-						                            	 <c:when test = "${mytask.status eq '시작전'}">
-						                           			<td><span class="badge bg-secondary">${mytask.status}</span></td>
-						                            	 </c:when>
-						                            	 <c:when test = "${mytask.status eq '정상진행'}">
-						                            	 	<td><span class="badge bg-success">${mytask.status}</span></td>
-						                           		 </c:when>
-						                            	 <c:when test = "${mytask.status eq '지연진행'}">
-						                            	 	<td><span class="badge bg-danger">${mytask.status}</span></td>
-						                           		 </c:when>
-						                            </c:choose>
-						                            <td><fmt:formatDate value="${mytask.startAt}" pattern="yyyy-MM-dd"/></td>
-						                            <td><fmt:formatDate value="${mytask.endAt}" pattern="yyyy-MM-dd"/></td>
-						                            <td>
-														<div class="progress progress-primary">
-															<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="${mytask.progress}"
-																aria-valuemin="0" aria-valuemax="100"></div>
-														</div>
-													</td>
-				                        		</tr>
-			                       			</c:forEach>
-			                      		</c:when>
-			                      		<c:otherwise>
-			                      			<tr>
-			                      				<td colspan="6" style="text-align: center;"><h6>등록된 작업이 없습니다.</h6></td>
-			                      			</tr>
-			                      		</c:otherwise>
-			                      	</c:choose>
+	                      			<c:forEach var="mytask" items="${MyTaskList}">
+										<tr>
+											<td>
+												<input type="checkbox" id="checkbox1" name="chk" class="form-check-input">
+											</td>
+				                            <td>${mytask.taskName}</td>
+				                            <td>${mytask.title}</td>
+				                            <td>${mytask.pmName}</td>
+				                            <c:choose>
+				                            	 <c:when test = "${mytask.status eq '시작전'}">
+				                           			<td><span class="badge bg-secondary">${mytask.status}</span></td>
+				                            	 </c:when>
+				                            	 <c:when test = "${mytask.status eq '정상진행'}">
+				                            	 	<td><span class="badge bg-success">${mytask.status}</span></td>
+				                           		 </c:when>
+				                            	 <c:when test = "${mytask.status eq '지연진행'}">
+				                            	 	<td><span class="badge bg-danger">${mytask.status}</span></td>
+				                           		 </c:when>
+				                            </c:choose>
+				                            <td><fmt:formatDate value="${mytask.startAt}" pattern="yyyy-MM-dd"/></td>
+				                            <td><fmt:formatDate value="${mytask.endAt}" pattern="yyyy-MM-dd"/></td>
+				                            <td>
+												<div class="progress progress-primary">
+													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="${mytask.progress}"
+														aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</td>
+		                        		</tr>
+	                       			</c:forEach>
 								</tbody>
 							</table>
 							<!-- Basic Tables end -->
@@ -552,6 +543,9 @@
 		    {"width": "20%", "targets": 2},
 		    {"className": "dt-center", "targets": "_all"}
 		],
+		"language": {
+	        "zeroRecords": "등록된 작업이 없습니다."
+	    },
 		"order": [5, 'desc']
 	});
 
@@ -563,7 +557,10 @@
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"},
 		    {"width": "55%", "targets": 1}
-		]
+		],
+		"language": {
+	        "zeroRecords": "등록한 산출물이 없습니다."
+	    }
 	});
 </script>
 
