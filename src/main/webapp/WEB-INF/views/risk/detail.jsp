@@ -26,49 +26,49 @@
                                   	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">리스크 제목</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="Rname" maxlength="120" value="@@@ 발생했습니다." style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="title" maxlength="120" value=${detail.title } style="background-color:white;">
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">유형</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rType" maxlength="120" value="고객 변심" style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rType" maxlength="120" value=${detail.rType } style="background-color:white;">
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">프로젝트명</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rProject" maxlength="120" value="CPMS 프로젝트" style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rProject" maxlength="120" value=${detail.pName } style="background-color:white;">
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">작업</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rTask" maxlength="120" value="환불 처리" style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rTask" maxlength="120" value=${detail.tName } style="background-color:white;">
                                         </div>
                                     </div>
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly style="background-color:white;"></textarea>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly style="background-color:white;">${detail.rContent}</textarea>
                                         </div>
                                 	</div>                          
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">조치자</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rActivator" maxlength="120" value="홍길동" style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rActivator" maxlength="120" value=${detail.presenter } style="background-color:white;">
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">조치 희망일</label>
-                                          	<input type="date" id="first-name-vertical" class="form-control mt-2" name="end_at" readonly style="background-color:white;">
+                                          	<input type="date" id="first-name-vertical" class="form-control mt-2" name="end_at" readonly style="background-color:white;" value=${detail.dueAt }>
                                         </div>
                                 	</div>
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">조치내용</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly style="background-color:white;"></textarea>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly style="background-color:white;">${detail.aContent}</textarea>
                                         </div>
                                 	</div>
                                     <div class="col-12">
@@ -77,13 +77,21 @@
                                             <input type="file" id="first-name-vertical" class="form-control" placeholder="산출물 제목을 입력하세요." name="pname" maxlength="120" readonly style="background-color:white;">
                                         </div>
                                     </div>
-                                    
+			                        <div class="col-md-1">
+					                    <fieldset class="form-group">
+					                    <label for="basicSelect">진행 상태</label>
+					                       <select class="form-select" id="basicSelect" disabled style="background-color:white; margin-top:5px;">
+					                            <option>${detail.rStatus}</option>
+					                        </select>
+					                    </fieldset>
+					                </div>
                                     <div class="col-12 d-flex justify-content-end">
                                     
-                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="location='modify.do'">수정</button>
-                                        <button type="button" class="btn btn-danger me-1 mb-1">삭제</button>
+                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="location='modify.do?riskId='+${detail.riskId}">수정</button>
+                                        <button type="button" class="btn btn-danger me-1 mb-1" onclick="location='delete.do?riskId='+${detail.riskId}">삭제</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
                                     </div>
+                                    
                                 </div>                      
                         </div>
                     </div>

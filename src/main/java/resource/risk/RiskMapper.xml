@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+ <mapper namespace="com.project.pms.risk.repository.RiskDAO">
+    	
+ 	<resultMap type="risk" id="riskListMap">
+ 		<result column="risk_id" property="riskId"/>
+ 		<result column="r_status_id" property="rStatusId"/>
+ 		<result column="r_status" property="rStatus"/>
+ 		<result column="r_type_id" property="rTypeId"/>
+ 		<result column="r_type_name" property="rType"/>
+ 		<result column="emp_id" property="empId"/>
+ 		<result column="presenter" property="presenter"/>
+ 		<result column="prj_id" property="pId"/>
+ 		<result column="p_name" property="pName"/>
+ 		<result column="t_name" property="tName"/>
+ 		<result column="title" property="title"/>
+ 		<result column="r_content" property="rContent"/>
+ 		<result column="activator" property="activator"/>
+ 		<result column="a_content" property="aContent"/>
+ 		<result column="due_at" property="dueAt"/>
+ 		<result column="com_at" property="comAt"/>
+ 		<result column="create_at" property="createAt"/>
+ 		<result column="update_at" property="updateAt"/>
+ 	</resultMap>
+ 	
+ 	
+ 	 <!-- 리스크 목록 -->
+ 	 <select id="getRiskList" resultMap="riskListMap">
+ 	 	SELECT  tr.RISK_ID,
+ 	 			tr.TITLE,
+ 	 			tr.P_NAME,
+ 	 			trt.R_TYPE_NAME,
+ 	 			tr.PRESENTER,
+ 	 			tr.ACTIVATOR,
+ 	 			tr.DUE_AT,
+ 	 			tr.COM_AT 
+ 	 	FROM SCOTT.TBL_RISK tr , SCOTT.TBL_R_TYPE trt
+ 	 	WHERE tr.R_TYPE_ID = trt.R_TYPE_ID
+ 	 </select>
+ 	
+ 	<!-- 리스크 상세 -->
+ 	<select id="getRiskDetail" resultMap="riskListMap" parameterType="int">
+		SELECT tr.RISK_ID ,
+			tr.TITLE ,
+			trt.R_TYPE_NAME ,
+			tr.P_NAME ,
+			tr.T_NAME ,
+			tr.R_CONTENT,
+			tr.PRESENTER ,
+			tr.DUE_AT ,
+			tr.A_CONTENT, 
+			trs.R_STATUS 
+		FROM SCOTT.TBL_RISK tr
+			INNER JOIN SCOTT.TBL_R_STATUS trs on tr.R_STATUS_ID = trs.R_STATUS_ID
+			INNER JOIN SCOTT.TBL_R_TYPE trt ON tr.R_TYPE_ID = trt.R_TYPE_ID 
+		WHERE tr.RISK_ID = #{riskId}
+ 	</select>
+ 	
+ 	<!-- 사원정보 -->
+ 	<select id="getEmpList" resultType="emp">
+ 		SELECT emp_id, name 
+ 		FROM SCOTT.TBL_EMP
+ 		ORDER BY EMP_ID
+ 	</select>
+ 	
+ 	<!-- 프로젝트 정보 -->
+ 	<select id="getProjectList" resultType="project">
+ 		SELECT PRJ_ID, NAME as title
+ 		FROM SCOTT.TBL_PROJECT
+ 		ORDER BY PRJ_ID
+ 	</select>
+ 	
+ 	<!-- 작업 정보 -->
+ 	<select id="getMyTaskList" resultType="myTask">
+ 		SELECT TASK_NAME AS taskName
+ 		FROM SCOTT.TBL_TASK
+ 		ORDER BY TASK_ID
+ 	</select>
+ 	
+ 	<!-- 리스크 삭제 -->
+ 	<delete id="deleteRisk">
+ 		DELETE FROM SCOTT.TBL_RISK
+ 		WHERE RISK_ID = #{riskId}
+ 	</delete>
+ 	
+ </mapper> 

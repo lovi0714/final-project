@@ -90,7 +90,7 @@
 						<c:forEach items="${riskList }" var="list">
                         	<tr>
 	                            <td>${list.riskId }</td>
-	                            <td><a href="${path}/risk/detail.do">${list.title}</a></td>
+	                            <td><a href="${path}/risk/detail.do?riskId=${list.riskId}">${list.title}</a></td>
 	                            <td>${list.pName }</td>
 	                            <td>${list.rType }</td>
 	                            <td>${list.presenter}</td>
@@ -115,14 +115,9 @@ let jquery_datatable = $("#table1").DataTable({
 	"searching" : false,
 	"lengthChange" : false,
 	"info" : false,
+	"language": {
+        "zeroRecords": "등록된 리스크가 없습니다."
+    }
 });
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-
- 
-
-
-   
-    
-               
-

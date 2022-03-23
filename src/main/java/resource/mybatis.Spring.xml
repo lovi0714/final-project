@@ -14,7 +14,7 @@
 		<typeAlias alias="pm" type="com.project.pms.project.vo.Pm"/>
 		<typeAlias alias="deptType" type="com.project.pms.project.vo.DeptType"/>
 		<typeAlias alias="projectType" type="com.project.pms.project.vo.ProjectType"/>
-		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
+		<typeAlias alias="risk" type="com.project.pms.risk.vo.Risk"/>
 		<typeAlias alias="notice" type="com.project.pms.community.vo.Notice"/>
 		<typeAlias alias="noticeFile" type="com.project.pms.community.vo.NoticeFile"/>
 		<typeAlias alias="emp" type="com.project.pms.emp.vo.Emp"/>
@@ -30,7 +30,7 @@
 		<mapper resource="resource/myTask/MyApprovalMapper.xml"/>
 		<mapper resource="resource/myTask/CalendarMapper.xml"/>
 		<mapper resource="resource/project/ProjectMapper.xml"/>
-		<mapper resource="resource/risk/RiskBoardMapper.xml"/>
+		<mapper resource="resource/risk/RiskMapper.xml"/>
 		<mapper resource="resource/emp/EmpMapper.xml"/>
 	</mappers>
 	

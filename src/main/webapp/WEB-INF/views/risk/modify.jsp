@@ -25,7 +25,7 @@
                                   	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">리스크 제목</label>
-                                            <input type="text" id="first-name-vertical" class="form-control" placeholder="리스크 제목을 입력하세요." name="Rname" maxlength="120">
+                                            <input type="text" value=${risk.title } id="first-name-vertical" class="form-control" placeholder="리스크 제목을 입력하세요." name="Rname" maxlength="120">
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
@@ -33,11 +33,11 @@
                                             <label for="basicSelect">유형</label>
 		                                    <fieldset class="form-group mt-2">
 		                                        <select class="form-select" id="basicSelect">
-		                                        	<option>유형을 선택하세요</option>
-		                                            <option>장비개발</option>
-		                                            <option>SW 개발</option>
-		                                            <option>플랫폼 개발</option>
-		                                            <option>QA 테스트</option>
+		                                        	<option selected>유형을 선택하세요</option>
+		                                            <option>고객 변심</option>
+		                                            <option>일정 지연</option>
+		                                            <option>품질 문제</option>
+		                                            <option>기타 사유</option>
 		                                        </select>
 		                                    </fieldset>
                                         </div>
@@ -46,10 +46,11 @@
                                     	<div class="form-group">
                                             <label for="basicSelect">프로젝트명</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect">
-		                                        	<option value="">프로젝트를 선택하세요</option>
-		                                            <option value="1">장비개발</option>
-		                                            <option value="2">SW 개발</option>                        
+		                                         <select class="form-select" id="basicSelect">
+		                                        	<option selected>프로젝트를 선택하세요</option>
+		                                            <c:forEach items="${prj}" var="prj">
+		                                            	<option><c:out value="${prj.title }"/></option>
+		                                            </c:forEach>                  
 		                                        </select>
 		                                    </fieldset>
                                         </div>
@@ -59,14 +60,10 @@
                                             <label for="basicSelect">작업</label>
 		                                    <fieldset class="form-group mt-2">
 		                                        <select class="form-select" id="basicSelect">
-									            	<optgroup label="CPMS 프로젝트">
-													    <option value="1">작업 1</option>
-													    <option value="2">작업 2</option>
-													</optgroup>
-													<optgroup label="spring-project">
-													    <option value="1">작업 1</option>
-													    <option value="2">작업 2</option>
-													</optgroup>
+									            	<option selected>작업을 선택하세요</option>
+		                                            <c:forEach items="${task}" var="task">
+		                                            	<option><c:out value="${task.taskName }"/></option>
+		                                            </c:forEach> 
 		                                        </select>
 		                                    </fieldset>
                                         </div>
@@ -74,7 +71,7 @@
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${risk.rContent }</textarea>
                                         </div>
                                 	</div>                          
                                 	<div class="col-md-6 col-12">
@@ -82,10 +79,10 @@
                                             <label for="basicSelect">조치자</label>
 		                                    <fieldset class="form-group mt-2">
 		                                        <select class="form-select" id="basicSelect">
-		                                        	<option>조치자를 선택하세요</option>
-		                                            <option>홍길동</option>
-		                                            <option>신길동</option>
-		                                            <option>마길동</option>
+		                                        	<option selected>조치자를 선택하세요</option>
+		                                            <c:forEach items="${emp}" var="emp">
+		                                            	<option><c:out value="${emp.name }"/></option>
+		                                            </c:forEach>
 		                                        </select>
 		                                    </fieldset>
                                         </div>
@@ -99,7 +96,7 @@
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">조치내용</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${risk.aContent }</textarea>
                                         </div>
                                 	</div>
                                     <div class="col-12">
@@ -108,7 +105,19 @@
                                             <input type="file" id="first-name-vertical" class="form-control" placeholder="산출물 제목을 입력하세요." name="pname" maxlength="120">
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-md-2">
+					                    <fieldset class="form-group">
+					                    <label for="basicSelect">진행 상태</label>
+					                        <select class="form-select" id="basicSelect" style="background-color:white; margin-top:5px;">
+					                      		<option selected>진행 상태</option>
+					                      		<option>오픈</option>
+					                            <option>진행</option>
+					                            <option>취소</option>
+					                            <option>홀드</option>
+					                            <option>조치완료</option>
+					                        </select>
+					                    </fieldset>
+					                </div>
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">등록</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>

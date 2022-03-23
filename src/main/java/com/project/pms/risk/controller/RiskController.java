@@ -15,31 +15,41 @@ import com.project.pms.risk.service.RiskService;
 public class RiskController {
 	
 	@Autowired
-	private RiskService service;
+	private RiskService riskService;
 
 	// 리스크 목록 가져오기
 	@GetMapping("/riskBoard.do")
 	public String getRiskList(Model model) {
-		model.addAttribute("riskList", service.getRiskList());
+		model.addAttribute("riskList", riskService.getRiskList());
 
 		return "risk/riskBoard";
 	}
 	
 	// 상세 페이지 가져오기
 	@GetMapping("/detail.do")
-	public String getDetail() {
+	public String getDetail(@RequestParam int riskId, Model model) {
+		
+		model.addAttribute("detail", riskService.getRiskDetail(riskId));
 		return "risk/detail";
 	}
 	
 	// 리스크 등록 페이지 
 	@GetMapping("/write.do")
-	public String writeRisk() {
+	public String writeRisk(Model model) {
+		
+		model.addAttribute("emp", riskService.getEmpList());
+		model.addAttribute("prj", riskService.getProjectList());
+		model.addAttribute("task",riskService.getMyTaskList());
 		return "risk/writeForm";
 	}
 	
 	// 수정 페이지 가져오기
 	@GetMapping("/modify.do")
-	public String modifyRisk() {
+	public String modifyRisk(@RequestParam int riskId, Model model) {
+		model.addAttribute("emp", riskService.getEmpList());
+		model.addAttribute("prj", riskService.getProjectList());
+		model.addAttribute("task",riskService.getMyTaskList());
+		model.addAttribute("risk", riskService.getRiskDetail(riskId));
 		return "risk/modify";
 	}
 	
@@ -51,7 +61,8 @@ public class RiskController {
 	
 	// 글 삭제하기
 	@GetMapping("/delete.do")
-	public String deleteRisk() {
-		return "redirect:/risk/riskBoard";
+	public String deleteRisk(@RequestParam int riskId) {
+		riskService.deleteRisk(riskId);
+		return "redirect:/risk/riskBoard.do";
 	}
 }
