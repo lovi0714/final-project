@@ -13,8 +13,7 @@
  		<result column="r_type_name" property="rType"/>
  		<result column="emp_id" property="empId"/>
  		<result column="presenter" property="presenter"/>
- 		<result column="prj_id" property="pId"/>
- 		<result column="p_name" property="pName"/>
+ 		<result column="prj_id" property="prjId"/>
  		<result column="t_name" property="tName"/>
  		<result column="title" property="title"/>
  		<result column="r_content" property="rContent"/>
@@ -28,36 +27,77 @@
  	
  	
  	 <!-- 리스크 목록 -->
- 	 <select id="getRiskList" resultMap="riskListMap">
- 	 	SELECT  tr.RISK_ID,
- 	 			tr.TITLE,
- 	 			tr.P_NAME,
- 	 			trt.R_TYPE_NAME,
- 	 			tr.PRESENTER,
- 	 			tr.ACTIVATOR,
- 	 			tr.DUE_AT,
- 	 			tr.COM_AT 
- 	 	FROM SCOTT.TBL_RISK tr , SCOTT.TBL_R_TYPE trt
- 	 	WHERE tr.R_TYPE_ID = trt.R_TYPE_ID
- 	 </select>
- 	
- 	<!-- 리스크 상세 -->
- 	<select id="getRiskDetail" resultMap="riskListMap" parameterType="int">
-		SELECT tr.RISK_ID ,
-			tr.TITLE ,
-			trt.R_TYPE_NAME ,
-			tr.P_NAME ,
-			tr.T_NAME ,
-			tr.R_CONTENT,
-			tr.PRESENTER ,
-			tr.DUE_AT ,
-			tr.A_CONTENT, 
-			trs.R_STATUS 
+ 	 <select id="getRiskList" resultType="riskBoard">
+		SELECT tr.RISK_ID as riskId ,
+			tr.TITLE as title ,
+			trt.R_TYPE_NAME as rType ,
+			tp.NAME AS pName,
+			tr.PRESENTER as presenter,
+			tr.ACTIVATOR as activator ,
+			tr.DUE_AT as dueAt ,
+			tr.COM_AT as comAt 
 		FROM SCOTT.TBL_RISK tr
 			INNER JOIN SCOTT.TBL_R_STATUS trs on tr.R_STATUS_ID = trs.R_STATUS_ID
 			INNER JOIN SCOTT.TBL_R_TYPE trt ON tr.R_TYPE_ID = trt.R_TYPE_ID 
+			INNER JOIN SCOTT.TBL_PROJECT tp ON tr.PRJ_ID = tp.PRJ_ID 
+		ORDER BY tr.RISK_ID DESC
+ 	 </select>
+ 	
+ 	<!-- 리스크 상세 -->
+ 	<select id="getRiskDetail" resultType="riskDetail" parameterType="int">
+		SELECT tr.RISK_ID AS riskId,
+			tr.TITLE AS title,
+			trt.R_TYPE_NAME AS rType,
+			tp.NAME AS pName,
+			tr.T_NAME AS tName,
+			tr.R_CONTENT AS rContent,
+			tr.ACTIVATOR AS activator ,
+			tr.DUE_AT AS dueAt,
+			tr.A_CONTENT AS aContent, 
+			trs.R_STATUS AS rStatus 
+		FROM SCOTT.TBL_RISK tr
+			INNER JOIN SCOTT.TBL_R_STATUS trs on tr.R_STATUS_ID = trs.R_STATUS_ID
+			INNER JOIN SCOTT.TBL_R_TYPE trt ON tr.R_TYPE_ID = trt.R_TYPE_ID
+			INNER JOIN SCOTT.TBL_PROJECT tp ON tr.PRJ_ID = tp.PRJ_ID 
 		WHERE tr.RISK_ID = #{riskId}
  	</select>
+ 	
+ 	<!-- 리스크 등록 -->
+ 	<insert id="createRisk" parameterType="riskSaveRequest">
+ 	INSERT INTO SCOTT.TBL_RISK(
+		RISK_ID,
+		TITLE,
+		R_TYPE_ID,
+		PRJ_ID,
+		R_STATUS_ID,
+		EMP_ID ,
+		T_NAME,
+		R_CONTENT,
+		PRESENTER,
+		ACTIVATOR,
+		A_CONTENT,
+		DUE_AT,
+		CREATE_AT ,
+		UPDATE_AT 
+	)
+	VALUES
+	(
+	RISK_SEQ.NEXTVAL,
+	#{title},
+	#{rTypeId},
+	#{prjId},
+	#{rStatusId},
+	#{empId},
+	#{tName},
+	#{rContent},
+	#{empName},
+	#{activator},
+	#{aContent},
+	TO_DATE(#{dueAt}, 'YYYY-MM-DD'),
+	sysdate,
+	sysdate
+	)
+ 	</insert>
  	
  	<!-- 사원정보 -->
  	<select id="getEmpList" resultType="emp">
@@ -68,7 +108,7 @@
  	
  	<!-- 프로젝트 정보 -->
  	<select id="getProjectList" resultType="project">
- 		SELECT PRJ_ID, NAME as title
+ 		SELECT PRJ_ID as projectId, NAME as title
  		FROM SCOTT.TBL_PROJECT
  		ORDER BY PRJ_ID
  	</select>

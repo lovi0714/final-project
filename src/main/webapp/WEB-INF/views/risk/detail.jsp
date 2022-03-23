@@ -17,7 +17,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">리스크 등록</h4>
+                        <h4 class="card-title">리스크 상세보기</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -26,25 +26,25 @@
                                   	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">리스크 제목</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="title" maxlength="120" value=${detail.title } style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="title" maxlength="120" style="background-color:white;" value="${detail.title }" >
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">유형</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rType" maxlength="120" value=${detail.rType } style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rType" maxlength="120" style="background-color:white;" value="${detail.rType }" >
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">프로젝트명</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rProject" maxlength="120" value=${detail.pName } style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rProject" maxlength="120" style="background-color:white;" value="${detail.pName }" >
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">작업</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rTask" maxlength="120" value=${detail.tName } style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rTask" maxlength="120" style="background-color:white;" value="${detail.tName }" >
                                         </div>
                                     </div>
                                 	<div class="col-12">
@@ -56,13 +56,13 @@
                                 	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">조치자</label>
-                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rActivator" maxlength="120" value=${detail.presenter } style="background-color:white;">
+                                            <input type="text" readonly id="first-name-vertical" class="form-control" name="rActivator" maxlength="120" style="background-color:white;" value="${detail.activator }" >
                                         </div>
                                     </div>
                                 	<div class="col-md-6 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">조치 희망일</label>
-                                          	<input type="date" id="first-name-vertical" class="form-control mt-2" name="end_at" readonly style="background-color:white;" value=${detail.dueAt }>
+                                          	<input type="date" id="first-name-vertical" class="form-control mt-2" name="end_at" readonly style="background-color:white;" value="${detail.dueAt }">
                                         </div>
                                 	</div>
                                 	<div class="col-12">
@@ -74,7 +74,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">파일</label>
-                                            <input type="file" id="first-name-vertical" class="form-control" placeholder="산출물 제목을 입력하세요." name="pname" maxlength="120" readonly style="background-color:white;">
+                                            <input type="file" id="first-name-vertical" class="form-control" placeholder="산출물 제목을 입력하세요." name="rFile" maxlength="120" disabled style="background-color:white;">
                                         </div>
                                     </div>
 			                        <div class="col-md-1">

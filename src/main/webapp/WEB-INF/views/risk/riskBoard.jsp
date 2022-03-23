@@ -117,7 +117,9 @@ let jquery_datatable = $("#table1").DataTable({
 	"info" : false,
 	"language": {
         "zeroRecords": "등록된 리스크가 없습니다."
-    }
+    },
+    order: [[0, 'desc']],
+    ordering: true,
 });
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -2,6 +2,7 @@ package com.project.pms.risk.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.pms.risk.service.RiskService;
+import com.project.pms.risk.vo.RiskSaveRequest;
 
 @Controller
 @RequestMapping("/risk")
@@ -24,7 +26,7 @@ public class RiskController {
 
 		return "risk/riskBoard";
 	}
-	
+
 	// 상세 페이지 가져오기
 	@GetMapping("/detail.do")
 	public String getDetail(@RequestParam int riskId, Model model) {
@@ -54,9 +56,11 @@ public class RiskController {
 	}
 	
 	// 글 저장하기
-	@PostMapping("/save.do")
-	public String savaRisk() {
-		return "redirect:/risk/riskBoard";
+	@PostMapping("/create.do")
+	public String createRisk(RiskSaveRequest riskSaveRequest) throws Exception {
+		
+		riskService.createRisk(riskSaveRequest);
+		return "redirect:/risk/riskBoard.do";
 	}
 	
 	// 글 삭제하기
