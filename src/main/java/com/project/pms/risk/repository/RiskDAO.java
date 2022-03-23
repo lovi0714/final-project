@@ -21,11 +21,13 @@ public interface RiskDAO {
 	// 상세 페이지
 	public RiskDetail getRiskDetail(int riskId);
 	
-	// 리스크 등록하기
-	public void createRisk(RiskSaveRequest riskSaveRequest);
+	// 리스크 저장하기
+	public void saveRisk(RiskSaveRequest riskSaveRequest);
 	
 	// 리스크 삭제
 	void deleteRisk(int riskId);
+	
+	/* SELECT BOX 목록 가져오기 */
 	
 	// 사원 리스트 
 	public List<Emp> getEmpList();

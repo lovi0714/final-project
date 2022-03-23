@@ -55,11 +55,11 @@ public class RiskController {
 		return "risk/modify";
 	}
 	
-	// 글 저장하기
-	@PostMapping("/create.do")
-	public String createRisk(RiskSaveRequest riskSaveRequest) throws Exception {
+	// 리스크 저장하기
+	@PostMapping("/save.do")
+	public String saveRisk(RiskSaveRequest riskSaveRequest) throws Exception {
 		
-		riskService.createRisk(riskSaveRequest);
+		riskService.saveRisk(riskSaveRequest);
 		return "redirect:/risk/riskBoard.do";
 	}
 	

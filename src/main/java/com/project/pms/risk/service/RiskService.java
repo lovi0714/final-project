@@ -32,8 +32,8 @@ public class RiskService {
 	}
 	
 	// 리스크 등록
-	public void createRisk(RiskSaveRequest riskSaveRequest) {
-		dao.createRisk(riskSaveRequest);
+	public void saveRisk(RiskSaveRequest riskSaveRequest) {
+		dao.saveRisk(riskSaveRequest);
 	}
 	
 	//리스크 삭제
@@ -41,6 +41,7 @@ public class RiskService {
 		dao.deleteRisk(riskId);
 	}
 	
+	/* SELECT BOX 목록 가져오기 */
 	
 	// 사원 리스트
 	public List<Emp> getEmpList() {

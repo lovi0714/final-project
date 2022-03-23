@@ -62,7 +62,7 @@
 		WHERE tr.RISK_ID = #{riskId}
  	</select>
  	
- 	<!-- 리스크 등록 -->
+ 	<!-- 리스크 등록 
  	<insert id="createRisk" parameterType="riskSaveRequest">
  	INSERT INTO SCOTT.TBL_RISK(
 		RISK_ID,
@@ -98,6 +98,63 @@
 	sysdate
 	)
  	</insert>
+ 	-->
+ 	
+ 	<!-- 글 저장 테스트 -->
+ 	<update id="saveRisk" parameterType="riskSaveRequest">
+	MERGE INTO SCOTT.TBL_RISK tr
+	USING dual ON (
+	tr.RISK_ID = #{riskId}
+	)
+	WHEN MATCHED THEN 
+		UPDATE SET
+			TITLE = #{title, jdbcType=VARCHAR},
+			R_TYPE_ID = #{rTypeId, jdbcType=INTEGER},
+			PRJ_ID = #{prjId, jdbcType=VARCHAR},
+			R_STATUS_ID = #{rStatusId, jdbcType=INTEGER},
+			T_NAME = #{tName,jdbcType=VARCHAR},
+			R_CONTENT = #{rContent, jdbcType=CLOB},
+			ACTIVATOR = #{activator, jdbcType=VARCHAR},
+			A_CONTENT = #{aContent, jdbcType=CLOB},
+			DUE_AT = TO_DATE(#{dueAt, jdbcType=VARCHAR}, 'YYYY-MM-DD'),
+			UPDATE_AT = sysdate
+		WHEN NOT MATCHED THEN 
+			INSERT
+			(
+			RISK_ID,
+			TITLE,
+			R_TYPE_ID,
+			PRJ_ID,
+			R_STATUS_ID,
+			EMP_ID ,
+			T_NAME,
+			R_CONTENT,
+			PRESENTER,
+			ACTIVATOR,
+			A_CONTENT,
+			DUE_AT,
+			CREATE_AT ,
+			UPDATE_AT 
+			)
+			VALUES
+			(
+			RISK_SEQ.NEXTVAL,
+			#{title},
+			#{rTypeId},
+			#{prjId},
+			#{rStatusId},
+			#{empId},
+			#{tName},
+			#{rContent},
+			#{empName},
+			#{activator},
+			#{aContent},
+			TO_DATE(#{dueAt}, 'YYYY-MM-DD'),
+			sysdate,
+			sysdate
+			)
+ 	</update>
+ 	
  	
  	<!-- 사원정보 -->
  	<select id="getEmpList" resultType="emp">
