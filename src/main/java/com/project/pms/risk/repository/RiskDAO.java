@@ -23,6 +23,7 @@ public interface RiskDAO {
 	
 	// 리스크 저장하기
 	public void saveRisk(RiskSaveRequest riskSaveRequest);
+	public void setComAt(RiskSaveRequest riskSaveRequest);
 	
 	// 리스크 삭제
 	void deleteRisk(int riskId);

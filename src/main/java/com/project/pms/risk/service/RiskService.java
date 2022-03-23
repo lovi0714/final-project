@@ -34,6 +34,7 @@ public class RiskService {
 	// 리스크 등록
 	public void saveRisk(RiskSaveRequest riskSaveRequest) {
 		dao.saveRisk(riskSaveRequest);
+		dao.setComAt(riskSaveRequest);
 	}
 	
 	//리스크 삭제

@@ -62,45 +62,7 @@
 		WHERE tr.RISK_ID = #{riskId}
  	</select>
  	
- 	<!-- 리스크 등록 
- 	<insert id="createRisk" parameterType="riskSaveRequest">
- 	INSERT INTO SCOTT.TBL_RISK(
-		RISK_ID,
-		TITLE,
-		R_TYPE_ID,
-		PRJ_ID,
-		R_STATUS_ID,
-		EMP_ID ,
-		T_NAME,
-		R_CONTENT,
-		PRESENTER,
-		ACTIVATOR,
-		A_CONTENT,
-		DUE_AT,
-		CREATE_AT ,
-		UPDATE_AT 
-	)
-	VALUES
-	(
-	RISK_SEQ.NEXTVAL,
-	#{title},
-	#{rTypeId},
-	#{prjId},
-	#{rStatusId},
-	#{empId},
-	#{tName},
-	#{rContent},
-	#{empName},
-	#{activator},
-	#{aContent},
-	TO_DATE(#{dueAt}, 'YYYY-MM-DD'),
-	sysdate,
-	sysdate
-	)
- 	</insert>
- 	-->
- 	
- 	<!-- 글 저장 테스트 -->
+ 	<!-- 리스크 저장 -->
  	<update id="saveRisk" parameterType="riskSaveRequest">
 	MERGE INTO SCOTT.TBL_RISK tr
 	USING dual ON (
@@ -153,6 +115,12 @@
 			sysdate,
 			sysdate
 			)
+ 	</update>
+ 	
+ 	<update id="setComAt" parameterType="riskSaveRequest">
+ 		UPDATE SCOTT.TBL_RISK
+ 		SET COM_AT = SYSDATE
+ 		WHERE R_STATUS_ID = 5
  	</update>
  	
  	
