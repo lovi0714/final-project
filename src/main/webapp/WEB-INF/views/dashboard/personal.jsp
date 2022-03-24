@@ -44,7 +44,7 @@
 						<tbody>
                    			<c:forEach var="project" items="${MyProjectList}">
 								<tr>
-		                            <td>${project.projectId}</td>
+		                            <td><a href="${path}/project/detail.do?projectId=${project.projectId}">${project.projectId}</a></td>
 		                            <td>${project.title}</td>
 		                            <td>${project.pmDeptName}</td>
 		                            <td>${project.pmName}</td>
@@ -148,6 +148,43 @@
 	});
 </script>
 <script>
+	// 작업 진행상태
+	var statusList = [];
+	var countList = [];
+	
+	<c:forEach var="task" items="${MyTaskStatusChart}" >		
+		statusList.push('${task.status}');
+		countList.push(${task.count});
+	</c:forEach>
+
+	const ctx3 = document.getElementById('douChart3');
+	const douChart3 = new Chart(ctx3, {
+		type : 'doughnut',
+		data : {
+			labels : statusList,
+			datasets : [ {
+				data : countList,
+				backgroundColor : [
+					'rgba(170, 170, 170, 0.5)',
+					'rgba(75, 192, 192, 0.5)',
+					'rgba(255, 99, 132, 0.5)',
+					'rgba(54, 162, 235, 0.5)'
+				],
+				hoverOffset : 4
+			} ],
+		},
+		options : {
+			responsive : true,
+			maintainAspectRatio : false,
+			plugins : {
+				legend : {
+					position : 'bottom'
+				}
+			}
+		}
+	});
+
+	// 리스크 현황 select option
 	$(document).ready(function(){
 		$("#chart2").hide()
 		$("#douChart5").hide()
@@ -168,44 +205,6 @@
 		 });
 	});
 	
-	// 작업 진행상태
-	var statusList = [];
-	var countList = [];
-	
-	<c:forEach var="task" items="${MyTaskStatusChart}" >		
-		statusList.push('${task.status}');
-		countList.push(${task.count});
-	</c:forEach>
-
-	const ctx3 = document.getElementById('douChart3');
-	const douChart3 = new Chart(ctx3, {
-		type : 'doughnut',
-		data : {
-			labels : statusList,
-			datasets : [ {
-				label : 'My First Dataset',
-				data : countList,
-				backgroundColor : [
-					'rgba(54, 162, 235, 0.5)',
-					'rgba(153, 102, 255, 0.5)',
-					'rgba(255, 99, 132, 0.5)',
-					'rgba(255, 206, 86, 0.5)',
-					'rgba(75, 192, 192, 0.5)'
-				],
-				hoverOffset : 4
-			} ],
-		},
-		options : {
-			responsive : true,
-			maintainAspectRatio : false,
-			plugins : {
-				legend : {
-					position : 'bottom'
-				}
-			}
-		}
-	});
-
 	// 리스크 현황: 상태별
 	var statusList2 = [];
 	var countList2 = [];

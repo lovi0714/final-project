@@ -21,6 +21,7 @@
 	</resultMap>
 	
 	<resultMap type="dashboardChart" id="dashboardChartMap">
+		<result column="status_id" property="statusId"/>
 		<result column="status" property="status"/>
 		<result column="count" property="count"/>
 	</resultMap>
@@ -60,14 +61,23 @@
 	<!-- 월별 프로젝트 -->
 	
 	<!-- 리스크 현황: 상태별 -->
-	<select id="getRiskStatusChart" resultMap="dashboardChartMap">
+	<select id="getRiskStatusChart1" resultMap="dashboardChartMap">
 		SELECT r_status AS status, count(*) AS count 
-		FROM (SELECT tr.r_status_id AS status_count, trs.R_STATUS 
+		FROM (SELECT tr.r_status_id, trs.r_status 
 				FROM TBL_R_STATUS trs,TBL_RISK tr 
-				WHERE tr.R_STATUS_ID = trs.R_STATUS_ID) 
-		GROUP BY r_status
+				WHERE tr.r_status_id = trs.r_status_id) 
+		GROUP BY r_status	
 	</select>
 	
+	<!-- 리스크 현황: 유형별 -->
+	<select id="getRiskStatusChart2" resultMap="dashboardChartMap">
+		SELECT r_type_name AS status, count(*) AS count 
+		FROM (SELECT tr.r_type_id, rt.r_type_name 
+				FROM TBL_RISK tr, TBL_R_TYPE rt
+				WHERE tr.r_type_id = rt.r_type_id) 
+		GROUP BY r_type_name
+	</select>
+		
 	<!-- ***개인 대시보드*** -->
 	<!-- 참여 프로젝트 -->
 	<select id="getMyProjectList" resultMap="dashboardProjectMap" parameterType="int">
@@ -95,12 +105,15 @@
 	
 	<!-- 작업 진행상태 -->
 	<select id="getMyTaskStatusChart" resultMap="dashboardChartMap" parameterType="int">		
-		SELECT t_status AS status, count(*) AS count
-		FROM (SELECT tt.t_status_id
-				FROM TBL_RESOURCE tr, TBL_TASK tt 
-				WHERE tr.res_id = tt.res_id AND emp_id = #{empId}) tr, tbl_t_status tts
-		WHERE tr.t_status_id = tts.t_status_id
-		GROUP BY t_status
+		SELECT ts.T_STATUS_id, ts.t_status AS status, nvl(count, 0) AS count
+		FROM (SELECT t_status_id, count(*) AS count
+				FROM (SELECT tt.t_status_id
+					FROM TBL_RESOURCE tr, TBL_TASK tt
+					WHERE tr.res_id = tt.res_id 
+						AND tr.emp_id = #{empId}) 
+				GROUP BY t_status_id) trtt RIGHT JOIN TBL_T_STATUS ts
+		ON trtt.t_status_id = ts.t_status_id
+		ORDER BY t_status_id 
 	</select>
 	
 	<!-- 리스크 현황: 상태별 -->

@@ -18,8 +18,11 @@ public interface DashboardDAO {
 	// 프로젝트 현황
 	public List<DashboardProject> getProjectList();
 	
-	// 리스크 현황
-	public List<DashboardChart> getRiskStatusChart();
+	// 리스크 현황: 상태별
+	public List<DashboardChart> getRiskStatusChart1();
+
+	// 리스크 현황: 유형별
+	public List<DashboardChart> getRiskStatusChart2();
 	
 	// ** 개인 대시보드 **
 	// 참여 프로젝트

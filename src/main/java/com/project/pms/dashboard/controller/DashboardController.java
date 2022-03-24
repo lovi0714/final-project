@@ -22,7 +22,8 @@ public class DashboardController {
 		
 		d.addAttribute("NoticeList", service.getNoticeList());
 		d.addAttribute("ProjectList", service.getProjectList());
-		d.addAttribute("RiskStatusChart", service.getRiskStatusChart());
+		d.addAttribute("RiskStatusChart1", service.getRiskStatusChart1());
+		d.addAttribute("RiskStatusChart2", service.getRiskStatusChart2());
 		
 		return "dashboard/general";
 	}

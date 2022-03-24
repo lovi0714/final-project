@@ -29,10 +29,16 @@ public class DashboardService {
 		return dao.getProjectList();
 	}
 	
-	// 리스크 현황
-	public List<DashboardChart> getRiskStatusChart() {
+	// 리스크 현황: 상태별
+	public List<DashboardChart> getRiskStatusChart1() {
 		
-		return dao.getRiskStatusChart();
+		return dao.getRiskStatusChart1();
+	}
+	
+	// 리스크 현황: 유형별
+	public List<DashboardChart> getRiskStatusChart2() {
+		
+		return dao.getRiskStatusChart2();
 	}
 	
 	// *** 개인 대시보드 ***

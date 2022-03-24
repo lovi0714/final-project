@@ -94,7 +94,7 @@
 						<tbody>
                     		<c:forEach var="project" items="${ProjectList}">
 								<tr>
-		                            <td>${project.projectId}</td>
+		                            <td><a href="${path}/project/detail.do?projectId=${project.projectId}">${project.projectId}</a></td>
 		                            <td>${project.title}</td>
 		                            <td>${project.pmDeptName}</td>
 		                            <td>${project.pmName}</td>
@@ -168,8 +168,11 @@
 								<form class="form form-horizontal">
 									<div class="form-body">
 										<div class="row"></div>
-										<div style="height: 300px">
+										<div id="chart1" style="height: 300px">
 											<canvas id="douChart"></canvas>
+										</div>	
+										<div id="chart2" style="display: none; height: 300px">
+											<canvas id="douChart2"></canvas>
 										</div>
 									</div>
 								</form>
@@ -219,65 +222,54 @@
 		"order": [5, 'desc']
 	});
 	
-	// 월별 프로젝트
-										
-	const ctx = document.getElementById('myChart');
-	const myChart = new Chart(ctx, {
-		type : 'bar',
-		data : {
-			labels : [ 'Red',
-					'Blue',
-					'Yellow',
-					'Green',
-					'Purple',
-					'Orange',
-					'Red', 'Blue',
-					'Yellow',
-					'Green',
-					'Purple',
-					'Orange' ],
-			datasets : [ {
-				label : '# of Votes',
-				data : [ 12, 19, 3,
-						5, 2, 3,
-						12, 19, 3,
-						5, 2, 3 ],
-				backgroundColor : [
-						'rgba(255, 99, 132, 0.2)',
-						'rgba(54, 162, 235, 0.2)',
-						'rgba(255, 206, 86, 0.2)',
-						'rgba(75, 192, 192, 0.2)',
-						'rgba(153, 102, 255, 0.2)',
-						'rgba(255, 159, 64, 0.2)',
-						'rgba(255, 99, 132, 0.2)',
-						'rgba(54, 162, 235, 0.2)',
-						'rgba(255, 206, 86, 0.2)',
-						'rgba(75, 192, 192, 0.2)',
-						'rgba(153, 102, 255, 0.2)',
-						'rgba(255, 159, 64, 0.2)' ],
-				borderColor : [
-						'rgba(255, 99, 132, 1)',
-						'rgba(54, 162, 235, 1)',
-						'rgba(255, 206, 86, 1)',
-						'rgba(75, 192, 192, 1)',
-						'rgba(153, 102, 255, 1)',
-						'rgba(255, 159, 64, 1)',
-						'rgba(255, 99, 132, 1)',
-						'rgba(54, 162, 235, 1)',
-						'rgba(255, 206, 86, 1)',
-						'rgba(75, 192, 192, 1)',
-						'rgba(153, 102, 255, 1)',
-						'rgba(255, 159, 64, 1)', ],
-				borderWidth : 1
-			} ]
-		},
+	// 월별 프로젝트					
+	   const ctx = document.getElementById('myChart');
+	   const myChart = new Chart(ctx, {
+	      type : 'bar',
+	      data : {
+	         labels : [ '2022-03', '2022-04', '2022-05' ],
+	         datasets : [ {
+	            label : '시작전',
+	            data : [ 10, 20, 30 ],
+	            backgroundColor : 'rgba(170, 170, 170, 0.5)',
+	            borderWidth : 1
+	         },
+	         {
+	            label : '정상진행',
+	            data : [ 10, 20, 30 ],
+	            backgroundColor : 'rgba(75, 192, 192, 0.5)',
+	            borderWidth : 1
+	         },
+	         {
+	            label : '지연진행',
+	            data : [ 10, 20, 30 ],
+	            backgroundColor : 'rgba(255, 99, 132, 0.5)',
+	            borderWidth : 1
+	         },
+	         {
+	            label : '완료',
+	            data : [ 10, 20, 30 ],
+	            backgroundColor : 'rgba(54, 162, 235, 0.5)',
+	            borderWidth : 1
+	         },
+	         {
+	            label : '중단',
+	            data : [0],
+	            backgroundColor : 'rgba(255, 206, 86, 0.5)',
+	            borderWidth : 1
+	         }]
+		},	
 		options : {
 			responsive : true,
 			maintainAspectRatio : false,
 			scales : {
-				y : {
-					beginAtZero : true
-				}
+			      x: {
+			          stacked: true,
+			        },
+			        y: {
+			          stacked: true,
+						beginAtZero : true
+			        }
 			},
 			plugins : {
 				legend : {
@@ -286,12 +278,33 @@
 			}
 		}
 	});
-										
-	// 리스크 현황
+	
+	// 리스크 현황 select option
+	$(document).ready(function(){
+		$("#chart2").hide()
+		$("#douChart2").hide()
+		
+		$("#riskChart").change(function(){
+		    if($(this).val() == 1) {
+		    	$("#chart1").show()
+		    	$("#chart2").hide()
+		    	$("#douChart").show()
+		    	$("#douChart2").hide()
+		    	
+		    } else if ($(this).val() == 2) {
+		    	$("#chart1").hide()
+		    	$("#chart2").show()
+		    	$("#douChart").hide()
+		    	$("#douChart2").show()   
+		    }   
+		 });
+	});
+	
+	// 리스크 현황: 상태별
 	var statusList = [];
 	var countList = [];
 	
-	<c:forEach var="risk" items="${RiskStatusChart}" >		
+	<c:forEach var="risk" items="${RiskStatusChart1}" >		
 		statusList.push('${risk.status}');
 		countList.push(${risk.count});
 	</c:forEach>
@@ -302,8 +315,45 @@
 		data: {
 			labels: statusList,
 			datasets: [ {
-				label: 'My First Dataset',
 				data: countList,
+				backgroundColor: [
+					'rgba(54, 162, 235, 0.5)',
+					'rgba(153, 102, 255, 0.5)',
+					'rgba(255, 99, 132, 0.5)',
+					'rgba(255, 206, 86, 0.5)',
+					'rgba(75, 192, 192, 0.5)'
+				],
+				hoverOffset: 4
+			} ],
+		},
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					position : 'bottom'
+				}
+			}
+		}
+	});
+	
+	// 리스크 현황: 유형별
+	var statusList2 = [];
+	var countList2 = [];
+	
+	<c:forEach var="risk" items="${RiskStatusChart2}" >		
+		statusList2.push('${risk.status}');
+		countList2.push(${risk.count});
+	</c:forEach>
+	
+	const ctx3 = document.getElementById('douChart2');
+	const douChart2 = new Chart(ctx3, {
+		type: 'doughnut',
+		data: {
+			labels: statusList2,
+			datasets: [ {
+				label: 'My First Dataset',
+				data: countList2,
 				backgroundColor: [
 					'rgba(54, 162, 235, 0.5)',
 					'rgba(153, 102, 255, 0.5)',
