@@ -17,13 +17,13 @@ public class EmpService {
 	// 로그인 체크
 	public boolean loginCheck(Emp emp, HttpSession session) {
 		
-			Emp emp2 = empInfo(emp);
-			// 세션 변수 등록
+		Emp emp2 = empInfo(emp);
+		// 세션 변수 등록
 			
-			session.setAttribute("account", emp2.getAccount());
-			session.setAttribute("name", emp2.getName());
-			session.setAttribute("authId", emp2.getAuthId());
-			session.setAttribute("empId", emp2.getEmpId());
+		session.setAttribute("account", emp2.getAccount());
+		session.setAttribute("name", emp2.getName());
+		session.setAttribute("authId", emp2.getAuthId());
+		session.setAttribute("empId", emp2.getEmpId());
 		return true;
 	}			
 	

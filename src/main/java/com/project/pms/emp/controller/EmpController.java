@@ -28,17 +28,18 @@ public class EmpController {
 	
 	/* 로그인 처리 */
 	@PostMapping("loginCheck.do")
-	public ModelAndView loginCheck(@ModelAttribute Emp emp, HttpSession session) {
+	public String loginCheck(Emp emp, HttpSession session) {
 		boolean result = empService.loginCheck(emp, session);
-		ModelAndView mav = new ModelAndView();
-		if (result == true) { // 로그인 성공
-			mav.setViewName("dashboard/general");
-			mav.addObject("msg", "success");
+		// ModelAndView mav = new ModelAndView();
+		if (emp != null) { // 로그인 성공
+			return "redirect:/dashboard/general.do";
+			// mav.addObject("msg", "success");
 		} else {
-			mav.setViewName("emp/login");
-			mav.addObject("msg", "fail");
+			// mav.setViewName("emp/login");
+			// mav.addObject("msg", "fail");
+			return "redirect:/emp/login.do";
 		}
-		return mav;
+		
 	}
 	
 	/* 로그아웃 처리 */
