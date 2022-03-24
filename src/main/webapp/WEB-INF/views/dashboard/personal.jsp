@@ -29,7 +29,7 @@
 					<a href="${path}/myTask/list.do">더보기</a>
 				</div>
 				<div class="card-body">
-					<table class="table" id="table1">
+					<table class="table" id="myProjectList">
 						<thead>
 							<tr>
 								<th>프로젝트 코드</th>
@@ -89,7 +89,7 @@
 									<div class="form-body">
 										<div class="row"></div>
 										<div style="height: 300px">
-											<canvas id="douChart3"></canvas>
+											<canvas id="myTaskStatusChart"></canvas>
 										</div>
 									</div>
 								</form>
@@ -112,10 +112,10 @@
 									<div class="form-body">
 										<div class="row"></div>
 										<div id="chart1" style="height: 300px">
-											<canvas id="douChart4"></canvas>
+											<canvas id="MyRiskStatusChart1"></canvas>
 										</div>
 										<div id="chart2" style="display: none; height: 300px">
-											<canvas id="douChart5"></canvas>
+											<canvas id="MyRiskStatusChart2"></canvas>
 										</div>
 									</div>
 								</form>
@@ -133,7 +133,7 @@
 
 <script>	
 	// 참여 프로젝트
-	$("#table1").DataTable({
+	$("#myProjectList").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false, 
@@ -146,29 +146,28 @@
 	        "zeroRecords": "참여중인 프로젝트가 없습니다."
 	    }
 	});
-</script>
-<script>
+	
 	// 작업 진행상태
-	var statusList = [];
-	var countList = [];
+	let myTaskStatusList = [];
+	let myTaskCountList = [];
 	
 	<c:forEach var="task" items="${MyTaskStatusChart}" >		
-		statusList.push('${task.status}');
-		countList.push(${task.count});
+		myTaskStatusList.push('${task.status}');
+		myTaskCountList.push(${task.count});
 	</c:forEach>
 
-	const ctx3 = document.getElementById('douChart3');
-	const douChart3 = new Chart(ctx3, {
+	const mtsc = document.getElementById('myTaskStatusChart');
+	const myTaskStatusChart = new Chart(mtsc, {
 		type : 'doughnut',
 		data : {
-			labels : statusList,
+			labels : myTaskStatusList,
 			datasets : [ {
-				data : countList,
+				data : myTaskCountList,
 				backgroundColor : [
-					'rgba(170, 170, 170, 0.5)',
-					'rgba(75, 192, 192, 0.5)',
-					'rgba(255, 99, 132, 0.5)',
-					'rgba(54, 162, 235, 0.5)'
+					'rgba(170, 170, 170, 0.5)', // 시작전(회색)
+					'rgba(75, 192, 192, 0.5)', // 정상진행(연두색)
+					'rgba(255, 99, 132, 0.5)', // 지연진행(분홍색)
+					'rgba(54, 162, 235, 0.5)' // 완료(하늘색)
 				],
 				hoverOffset : 4
 			} ],
@@ -184,50 +183,44 @@
 		}
 	});
 
-	// 리스크 현황 select option
+	// 리스크 현황 (select / option)
 	$(document).ready(function(){
 		$("#chart2").hide()
-		$("#douChart5").hide()
 		
 		$("#riskChart").change(function(){
 		    if($(this).val() == 1) {
 		    	$("#chart1").show()
 		    	$("#chart2").hide()
-		    	$("#douChart4").show()
-		    	$("#douChart5").hide()
 		    	
 		    } else if ($(this).val() == 2) {
 		    	$("#chart1").hide()
-		    	$("#chart2").show()
-		    	$("#douChart4").hide()
-		    	$("#douChart5").show()   
-		    }   
-		 });
+		    	$("#chart2").show() 
+			}   
+		});
 	});
 	
 	// 리스크 현황: 상태별
-	var statusList2 = [];
-	var countList2 = [];
+	var myRiskStatusList1 = [];
+	var myRiskCountList1 = [];
 	
 	<c:forEach var="risk" items="${MyRiskStatusChart1}" >		
-		statusList2.push('${risk.status}');
-		countList2.push(${risk.count});
+		myRiskStatusList1.push('${risk.status}');
+		myRiskCountList1.push(${risk.count});
 	</c:forEach>
 
-	const ctx4 = document.getElementById('douChart4');
-	const douChart4 = new Chart(ctx4, {
+	const mrsc1 = document.getElementById('MyRiskStatusChart1');
+	const MyRiskStatusChart1 = new Chart(mrsc1, {
 		type : 'doughnut',
 		data : {
-			labels : statusList2,
+			labels : myRiskStatusList1,
 			datasets : [ {
-				label : 'My First Dataset',
-				data : countList2,
+				data : myRiskCountList1,
 				backgroundColor : [
-					'rgba(54, 162, 235, 0.5)',
-					'rgba(153, 102, 255, 0.5)',
-					'rgba(255, 99, 132, 0.5)',
-					'rgba(255, 206, 86, 0.5)',
-					'rgba(75, 192, 192, 0.5)'
+					'rgba(170, 170, 170, 0.5)', // 오픈(회색)
+					'rgba(75, 192, 192, 0.5)', // 진행(초록색)
+					'rgba(153, 102, 255, 0.5)', // 취소(보라색)
+					'rgba(255, 206, 86, 0.5)', // 홀드(노랑색)
+					'rgba(54, 162, 235, 0.5)' // 조치완료(파랑색)
 				],
 				hoverOffset : 4
 			} ],
@@ -244,28 +237,26 @@
 	});
 	
 	// 리스크 현황: 유형별
-	var statusList3 = [];
-	var countList3 = [];
+	var myRiskStatusList2 = [];
+	var myRiskCountList2 = [];
 	
 	<c:forEach var="risk" items="${MyRiskStatusChart2}" >		
-		statusList3.push('${risk.status}');
-		countList3.push(${risk.count});
+		myRiskStatusList2.push('${risk.status}');
+		myRiskCountList2.push(${risk.count});
 	</c:forEach>
 
-	const ctx5 = document.getElementById('douChart5');
-	const douChart5 = new Chart(ctx5, {
+	const mrsc2 = document.getElementById('MyRiskStatusChart2');
+	const MyRiskStatusChart2 = new Chart(mrsc2, {
 		type : 'doughnut',
 		data : {
-			labels : statusList3,
+			labels : myRiskStatusList2,
 			datasets : [ {
-				label : 'My First Dataset',
-				data : countList3,
+				data : myRiskCountList2,
 				backgroundColor : [
-					'rgba(54, 162, 235, 0.5)',
-					'rgba(153, 102, 255, 0.5)',
-					'rgba(255, 99, 132, 0.5)',
-					'rgba(255, 206, 86, 0.5)',
-					'rgba(75, 192, 192, 0.5)'
+					'rgba(54, 162, 235, 0.5)', // 고객변심(파랑색)
+					'rgba(255, 99, 132, 0.5)', // 지연진행(분홍색)
+					'rgba(153, 102, 255, 0.5)', // 품질문제(보라색)
+					'rgba(255, 206, 86, 0.5)', // 기타사유(노랑색)
 				],
 				hoverOffset : 4
 			} ],
