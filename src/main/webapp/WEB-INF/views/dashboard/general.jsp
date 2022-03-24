@@ -29,7 +29,7 @@
 					<a href="${path}/community/noticeList.do">더보기</a>
 				</div>
 				<div class="card-body">
-					<table class="table" id="table1">
+					<table class="table" id="noticeList">
 						<thead>
 							<tr>
 								<th>제목</th>
@@ -79,7 +79,7 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<table class="table" id="table2">
+					<table class="table" id="projectList">
 						<thead>
 							<tr>
 								<th>프로젝트코드</th>
@@ -169,10 +169,10 @@
 									<div class="form-body">
 										<div class="row"></div>
 										<div id="chart1" style="height: 300px">
-											<canvas id="douChart"></canvas>
+											<canvas id="riskStatusChart1"></canvas>
 										</div>	
 										<div id="chart2" style="display: none; height: 300px">
-											<canvas id="douChart2"></canvas>
+											<canvas id="riskStatusChart2"></canvas>
 										</div>
 									</div>
 								</form>
@@ -191,7 +191,7 @@
 
 <script>
 	// 공지사항
-	$("#table1").DataTable({
+	$("#noticeList").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false, 
@@ -208,7 +208,7 @@
 	});
 	
 	// 프로젝트 현황
-	$("#table2").DataTable({
+	$("#projectList").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false, 
@@ -279,49 +279,44 @@
 		}
 	});
 	
-	// 리스크 현황 select option
+	// 리스크 현황 (select / option)
 	$(document).ready(function(){
 		$("#chart2").hide()
-		$("#douChart2").hide()
 		
 		$("#riskChart").change(function(){
 		    if($(this).val() == 1) {
 		    	$("#chart1").show()
 		    	$("#chart2").hide()
-		    	$("#douChart").show()
-		    	$("#douChart2").hide()
 		    	
 		    } else if ($(this).val() == 2) {
 		    	$("#chart1").hide()
-		    	$("#chart2").show()
-		    	$("#douChart").hide()
-		    	$("#douChart2").show()   
+		    	$("#chart2").show()  
 		    }   
 		 });
 	});
 	
 	// 리스크 현황: 상태별
-	var statusList = [];
-	var countList = [];
+	var riskStatusList1 = [];
+	var riskCountList2 = [];
 	
 	<c:forEach var="risk" items="${RiskStatusChart1}" >		
-		statusList.push('${risk.status}');
-		countList.push(${risk.count});
+		riskStatusList1.push('${risk.status}');
+		riskCountList2.push(${risk.count});
 	</c:forEach>
 	
-	const ctx2 = document.getElementById('douChart');
-	const douChart = new Chart(ctx2, {
+	const rsc1 = document.getElementById('riskStatusChart1');
+	const riskStatusChart1 = new Chart(rsc1, {
 		type: 'doughnut',
 		data: {
-			labels: statusList,
+			labels: riskStatusList1,
 			datasets: [ {
-				data: countList,
+				data: riskCountList2,
 				backgroundColor: [
-					'rgba(54, 162, 235, 0.5)',
-					'rgba(153, 102, 255, 0.5)',
-					'rgba(255, 99, 132, 0.5)',
-					'rgba(255, 206, 86, 0.5)',
-					'rgba(75, 192, 192, 0.5)'
+					'rgba(170, 170, 170, 0.5)', // 오픈(회색)
+					'rgba(75, 192, 192, 0.5)', // 진행(초록색)
+					'rgba(153, 102, 255, 0.5)', // 취소(보라색)
+					'rgba(255, 206, 86, 0.5)', // 홀드(노랑색)
+					'rgba(54, 162, 235, 0.5)' // 조치완료(파랑색)
 				],
 				hoverOffset: 4
 			} ],
@@ -338,28 +333,26 @@
 	});
 	
 	// 리스크 현황: 유형별
-	var statusList2 = [];
-	var countList2 = [];
+	var riskStatusList2 = [];
+	var riskCountList2 = [];
 	
 	<c:forEach var="risk" items="${RiskStatusChart2}" >		
-		statusList2.push('${risk.status}');
-		countList2.push(${risk.count});
+		riskStatusList2.push('${risk.status}');
+		riskCountList2.push(${risk.count});
 	</c:forEach>
 	
-	const ctx3 = document.getElementById('douChart2');
-	const douChart2 = new Chart(ctx3, {
+	const rsc2 = document.getElementById('riskStatusChart2');
+	const riskStatusChart2 = new Chart(rsc2, {
 		type: 'doughnut',
 		data: {
-			labels: statusList2,
+			labels: riskStatusList2,
 			datasets: [ {
-				label: 'My First Dataset',
-				data: countList2,
+				data: riskCountList2,
 				backgroundColor: [
-					'rgba(54, 162, 235, 0.5)',
-					'rgba(153, 102, 255, 0.5)',
-					'rgba(255, 99, 132, 0.5)',
-					'rgba(255, 206, 86, 0.5)',
-					'rgba(75, 192, 192, 0.5)'
+					'rgba(54, 162, 235, 0.5)', // 고객변심(파랑색)
+					'rgba(255, 99, 132, 0.5)', // 지연진행(분홍색)
+					'rgba(153, 102, 255, 0.5)', // 품질문제(보라색)
+					'rgba(255, 206, 86, 0.5)', // 기타사유(노랑색)
 				],
 				hoverOffset: 4
 			} ],

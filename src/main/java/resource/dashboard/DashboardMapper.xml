@@ -62,20 +62,22 @@
 	
 	<!-- 리스크 현황: 상태별 -->
 	<select id="getRiskStatusChart1" resultMap="dashboardChartMap">
-		SELECT r_status AS status, count(*) AS count 
-		FROM (SELECT tr.r_status_id, trs.r_status 
-				FROM TBL_R_STATUS trs,TBL_RISK tr 
-				WHERE tr.r_status_id = trs.r_status_id) 
-		GROUP BY r_status	
+		SELECT trs.r_status_id AS status_id, r_status AS status, nvl(count, 0) AS count
+		FROM (SELECT r_status_id, count(*) AS count
+				FROM tbl_risk
+				GROUP BY r_status_id) tr RIGHT JOIN TBL_R_STATUS trs 
+		ON tr.r_status_id = trs.r_status_id 
+		ORDER BY status_id
 	</select>
 	
 	<!-- 리스크 현황: 유형별 -->
 	<select id="getRiskStatusChart2" resultMap="dashboardChartMap">
-		SELECT r_type_name AS status, count(*) AS count 
-		FROM (SELECT tr.r_type_id, rt.r_type_name 
-				FROM TBL_RISK tr, TBL_R_TYPE rt
-				WHERE tr.r_type_id = rt.r_type_id) 
-		GROUP BY r_type_name
+		SELECT trt.r_type_id AS status_id, r_type_name AS status, nvl(count, 0) AS count
+		FROM (SELECT r_type_id, count(*) AS count
+				FROM tbl_risk
+				GROUP BY r_type_id) tr RIGHT JOIN TBL_R_TYPE trt 
+		ON tr.r_type_id = trt.r_type_id 
+		ORDER BY status_id
 	</select>
 		
 	<!-- ***개인 대시보드*** -->
@@ -105,14 +107,14 @@
 	
 	<!-- 작업 진행상태 -->
 	<select id="getMyTaskStatusChart" resultMap="dashboardChartMap" parameterType="int">		
-		SELECT ts.t_status_id AS status_id, ts.t_status AS status, nvl(count, 0) AS count
+		SELECT tts.t_status_id AS status_id, tts.t_status AS status, nvl(count, 0) AS count
 		FROM (SELECT t_status_id, count(*) AS count
 				FROM (SELECT tt.t_status_id
 					FROM TBL_RESOURCE tr, TBL_TASK tt
 					WHERE tr.res_id = tt.res_id 
 						AND tr.emp_id = #{empId}) 
-				GROUP BY t_status_id) trtt RIGHT JOIN TBL_T_STATUS ts
-		ON trtt.t_status_id = ts.t_status_id
+				GROUP BY t_status_id) trtt RIGHT JOIN TBL_T_STATUS tts
+		ON trtt.t_status_id = tts.t_status_id
 		ORDER BY status_id 
 	</select>
 	
@@ -131,14 +133,14 @@
 	
 	<!-- 리스크 현황: 유형별 -->
 	<select id="getMyRiskStatusChart2" resultMap="dashboardChartMap" parameterType="int">
-		SELECT rt.r_type_id AS status_id, rt.r_type_name AS status, nvl(count, 0) AS count
+		SELECT trt.r_type_id AS status_id, trt.r_type_name AS status, nvl(count, 0) AS count
 		FROM (SELECT r_type_id, count(*) AS count
 				FROM (SELECT tr.prj_id
 						FROM TBL_RESOURCE tr 
 						WHERE emp_id = #{empId}) tr, tbl_risk tr2
 				WHERE tr.prj_id = tr2.prj_id
-				GROUP BY r_type_id) trtr2 RIGHT JOIN TBL_R_TYPE rt
-		ON trtr2.r_type_id = rt.r_type_id
+				GROUP BY r_type_id) trtr2 RIGHT JOIN TBL_R_TYPE trt
+		ON trtr2.r_type_id = trt.r_type_id
 		ORDER BY status_id
 	</select>
 </mapper>

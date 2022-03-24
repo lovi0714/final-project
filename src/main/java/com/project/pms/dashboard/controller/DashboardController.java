@@ -1,5 +1,7 @@
 package com.project.pms.dashboard.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +32,9 @@ public class DashboardController {
 	
 	// *** 개인 대시보드 ***
 	@GetMapping("/personal.do")
-	public String getDashboardPersonal(Model d) {
+	public String getDashboardPersonal(HttpSession session, Model d) {
 		System.out.println("getDashboardPersonal controller called...");
-		int empId = 3; // 세션 처리 예정
+		int empId = (int)session.getAttribute("empId");
 		
 		d.addAttribute("MyProjectList", service.getMyProjectList(empId));
 		d.addAttribute("MyTaskStatusChart", service.getMyTaskStatusChart(empId));
