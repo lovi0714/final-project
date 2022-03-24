@@ -54,7 +54,7 @@
 			events: function(info, successCallback, failureCallback) {
 				$.ajax({
 					type: "post",
-					url: "${path}/task/calendarList.do",
+					url: "${path}/myTask/calendarList.do",
 					dataType: "json",
 					success: function(data) {
 						console.log(data.calendarList)
@@ -109,7 +109,7 @@
 				$("#calendarForm").submit();
 		});
 	});
-	
+
 </script>
 
 <!-- 

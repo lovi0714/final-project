@@ -1,5 +1,7 @@
 package com.project.pms.myTask.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +28,10 @@ public class CalendarController {
 	}
 
 	@PostMapping("calendarList.do")
-	public String getCalendarList(Model d) {
+	public String getCalendarList(HttpSession session, Model d) {
 		System.out.println("calendarList controller called...");
-		int empId = 1;
+		
+		int empId = (int)session.getAttribute("empId");
 		d.addAttribute("calendarList", service.getCalendarList(empId));
 
 		return "pageJsonReport";
@@ -36,9 +39,11 @@ public class CalendarController {
 
 	// 캘린더 등록
 	@PostMapping("insertCalendar.do")
-	public String insertCalendar(Calendar calendar) {
+	public String insertCalendar(HttpSession session, Calendar calendar) {
 		System.out.println("insertCalendar controller called...");
-		calendar.setEmpId(1);
+
+		int empId = (int)session.getAttribute("empId");
+		calendar.setEmpId(empId);
 		service.insertCalendar(calendar);
 
 		return "redirect:/myTask/calendar.do";
@@ -46,9 +51,11 @@ public class CalendarController {
 
 	// 캘린더 수정
 	@PostMapping("updateCalendar")
-	public String updateCalendar(Calendar calendar){
+	public String updateCalendar(HttpSession session, Calendar calendar){
 		System.out.println("updateCalendar controller called...");
-		calendar.setEmpId(1);
+		
+		int empId = (int)session.getAttribute("empId");
+		calendar.setEmpId(empId);
 		service.updateCalendar(calendar);
 		
 		return "redirect:/myTask/calendar.do";
@@ -56,9 +63,10 @@ public class CalendarController {
 	
 	// 캘린더 삭제
 	@GetMapping("deleteCalendar")
-	public String deleteCalendar(int empId){
+	public String deleteCalendar(HttpSession session){
 		System.out.println("deleteCalendar controller called...");
-		empId = 1;
+		
+		int empId = (int)session.getAttribute("empId");
 		service.deleteCalendar(empId);
 		
 		return "redirect:/myTask/calendar.do";		
