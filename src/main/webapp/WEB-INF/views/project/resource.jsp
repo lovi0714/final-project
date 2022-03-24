@@ -51,8 +51,11 @@
 				<div class="card-body">
 					<div class="tab-content" id="myTabContent">
 						<select multiple="multiple" size="15" id="demo">
+						<c:forEach var="member" items="${allMember}">
+							<option value="${member.empId}">${member.empName}-${member.position}</option>
+						</c:forEach>
 						<c:forEach var="member" items="${projectMember}">
-							<option value="${member.empId }" selected>${member.empName}-${member.position}</option>
+							<option value="${member.empId}" selected ${member.empId == member.pmoId ? 'disabled' : '' }>${member.empName}-${member.position}</option>
 						</c:forEach>
 						</select>
 					</div>
@@ -62,6 +65,7 @@
      </div>
 <script type="text/javascript">
 $(function() {
+	let selectedMember = '';
 	// label 추가
 	$("#demo").bootstrapDualListbox({
 		bootstrap3Compatible: true,
@@ -69,6 +73,50 @@ $(function() {
 		selectedListLabel: "프로젝트 참여자",
 		moveOnSelect: false,
 		infoText: false,
+	});
+	
+	$('#bootstrap-duallistbox-nonselected-list_').change(function() {
+	    selectMember = $(this).val().join('');
+	})
+	
+	$('#bootstrap-duallistbox-selected-list_').change(function() {
+	    selectedMember = $(this).val().join('');
+	})
+	
+	$('#addMember').click(function() {
+		let data = {
+			"projectId": '${param.projectId}',
+			"empId": selectMember
+		};
+		
+		$.ajax({
+		  url: "${path}/resource/api/addMember.do",
+		  method: "post",
+		  contentType: "application/json; charset=utf-8",
+		  data: JSON.stringify(data)
+		}).done(function(msg) {
+			console.log('추가성공');
+		}).fail(function(error) {
+			console.log(error);
+		});
+	});
+	
+	$('#removeMember').click(function() {
+		let data = {
+			"projectId": '${param.projectId}',
+			"empId": selectedMember
+		};
+		
+		$.ajax({
+		  url: "${path}/resource/api/removeMember.do",
+		  method: "post",
+		  contentType: "application/json; charset=utf-8",
+		  data: JSON.stringify(data)
+		}).done(function(msg) {
+			console.log('삭제성공');
+		}).fail(function(error) {
+			console.log(error);
+		});
 	});
 	
 });

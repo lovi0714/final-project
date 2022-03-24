@@ -3,16 +3,23 @@ package com.project.pms.resource.vo;
 public class Resource {
 	private Integer resourceId;
 	private String projectId;
-	private String empId;
+	private Integer empId;
 	private String empName;
 	private Integer positionId;
 	private String position;
+	private Integer pmoId;
 	
 	public Resource() {
 	}
 
-	public Resource(Integer resourceId, String projectId, String empId, String empName, Integer positionId,
-			String position) {
+	public Resource(String projectId, Integer empId) {
+		super();
+		this.projectId = projectId;
+		this.empId = empId;
+	}
+
+	public Resource(Integer resourceId, String projectId, Integer empId, String empName, Integer positionId,
+			String position, Integer pmoId) {
 		super();
 		this.resourceId = resourceId;
 		this.projectId = projectId;
@@ -20,6 +27,7 @@ public class Resource {
 		this.empName = empName;
 		this.positionId = positionId;
 		this.position = position;
+		this.pmoId = pmoId;
 	}
 
 	public Integer getResourceId() {
@@ -38,11 +46,11 @@ public class Resource {
 		this.projectId = projectId;
 	}
 
-	public String getEmpId() {
+	public Integer getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(String empId) {
+	public void setEmpId(Integer empId) {
 		this.empId = empId;
 	}
 
@@ -70,10 +78,18 @@ public class Resource {
 		this.position = position;
 	}
 
+	public Integer getPmoId() {
+		return pmoId;
+	}
+
+	public void setPmoId(Integer pmoId) {
+		this.pmoId = pmoId;
+	}
+
 	@Override
 	public String toString() {
 		return "Resource [resourceId=" + resourceId + ", projectId=" + projectId + ", empId=" + empId + ", empName="
-				+ empName + ", positionId=" + positionId + ", position=" + position + "]";
+				+ empName + ", positionId=" + positionId + ", position=" + position + ", pmoId=" + pmoId + "]";
 	}
-	
+
 }

@@ -11,13 +11,47 @@
 		<result column="name" property="empName"/>
 		<result column="pos_id" property="positionId"/>
 		<result column="pos_name" property="position"/>
+		<result column="pmo_id" property="pmoId"/>
+	</resultMap>
+	
+	<resultMap type="projectMember" id="projectMemberMap">
+		<result column="emp_id" property="empId"/>
+		<result column="name" property="empName"/>
+ 		<result column="dept_name" property="deptName"/>
+ 		<result column="pos_name" property="position"/>		
 	</resultMap>
 	
 	<select id="getResourceList" resultMap="resourceMap" parameterType="string">
-	SELECT tr.*, te.NAME, tp.POS_ID, tp.POS_NAME 
-	FROM TBL_RESOURCE tr, TBL_EMP te, TBL_POS tp
-	WHERE tr.EMP_ID = te.EMP_ID 
-	AND te.POS_ID = tp.POS_ID 
-	AND PRJ_ID = #{projectId}
+		SELECT tr.*, te.NAME, tp.POS_ID, tp.POS_NAME, tp2.PMO_ID 
+		FROM TBL_RESOURCE tr, TBL_EMP te, TBL_POS tp, TBL_PROJECT tp2 
+		WHERE tr.EMP_ID = te.EMP_ID 
+		AND te.POS_ID = tp.POS_ID
+		AND tr.PRJ_ID = tp2.PRJ_ID
+		AND tr.PRJ_ID = #{projectId}
 	</select>
+	
+	<select id="getAllResourceList" resultMap="projectMemberMap" parameterType="string">
+		SELECT tr.EMP_ID, tr.NAME, td.DEPT_NAME, tp.POS_NAME
+		FROM TBL_EMP tr, TBL_DEPT td, TBL_POS tp 
+		WHERE EMP_ID NOT IN (SELECT EMP_ID FROM TBL_RESOURCE tr2 WHERE prj_id = #{projectId})
+		AND tr.DEPT_ID = td.DEPT_ID AND tr.POS_ID = tp.POS_ID
+	</select>
+	
+	<select id="resourceFindByEmpIdAndProjectId" resultMap="resourceMap" parameterType="map">
+		SELECT *
+		FROM TBL_RESOURCE
+		WHERE PRJ_ID = #{projectId} AND EMP_ID = #{empId}
+	</select>
+	
+	<insert id="insertResource" parameterType="resource">
+		INSERT INTO TBL_RESOURCE
+		VALUES (resource_seq.nextval, #{projectId}, #{empId})
+	</insert>
+	
+	<delete id="removeReource" parameterType="resource">
+		DELETE
+		FROM TBL_RESOURCE tr
+		WHERE tr.PRJ_ID = #{projectId} AND tr.EMP_ID = #{empId}
+	</delete>
+	
 </mapper>

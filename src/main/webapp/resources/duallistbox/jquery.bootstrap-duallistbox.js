@@ -380,10 +380,10 @@
         '   <select multiple="multiple"></select>' +
         ' </div>' +
         ' <div class="row btn-group buttons d-flex align-self-center col-md-2">' +
-        '    <button type="button" class="btn btn-primary move">추가' +
+        '    <button type="button" id="addMember" class="btn btn-primary move">추가' +
         '       <i></i>' +
         '    </button>' +
-		'    <button type="button" class="btn btn-danger remove">삭제' +
+		'    <button type="button" id="removeMember" class="btn btn-danger remove">삭제' +
         '       <i></i>' +
         '    </button>' +
         ' </div>' +

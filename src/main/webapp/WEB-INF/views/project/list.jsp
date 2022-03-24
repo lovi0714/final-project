@@ -131,7 +131,8 @@
 				"lengthChange": false,
 				"columnDefs": [
 				    {"className": "dt-center", "targets": "_all"}
-				]
+				],
+				"order": [0, 'desc']
 			});
 		}
 			

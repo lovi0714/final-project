@@ -23,4 +23,5 @@ public interface ProjectDAO {
 	public List<Pm> getPmoByDeptId(Integer deptId);
 	public Pm getPmByProjectId(String projectId);
 	public Pm getPmoByProjectId(String projectId);
+	public String getProjectMaxId();
 }

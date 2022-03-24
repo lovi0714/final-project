@@ -3,6 +3,7 @@ package com.project.pms.resource.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,30 @@ public class ResourceAPI {
 	@ResponseBody
 	@GetMapping(value = "/projectMember.do")
 	public List<Resource> getResourceList(@RequestParam("projectId") String projectId) {
-		System.out.println(projectId);
+		
 		return service.getResourceList(projectId);
 	}
+	
+	@ResponseBody
+	@GetMapping(value = "/getAllMember.do")
+	public List<Resource> getAllResourceList(@RequestParam("projectId") String projectId) {
+		
+		return service.getAllResourceList(projectId);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/addMember.do", consumes = "application/json")
+	public void insertReource(@RequestBody Resource resource) {
+		
+		service.insertResource(resource);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/removeMember.do", consumes = "application/json")
+	public void removeResource(@RequestBody Resource resource) {
+		System.out.println("removeResource has been called.......... " + resource);
+		service.removeResource(resource);
+	}
+	
+	
 }

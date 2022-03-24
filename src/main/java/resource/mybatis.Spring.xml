@@ -22,6 +22,7 @@
 		<typeAlias alias="noticeFile" type="com.project.pms.community.vo.NoticeFile"/>
 		<typeAlias alias="emp" type="com.project.pms.emp.vo.Emp"/>
 		<typeAlias alias="resource" type="com.project.pms.resource.vo.Resource"/>
+		<typeAlias alias="projectMember" type="com.project.pms.resource.vo.ProjectMember"/>
 	</typeAliases>
 	
 	<typeHandlers>

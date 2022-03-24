@@ -16,6 +16,7 @@
 		<result column="end_at" property="endAt"/>
 		<result column="create_at" property="createdAt"/>
 		<result column="update_at" property="updatedAt"/>
+		<result column="pmo_id" property="pmoId"/>
 	</resultMap>
 	
 	<resultMap type="rndType" id="rndTypeMap">
@@ -43,11 +44,12 @@
 	<select id="getList" resultMap="projectMap">
 		SELECT *
 		FROM TBL_PROJECT
+		ORDER BY PRJ_ID DESC
 	</select>
 	
 	<insert id="insertProject" parameterType="project" >
-		INSERT INTO TBL_PROJECT(prj_status_id, prj_type_id, rd_type_id, name, content, pm_id, start_at, end_at, create_at, update_at)
-		VALUES (#{statusId}, #{typeId}, #{rndTypeId}, #{title}, #{content}, #{pmId}, #{startAt}, #{endAt}, sysdate, sysdate)
+		INSERT INTO TBL_PROJECT(prj_status_id, prj_type_id, rd_type_id, name, content, pm_id, start_at, end_at, create_at, update_at, pmo_id)
+		VALUES (#{statusId}, #{typeId}, #{rndTypeId}, #{title}, #{content}, #{pmId}, #{startAt}, #{endAt}, sysdate, sysdate, #{pmoId})
 	</insert>
 	
 	<select id="getProjectByProjectId" resultMap="projectMap" parameterType="string">
@@ -86,15 +88,20 @@
 	</select>
 	
 	<select id="getPmByProjectId" resultMap="pmListMap" parameterType="string">
-		SELECT te.emp_id, te.DEPT_ID, te.NAME, te.AUTH_ID
+		SELECT te.emp_id, te.DEPT_ID, te.NAME
 		FROM TBL_PROJECT tp, TBL_EMP te
 		WHERE tp.PRJ_ID = #{projectId} AND tp.PM_ID = te.EMP_ID
 	</select>
 	
 	<select id="getPmoByProjectId" resultMap="pmListMap" parameterType="string">
-		SELECT te.EMP_ID, te.DEPT_ID, te.NAME, te.AUTH_ID
-		FROM TBL_RESOURCE tr, TBL_EMP te 
-		WHERE tr.PRJ_ID = #{projectId} AND tr.EMP_ID = te.EMP_ID AND te.AUTH_ID = 1
+		SELECT te.EMP_ID, te.DEPT_ID, te.NAME
+		FROM TBL_PROJECT tp, TBL_EMP te 
+		WHERE tp.PRJ_ID = #{projectId} AND tp.PMO_ID = te.EMP_ID
+	</select>
+	
+	<select id="getProjectMaxId" resultType="string">
+		SELECT MAX(tp.PRJ_ID)
+		FROM TBL_PROJECT tp
 	</select>
 	
 	<update id="modifyProject" parameterType="project">
@@ -107,7 +114,8 @@
 		    PM_ID = #{pmId},
 		    START_AT = #{startAt},
 		    END_AT = #{endAt},
-		    UPDATE_AT = sysdate
+		    UPDATE_AT = sysdate,
+		    PMO_ID = #{pmoId}
 		WHERE PRJ_ID = #{projectId}
 	</update>
 </mapper>
