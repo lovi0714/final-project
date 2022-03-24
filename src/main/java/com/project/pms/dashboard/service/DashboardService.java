@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.pms.dashboard.repository.DashboardDAO;
 import com.project.pms.dashboard.vo.DashboardNotice;
 import com.project.pms.dashboard.vo.DashboardProject;
-import com.project.pms.dashboard.vo.DashboardChart;
+import com.project.pms.dashboard.vo.StatusChart;
 
 @Service
 public class DashboardService {
@@ -29,14 +29,40 @@ public class DashboardService {
 		return dao.getProjectList();
 	}
 	
+	// 부서별 프로젝트 현황
+	public List<StatusChart> getProjectChart1() {
+		
+		return dao.getProjectChart1();
+	}
+	
+	public List<StatusChart> getProjectChart2() {
+		
+		return dao.getProjectChart2();
+	}
+	
+	public List<StatusChart> getProjectChart3() {
+		
+		return dao.getProjectChart3();
+	}
+	
+	public List<StatusChart> getProjectChart4() {
+		
+		return dao.getProjectChart4();
+	}
+	
+	public List<StatusChart> getProjectChart5() {
+		
+		return dao.getProjectChart5();
+	}
+	
 	// 리스크 현황: 상태별
-	public List<DashboardChart> getRiskStatusChart1() {
+	public List<StatusChart> getRiskStatusChart1() {
 		
 		return dao.getRiskStatusChart1();
 	}
 	
 	// 리스크 현황: 유형별
-	public List<DashboardChart> getRiskStatusChart2() {
+	public List<StatusChart> getRiskStatusChart2() {
 		
 		return dao.getRiskStatusChart2();
 	}
@@ -49,20 +75,20 @@ public class DashboardService {
 	}	
 	
 	// 작업 진행상태
-	public List<DashboardChart> getMyTaskStatusChart(int empId) {
+	public List<StatusChart> getMyTaskStatusChart(int empId) {
 		
 		return dao.getMyTaskStatusChart(empId);
 	}
 	
 	// 리스크 현황: 상태별
-	public List<DashboardChart> getMyRiskStatusChart1(int empId) {
-			
+	public List<StatusChart> getMyRiskStatusChart1(int empId) {	
+		
 		return dao.getMyRiskStatusChart1(empId);
 	}
 	
 	// 리스크 현황: 유형별
-	public List<DashboardChart> getMyRiskStatusChart2(int empId) {
-			
+	public List<StatusChart> getMyRiskStatusChart2(int empId) {
+		
 		return dao.getMyRiskStatusChart2(empId);
 	}
 }

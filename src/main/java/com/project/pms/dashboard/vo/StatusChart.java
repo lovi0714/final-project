@@ -1,16 +1,16 @@
 package com.project.pms.dashboard.vo;
 
-public class DashboardChart {
+public class StatusChart {
 	private int statusId;
 	private String status;
 	private int count;
 	
-	public DashboardChart() {
+	public StatusChart() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public DashboardChart(int statusId, String status, int count) {
+	public StatusChart(int statusId, String status, int count) {
 		super();
 		this.statusId = statusId;
 		this.status = status;

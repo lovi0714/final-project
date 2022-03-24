@@ -20,7 +20,7 @@
 		<result column="end_at" property="endAt"/>
 	</resultMap>
 	
-	<resultMap type="dashboardChart" id="dashboardChartMap">
+	<resultMap type="statusChart" id="statusChartMap">
 		<result column="status_id" property="statusId"/>
 		<result column="status" property="status"/>
 		<result column="count" property="count"/>
@@ -58,10 +58,59 @@
 		ORDER BY tp.create_at DESC
 	</select>
 	
-	<!-- 월별 프로젝트 -->
+	<!-- 부서별 프로젝트 현황 -->
+	<select id="getProjectChart1" resultMap="statusChartMap">
+		SELECT td.dept_id AS status_id, dept_name AS status, nvl(count, 0) AS count
+		FROM (SELECT dept_id, count(*) AS count
+				FROM TBL_PROJECT tp, TBL_EMP te
+				WHERE tp.pm_id = te.emp_id AND prj_status_id = 1
+				GROUP BY dept_id) tpte RIGHT JOIN TBL_DEPT td 
+		ON tpte.dept_id = td.dept_id
+		ORDER BY status_id
+	</select>
+		
+	<select id="getProjectChart2" resultMap="statusChartMap">
+		SELECT td.dept_id AS status_id, dept_name AS status, nvl(count, 0) AS count
+		FROM (SELECT dept_id, count(*) AS count
+				FROM TBL_PROJECT tp, TBL_EMP te
+				WHERE tp.pm_id = te.emp_id AND prj_status_id = 2
+				GROUP BY dept_id) tpte RIGHT JOIN TBL_DEPT td 
+		ON tpte.dept_id = td.dept_id
+		ORDER BY status_id
+	</select>
+		
+	<select id="getProjectChart3" resultMap="statusChartMap">
+		SELECT td.dept_id AS status_id, dept_name AS status, nvl(count, 0) AS count
+		FROM (SELECT dept_id, count(*) AS count
+				FROM TBL_PROJECT tp, TBL_EMP te
+				WHERE tp.pm_id = te.emp_id AND prj_status_id = 3
+				GROUP BY dept_id) tpte RIGHT JOIN TBL_DEPT td 
+		ON tpte.dept_id = td.dept_id
+		ORDER BY status_id
+	</select>
+	
+	<select id="getProjectChart4" resultMap="statusChartMap">
+		SELECT td.dept_id AS status_id, dept_name AS status, nvl(count, 0) AS count
+		FROM (SELECT dept_id, count(*) AS count
+				FROM TBL_PROJECT tp, TBL_EMP te
+				WHERE tp.pm_id = te.emp_id AND prj_status_id = 4
+				GROUP BY dept_id) tpte RIGHT JOIN TBL_DEPT td 
+		ON tpte.dept_id = td.dept_id
+		ORDER BY status_id
+	</select>
+	
+	<select id="getProjectChart5" resultMap="statusChartMap">
+		SELECT td.dept_id AS status_id, dept_name AS status, nvl(count, 0) AS count
+		FROM (SELECT dept_id, count(*) AS count
+				FROM TBL_PROJECT tp, TBL_EMP te
+				WHERE tp.pm_id = te.emp_id AND prj_status_id = 5
+				GROUP BY dept_id) tpte RIGHT JOIN TBL_DEPT td 
+		ON tpte.dept_id = td.dept_id
+		ORDER BY status_id
+	</select>
 	
 	<!-- 리스크 현황: 상태별 -->
-	<select id="getRiskStatusChart1" resultMap="dashboardChartMap">
+	<select id="getRiskStatusChart1" resultMap="statusChartMap">
 		SELECT trs.r_status_id AS status_id, r_status AS status, nvl(count, 0) AS count
 		FROM (SELECT r_status_id, count(*) AS count
 				FROM tbl_risk
@@ -71,7 +120,7 @@
 	</select>
 	
 	<!-- 리스크 현황: 유형별 -->
-	<select id="getRiskStatusChart2" resultMap="dashboardChartMap">
+	<select id="getRiskStatusChart2" resultMap="statusChartMap">
 		SELECT trt.r_type_id AS status_id, r_type_name AS status, nvl(count, 0) AS count
 		FROM (SELECT r_type_id, count(*) AS count
 				FROM tbl_risk
@@ -106,7 +155,7 @@
 	</select>
 	
 	<!-- 작업 진행상태 -->
-	<select id="getMyTaskStatusChart" resultMap="dashboardChartMap" parameterType="int">		
+	<select id="getMyTaskStatusChart" resultMap="statusChartMap" parameterType="int">		
 		SELECT tts.t_status_id AS status_id, tts.t_status AS status, nvl(count, 0) AS count
 		FROM (SELECT t_status_id, count(*) AS count
 				FROM (SELECT tt.t_status_id
@@ -119,7 +168,7 @@
 	</select>
 	
 	<!-- 리스크 현황: 상태별 -->
-	<select id="getMyRiskStatusChart1" resultMap="dashboardChartMap" parameterType="int">
+	<select id="getMyRiskStatusChart1" resultMap="statusChartMap" parameterType="int">
 		SELECT trs.r_status_id AS status_id, trs.r_status AS status, nvl(count, 0) AS count
 		FROM (SELECT r_status_id, count(*) AS count
 				FROM (SELECT tr.prj_id
@@ -132,7 +181,7 @@
 	</select>
 	
 	<!-- 리스크 현황: 유형별 -->
-	<select id="getMyRiskStatusChart2" resultMap="dashboardChartMap" parameterType="int">
+	<select id="getMyRiskStatusChart2" resultMap="statusChartMap" parameterType="int">
 		SELECT trt.r_type_id AS status_id, trt.r_type_name AS status, nvl(count, 0) AS count
 		FROM (SELECT r_type_id, count(*) AS count
 				FROM (SELECT tr.prj_id

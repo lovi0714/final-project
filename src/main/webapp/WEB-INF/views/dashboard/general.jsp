@@ -132,13 +132,7 @@
 				<div class="col-md-6 col-12">
 					<div class="card">
 						<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
-							<p class="fw-bold">월별 프로젝트</p>
-							<select class="form-select" style="width: 150px;">
-								<option value="1">종합</option>
-								<option value="2">선행개발</option>
-								<option value="3">고객선행</option>
-								<option value="4">양산개발</option>
-							</select>
+							<p class="fw-bold">부서별 프로젝트 현황</p>
 						</div>
 						<div class="card-content">
 							<div class="card-body">
@@ -146,7 +140,7 @@
 									<div class="form-body">
 										<div class="row"></div>
 										<div style="height: 300px">
-											<canvas id="myChart" width="200px" height="200px"></canvas>
+											<canvas id="projectChart" width="200px" height="200px"></canvas>
 										</div>
 									</div>
 								</form>
@@ -222,58 +216,80 @@
 		"order": [5, 'desc']
 	});
 	
-	// 월별 프로젝트					
-	   const ctx = document.getElementById('myChart');
-	   const myChart = new Chart(ctx, {
-	      type : 'bar',
-	      data : {
-	         labels : [ '2022-03', '2022-04', '2022-05' ],
-	         datasets : [ {
-	            label : '시작전',
-	            data : [ 10, 20, 30 ],
-	            backgroundColor : 'rgba(170, 170, 170, 0.5)',
-	            borderWidth : 1
-	         },
-	         {
-	            label : '정상진행',
-	            data : [ 10, 20, 30 ],
-	            backgroundColor : 'rgba(75, 192, 192, 0.5)',
-	            borderWidth : 1
-	         },
-	         {
-	            label : '지연진행',
-	            data : [ 10, 20, 30 ],
-	            backgroundColor : 'rgba(255, 99, 132, 0.5)',
-	            borderWidth : 1
-	         },
-	         {
-	            label : '완료',
-	            data : [ 10, 20, 30 ],
-	            backgroundColor : 'rgba(54, 162, 235, 0.5)',
-	            borderWidth : 1
-	         },
-	         {
-	            label : '중단',
-	            data : [0],
-	            backgroundColor : 'rgba(255, 206, 86, 0.5)',
-	            borderWidth : 1
-	         }]
+	// 부서별 프로젝트 현황		
+	var projectCountList1 = [];
+	var projectCountList2 = [];
+	var projectCountList3 = [];
+	var projectCountList4 = [];
+	var projectCountList5 = [];
+	
+	<c:forEach var="project" items="${ProjectChart1}">	
+		projectCountList1.push(${project.count});
+	</c:forEach>
+	
+	<c:forEach var="project" items="${ProjectChart2}">	
+		projectCountList2.push(${project.count});
+	</c:forEach>
+	
+	<c:forEach var="project" items="${ProjectChart3}">	
+		projectCountList3.push(${project.count});
+	</c:forEach>
+	
+	<c:forEach var="project" items="${ProjectChart4}">	
+		projectCountList4.push(${project.count});
+	</c:forEach>
+	
+	<c:forEach var="project" items="${ProjectChart5}">	
+		projectCountList5.push(${project.count});
+	</c:forEach>
+	
+	const pc = document.getElementById('projectChart');
+	const projectChart = new Chart(pc, {
+		type: 'bar',
+	    data: {
+	    	labels: [ '인사', '회계', '경영지원', '생산관리', '기술지원', '연구개발'],
+	        datasets: [ {
+	        	label: '시작전',
+	            data: projectCountList1,
+	            backgroundColor: 'rgba(170, 170, 170, 0.5)'
+	        },
+	        {
+	        	label: '정상진행',
+	            data: projectCountList2,
+	            backgroundColor: 'rgba(75, 192, 192, 0.5)'
+	        },
+	        {
+	            label: '지연진행',
+	            data: projectCountList3,
+	            backgroundColor: 'rgba(255, 99, 132, 0.5)'
+	        },
+	        {
+	            label: '완료',
+	            data: projectCountList4,
+	            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+	        },
+	        {
+	            label: '중단',
+	            data: projectCountList5,
+	            backgroundColor: 'rgba(255, 206, 86, 0.5)'
+	        }]
 		},	
-		options : {
-			responsive : true,
-			maintainAspectRatio : false,
-			scales : {
-			      x: {
-			          stacked: true,
-			        },
-			        y: {
-			          stacked: true,
-						beginAtZero : true
-			        }
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			scales: {
+				x: {
+					stacked: true
+			    },
+			    y: {
+			        stacked: true,
+					beginAtZero : true,
+					max: 30
+			    }
 			},
-			plugins : {
-				legend : {
-					position : 'bottom'
+			plugins: {
+				legend: {
+					position: 'bottom'
 				}
 			}
 		}
