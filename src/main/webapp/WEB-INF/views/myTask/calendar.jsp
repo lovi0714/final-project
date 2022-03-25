@@ -14,112 +14,142 @@
 <script src="${path}/resources/fullcalendar-5.10.2/lib/main.js"></script>
 <script src="${path}/resources/fullcalendar-5.10.2/lib/locales-all.js"></script>
 
-<script>	
-	document.addEventListener('DOMContentLoaded', function() {
+<script>
+	$(document).ready(function() {
 		var calendarEl = document.getElementById('calendar');
-
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			headerToolbar : {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'dayGridMonth,timeGridWeek,timeGridDay'
+				left : 'prev,next today',
+				center : 'title',
+				right : 'dayGridMonth,timeGridWeek,timeGridDay'
 			},
 			locale : "ko",
-			themeSystem: 'bootstrap5',
-			initialDate: '2022-03-21',
-			fixedWeekCount: false,
-			navLinks: true, // can click day/week names to navigate views
-			selectable: true,
-			selectMirror: true,
-			select: function(arg) {
-		    	$("#modalBtn").click(); 
+			themeSystem : 'bootstrap5',
+			aspectRatio: 1.35, 
+			contentHeight: 700,
+			fixedWeekCount : false,
+			navLinks : true, 
+			selectable : true,
+			selectMirror : true,
+			select : function(arg) {
+				// 모달 설정
+				$("#myModalLabel160").text("일정등록");
 				
-				console.log("시작일:"+arg.start.toLocaleString())
-				console.log("마지막일:"+arg.end.toLocaleString())		
+				$("#regBtn").show();
+				$("#uptBtn").hide();
+				$("#delBtn").hide();
 				
-				console.log("시작일:"+arg.start.toISOString())
-				console.log("마지막일:"+arg.end.toISOString())		
+				// 모달창 표시
+				$("#modalBtn").click();
+				
+				// 폼 초기화  
+				$("#calendarForm")[0].reset();
+				
+				// 폼 데이터 입력
+				$("#start").val(arg.start.toLocaleString());
+				$("[name=start]").val(arg.start.toISOString());
+				
+				$("#end").val(arg.end.toLocaleString());
+				$("[name=end]").val(arg.end.toISOString());
+				
+				$("#allDay").val("" + arg.allDay);
+				$("[name=allDay]").val((arg.allDay?1:0));
 				
 				calendar.unselect()
 			},
 			eventClick: function(arg) {
-				if (confirm('Are you sure you want to delete this event?')) {
-					arg.event.remove()
-				}
+				// 폼 데이터 입력
+				formData(arg.event);
+				
+				// 모달 설정
+				$("#myModalLabel160").text("상세일정");
+				
+				$("#regBtn").hide();
+				$("#uptBtn").show();
+				$("#delBtn").show();
+				
+				// 모달창 표시
+				$("#modalBtn").click();
 			},
-			editable: true,
-			dayMaxEvents: true, // allow "more" link when too many events
-			allDaySlot: true,
-			allDayText: '종일',
-			events: function(info, successCallback, failureCallback) {
+			eventDrop : function(info) {
+				// 폼 데이터 입력
+				formData(info.event);
+				
+				// updateCalendar.do 컨트롤러 호출
+				$("#calendarForm").attr("action", "${path}/myTask/updateCalendar.do");
+				$("#calendarForm").attr("method", "post");
+				$("#calendarForm").submit();
+			},
+			eventResize : function(info) {
+				// 폼 데이터 입력
+				formData(info.event);
+				
+				// updateCalendar.do 컨트롤러 호출
+				$("#calendarForm").attr("action", "${path}/myTask/updateCalendar.do");
+				$("#calendarForm").attr("method", "post");
+				$("#calendarForm").submit();
+			},
+			editable : true,
+			dayMaxEvents : true,
+			events : function(info, successCallback, failureCallback) {
 				$.ajax({
-					type: "post",
-					url: "${path}/myTask/calendarList.do",
-					dataType: "json",
-					success: function(data) {
-						console.log(data.calendarList)
+					type : "post",
+					url : "${path}/myTask/calendarList.do",
+					dataType : "json",
+					success : function(data) {
 						successCallback(data.calendarList);
 						document.getElementById('script-warning').style.display = 'none';
 					},
-					error: function(err) {
-						console.log(err)
+					error : function(err) {
 						failureCallback(err);
 						document.getElementById('script-warning').style.display = 'block';
 					}
 				});
 			},
-			loading: function(bool) {
+			loading : function(bool) {
 				document.getElementById('loading').style.display = bool ? 'block' : 'none';
 			}
 		});
 		calendar.render();
 	});
+
+	function formData(event) {
+		// 폼 데이터 입력
+		$("[name=id]").val(event.id);
+		$("[name=title]").val(event.title);
+		$("#start").val(event.start.toLocaleString());
+		$("[name=start]").val(event.start.toISOString());				
+		$("#end").val(event.end.toLocaleString());
+		$("[name=end]").val(event.end.toISOString());
+		$("[name=allDay]").val((event.allDay?1:0)); 				
+		$("[name=backgroundColor]").val(event.backgroundColor);
+		$("[name=textColor]").val(event.textColor);
+		$("[name=content]").val(event.extendedProps.content);
+			
+	}
 	
-	$(document).ready(function(){
-		$("#start2").hide()
-		$("#end2").hide()	
-		
-	    $("#allDay").change(function(){
-	        if($("#allDay").is(":checked")){
-	        	
-				$("#start1").hide()
-				$("#start2").show()
-				$("#end1").hide()
-				$("#end2").show()
-				
-				let start = (document.querySelector('#start1').value).substr(0, 10);
-				let end = (document.querySelector('#end1').value).substr(0, 10);
-				
-				document.getElementById("start2").value = start;
-				document.getElementById("end2").value = end;
-				
-	        } else{
-				$("#start1").show()
-				$("#start2").hide()
-				$("#end1").show()
-				$("#end2").hide()       
-	        }
-	    });
-	});
-
-	$(document).ready(function(){
-		$("#regBtn").click(function(){
-				$("#calendarForm").attr("action", "${path}/task/insertCalendar.do");
-				$("#calendarForm").attr("method", "post");
-				$("#calendarForm").submit();
+	$(document).ready(function() {
+		// 등록 버튼 클릭 시 inserCalender.do 컨트롤러 호출
+		$("#regBtn").click(function() {
+			$("#calendarForm").attr("action", "${path}/myTask/insertCalendar.do");
+			$("#calendarForm").attr("method", "post");
+			$("#calendarForm").submit();
 		});
+		
+		// 수정 버튼 클릭 시 updateCalender.do 컨트롤러 호출
+		$("#uptBtn").click(function(){
+			$("#calendarForm").attr("action","${path}/myTask/updateCalendar.do");
+			$("#calendarForm").attr("method", "post");
+			$("#calendarForm").submit();
+		});	
+		
+		// 삭제 버튼 클릭 시 deleteCalender.do 컨트롤러 호출
+		$("#delBtn").click(function(){
+			$("#calendarForm").attr("action","${path}/myTask/deleteCalendar.do");
+			$("#calendarForm").submit();
+		});		
 	});
-
 </script>
-
-<!-- 
-<style>
-#calendar {
-	max-width: 1100px;
-	margin: 0 auto;
-}
-</style>
--->
 
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
@@ -139,87 +169,78 @@
 					<div id='calendar'></div>
 					<div id='loading'>loading...</div>
 					<div id='script-warning'>
-						<code>서버</code>
-						must be running.
+						<code>서버</code> must be running.
 					</div>
 				</div>
 			</div>
 		</section>
 	</div>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary" id="modalBtn" style="display:none"></button>		
+	<!-- 산출물 등록 modal 버튼 -->
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary" id="modalBtn" style="display: none"></button>
 
-<!-- 산출물 등록 modal -->
-<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" data-bs-backdrop="static"
-	aria-labelledby="myModalLabel160" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal" role="document">
-		<div class="modal-content">
-			<div class="modal-header bg-primary">
-				<h5 class="modal-title white" id="myModalLabel160">일정 등록</h5>
-			</div>
-			<div class="modal-body">
-				<form class="form" id="calendarForm">
-					<div class="row">
-						<div class="col-12">
-							<div class="form-group">
-								<label for="title" class="form-label">일정</label> 
-								<input type="text" id="title" class="form-control" placeholder="일정 제목을 입력하세요">
+	<!-- 산출물 등록 modal -->
+	<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" 
+		data-bs-backdrop="static" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160"></h5>
+				</div>
+				<div class="modal-body">
+					<form class="form" id="calendarForm">
+						<input type="hidden" name="id"/>
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<label for="title" class="form-label">일정</label> 
+									<input type="text" name="title" class="form-control" placeholder="일정 제목을 입력하세요"/>
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="start" class="form-label">시작일</label>
+									<input type="text" id="start" class="form-control" readonly style="background-color: white;"/>
+									<input type="hidden" name="start"/>
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="end" class="form-label">종료일</label> 
+									<input type="text" id="end" class="form-control" readonly style="background-color: white;"/>
+									<input type="hidden" name="end"/>
+									<input type="hidden" name="allDay"/>
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="backgroundColor" class="form-label">배경색</label> 
+									<input type="color" name="backgroundColor" class="form-control" value="#3245DE" style="height: 38px"/>
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="fontColor" class="form-label">글자색</label> 
+									<input type="color" name="textColor" class="form-control" value="#ffffff" style="height: 38px;"/>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-group">
+									<label for="content" class="form-label">내용</label>
+									<textarea class="form-control" name="content" rows="3" placeholder="일정 내용을 입력하세요"></textarea>
+								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-12">
-							<div class="form-group">
-								<label for="start" class="form-label">시작일</label> 
-								<input type="datetime-local" id="start1" class="form-control">
-								<input type="date" id="start2" class="form-control">
-							</div>
-						</div>
-						<div class="col-md-6 col-12">
-							<div class="form-group">
-								<label for="end" class="form-label">종료일</label> 
-								<input type="datetime-local" id="end1" class="form-control">
-								<input type="date" id="end2" class="form-control">
-							</div>
-						</div>
-						<div class="col-12">
-							<div class="form-group">
-								<input type="checkbox" id="allDay" name="allDay" class="form-check-input">
-                            	<label for="allDay">종일여부</label>
-							</div>
-						</div>
-						<div class="col-12">
-							<div class="form-group">
-								<label for="content" class="form-label">내용</label>
-								<textarea class="form-control" id="content" rows="3" placeholder="일정 내용을 입력하세요"></textarea>
-							</div>
-						</div>
-						<div class="col-md-6 col-12">
-							<div class="form-group">
-								<label for="backgroundColor" class="form-label">배경색상</label> 
-								<input type="color" id="backgroundColor" class="form-control" value="#3245DE">
-							</div>
-						</div>
-						<div class="col-md-6 col-12">
-							<div class="form-group">
-								<label for="fontColor" class="form-label">글자색상</label> 
-								<input type="color" id="fontColor" class="form-control" value="#ffffff">
-							</div>
-						</div>	
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary ml-1" id="regBtn">
-					<i class="bx bx-check d-block d-sm-none"></i> 
-					<span class="d-none d-sm-block">등록</span>
-				</button>
-				<button type="button" class="btn btn-light-secondary"
-					data-bs-dismiss="modal">
-					<i class="bx bx-x d-block d-sm-none"></i> 
-					<span class="d-none d-sm-block">취소</span>
-				</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary ml-1" id="regBtn">등록</button>
+					<button type="button" class="btn btn-primary ml-1" id="uptBtn">수정</button>
+					<button type="button" class="btn btn-danger ml-1" id="delBtn">삭제</button>
+					<button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">취소</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-				
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

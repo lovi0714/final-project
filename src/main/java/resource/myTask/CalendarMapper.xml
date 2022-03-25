@@ -19,20 +19,20 @@
 	<!-- 캘린더 목록 -->
 	<select id="getCalendarList" resultMap="calendarMap" parameterType="int">
 		SELECT *
-		FROM TBL_SCHEDULE
+		FROM TBL_CALENDAR
 		WHERE emp_id = #{empId}
 	</select>
 	
 	<!-- 캘린더 등록 -->
 	<insert id="insertCalendar" parameterType="calendar">
-		INSERT INTO TBL_SCHEDULE
-		VALUES (schedule_seq.nextval, #{empId}, #{title}, #{start}, #{end},  
+		INSERT INTO TBL_CALENDAR
+		VALUES (schedule_seq.nextVal, #{empId}, #{title}, #{start}, #{end},  
 				#{allDay}, #{content}, #{backgroundColor}, #{textColor})	
 	</insert> 
 	
 	<!-- 캘린더 수정 -->
 	<update id="updateCalendar" parameterType="calendar">
-		UPDATE TBL_SCHEDULE
+		UPDATE TBL_CALENDAR
 		SET title = #{title},
 			start_at = #{start},
 			end_at = #{end},
@@ -40,13 +40,13 @@
 			content = #{content},
 			bg_color = #{backgroundColor},
 			t_color = #{textColor}
-		WHERE emp_id = #{empId}
+		WHERE sch_id = #{id}
 	</update>
 	
 	<!-- 캘린더 삭제 -->
 	<delete id="deleteCalendar" parameterType="int">
-		DELETE FROM TBL_SCHEDULE
-		WHERE emp_id = #{empId}
+		DELETE FROM TBL_CALENDAR
+		WHERE sch_id = #{id}
 	</delete>
 		
 </mapper>

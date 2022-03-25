@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.pms.myTask.service.CalendarService;
 import com.project.pms.myTask.vo.Calendar;
@@ -30,9 +31,7 @@ public class CalendarController {
 	@PostMapping("calendarList.do")
 	public String getCalendarList(HttpSession session, Model d) {
 		System.out.println("calendarList controller called...");
-		
-		int empId = (int)session.getAttribute("empId");
-		d.addAttribute("calendarList", service.getCalendarList(empId));
+		d.addAttribute("calendarList", service.getCalendarList((int)session.getAttribute("empId")));
 
 		return "pageJsonReport";
 	}
@@ -40,34 +39,28 @@ public class CalendarController {
 	// 캘린더 등록
 	@PostMapping("insertCalendar.do")
 	public String insertCalendar(HttpSession session, Calendar calendar) {
-		System.out.println("insertCalendar controller called...");
-
-		int empId = (int)session.getAttribute("empId");
-		calendar.setEmpId(empId);
+		System.out.println("insertCalendar controller called...");		
+		calendar.setEmpId((int)session.getAttribute("empId"));
+		
 		service.insertCalendar(calendar);
 
 		return "redirect:/myTask/calendar.do";
 	}
 
 	// 캘린더 수정
-	@PostMapping("updateCalendar")
-	public String updateCalendar(HttpSession session, Calendar calendar){
+	@PostMapping("updateCalendar.do")
+	public String updateCalendar(Calendar calendar){
 		System.out.println("updateCalendar controller called...");
-		
-		int empId = (int)session.getAttribute("empId");
-		calendar.setEmpId(empId);
 		service.updateCalendar(calendar);
 		
 		return "redirect:/myTask/calendar.do";
 	}
 	
 	// 캘린더 삭제
-	@GetMapping("deleteCalendar")
-	public String deleteCalendar(HttpSession session){
+	@GetMapping("deleteCalendar.do")
+	public String deleteCalendar(@RequestParam("id") int id){
 		System.out.println("deleteCalendar controller called...");
-		
-		int empId = (int)session.getAttribute("empId");
-		service.deleteCalendar(empId);
+		service.deleteCalendar(id);
 		
 		return "redirect:/myTask/calendar.do";		
 	}	

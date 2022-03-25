@@ -25,8 +25,8 @@ public class CalendarService {
 	}
 
 	// 캘린더 수정
-	public void updateCalendar(Calendar upt) {
-		dao.updateCalendar(upt);
+	public void updateCalendar(Calendar calendar) {
+		dao.updateCalendar(calendar);
 	}
 	
 	// 캘린더 삭제

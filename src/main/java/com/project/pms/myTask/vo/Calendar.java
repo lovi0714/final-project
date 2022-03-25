@@ -7,17 +7,17 @@ public class Calendar {
 	private String start;
 	private String end;
 	private boolean allDay;
-	private String content;
 	private String backgroundColor;
 	private String textColor;
+	private String content;
 	
-	public Calendar() {		
+	public Calendar() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Calendar(int id, int empId, String title, String start, String end, boolean allDay, String content,
-			String backgroundColor, String textColor) {
+	public Calendar(int id, int empId, String title, String start, String end, boolean allDay, String backgroundColor,
+			String textColor, String content) {
 		super();
 		this.id = id;
 		this.empId = empId;
@@ -25,9 +25,9 @@ public class Calendar {
 		this.start = start;
 		this.end = end;
 		this.allDay = allDay;
-		this.content = content;
 		this.backgroundColor = backgroundColor;
 		this.textColor = textColor;
+		this.content = content;
 	}
 
 	public int getId() {
@@ -78,14 +78,6 @@ public class Calendar {
 		this.allDay = allDay;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public String getBackgroundColor() {
 		return backgroundColor;
 	}
@@ -101,7 +93,14 @@ public class Calendar {
 	public void setTextColor(String textColor) {
 		this.textColor = textColor;
 	}
-	
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 	
 	
 	
