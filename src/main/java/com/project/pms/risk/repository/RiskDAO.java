@@ -25,9 +25,6 @@ public interface RiskDAO {
 	public void saveRisk(RiskSaveRequest riskSaveRequest);
 	public void setComAt(RiskSaveRequest riskSaveRequest);
 	
-	// 수정 정보 가져오기
-	public RiskSaveRequest getModifyInfo(int riskId);
-	
 	// 리스크 삭제
 	void deleteRisk(int riskId);
 	

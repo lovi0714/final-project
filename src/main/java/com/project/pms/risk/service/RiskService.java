@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.pms.emp.vo.Emp;
 import com.project.pms.myTask.vo.MyTask;
 import com.project.pms.project.vo.Project;
 import com.project.pms.risk.repository.RiskDAO;
-import com.project.pms.risk.vo.Risk;
 import com.project.pms.risk.vo.RiskBoard;
 import com.project.pms.risk.vo.RiskDetail;
 import com.project.pms.risk.vo.RiskSaveRequest;
@@ -36,11 +36,6 @@ public class RiskService {
 		dao.saveRisk(riskSaveRequest);
 		dao.setComAt(riskSaveRequest);
 	}
-	
-	// 수정 정보
-	public RiskSaveRequest getModifyInfo(int riskId) {
-		return dao.getModifyInfo(riskId);
-	} 
 	
 	//리스크 삭제
 	public void deleteRisk(int riskId) {

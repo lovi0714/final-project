@@ -10,7 +10,7 @@ public class Risk {
 	private String rType; // 유형명
 	private int empId; // 사원 ID
 	private String presenter; // 제기자
-	private int prjId; // 프로젝트 ID
+	private int pId; // 프로젝트 ID
 	private String pName; // 프로젝트명
 	private String tName; // 작업명
 	private String title; // 제목
@@ -36,7 +36,7 @@ public class Risk {
 		this.rType = rType;
 		this.empId = empId;
 		this.presenter = presenter;
-		this.prjId = pId;
+		this.pId = pId;
 		this.pName = pName;
 		this.tName = tName;
 		this.title = title;
@@ -91,10 +91,10 @@ public class Risk {
 		this.presenter = presenter;
 	}
 	public int getpId() {
-		return prjId;
+		return pId;
 	}
 	public void setpId(int pId) {
-		this.prjId = pId;
+		this.pId = pId;
 	}
 	public String getpName() {
 		return pName;

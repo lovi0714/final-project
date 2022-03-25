@@ -62,23 +62,6 @@
 		WHERE tr.RISK_ID = #{riskId}
  	</select>
  	
- 	<select id="getModifyInfo" resultType="riskSaveRequest" parameterType="int">
- 		SELECT 
- 		RISK_ID as riskId,
- 		R_TYPE_ID as rTypeId,
- 		TITLE as title,
- 		PRJ_ID as prjId,
- 		T_NAME as tName,
- 		R_CONTENT as rContent,
- 		A_CONTENT as aContent,
- 		TO_CHAR(DUE_AT,'YYYY-MM-DD') as dueAt,
- 		R_STATUS_ID as rStatusId
-		FROM TBL_RISK
-		WHERE RISK_ID = #{riskId} 		
- 	</select>
- 	
- 	
- 	
  	<!-- 리스크 저장 -->
  	<update id="saveRisk" parameterType="riskSaveRequest">
 	MERGE INTO SCOTT.TBL_RISK tr

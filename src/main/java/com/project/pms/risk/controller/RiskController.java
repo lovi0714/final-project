@@ -2,6 +2,7 @@ package com.project.pms.risk.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.pms.risk.service.RiskService;
-import com.project.pms.risk.vo.RiskDetail;
 import com.project.pms.risk.vo.RiskSaveRequest;
 
 @Controller
@@ -51,7 +51,7 @@ public class RiskController {
 		model.addAttribute("emp", riskService.getEmpList());
 		model.addAttribute("prj", riskService.getProjectList());
 		model.addAttribute("task",riskService.getMyTaskList());
-		model.addAttribute("risk", riskService.getModifyInfo(riskId));
+		model.addAttribute("risk", riskService.getRiskDetail(riskId));
 		return "risk/modify";
 	}
 	
