@@ -12,7 +12,6 @@
 <style>
 	a{
 		text-decoration: none;
-		color: inherit;
 	}
 </style>
 <div id="main-content" style="padding-top: 0">

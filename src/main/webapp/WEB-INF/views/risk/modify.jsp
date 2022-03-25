@@ -7,6 +7,7 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+
  <div id="main-content">
 
                 <div class="page-heading">
@@ -32,26 +33,33 @@
                                     	<div class="form-group">
                                             <label for="basicSelect">유형</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect" name="rTypeId" required>
+		                                        <select class="form-select" id="rTypeId" name="rTypeId" required>
 		                                        	<option value="">유형을 선택하세요</option>
-		                                            <option value="1">고객 변심</option>
-		                                            <option value="2">일정 지연</option>
-		                                            <option value="3">품질 문제</option>
-		                                            <option value="4">기타 사유</option>
+		                                            <option value="1">고객변심</option>
+		                                            <option value="2">일정지연</option>
+		                                            <option value="3">품질문제</option>
+		                                             <option value="4">기타사유</option>
 		                                        </select>
+		                    					<script>
+		                    						$('#rTypeId').val('${risk.rTypeId}').prop("selected",true);
+		                    					</script>
 		                                    </fieldset>
+		                    
                                         </div>
                                 	</div>
                                 	<div class="col-md-6 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">프로젝트명</label>
 		                                    <fieldset class="form-group mt-2">
-		                                         <select class="form-select" id="basicSelect" name="prjId" required>
+		                                         <select class="form-select" id="prjId" name="prjId" required>
 		                                        	<option value="">프로젝트를 선택하세요</option>
 		                                            <c:forEach items="${prj}" var="prj">
 		                                            	<option value="${prj.projectId }"><c:out value="${prj.title }"/></option>
 		                                            </c:forEach>                  
 		                                        </select>
+		                                        <script>
+		                    						$('#prjId').val('${risk.prjId}').prop("selected",true);
+		                    					</script>
 		                                    </fieldset>
                                         </div>
                                 	</div>
@@ -59,26 +67,29 @@
                                     	<div class="form-group">
                                             <label for="basicSelect">작업</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect" name="tName" required>
+		                                        <select class="form-select" id="tName" name="tName" required>
 									            	<option value="">작업을 선택하세요</option>
 		                                            <c:forEach items="${task}" var="task">
 		                                            	<option><c:out value="${task.taskName }"/></option>
 		                                            </c:forEach> 
 		                                        </select>
+		                    					<script>
+		                    						$('#tName').val('${risk.tName}').prop("selected",true);
+		                    					</script>		                                        
 		                                    </fieldset>
                                         </div>
                                 	</div>
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" name="rContent" rows="3" required>${risk.rContent }</textarea>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" name="rContent" rows="3" required>${risk.rContent}</textarea>
                                         </div>
                                 	</div>                          
                                 	<div class="col-md-6 col-12">
                                     <div class="form-group">
                                             <label for="basicSelect">조치자</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect" name="activator">
+		                                        <select class="form-select" id="activator" name="activator">
 		                                        	<option value="">조치자를 선택하세요</option>
 		                                            <c:forEach items="${emp}" var="emp">
 		                                            	<option><c:out value="${emp.name }"/></option>
@@ -90,13 +101,14 @@
                                 	<div class="col-md-6 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">조치 희망일</label>
-                                          	<input type="date" id="first-name-vertical" class="form-control mt-2" name="dueAt" required>
+                                          	<input type="date" id="dueAt" class="form-control mt-2" name="dueAt" value="${risk.dueAt }" required>
+                                          	
                                         </div>
                                 	</div>
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">조치내용</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" name="aContent" rows="3">${risk.aContent }</textarea>
+                            				<textarea class="form-control" id="aContent" name="aContent" rows="3">${risk.aContent }</textarea>
                                         </div>
                                 	</div>
                                     <div class="col-12">
@@ -108,7 +120,7 @@
                                     <div class="col-md-1">
 					                    <fieldset class="form-group">
 					                    <label for="basicSelect">진행 상태</label>
-					                        <select class="form-select" id="basicSelect" name="rStatusId" style="background-color:white; margin-top:5px;" required>
+					                        <select class="form-select" id="rStatusId" name="rStatusId" style="background-color:white; margin-top:5px;" required>
 					                      		<option value="">진행 상태</option>
 					                      		<option value="1">오픈</option>
 					                            <option value="2">진행</option>
@@ -116,6 +128,9 @@
 					                            <option value="4">홀드</option>
 					                            <option value="5">조치완료</option>
 					                        </select>
+					                        <script>
+		                    						$('#rStatusId').val('${risk.rStatusId}').prop("selected",true);
+		                    				</script>
 					                	</fieldset>
 					                </div>
                                     <div class="col-12 d-flex justify-content-end">
