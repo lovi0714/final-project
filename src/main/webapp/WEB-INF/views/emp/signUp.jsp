@@ -26,29 +26,44 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-horizontal">
+                            <form class="form form-horizontal" action="${path}/emp/sendEmail.do" method="post">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>이메일</label>
+                                            <label>발신자 이름</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="first-name" class="form-control" name="fname"
-                                                placeholder="이메일을 입력해주세요.">
+                                            <input type="text" id="first-name" class="form-control" name="senderName"
+                                                value="CPMS 관리자" readonly>
                                         </div>
                                         <div class="col-md-4">
-                                            <label>번호</label>
+                                            <label>발신자 이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="email" id="email-id" class="form-control" name="email-id"
-                                                placeholder="번호를 입력해주세요.">
+                                            <input type="text" id="email-id" class="form-control" name="senderMail"
+                                                value="dahoonEmailTest@gmail.com" readonly>
                                         </div>
+                                        <div class="col-md-4">
+                                            <label>수신자 이메일</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="text" id="contact-info" class="form-control" name="receiverMail"
+                                                placeholder="">
+                                        </div>
+                                        
                                         <div class="col-md-4">
                                             <label>이름</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" id="contact-info" class="form-control" name="contact"
-                                                placeholder="이름을 입력해주세요.">
+                                            <input type="text" id="contact-info" class="form-control" name="content"
+                                                placeholder="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>전화번호</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="text" id="contact-info" class="form-control" name="content"
+                                                placeholder="">
                                         </div>
                                         <div class="col-md-4">
                                             <label>권한</label>
@@ -56,9 +71,9 @@
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
 		                                        <select class="form-select" id="basicSelect">
-		                                            <option>실무진</option>
-		                                            <option>PM</option>
-		                                            <option>관리자</option>
+		                                            <option value="1">실무진</option>
+		                                            <option value="2">PM</option>
+		                                            <option value="3">관리자</option>
 		                                        </select>
 		                                    </fieldset>
 		                                </div>
@@ -68,12 +83,12 @@
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
 		                                        <select class="form-select" id="basicSelect">
-		                                            <option>인사</option>
-		                                            <option>회계</option>
-		                                            <option>경영지원</option>
-		                                            <option>기술지원</option>
-		                                            <option>생산관리</option>
-		                                            <option>연구개발</option>
+		                                            <option value="1">인사</option>
+		                                            <option value="2">회계</option>
+		                                            <option value="3">경영지원</option>
+		                                            <option value="4">기술지원</option>
+		                                            <option value="5">생산관리</option>
+		                                            <option value="6">연구개발</option>
 		                                        </select>
 		                                    </fieldset>
 		                                </div>
@@ -82,12 +97,12 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select class="form-select" id="basicSelect">
-		                                            <option>사원</option>
-		                                            <option>대리</option>
-		                                            <option>팀장</option>
-		                                            <option>과장</option>
-		                                            <option>PM</option>
+		                                        <select name="pos" class="form-select" id="basicSelect">
+		                                            <option value="1">사원</option>
+		                                            <option value="2">대리</option>
+		                                            <option value="3">팀장</option>
+		                                            <option value="4">과장</option>
+		                                            <option value="5">PM</option>
 		                                        </select>
 		                                    </fieldset>
 		                                </div>							                            
@@ -95,7 +110,7 @@
                                          
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary me-1 mb-1">이메일 전송</button>
-                                            
+                                            <span style="color:red;">${msg}</span>
                                         </div>
                                     </div>
                                 </div>
