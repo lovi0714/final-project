@@ -73,4 +73,10 @@ public class ProjectController {
 		return "project/resource";
 	}
 	
+	@GetMapping("/wbs.do")
+	public String getWBS(@RequestParam("projectId") String projectId, Model m) {
+		
+		return "project/wbs";
+	}
+	
 }
