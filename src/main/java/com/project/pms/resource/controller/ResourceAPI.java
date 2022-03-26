@@ -3,7 +3,6 @@ package com.project.pms.resource.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.project.pms.resource.service.ResourceService;
 import com.project.pms.resource.vo.Resource;
+import com.project.pms.resource.vo.ResourceWbs;
 
 @EnableWebMvc
 @RequestMapping("/resource/api/*")
@@ -29,6 +29,13 @@ public class ResourceAPI {
 	public List<Resource> getResourceList(@RequestParam("projectId") String projectId) {
 		
 		return service.getResourceList(projectId);
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "wbs/projectMember.do")
+	public List<ResourceWbs> getWbsResourceList(@RequestParam("projectId") String projectId) {
+		
+		return service.getWbsResourceList(projectId);
 	}
 	
 	@ResponseBody

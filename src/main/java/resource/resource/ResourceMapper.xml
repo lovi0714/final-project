@@ -21,6 +21,11 @@
  		<result column="pos_name" property="position"/>		
 	</resultMap>
 	
+	<resultMap type="wbsResource" id="wbsResourceMap">
+		<result column="emp_id" property="key"/>
+		<result column="name" property="label"/>
+	</resultMap>
+	
 	<select id="getResourceList" resultMap="resourceMap" parameterType="string">
 		SELECT tr.*, te.NAME, tp.POS_ID, tp.POS_NAME, tp2.PMO_ID 
 		FROM TBL_RESOURCE tr, TBL_EMP te, TBL_POS tp, TBL_PROJECT tp2 
@@ -53,5 +58,14 @@
 		FROM TBL_RESOURCE tr
 		WHERE tr.PRJ_ID = #{projectId} AND tr.EMP_ID = #{empId}
 	</delete>
+	
+	<select id="getWbsResourceList" resultMap="wbsResourceMap" parameterType="string">
+		SELECT te.emp_id, te.name 
+		FROM TBL_RESOURCE tr, TBL_EMP te, TBL_POS tp, TBL_PROJECT tp2 
+		WHERE tr.EMP_ID = te.EMP_ID 
+		AND te.POS_ID = tp.POS_ID
+		AND tr.PRJ_ID = tp2.PRJ_ID
+		AND tr.PRJ_ID = #{projectId}
+	</select>
 	
 </mapper>

@@ -23,6 +23,7 @@
 		<typeAlias alias="emp" type="com.project.pms.emp.vo.Emp"/>
 		<typeAlias alias="resource" type="com.project.pms.resource.vo.Resource"/>
 		<typeAlias alias="projectMember" type="com.project.pms.resource.vo.ProjectMember"/>
+		<typeAlias alias="wbsResource" type="com.project.pms.resource.vo.ResourceWbs"/>
 	</typeAliases>
 	
 	<typeHandlers>

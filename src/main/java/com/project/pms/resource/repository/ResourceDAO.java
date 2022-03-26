@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.project.pms.resource.vo.Resource;
+import com.project.pms.resource.vo.ResourceWbs;
 
 @Repository
 public interface ResourceDAO {
@@ -19,5 +20,7 @@ public interface ResourceDAO {
 	public void removeReource(Resource resource);
 
 	public Resource resourceFindByEmpIdAndProjectId(Map<?, ?> map);
+
+	public List<ResourceWbs> getWbsResourceList(String projectId);
 
 }

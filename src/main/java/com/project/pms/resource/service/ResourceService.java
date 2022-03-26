@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.project.pms.resource.repository.ResourceDAO;
 import com.project.pms.resource.vo.Resource;
+import com.project.pms.resource.vo.ResourceWbs;
 
 @Service
 public class ResourceService {
@@ -24,6 +25,12 @@ public class ResourceService {
 		return dao.getResourceList(projectId);
 	}
 
+	public List<ResourceWbs> getWbsResourceList(String projectId) {
+		
+		return dao.getWbsResourceList(projectId);
+	
+	}
+	
 	public List<Resource> getAllResourceList(String projectId) {
 		
 		return dao.getAllResourceList(projectId);

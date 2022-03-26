@@ -58,24 +58,48 @@
      </div>
 <script type="text/javascript">
 $(function() {
-	gantt.config.date_format = "%Y-%m-%d %H:%i";
-	var opts = [
-	    { key: 1, label: 'High' },
-	    { key: 2, label: 'Normal' },
-	    { key: 3, label: 'Low' }
-	];
-	 
-	gantt.config.lightbox.sections = [
-	    {name:"description", height:38, map_to:"text", type:"textarea", focus:true},
-	    {name:"priority",    height:22, map_to:"priority", type:"select", options:opts},
-	    {name:"time",        height:72, map_to:"auto", type:"duration"}
-	];
+	$.ajax({
+	  url: "${path}/resource/api/wbs/projectMember.do?projectId=${param.projectId}",
+	  method: "get",
+	  dataType: "json",
+	}).done(function(resourceList) {
+		console.log(resourceList);
+		
+		gantt.config.lightbox.sections = [
+			{name: "task", height: 38, map_to: "text", type: "textarea", focus: true},
+			{
+				name: "approver",
+				height: 22,
+				map_to: "approver",
+				type: "select",
+				options: resourceList
+			},
+			{
+				name: "manager",
+				height: 22,
+				map_to: "manager",
+				type: "select",
+				options: resourceList
+			},
+			{name: "time", type: "time", map_to: "auto", time_format: ["%d", "%m", "%Y"]},
+			{name: "description", height: 100, map_to: "description", type: "textarea"}
+		];
+	}).fail(function(error) {
+		console.log(error);
+	});
+
+	gantt.locale.labels.section_task = "작업명"
+	gantt.locale.labels.section_approver = "승인자";
+	gantt.locale.labels.section_manager = "담당자";
+	gantt.locale.labels.section_description = "작업 설명";
+	gantt.locale.labels.section_time = "날짜";
+	
 	gantt.init("gantt_here");
 	gantt.parse({
 	  data: [
 	    {id: 1, text: "Project #1", start_date: null, duration: null, parent:0, progress: 0, open: true},
 	    {id: 2, text: "Task #1", start_date: "2019-08-01 00:00", duration:5, parent:1, progress: 1},
-	    {id: 3, text: "Task #2", start_date: "2019-08-06 00:00", duration:2, parent:1, progress: 0.5},
+	    {id: 3, text: "Task #2", start_date	: "2019-08-06 00:00", duration:2, parent:1, progress: 0.5},
 	    {id: 4, text: "Task #3", start_date: null, duration: null, parent:1, progress: 0.8, open: true},
 	    {id: 5, text: "Task #3.1", start_date: "2019-08-09 00:00", duration:2, parent:4, progress: 0.2},
 	    {id: 6, text: "Task #3.2", start_date: "2019-08-11 00:00", duration:1, parent:4, progress: 0}
@@ -87,7 +111,6 @@ $(function() {
 	  ]
 	});
 	
-
 	
 });
 </script>
