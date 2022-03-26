@@ -30,13 +30,12 @@ public class EmpController {
 	@PostMapping("loginCheck.do")
 	public String loginCheck(Emp emp, HttpSession session) {
 		boolean result = empService.loginCheck(emp, session);
-		// ModelAndView mav = new ModelAndView();
+		
 		if (emp != null) { // 로그인 성공
 			return "redirect:/dashboard/general.do";
-			// mav.addObject("msg", "success");
+		
 		} else {
-			// mav.setViewName("emp/login");
-			// mav.addObject("msg", "fail");
+			
 			return "redirect:/emp/login.do";
 		}
 		

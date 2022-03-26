@@ -38,7 +38,7 @@
 
             <form name=loginForm action="${path}/emp/loginCheck.do" method="post">
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" name="account" id="account" placeholder="Username">
+                    <input type="text" class="form-control form-control-xl" name="empId" id="empId" placeholder="UserId">
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>

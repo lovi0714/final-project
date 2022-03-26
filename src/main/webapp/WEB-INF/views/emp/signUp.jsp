@@ -70,7 +70,8 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select class="form-select" id="basicSelect">
+		                                        <select class="form-select" id="basicSelect" required>
+		                                            <option value="">권한을 선택해주세요.</option>
 		                                            <option value="1">실무진</option>
 		                                            <option value="2">PM</option>
 		                                            <option value="3">관리자</option>
@@ -82,7 +83,8 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select class="form-select" id="basicSelect">
+		                                        <select class="form-select" id="basicSelect"> <!--  -->
+		                                            <option value="">부서를 선택해주세요.</option>
 		                                            <option value="1">인사</option>
 		                                            <option value="2">회계</option>
 		                                            <option value="3">경영지원</option>
@@ -97,7 +99,8 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select name="pos" class="form-select" id="basicSelect">
+		                                        <select name="pos" class="form-select" id="basicSelect" required>
+		                                            <option value="">직급을 선택해주세요.</option>
 		                                            <option value="1">사원</option>
 		                                            <option value="2">대리</option>
 		                                            <option value="3">팀장</option>

@@ -139,7 +139,7 @@
                                     <a href="${path}/admin/userInfo.do">사용자 정보</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/admin/signUp.do">사용자 추가</a>
+                                    <a href="${path}/emp/signUp.do">사용자 추가</a>
                                 </li>
                             </ul>
                         </li>
@@ -193,9 +193,10 @@
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <c:if test="${sessionScope.account != null}">
-                                            <h6 class="mb-0 text-gray-600">${sessionScope.account}</h6>                               
-                                            <p class="mb-0 text-sm text-gray-600">${sessionScope.name}</p>
+                                            <c:if test="${sessionScope.empId != null}">
+                                            <h6 class="mb-0 text-gray-600">${sessionScope.empId}</h6>                               
+                                            <h6 class="mb-0 text-gray-600">${sessionScope.name}</h6>                               
+                                            
                                            	</c:if> 
                                            	
                                            	
@@ -212,8 +213,8 @@
                                 
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                                     <li>
-                                        <c:if test="${sessionScope.account != null}">
-                                        <h6 class="dropdown-header">${sessionScope.account}</h6>
+                                        <c:if test="${sessionScope.empId != null}">
+                                        <h6 class="dropdown-header">${sessionScope.empId}</h6>
                                         <h6 class="dropdown-header">${sessionScope.name}</h6>
                                         </c:if>
                                            
