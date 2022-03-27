@@ -38,12 +38,12 @@
 				$("#regBtn").show();
 				$("#uptBtn").hide();
 				$("#delBtn").hide();
+							
+				// 폼 초기화  
+				$("#calendarForm")[0].reset();
 				
 				// 모달창 표시
 				$("#modalBtn").click();
-				
-				// 폼 초기화  
-				$("#calendarForm")[0].reset();
 				
 				// 폼 데이터 입력
 				$("#start").val(arg.start.toLocaleString());
@@ -55,7 +55,7 @@
 				$("#allDay").val("" + arg.allDay);
 				$("[name=allDay]").val((arg.allDay?1:0));
 				
-				calendar.unselect()
+				calendar.unselect();
 			},
 			eventClick: function(arg) {
 				// 폼 데이터 입력
@@ -131,13 +131,29 @@
 	$(document).ready(function() {
 		// 등록 버튼 클릭 시 inserCalender.do 컨트롤러 호출
 		$("#regBtn").click(function() {
+			if($("[name=title]").val()=="") {
+				Swal.fire({
+					  icon: 'error',
+					  title: '일정 제목을 입력해주세요.'
+				})
+				return;
+			}
+
 			$("#calendarForm").attr("action", "${path}/myTask/insertCalendar.do");
 			$("#calendarForm").attr("method", "post");
 			$("#calendarForm").submit();
+			
 		});
 		
 		// 수정 버튼 클릭 시 updateCalender.do 컨트롤러 호출
 		$("#uptBtn").click(function(){
+			if($("[name=title]").val()=="") {
+				Swal.fire({
+					  icon: 'error',
+					  title: '일정 제목을 입력해주세요.'
+				})
+				return;
+			}
 			$("#calendarForm").attr("action","${path}/myTask/updateCalendar.do");
 			$("#calendarForm").attr("method", "post");
 			$("#calendarForm").submit();
@@ -189,7 +205,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form" id="calendarForm">
-						<input type="hidden" name="id"/>
+						<input type="hidden" name="id" value="0"/>
 						<div class="row">
 							<div class="col-12">
 								<div class="form-group">

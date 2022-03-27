@@ -5,7 +5,7 @@
 
 <mapper namespace="com.project.pms.myTask.repository.CalendarDAO">
 	<resultMap type="calendar" id="calendarMap">
-		<result column="sch_id" property="id"/>
+		<result column="cal_id" property="id"/>
 		<result column="emp_id" property="empId"/>
 		<result column="title" property="title"/>
 		<result column="start_at" property="start"/>
@@ -26,7 +26,7 @@
 	<!-- 캘린더 등록 -->
 	<insert id="insertCalendar" parameterType="calendar">
 		INSERT INTO TBL_CALENDAR
-		VALUES (schedule_seq.nextVal, #{empId}, #{title}, #{start}, #{end},  
+		VALUES (calendar_seq.nextVal, #{empId}, #{title}, #{start}, #{end},  
 				#{allDay}, #{content}, #{backgroundColor}, #{textColor})	
 	</insert> 
 	
@@ -40,13 +40,13 @@
 			content = #{content},
 			bg_color = #{backgroundColor},
 			t_color = #{textColor}
-		WHERE sch_id = #{id}
+		WHERE cal_id = #{id}
 	</update>
 	
 	<!-- 캘린더 삭제 -->
 	<delete id="deleteCalendar" parameterType="int">
 		DELETE FROM TBL_CALENDAR
-		WHERE sch_id = #{id}
+		WHERE cal_id = #{id}
 	</delete>
 		
 </mapper>
