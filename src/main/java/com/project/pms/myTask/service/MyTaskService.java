@@ -25,4 +25,24 @@ public class MyTaskService {
 		
 		return dao.getMyTaskDetail(taskId); 
 	}
+	
+	// 작업정보 수정
+	public boolean uptMyTaskDetail(MyTask myTask) {
+		dao.uptMyTaskDetail(myTask);
+		
+		return true;
+	}
+	
+	// 회수 요청
+	public boolean uptApprovalRequest(int taskId) {		
+		dao.uptApprovalRequest(taskId);
+		
+		return true;
+	}
+	
+	public boolean insertApproval(MyTask myTask) {
+		dao.insertApproval(myTask);
+		
+		return true;
+	}
 }

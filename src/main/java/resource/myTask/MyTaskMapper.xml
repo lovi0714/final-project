@@ -7,13 +7,15 @@
 	<resultMap type="myTask" id="myTaskMap">
 		<result column="task_id" property="taskId"/>
 		<result column="task_name" property="taskName"/>
-		<result column="prj_name" property="title"/>
+		<result column="prj_name" property="pTitle"/>
+		<result column="pm_id" property="pmId"/>
 		<result column="pm_name" property="pmName"/>
 		<result column="t_status" property="status"/>
 		<result column="start_at" property="startAt"/>
 		<result column="end_at" property="endAt"/>
 		<result column="progress" property="progress"/>
 		<result column="content" property="content"/>
+		<result column="req_content" property="reqContent"/>
 	</resultMap>
 		
 	<!-- 작업 목록 -->
@@ -21,6 +23,7 @@
 		SELECT tt.task_id,
 				tt.task_name,
 				tp.name AS prj_name,
+				tp.pm_id,
 				(SELECT name FROM TBL_EMP WHERE emp_id = tp.pm_id) AS pm_name,			
 				tts.t_status,
 				tt.start_at,
@@ -41,12 +44,14 @@
 	
 	<!-- 작업정보 조회 -->
 	<select id="getMyTaskDetail" resultMap="myTaskMap" parameterType="int">
-		SELECT tt.task_name,
+		SELECT  tt.task_id,
+				tt.task_name,
 				tp.name AS prj_name,
+				tp.pm_id,
+				(SELECT name FROM TBL_EMP WHERE emp_id = tp.pm_id) AS pm_name,
 				tt.start_at,
 				tt.end_at,
-				tt.progress, 	
-				(SELECT name FROM TBL_EMP WHERE emp_id = tp.pm_id) AS pm_name,			
+				tt.progress, 					
 				tt.content
 		FROM TBL_EMP te,
 			TBL_RESOURCE tr,
@@ -57,4 +62,23 @@
 				tt.prj_id = tp.prj_id AND
 				tt.task_id = #{taskId} 
 	</select>
+	
+	<!-- 작업정보 수정 -->
+	<update id="uptMyTaskDetail" parameterType="myTask">
+		UPDATE TBL_TASK
+		SET progress = #{progress}, content = #{content}
+		WHERE task_id = #{taskId}
+	</update>
+	
+	<!-- 승인요청 -->
+	<update id="uptApprovalReqeust" parameterType="int">
+		UPDATE TBL_TASK
+		SET is_approval = 1
+		WHERE task_id = #{taskId}
+	</update>
+	
+	<insert id="insertApproval" parameterType="myTask">
+		INSERT INTO TBL_APPROVAL
+		VALUES (approval_seq.nextVal, 1, #{taskId}, null, null, null, #{reqContent}, #{pmId}, sysdate, sysdate)
+	</insert>
 </mapper>

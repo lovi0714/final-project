@@ -37,7 +37,7 @@ public class MyApprovalController {
 	public String uptApprovalCancel(@RequestParam(value="taskId[]") List<Integer> taskId, String result) {
 		System.out.println("uptApprovalCancel controller called");
 		
-		for (int i=0; i< taskId.size(); i++) {
+		for (int i=0; i<taskId.size(); i++) {
 			if(service.uptApprovalCancel(taskId.get(i)) && service.uptApprovalStatus(taskId.get(i))) {
 				result = "success";
 			} else {

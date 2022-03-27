@@ -15,7 +15,7 @@
 		<result column="reject_at" property="rejectAt"/>
 	</resultMap>
 	
-	<!-- 승인 대기 -->
+	<!-- 승인대기 목록 -->
 	<select id="getMyApprovalWaitingList" resultMap="myApprovalMap" parameterType="int">
 		SELECT tt.task_id,
 				tt.task_name,
@@ -38,9 +38,10 @@
 				te.emp_id = #{empId}
 	</select>		
 	
-	<!-- 승인 완료 -->
+	<!-- 승인완료 목록 -->
 	<select id="getMyApprovalCompletedList" resultMap="myApprovalMap" parameterType="int">
-		SELECT tt.task_name,
+		SELECT tt.task_id,
+				tt.task_name,
 				tp.name AS prj_name,
 				(SELECT name FROM TBL_EMP WHERE emp_id = ta.approver) AS approver,
 				tas.ap_status,
@@ -61,7 +62,7 @@
 				te.emp_id = #{empId}
 	</select>		
 	
-	<!-- 반려 -->
+	<!-- 반려 목록 -->
 	<select id="getMyApprovalRejectedList" resultMap="myApprovalMap" parameterType="int">
 		SELECT tt.task_id,
 				tt.task_name,

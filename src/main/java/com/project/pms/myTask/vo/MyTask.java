@@ -2,41 +2,49 @@ package com.project.pms.myTask.vo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class MyTask {
-	private String taskId;
+	private int taskId;
 	private String taskName;
-	private String title;
+	private String pTitle;
+	private int pmId;
 	private String pmName;
 	private String status;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date startAt;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date endAt;
 	private int progress;
 	private String content;
+	private String reqContent;
 	
 	public MyTask() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MyTask(String taskId, String taskName, String title, String pmName, String status, Date startAt, Date endAt,
-			int progress, String content) {
+	public MyTask(int taskId, String taskName, String pTitle, int pmId, String pmName, String status, Date startAt,
+			Date endAt, int progress, String content, String reqContent) {
 		super();
 		this.taskId = taskId;
 		this.taskName = taskName;
-		this.title = title;
+		this.pTitle = pTitle;
+		this.pmId = pmId;
 		this.pmName = pmName;
 		this.status = status;
 		this.startAt = startAt;
 		this.endAt = endAt;
 		this.progress = progress;
 		this.content = content;
+		this.reqContent = reqContent;
 	}
 
-	public String getTaskId() {
+	public int getTaskId() {
 		return taskId;
 	}
 
-	public void setTaskId(String taskId) {
+	public void setTaskId(int taskId) {
 		this.taskId = taskId;
 	}
 
@@ -48,12 +56,20 @@ public class MyTask {
 		this.taskName = taskName;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getpTitle() {
+		return pTitle;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setpTitle(String pTitle) {
+		this.pTitle = pTitle;
+	}
+
+	public int getPmId() {
+		return pmId;
+	}
+
+	public void setPmId(int pmId) {
+		this.pmId = pmId;
 	}
 
 	public String getPmName() {
@@ -102,6 +118,14 @@ public class MyTask {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getReqContent() {
+		return reqContent;
+	}
+
+	public void setReqContent(String reqContent) {
+		this.reqContent = reqContent;
 	}
 	
 }

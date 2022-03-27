@@ -22,88 +22,6 @@
 }
 </style>
 
-<script>
-$(document).ready(function() {
-	$("#cbx_chkAll1").click(function() {	
-		if($("#cbx_chkAll1").is(":checked")) 
-			$("input[name=chk1]").prop("checked", true);
-		else 
-			$("input[name=chk1]").prop("checked", false);
-	});
-		
-	$("input[name=chk1]").click(function() {			
-		let total = $("input[name=chk1]").length;
-		let checked = $("input[name=chk1]:checked").length;
-		
-		if(total != checked) 
-			$("#cbx_chkAll1").prop("checked", false);
-		else 
-			$("#cbx_chkAll1").prop("checked", true); 
-	});
-});
-
-$(document).ready(function() {
-	$("#cbx_chkAll2").click(function() {	
-		if($("#cbx_chkAll2").is(":checked")) 
-			$("input[name=chk2]").prop("checked", true);
-		else 
-			$("input[name=chk2]").prop("checked", false);
-	});
-		
-	$("input[name=chk2]").click(function() {			
-		let total = $("input[name=chk2]").length;
-		let checked = $("input[name=chk2]:checked").length;
-		
-		if(total != checked) 
-			$("#cbx_chkAll2").prop("checked", false);
-		else 
-			$("#cbx_chkAll2").prop("checked", true); 
-	});
-});
-
-function MyApprovalCancel1() {
-	
-	var taskIdValues = []
-	$("input[name=chk1]:checked").each(function(i) {
-		taskIdValues.push($(this).val());
-	});	
-	
-	var taskIdData = {"taskId": taskIdValues};
-	
-	$.ajax({
-		url: "${path}/myTask/approvalCancel.do",
-		type: 'GET',
-		data: taskIdData,
-		success: function(result) {
-			if(result == "success") {
-				location.href = "${path}/myTask/list.do"
-			}
-		}
-	});
-}
-
-function MyApprovalCancel2() {
-	
-	var taskIdValues = []
-	$("input[name=chk2]:checked").each(function(i) {
-		taskIdValues.push($(this).val());
-	});	
-	
-	var taskIdData = {"taskId": taskIdValues};
-	
-	$.ajax({
-		url: "${path}/myTask/approvalCancel.do",
-		type: 'GET',
-		data: taskIdData,
-		success: function(result) {
-			if(result == "success") {
-				location.href = "${path}/myTask/list.do"
-			}
-		}
-	});
-}
-</script>
-
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 		<div class="page-title">
@@ -176,7 +94,7 @@ function MyApprovalCancel2() {
 											<td>
 												<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${wait.taskId}">
 											</td>
-											<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">${wait.taskName}</a></td>
+											<td onclick="taskDetail(${wait.taskId})" style="color: #435ebe; cursor: pointer">${wait.taskName}</td>
 											<td>${wait.pTitle}</td>
 											<td>${wait.approver}</td>
 											<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
@@ -221,7 +139,7 @@ function MyApprovalCancel2() {
 								<tbody>
 	                      			<c:forEach var="complete" items="${CompletedList}">
 										<tr>
-											<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">${complete.taskName}</a></td>
+											<td onclick="taskDetail(${complete.taskId})" style="color: #435ebe; cursor: pointer">${complete.taskName}</td>
 											<td>${complete.pTitle}</td>
 											<td>${complete.approver}</td>
 											<td><span class="badge bg-success">${complete.apStatus}</span></td>
@@ -278,7 +196,7 @@ function MyApprovalCancel2() {
 											<td>
 												<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${reject.taskId}">
 											</td>
-											<td><a href="#primary" data-bs-toggle="modal" data-bs-target="#primary">${reject.taskName}</a></td>
+											<td onclick="taskDetail(${reject.taskId})" style="color: #435ebe; cursor: pointer">${reject.taskName}</td>
 											<td>${reject.pTitle}</td>
 											<td>${reject.approver}</td>
 											<td><span class="badge bg-danger">${reject.apStatus}</span></td>
@@ -295,6 +213,9 @@ function MyApprovalCancel2() {
 			</div>
 		</section>
 	</div>
+	
+	<!-- 작업정보 modal 버튼 -->
+	<button type="button" class="callModal" data-bs-toggle="modal" data-bs-target="#primary" style="display: none"></button>
 	
 	<!-- 작업정보 modal -->
 	<div class="modal fade text-left" id="primary" tabindex="-1"
@@ -325,48 +246,48 @@ function MyApprovalCancel2() {
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">작업</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="시장 환경 조사" name="fname-column" readonly>
+                                                name="taskName" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">프로젝트</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="빌링서비스 개발" name="fname-column" readonly>
+                                                name="pTitle" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">시작일</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="2022-04-15" name="fname-column" readonly>
+                                                name="startAt" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">완료일</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="2022-04-28" name="fname-column" readonly>
+                                                name="endAt" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
                                             <input type="number" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="100" name="fname-column" readonly>
+                                                name="progress" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">승인자</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="홍길동" name="fname-column" readonly>
+                                                name="pmName" readonly>
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="form-group">
 											<label for="exampleFormControlTextarea1" class="form-label">작업 세부내용</label>
-											<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly style="background-color: white"></textarea>
+											<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" readonly style="background-color: white"></textarea>
 										</div>
 									</div>
 								</div>
@@ -394,35 +315,21 @@ function MyApprovalCancel2() {
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">파일</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="파일명" name="fname-column" readonly>
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">프로젝트</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="2022-04-15" name="fname-column" readonly>
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">작업</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="2022-04-28" name="fname-column" readonly>
+                                                name="fname-column" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">산출물 카테고리</label>
                                             <input type="number" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="100" name="fname-column" readonly>
+                                                name="fname-column" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">산출물 종류</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                value="홍길동" name="fname-column" readonly>
+                                                name="fname-column" readonly>
 										</div>
 									</div>
 									<div class="col-12">
@@ -456,6 +363,20 @@ function MyApprovalCancel2() {
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 
 <script>
+	$(document).ready(function() {
+		$.ajax({
+			url: "${path}/myTask/detail.do",
+			type: 'GET',
+			data: {"taskId": 1},
+			dateType: "json",
+			success: function(data) {
+				console.log(data);
+				let task = data;
+				console.log(task[1]);
+			}
+		});
+	});
+	
 	// Jquery Datatable
 	$("#table1").DataTable({
 		"searching": false,
@@ -508,6 +429,160 @@ function MyApprovalCancel2() {
 	    },
 		"order": [6, 'desc']
 	});
-</script>
 
+	$(document).ready(function() {
+		$("#cbx_chkAll1").click(function() {	
+			if($("#cbx_chkAll1").is(":checked")) 
+				$("input[name=chk1]").prop("checked", true);
+			else 
+				$("input[name=chk1]").prop("checked", false);
+		});
+			
+		$("input[name=chk1]").click(function() {			
+			let total = $("input[name=chk1]").length;
+			let checked = $("input[name=chk1]:checked").length;
+			
+			if(total != checked) 
+				$("#cbx_chkAll1").prop("checked", false);
+			else 
+				$("#cbx_chkAll1").prop("checked", true); 
+		});
+	});
+	
+	$(document).ready(function() {
+		$("#cbx_chkAll2").click(function() {	
+			if($("#cbx_chkAll2").is(":checked")) 
+				$("input[name=chk2]").prop("checked", true);
+			else 
+				$("input[name=chk2]").prop("checked", false);
+		});
+			
+		$("input[name=chk2]").click(function() {			
+			let total = $("input[name=chk2]").length;
+			let checked = $("input[name=chk2]:checked").length;
+			
+			if(total != checked) 
+				$("#cbx_chkAll2").prop("checked", false);
+			else 
+				$("#cbx_chkAll2").prop("checked", true); 
+		});
+	});
+	
+	function taskDetail(taskId){
+		$.ajax({
+			url: "${path}/myTask/detail.do",
+			type: 'GET',
+			data: "taskId="+taskId,
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				let myTaskDetail = data.myTaskDetail;
+				
+				$("input[name=taskName]").val(myTaskDetail.taskName);
+				$("input[name=pTitle]").val(myTaskDetail.pTitle);
+				$("input[name=startAt]").val(myTaskDetail.startAt);
+				$("input[name=endAt]").val(myTaskDetail.endAt);
+				$("input[name=progress]").val(myTaskDetail.progress);
+				$("input[name=pmName]").val(myTaskDetail.pmName);
+				$("textarea[name=content]").val(myTaskDetail.content);
+				
+				$(".callModal").click();
+				
+			}
+		});
+	}
+	
+	function MyApprovalCancel1() {
+		if($("input[name=chk1]").is(":checked")) {
+			Swal.fire({
+				title: '결재를 회수하시겠습니까?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '확인',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					let taskIdValues = [];
+					$("input[name=chk1]:checked").each(function(i) {
+						taskIdValues.push($(this).val());
+					});	
+					
+					let taskIdData = {"taskId": taskIdValues};
+					
+					$.ajax({
+						url: "${path}/myTask/approvalCancel.do",
+						type: 'GET',
+						data: taskIdData,
+						success: function(result) {
+							if(result == "success") {
+								Swal.fire({
+							    	icon: 'success',
+							    	title: '결재가 회수되었습니다.' 
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href = "${path}/myTask/list.do"
+									}
+								})
+							}
+						}
+					});
+				}
+			})
+		} else {
+			Swal.fire({
+				title: '작업을 선택해주세요',
+				icon: 'error'
+			})
+		}
+	}
+	
+	function MyApprovalCancel2() {
+		if($("input[name=chk1]").is(":checked")) {
+			Swal.fire({
+				title: '결재를 회수하시겠습니까?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '확인',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					let taskIdValues = [];
+					$("input[name=chk2]:checked").each(function(i) {
+						taskIdValues.push($(this).val());
+					});	
+					
+					let taskIdData = {"taskId": taskIdValues};
+					
+					$.ajax({
+						url: "${path}/myTask/approvalCancel.do",
+						type: 'GET',
+						data: taskIdData,
+						success: function(result) {
+							if(result == "success") {
+								Swal.fire({
+							    	icon: 'success',
+							    	title: '결재가 회수되었습니다.' 
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href = "${path}/myTask/list.do"
+									}
+								})
+							}
+						}
+					});
+				}
+			})
+		} else {
+			Swal.fire({
+				title: '작업을 선택해주세요',
+				icon: 'error'
+			})
+		}
+	}
+	
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
