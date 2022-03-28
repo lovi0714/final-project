@@ -33,7 +33,7 @@ public class MyTaskService {
 		return true;
 	}
 	
-	// 회수 요청
+	// 승인요청
 	public boolean uptApprovalRequest(int taskId) {		
 		dao.uptApprovalRequest(taskId);
 		

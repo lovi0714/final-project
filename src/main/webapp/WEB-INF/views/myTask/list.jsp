@@ -101,6 +101,7 @@
 										<tr>
 											<td>
 												<input type="checkbox" id="checkbox1" name="chk" class="form-check-input" value="${myTask.taskId}">
+												<input type="hidden" name="pmId" value="${myTask.pmId}"/>
 											</td>
 				                            <td onclick="taskDetail(${myTask.taskId})" style="color: #435ebe; cursor: pointer">${myTask.taskName}</td>
 				                            <td>${myTask.pTitle}</td>
@@ -268,7 +269,7 @@
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
                                             <input type="number" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="progress">
+                                                name="progress" min="0" max="100"/>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
@@ -566,48 +567,10 @@
 		});
 	}
 	
-	function uptDetail() {
-		Swal.fire({
-			title: '작업정보를 등록하시겠습니까?',
-			icon: 'question',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: '확인',
-			cancelButtonText: '취소'
-		}).then((result) => {
-			if (result.isConfirmed) {
-				let taskId = $("input[name=taskId").val();
-				let progress = $("input[name=progress]").val();
-				let content = $("textarea[name=content]").val();
-				
-				let taskDetail = {"taskId": taskId, "progress": progress, "content": content};
-				
-				$.ajax({
-					url: "${path}/myTask/uptDetail.do",
-					type: 'GET',
-					data: taskDetail,
-					success: function(result) {
-						if(result == "success") {
-							Swal.fire({
-						    	icon: 'success',
-						    	title: '작업정보가 등록되었습니다.' 
-							}).then((result) => {
-								if(result.isConfirmed) {
-									location.href = "${path}/myTask/list.do"
-								}
-							})
-						}
-					}
-				});
-			}
-		})
-	} 
-	
-	function approvalRequest() {	
-		if($("input[name=chk]").is(":checked")) {
+	function uptDetail() {		
+		if($("input[name=progress]").val() >= 0 && $("input[name=progress]").val() <= 100) {
 			Swal.fire({
-				title: '승인을 요청하시겠습니까?',
+				title: '작업정보를 등록하시겠습니까?',
 				icon: 'question',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -616,10 +579,91 @@
 				cancelButtonText: '취소'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					Swal.fire({
-						icon: 'success',
-						title: '승인이 요청되었습니다.' 
-					})
+					let taskId = $("input[name=taskId").val();
+					let progress = $("input[name=progress]").val();
+					let content = $("textarea[name=content]").val();
+					
+					let taskDetail = {"taskId": taskId, "progress": progress, "content": content};
+					
+					$.ajax({
+						url: "${path}/myTask/uptDetail.do",
+						type: 'POST',
+						data: taskDetail,
+						success: function(result) {
+							if(result == "success") {
+								Swal.fire({
+							    	icon: 'success',
+							    	title: '작업정보가 등록되었습니다.' 
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href = "${path}/myTask/list.do"
+									}
+								})
+							}
+						}
+					});
+				}
+			})
+		} else {
+			Swal.fire({
+				title: '진행률을 다시 입력해주세요',
+				text: '0~100 사이의 숫자를 입력해주세요',
+				icon: 'error'
+			})
+		}
+	} 
+	
+	function approvalRequest() {	
+		if($("input[name=chk]").is(":checked")) {
+			Swal.fire({
+				title: '승인을 요청하시겠습니까?',
+				icon: 'question',
+				input: 'textarea',
+				inputPlaceholder: '승인요청 내용을 입력해주세요.',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '확인',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					let taskIdValues = [];
+					let pmIdValues = [];
+					let reqContent = result.value;
+						
+					$("input[name=chk]:checked").each(function(i) {
+						taskIdValues.push($(this).val());
+						pmIdValues.push($(this).next().val());
+					});	
+					
+					let requestData = {
+						taskId: taskIdValues,
+						pmId: pmIdValues,
+						reqContent: reqContent
+					};
+					
+					console.log(taskIdValues);
+					console.log(requestData);
+					
+					$.ajax({
+						url: "${path}/myTask/approvalRequest.do",
+						type: 'POST',
+						contentType:'application/json; charset=UTF-8',
+						dataType:'json',
+						data: JSON.stringify(requestData), 
+						success: function(result) {
+							if(result == "success") {
+								Swal.fire({
+							    	icon: 'success',
+							    	title: '승인을 요청하였습니다.' 
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href = "${path}/myTask/approvalList.do"
+									}
+								})
+							}
+						}
+					});
 				}
 			})
 		} else {
@@ -629,8 +673,7 @@
 			})
 		}		
 	}
-		
-	
+
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

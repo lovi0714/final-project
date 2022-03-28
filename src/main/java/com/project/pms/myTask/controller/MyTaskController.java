@@ -1,11 +1,14 @@
 package com.project.pms.myTask.controller;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,7 +43,7 @@ public class MyTaskController {
 	}
 	
 	// 작업정보 수정
-	@GetMapping("/uptDetail.do")
+	@PostMapping("/uptDetail.do")
 	@ResponseBody
 	public String uptMyTaskDetail(MyTask myTask, String result) {
 		System.out.println("uptMyTaskDetail controller called...");		
@@ -54,14 +57,30 @@ public class MyTaskController {
 	}
 	
 	// 승인요청
-	@GetMapping("/approvalRequest.do")
+	@PostMapping(value="/approvalRequest.do", consumes = "application/json")
 	@ResponseBody
-	public String uptApprovalRequest(@RequestParam(value="taskId[]") List<Integer> taskId, String result) {
-		System.out.println("uptApprovalRequest controller called");
+	public String uptApprovalRequest(@RequestBody Map<String, Object> map, MyTask myTask, String result) {
+		System.out.println("uptApprovalRequest controller called...");
 		
-		// 작성중
+		String tid = map.get("taskId").toString();
+		String pid = map.get("pmId").toString(); 
+		String reqContent = map.get("reqContent").toString();
 		
-		return result;
+		int[] taskId = Arrays.stream(tid.substring(1, tid.length() - 1).split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray();
+		int[] pmId = Arrays.stream(pid.substring(1, pid.length() - 1).split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray();
+		myTask.setReqContent(reqContent);
 		
+		for (int i=0; i<taskId.length; i++) {
+			myTask.setTaskId(taskId[i]);
+			myTask.setPmId(pmId[i]);
+			
+			if(service.uptApprovalRequest(taskId[i]) && service.insertApproval(myTask)) {
+				result = "success";	
+			} else {
+				result = "false";
+			}	
+		}
+		
+		return result;	
 	}
 }

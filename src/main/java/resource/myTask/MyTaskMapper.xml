@@ -71,14 +71,14 @@
 	</update>
 	
 	<!-- 승인요청 -->
-	<update id="uptApprovalReqeust" parameterType="int">
+	<update id="uptApprovalRequest" parameterType="int">
 		UPDATE TBL_TASK
 		SET is_approval = 1
 		WHERE task_id = #{taskId}
 	</update>
 	
 	<insert id="insertApproval" parameterType="myTask">
-		INSERT INTO TBL_APPROVAL
-		VALUES (approval_seq.nextVal, 1, #{taskId}, null, null, null, #{reqContent}, #{pmId}, sysdate, sysdate)
+		INSERT INTO TBL_APPROVAL(approval_id, ap_status_id, task_id, req_content, approver, create_at, update_at)
+		VALUES (approval_seq.nextVal, 1, #{taskId}, #{reqContent, jdbcType=VARCHAR}, #{pmId}, sysdate, sysdate)
 	</insert>
 </mapper>

@@ -539,7 +539,7 @@
 	}
 	
 	function MyApprovalCancel2() {
-		if($("input[name=chk1]").is(":checked")) {
+		if($("input[name=chk2]").is(":checked")) {
 			Swal.fire({
 				title: '결재를 회수하시겠습니까?',
 				icon: 'question',
