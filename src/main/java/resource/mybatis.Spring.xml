@@ -18,6 +18,7 @@
 		<typeAlias alias="riskBoard" type="com.project.pms.risk.vo.RiskBoard"/>
         <typeAlias alias="riskDetail" type="com.project.pms.risk.vo.RiskDetail"/>
         <typeAlias alias="riskSaveRequest" type="com.project.pms.risk.vo.RiskSaveRequest"/>
+        <typeAlias alias="rFileInfo" type="com.project.pms.risk.vo.RiskFileInfo"/>
 		<typeAlias alias="notice" type="com.project.pms.community.vo.Notice"/>
 		<typeAlias alias="noticeFile" type="com.project.pms.community.vo.NoticeFile"/>
 		<typeAlias alias="emp" type="com.project.pms.emp.vo.Emp"/>

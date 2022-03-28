@@ -12,6 +12,7 @@ import com.project.pms.risk.repository.RiskDAO;
 import com.project.pms.risk.vo.Risk;
 import com.project.pms.risk.vo.RiskBoard;
 import com.project.pms.risk.vo.RiskDetail;
+import com.project.pms.risk.vo.RiskFileInfo;
 import com.project.pms.risk.vo.RiskSaveRequest;
 
 
@@ -32,9 +33,13 @@ public class RiskService {
 	}
 	
 	// 리스크 등록
-	public void saveRisk(RiskSaveRequest riskSaveRequest) {
+	public void saveRisk(RiskSaveRequest riskSaveRequest) throws Exception {
 		dao.saveRisk(riskSaveRequest);
 		dao.setComAt(riskSaveRequest);
+	}
+	
+	public void insertFile(RiskFileInfo file) throws Exception {
+		dao.insertFile(file);
 	}
 	
 	// 수정 정보

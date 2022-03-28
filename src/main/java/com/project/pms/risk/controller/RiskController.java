@@ -1,15 +1,22 @@
 package com.project.pms.risk.controller;
 
+import java.io.File;
+
+import java.util.UUID;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.pms.risk.service.RiskService;
-import com.project.pms.risk.vo.RiskDetail;
+import com.project.pms.risk.vo.RiskFileInfo;
 import com.project.pms.risk.vo.RiskSaveRequest;
 
 @Controller
@@ -56,10 +63,40 @@ public class RiskController {
 	}
 	
 	// 리스크 저장하기
+	@Value("${upload}")
+	private String upload;
 	@PostMapping("/save.do")
-	public String saveRisk(RiskSaveRequest riskSaveRequest) throws Exception {
+	public String saveRisk(RiskSaveRequest riskSaveRequest, @RequestParam(required = false) MultipartFile file, RiskFileInfo fileInfo) throws Exception {
+		
 		
 		riskService.saveRisk(riskSaveRequest);
+		if(file!=null) {
+		String originalName = file.getOriginalFilename();
+		String extension = FilenameUtils.getExtension(originalName).toLowerCase();
+		File saveFile;
+		String saveName;
+		long volume;
+		String path = upload;
+		
+		do {
+			saveName = UUID.randomUUID() + "." + extension;
+			saveFile = new File(path,saveName);
+			volume = file.getSize();
+			
+		} while (saveFile.exists());
+		
+		saveFile.getParentFile().mkdirs();
+		file.transferTo(saveFile);
+		
+		fileInfo.setBoardId(riskSaveRequest.getRiskId());
+		fileInfo.setOriginalName(originalName);
+		fileInfo.setSaveName(saveName);
+		fileInfo.setExtension(extension);
+		fileInfo.setVolume(volume);
+
+		riskService.insertFile(fileInfo);
+		
+		}
 		return "redirect:/risk/riskBoard.do";
 	}
 	

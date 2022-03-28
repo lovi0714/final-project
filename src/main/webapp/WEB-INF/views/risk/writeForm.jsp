@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" name="write" id="write" action="${path}/risk/save.do" method="post">
+                            <form class="form" name="write" id="write" action="${path}/risk/save.do" enctype="multipart/form-data" method="post">
                                 <div class="row">
        
                                   	<div class="col-md-6 col-12">
@@ -102,7 +102,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">파일</label>
-                                            <input type="file" id="first-name-vertical" class="form-control" placeholder="산출물 제목을 입력하세요." maxlength="120">
+                                            <input type="file" id="file" name="file" class="form-control" maxlength="120">
                                         </div>
                                     </div>
                                     <div class="col-md-2">

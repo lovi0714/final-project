@@ -74,7 +74,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">파일</label>
-                                            <input type="file" id="first-name-vertical" class="form-control" placeholder="산출물 제목을 입력하세요." name="rFile" maxlength="120" disabled style="background-color:white;">
+                                            <input type="file" id="file" name="file" class="form-control" maxlength="120" disabled style="background-color:white;">
                                         </div>
                                     </div>
 			                        <div class="col-md-1">

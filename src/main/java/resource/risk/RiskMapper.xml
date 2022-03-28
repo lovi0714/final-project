@@ -140,6 +140,22 @@
  		WHERE R_STATUS_ID = 5
  	</update>
  	
+ 	<update id="insertFile" parameterType="rFileInfo">
+ 		MERGE INTO TBL_R_FILE rf
+ 		USING DUAL ON (
+ 		rf.r_file_id = #{rFileId}
+ 		)
+ 		WHEN MATCHED THEN
+ 			UPDATE SET
+ 			original_name = #{originalName},
+ 			save_name = #{saveName},
+ 			ext = #{extension},
+ 			volume = #{volume},
+ 			update_at = sysdate
+ 		WHEN NOT MATCHED THEN
+ 		INSERT (r_file_id, risk_id, original_name, save_name, ext, volume, create_at)
+ 		VALUES (R_FILE_SEQ.NEXTVAL, RISK_SEQ.CURRVAL, #{originalName}, #{saveName}, #{extension}, #{volume}, sysdate)
+ 	</update>
  	
  	<!-- 사원정보 -->
  	<select id="getEmpList" resultType="emp">
