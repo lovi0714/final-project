@@ -5,12 +5,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.project.pms.emp.service.EmpService;
+import com.project.pms.emp.service.LoginVerification;
 import com.project.pms.emp.vo.Emp;
 
 @Controller
@@ -19,6 +18,8 @@ public class EmpController {
 	
 	@Autowired
 	EmpService empService;
+	@Autowired
+	LoginVerification loginVerification;
 	
 	/* 로그인 화면 */
 	@GetMapping("/login.do")
@@ -27,28 +28,39 @@ public class EmpController {
 	}
 	
 	/* 로그인 처리 */
-	@PostMapping("loginCheck.do")
-	public String loginCheck(Emp emp, HttpSession session) {
-		boolean result = empService.loginCheck(emp, session);
-		
-		if (emp != null) { // 로그인 성공
-			return "redirect:/dashboard/general.do";
-		
-		} else {
+	@PostMapping("/loginProcess.do")
+	public String loginProcess(Emp emp, HttpSession session) {
+		// String rawPassword = emp.getPassword();
+		if(loginVerification.loginVerification(emp)) { // , rawPassword
+			session.setAttribute("emp", emp);
+			session.setAttribute("empId", emp.getEmpId());
+			session.setAttribute("name", emp.getName());
 			
-			return "redirect:/emp/login.do";
+			session.setMaxInactiveInterval(60 * 30);
+			return "redirect:/dashboard/general.do";
 		}
-		
+		return "redirect:/emp/login.do";
 	}
 	
 	/* 로그아웃 처리 */
-	@GetMapping("logout.do")
-	public ModelAndView logout(HttpSession session) {
-		empService.logout(session);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("emp/login");
-		mav.addObject("msg", "logout");
-		return mav;
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/emp/login.do";
+	}
+	
+	/* 사원추가 페이지 */
+	@GetMapping("/addEmp.do")
+	public String addEmp() {
+		return "emp/addEmp";
+	}
+	
+	/* 사원 정보 저장 */
+	@PostMapping("/addEmp.do")
+	public String joinEmp(Emp emp) {
+		// String rawPassword = emp.getPassword();
+		empService.joinEmp(emp); //, rawPassword
+		return "redirect:/emp/login.do";
 	}
 	
 	/* 프로필 화면 */

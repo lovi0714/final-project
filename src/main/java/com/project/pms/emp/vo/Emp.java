@@ -10,7 +10,7 @@ public class Emp {
 	private String deptName;
 	private String password;
 	private String name;
-	private String email;
+	private String empEmail;
 	private String phone;
 	private LocalDateTime joinAt;
 	private LocalDateTime leaveAt;
@@ -21,17 +21,18 @@ public class Emp {
 	
 	public Emp() {}
 
-	public Emp(int empId, int deptId, int authId, int posId, String password, String name, String email, String phone,
-			LocalDateTime joinAt, LocalDateTime leaveAt, int isLeave, LocalDateTime createAt, LocalDateTime updateAt,
-			String authName) {
+	public Emp(int empId, int deptId, int authId, int posId, String deptName, String password, String name,
+			String empEmail, String phone, LocalDateTime joinAt, LocalDateTime leaveAt, int isLeave,
+			LocalDateTime createAt, LocalDateTime updateAt, String authName) {
 		super();
 		this.empId = empId;
 		this.deptId = deptId;
 		this.authId = authId;
 		this.posId = posId;
+		this.deptName = deptName;
 		this.password = password;
 		this.name = name;
-		this.email = email;
+		this.empEmail = empEmail;
 		this.phone = phone;
 		this.joinAt = joinAt;
 		this.leaveAt = leaveAt;
@@ -73,6 +74,14 @@ public class Emp {
 		this.posId = posId;
 	}
 
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -89,12 +98,12 @@ public class Emp {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmpEmail() {
+		return empEmail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmpEmail(String empEmail) {
+		this.empEmail = empEmail;
 	}
 
 	public String getPhone() {
@@ -152,5 +161,15 @@ public class Emp {
 	public void setAuthName(String authName) {
 		this.authName = authName;
 	}
+
+	@Override
+	public String toString() {
+		return "Emp [empId=" + empId + ", deptId=" + deptId + ", authId=" + authId + ", posId=" + posId + ", deptName="
+				+ deptName + ", password=" + password + ", name=" + name + ", empEmail=" + empEmail + ", phone=" + phone
+				+ ", joinAt=" + joinAt + ", leaveAt=" + leaveAt + ", isLeave=" + isLeave + ", createAt=" + createAt
+				+ ", updateAt=" + updateAt + ", authName=" + authName + "]";
+	}
+
+	
 	
 }

@@ -22,7 +22,7 @@ public class EmailManagement {
 			MimeMessage msg = mailSender.createMimeMessage();
 			
 			// 받는 사람을 설정 (수신자, 받는사람의 이메일 주소 객체를 생성해서 수신자 이메일주소를 담음)
-	        msg.addRecipient(RecipientType.TO, new InternetAddress(vo.getReceiverMail()));
+	        msg.addRecipient(RecipientType.TO, new InternetAddress(vo.getEmpEmail()));
 	
 	        /*
 	         * createMimeMessage() : MimeMessage객체를 생성시킴 (이것을 이용해서 메시지를 구성한 뒤 메일 발송)

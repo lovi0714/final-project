@@ -32,7 +32,7 @@ public class EmailController {
 			e.printStackTrace();
             m.addAttribute("msg", "이메일 발송 실패");
 		}
-		return "/emp/signUp"; // 이메일 전송 실패 시 다시 회원가입 페이지 이동.
+		return "redirect:/emp/addEmp"; // 이메일 전송 실패 시 다시 회원가입 페이지 이동.
 	} 
 	
 	

@@ -7,7 +7,10 @@ import com.project.pms.emp.vo.Emp;
 @Repository
 public interface EmpDAO {
 
-	// 직원정보조회
+	// 사원정보조회
 	public Emp empInfo(Emp emp);
+	
+	// 사원추가
+	public void saveEmp(Emp emp);
 	
 }

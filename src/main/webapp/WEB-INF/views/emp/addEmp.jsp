@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-horizontal" action="${path}/emp/sendEmail.do" method="post">
+                            <form class="form form-horizontal" action="${path}/emp/addEmp.do" method="post">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -47,7 +47,7 @@
                                             <label>수신자 이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="contact-info" class="form-control" name="receiverMail"
+                                            <input type="text" id="contact-info" class="form-control" name="empEmail"
                                                 placeholder="">
                                         </div>
                                         
@@ -55,14 +55,14 @@
                                             <label>이름</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="contact-info" class="form-control" name="content"
+                                            <input type="text" id="contact-info" class="form-control" name="name"
                                                 placeholder="">
                                         </div>
                                         <div class="col-md-4">
                                             <label>전화번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="contact-info" class="form-control" name="content"
+                                            <input type="text" id="contact-info" class="form-control" name="phone"
                                                 placeholder="">
                                         </div>
                                         <div class="col-md-4">
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select class="form-select" id="basicSelect" required>
+		                                        <select class="form-select" id="basicSelect" name="authId" required>
 		                                            <option value="">권한을 선택해주세요.</option>
 		                                            <option value="1">실무진</option>
 		                                            <option value="2">PM</option>
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select class="form-select" id="basicSelect"> <!--  -->
+		                                        <select class="form-select" id="basicSelect" name="deptId">
 		                                            <option value="">부서를 선택해주세요.</option>
 		                                            <option value="1">인사</option>
 		                                            <option value="2">회계</option>
@@ -99,7 +99,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select name="pos" class="form-select" id="basicSelect" required>
+		                                        <select class="form-select" id="basicSelect" name="posId" required>
 		                                            <option value="">직급을 선택해주세요.</option>
 		                                            <option value="1">사원</option>
 		                                            <option value="2">대리</option>
@@ -109,15 +109,16 @@
 		                                        </select>
 		                                    </fieldset>
 		                                </div>							                            
-                                        </div>
+                                        
                                          
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary me-1 mb-1">이메일 전송</button>
                                             <span style="color:red;">${msg}</span>
                                         </div>
+                                       </div> 
                                     </div>
-                                </div>
-                            </form>
+                                </form>    
+                            </div>                            
                         </div>
                     </div>
                 </div>

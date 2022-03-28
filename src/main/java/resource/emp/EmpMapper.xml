@@ -11,7 +11,7 @@
  		<result column="pos_id" property="posId"/> 		 		
  		<result column="password" property="password"/>
  		<result column="name" property="name"/>
- 		<result column="email" property="email"/>
+ 		<result column="emp_email" property="empEmail"/>
  		<result column="phone" property="phone"/>
  		<result column="join_at" property="joinAt"/>
  		<result column="leave_at" property="leaveAt"/>
@@ -20,13 +20,12 @@
  		<result column="update_at" property="updateAt"/>
  	</resultMap>
  	 
-	
-	<!-- 로그인 체크 -->
-	<select id="loginCheck" resultMap="empMap" parameterType="emp">
-		SELECT *
-		FROM TBL_EMP
-		WHERE emp_id = #{empId}
-	</select>	
+	<!-- 사원추가 -->	
+	<insert id="saveEmp" parameterType="emp">
+		INSERT INTO TBL_EMP
+		(emp_id, dept_id, auth_id, pos_id, password, name, emp_email, phone, join_at, leave_at, is_leave, create_at, update_at)
+		VALUES(empId_seq.NEXTVAL, #{deptId}, #{authId}, #{posId}, 1234, #{name}, #{empEmail}, #{phone}, sysdate, NULL, 0, sysdate, NULL)
+	</insert>
 	
 	<!-- 직원정보조회 -->
 	<select id="empInfo" resultMap="empMap">

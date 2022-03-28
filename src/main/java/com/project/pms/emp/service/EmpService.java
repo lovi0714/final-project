@@ -14,17 +14,19 @@ public class EmpService {
 	@Autowired
 	private EmpDAO empDAO;
 	
-	// 로그인 체크
-	public boolean loginCheck(Emp emp, HttpSession session) {
-		
-		Emp emp2 = empInfo(emp);
-		// 세션 변수 등록
-		session.setAttribute("empId", emp2.getEmpId());
-		session.setAttribute("name", emp2.getName());
-		return true;
-	}			
+	// @Autowired
+	// PasswordManagement passwordManagement;
 	
-	// 직원정보조회	
+	// 사원추가
+	public boolean joinEmp(Emp emp) { // , String rawPassword
+		// String encryptPassword = passwordManagement.encryptPassword(emp);
+		// emp.setPassword(encryptPassword);
+		empDAO.saveEmp(emp);
+		
+		return true;
+	}	
+	
+	// 사원정보조회	
 	public Emp empInfo(Emp emp) {
 		return empDAO.empInfo(emp);
 	}
