@@ -1,7 +1,7 @@
 package com.project.pms.emp.service;
 
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.pms.emp.vo.Emp;
@@ -11,7 +11,7 @@ public class LoginVerification {
 	
 	// @Autowired
 	// PasswordManagement passwordManagement;
-	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	// BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	/* 로그인 검증 */
 	public boolean loginVerification(Emp emp) { // String rawPassword
