@@ -44,11 +44,11 @@
                                                 value="dahoonEmailTest@gmail.com" readonly>
                                         </div>
                                         <div class="col-md-4">
-                                            <label>수신자 이메일</label>
+                                            <label>사원 이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="contact-info" class="form-control" name="empEmail"
-                                                placeholder="">
+                                                placeholder="이메일을 입력해주세요.">
                                         </div>
                                         
                                         <div class="col-md-4">
@@ -56,14 +56,14 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="contact-info" class="form-control" name="name"
-                                                placeholder="">
+                                                placeholder="이름을 입력해주세요.">
                                         </div>
                                         <div class="col-md-4">
                                             <label>전화번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="contact-info" class="form-control" name="phone"
-                                                placeholder="">
+                                                placeholder="전화번호를 입력해주세요.">
                                         </div>
                                         <div class="col-md-4">
                                             <label>권한</label>
@@ -112,8 +112,7 @@
                                         
                                          
                                         <div class="col-sm-12 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">이메일 전송</button>
-                                            <span style="color:red;">${msg}</span>
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">전송</button>
                                         </div>
                                        </div> 
                                     </div>
@@ -136,5 +135,6 @@ let jquery_datatable = $("#table1").DataTable({
 	"lengthChange" : false,
 	"info" : false,
 });
+
 </script>     
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 

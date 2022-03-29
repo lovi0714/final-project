@@ -193,9 +193,9 @@
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <c:if test="${sessionScope.empId != null}">                       
-                                            <h6 class="mb-0 text-gray-600">${sessionScope.empId}</h6>                               
-                                            <h6 class="mb-0 text-gray-600">${sessionScope.authId}</h6>                               
+                                            <c:if test="${sessionScope.emp != null}">                       
+                                            <h6 class="mb-0 text-gray-600">${sessionScope.emp.empId}</h6>                               
+                                            <h6 class="mb-0 text-gray-600">${sessionScope.emp.name}</h6>                               
                                             
                                            	</c:if> 
                                            	
@@ -215,7 +215,7 @@
                                     <li>
                                         <c:if test="${sessionScope.empId != null}">
                                         <h6 class="dropdown-header">${sessionScope.empId}</h6>
-                                        <h6 class="dropdown-header">${sessionScope.name}</h6>
+                                        <h6 class="dropdown-header">${sessionScope.emp.name}</h6>
                                         </c:if>
                                            
                                     </li>

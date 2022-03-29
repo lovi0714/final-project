@@ -8,7 +8,7 @@ import com.project.pms.emp.vo.Emp;
 public interface EmpDAO {
 
 	// 사원정보조회
-	public Emp empInfo(Emp emp);
+	public Emp empInfo(int empId);
 	
 	// 사원추가
 	public void saveEmp(Emp emp);

@@ -117,8 +117,8 @@
 					                        </select>
 					                    </fieldset>
 					                </div>
-					                <input type="hidden" name ="empId" value="${sessionScope.empId}">
-					                <input type="hidden" name ="presenter" value="${sessionScope.name}">
+					                <input type="hidden" name ="empId" value="${sessionScope.emp.empId}">
+					                <input type="hidden" name ="presenter" value="${sessionScope.emp.name}">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">등록</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>

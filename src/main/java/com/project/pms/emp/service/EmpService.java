@@ -27,8 +27,8 @@ public class EmpService {
 	}	
 	
 	// 사원정보조회	
-	public Emp empInfo(Emp emp) {
-		return empDAO.empInfo(emp);
+	public Emp empInfo(int empId) {
+		return empDAO.empInfo(empId);
 	}
 	
 	// 로그아웃

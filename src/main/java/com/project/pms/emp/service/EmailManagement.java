@@ -36,9 +36,9 @@ public class EmailManagement {
 	        msg.addFrom(new InternetAddress[] { new InternetAddress(vo.getSenderMail(), vo.getSenderName()) });
 	
 	        // 이메일 제목 (인코딩을 해야 한글이 깨지지 않음)
-	        msg.setSubject(vo.getSubject(), "utf-8");
+	        msg.setSubject("제목입니다.", "utf-8");
 	        // 이메일 본문 (인코딩을 해야 한글이 깨지지 않음)
-	        msg.setText(vo.getContent(), "utf-8");
+	        msg.setText("내용입니다.", "utf-8");
 	        
 	        // 이메일 보내기
 	        mailSender.send(msg);
