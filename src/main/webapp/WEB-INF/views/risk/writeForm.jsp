@@ -121,7 +121,7 @@
 					                <input type="hidden" name ="presenter" value="${sessionScope.emp.name}">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">등록</button>
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1" onclick="window.history.back()">취소</button>
                                     </div>
                                 </div>
                             </form>

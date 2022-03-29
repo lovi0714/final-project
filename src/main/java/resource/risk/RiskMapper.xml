@@ -105,7 +105,7 @@
 			R_TYPE_ID = #{rTypeId, jdbcType=INTEGER},
 			PRJ_ID = #{prjId, jdbcType=VARCHAR},
 			R_STATUS_ID = #{rStatusId, jdbcType=INTEGER},
-			T_NAME = #{tName,jdbcType=VARCHAR},
+			T_NAME = #{tName, jdbcType=VARCHAR},
 			R_CONTENT = #{rContent, jdbcType=CLOB},
 			ACTIVATOR = #{activator, jdbcType=VARCHAR},
 			A_CONTENT = #{aContent, jdbcType=CLOB},
@@ -155,10 +155,10 @@
  	</update>
  	
  	<!--파일 업로드 -->
- 	<update id="insertFile" parameterType="rFileInfo">
+ 	<update id="saveFile" parameterType="rFileInfo">
  		MERGE INTO TBL_R_FILE rf
  		USING DUAL ON (
- 		rf.r_file_id = #{rFileId}
+ 		rf.R_FILE_ID = #{rFileId}
  		)
  		WHEN MATCHED THEN
  			UPDATE SET
@@ -168,8 +168,8 @@
  			volume = #{volume},
  			update_at = sysdate
  		WHEN NOT MATCHED THEN
- 		INSERT (r_file_id, risk_id, original_name, save_name, ext, volume, create_at)
- 		VALUES (R_FILE_SEQ.NEXTVAL, RISK_SEQ.CURRVAL, #{originalName}, #{saveName}, #{extension}, #{volume}, sysdate)
+ 		INSERT (r_file_id, risk_id, original_name, save_name, ext, volume, create_at, update_at)
+ 		VALUES (R_FILE_SEQ.NEXTVAL, RISK_SEQ.CURRVAL, #{originalName}, #{saveName}, #{extension}, #{volume}, sysdate, sysdate)
  	</update>
  	
  	<!-- 사원정보 -->

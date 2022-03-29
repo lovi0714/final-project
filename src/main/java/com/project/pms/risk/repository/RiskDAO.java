@@ -26,7 +26,7 @@ public interface RiskDAO {
 	// 리스크 저장하기
 	public void saveRisk(RiskSaveRequest riskSaveRequest) throws Exception;
 	public void setComAt(RiskSaveRequest riskSaveRequest) throws Exception ;
-	public void insertFile(RiskFileInfo file) throws Exception ;
+	public void saveFile(RiskFileInfo fileInfo) throws Exception ;
 	
 	// 수정 정보 가져오기
 	public RiskSaveRequest getModifyInfo(int riskId);

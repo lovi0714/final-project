@@ -90,7 +90,7 @@
                                         <button type="button" class="btn btn-primary me-1 mb-1" onclick="location='modify.do?riskId='+${detail.riskId}">수정</button>
                                     </c:if>
                                         <button type="button" class="btn btn-danger me-1 mb-1" onclick="location='delete.do?riskId='+${detail.riskId}">삭제</button>
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1" onclick="window.history.back()">취소</button>
                                     </div>
                                     
                                 </div>                      

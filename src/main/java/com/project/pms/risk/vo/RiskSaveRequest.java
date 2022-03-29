@@ -8,7 +8,7 @@ public class RiskSaveRequest {
 	private String title;
 	private int rTypeId;
 	private String prjId;
-	private int empId; 
+	private String empId; 
 	private int rStatusId;
 	private String tName;
 	private String rContent;
@@ -21,9 +21,9 @@ public class RiskSaveRequest {
 		
 	}
 
-	public RiskSaveRequest(int riskId, String title, int rTypeId, String prjId, int empId, int rStatusId, String tName,
+	public RiskSaveRequest(int riskId, String title, int rTypeId, String prjId, String empId, int rStatusId, String tName,
 			String rContent, String presenter, String activator, String aContent, String dueAt) {
-		super();
+		
 		this.riskId = riskId;
 		this.title = title;
 		this.rTypeId = rTypeId;
@@ -70,11 +70,11 @@ public class RiskSaveRequest {
 		this.prjId = prjId;
 	}
 
-	public int getEmpId() {
+	public String getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(int empId) {
+	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
 

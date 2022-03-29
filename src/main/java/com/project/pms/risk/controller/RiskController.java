@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,8 +80,14 @@ public class RiskController {
 		
 		
 		riskService.saveRisk(riskSaveRequest);
+		int riskId  = riskSaveRequest.getRiskId();
+		Integer rFileId = fileInfo.getrFileId(); 
 		
+		// 파일 등록할 때
 		if(file.getSize()!=0) {
+			// riskId 가 있으면 수정이므로 있던 파일 삭제하고 새로 등록
+			if(riskId!=0 && rFileId!=null) riskService.deleteFile(riskId);
+		
 		String originalName = file.getOriginalFilename();
 		String extension = FilenameUtils.getExtension(originalName).toLowerCase();
 		File saveFile;
@@ -98,18 +105,21 @@ public class RiskController {
 		saveFile.getParentFile().mkdirs();
 		file.transferTo(saveFile);
 		
-		fileInfo.setRiskId(riskSaveRequest.getRiskId());
+		if(rFileId==null) rFileId=0;
+		fileInfo.setrFileId(rFileId);
+		fileInfo.setRiskId(riskId);
 		fileInfo.setOriginalName(originalName);
 		fileInfo.setSaveName(saveName);
 		fileInfo.setExtension(extension);
 		fileInfo.setVolume(volume);
 
-		riskService.insertFile(fileInfo);		
+		riskService.saveFile(fileInfo);		
 		
 		}
 		return "redirect:/risk/riskBoard.do";
 	}
 	
+	// 파일 다운로드
 	@RequestMapping("/fileDown.do")
 	public void fileDown(@RequestParam int riskId, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
@@ -179,10 +189,17 @@ public class RiskController {
 		
 	}
 
-	// 글 삭제하기
+	// 글, 파일 삭제하기
 	@GetMapping("/delete.do")
 	public String deleteRisk(@RequestParam int riskId) {
+		
+		// 업로드 된 파일 먼저 지우고 DB 정보를 지워야 DB에 정보가 없어 파일 경로를 불러오지 못하는 경우가 생기지 않는다.
+		RiskFileInfo fileInfo = riskService.getFileInfo(riskId);
+		if(fileInfo!=null) riskService.deleteFile(riskId);
+		
 		riskService.deleteRisk(riskId);
+		
 		return "redirect:/risk/riskBoard.do";
 	}
+
 }

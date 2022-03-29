@@ -22,7 +22,8 @@
                         <div class="card-body">
                             <form class="form" name="modify" id="modify" action="${path}/risk/save.do" enctype="multipart/form-data" method="post">
                                 <div class="row">
-       								<input type="hidden" name=riskId value="${risk.riskId }"/>
+       								<input type="hidden" name="riskId" value="${risk.riskId}"/>
+       								<input type="hidden" name="rFileId" value="${fileInfo.rFileId}"/>
                                   	<div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">리스크 제목</label>
@@ -134,10 +135,10 @@
 					                	</fieldset>
 					                </div>
                                     <div class="col-12 d-flex justify-content-end">
-                                    <input type="hidden" name ="empId" value="${sessionScope.empId}">
-					                <input type="hidden" name ="presenter" value="${sessionScope.name}">
+                                    <input type="hidden" name="empId" id="empId" value="${sessionScope.emp.empId}"/>
+					                <input type="hidden" name="presenter" id="presenter" value="${sessionScope.emp.name}"/>
                                         <button type="submit" class="btn btn-primary me-1 mb-1">등록</button>
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1" onclick="window.history.back()">취소</button>
                                     </div>
                                 </div>
                             </form>

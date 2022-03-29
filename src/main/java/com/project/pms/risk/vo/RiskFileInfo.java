@@ -3,7 +3,7 @@ package com.project.pms.risk.vo;
 import java.util.Date;
 
 public class RiskFileInfo {
-	private int rFileId;
+	private Integer rFileId;
 	private int riskId;
 	private String originalName;
 	private String saveName;
@@ -14,7 +14,7 @@ public class RiskFileInfo {
 	public RiskFileInfo() {
 
 	}
-	public RiskFileInfo(int rFileId, int riskId, String originalName, String saveName, String extension, long volume,
+	public RiskFileInfo(Integer rFileId, int riskId, String originalName, String saveName, String extension, long volume,
 			Date createAt, Date updateAt) {
 		super();
 		this.rFileId = rFileId;
@@ -26,10 +26,10 @@ public class RiskFileInfo {
 		this.createAt = createAt;
 		this.updateAt = updateAt;
 	}
-	public int getrFileId() {
+	public Integer getrFileId() {
 		return rFileId;
 	}
-	public void setrFileId(int rFileId) {
+	public void setrFileId(Integer rFileId) {
 		this.rFileId = rFileId;
 	}
 	public int getRiskId() {
