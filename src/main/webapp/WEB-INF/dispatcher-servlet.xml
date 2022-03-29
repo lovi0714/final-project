@@ -84,17 +84,6 @@
 		<property name="order" value="1"/>
 	</bean>
 	
-	<!-- 웹 소켓 통신을 위한 handelr 선언 
-		component로 선언한 이름과 url패턴을 mapping
-		server handler와 client에서 js로 호출할 url형식을 선언..
-	-->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
-	<mvc:default-servlet-handler/>
-	<websocket:handlers>
-		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
-	</websocket:handlers>
-		 
 	<!-- 다운로드 viewer 등록
 		컨트롤러에서 아래와 같이 viewer를 호출 처리..
 		return "download"
