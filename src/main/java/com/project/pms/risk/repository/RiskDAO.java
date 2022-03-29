@@ -21,6 +21,7 @@ public interface RiskDAO {
 	
 	// 상세 페이지
 	public RiskDetail getRiskDetail(int riskId);
+	public RiskFileInfo getFileInfo(int riskId);
 	
 	// 리스크 저장하기
 	public void saveRisk(RiskSaveRequest riskSaveRequest) throws Exception;

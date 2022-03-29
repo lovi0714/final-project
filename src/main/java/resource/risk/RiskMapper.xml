@@ -62,6 +62,22 @@
 		WHERE tr.RISK_ID = #{riskId}
  	</select>
  	
+ 	<!-- 파일 정보 불러오기 -->
+ 	<select id="getFileInfo" parameterType="int" resultType="rFileInfo">
+ 		SELECT 
+ 		R_FILE_ID as rFileId,
+ 		RISK_ID as riskId,
+ 		ORIGINAL_NAME as originalName,
+ 		SAVE_NAME as saveName,
+ 		EXT as extension,
+ 		VOLUME as volume,
+ 		CREATE_AT as createAt,
+ 		UPDATE_AT as updateAt
+ 		FROM TBL_R_FILE 
+ 		WHERE RISK_ID = #{riskId}
+ 	</select>
+ 	
+ 	<!-- 수정 시 입력했던 데이터 불러오기 -->
  	<select id="getModifyInfo" resultType="riskSaveRequest" parameterType="int">
  		SELECT 
  		RISK_ID as riskId,
@@ -76,8 +92,6 @@
 		FROM TBL_RISK
 		WHERE RISK_ID = #{riskId} 		
  	</select>
- 	
- 	
  	
  	<!-- 리스크 저장 -->
  	<update id="saveRisk" parameterType="riskSaveRequest">
@@ -133,13 +147,14 @@
 			sysdate
 			)
  	</update>
- 	
+ 	<!-- 조치 완료 시 리스크 종료 -->
  	<update id="setComAt" parameterType="riskSaveRequest">
  		UPDATE SCOTT.TBL_RISK
  		SET COM_AT = SYSDATE
  		WHERE R_STATUS_ID = 5
  	</update>
  	
+ 	<!--파일 업로드 -->
  	<update id="insertFile" parameterType="rFileInfo">
  		MERGE INTO TBL_R_FILE rf
  		USING DUAL ON (

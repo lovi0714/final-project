@@ -32,6 +32,10 @@ public class RiskService {
 		return dao.getRiskDetail(riskId);
 	}
 	
+	public RiskFileInfo getFileInfo(int riskId) {
+		return dao.getFileInfo(riskId);
+	}
+	
 	// 리스크 등록
 	public void saveRisk(RiskSaveRequest riskSaveRequest) throws Exception {
 		dao.saveRisk(riskSaveRequest);

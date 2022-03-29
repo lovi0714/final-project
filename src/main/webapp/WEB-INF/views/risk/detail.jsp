@@ -72,11 +72,11 @@
                                         </div>
                                 	</div>
                                     <div class="col-12">
-                                        <div class="form-group">
-                                            <label for="first-name-vertical" class="form-label">파일</label>
-                                            <input type="file" id="file" name="file" class="form-control" maxlength="120" disabled style="background-color:white;">
-                                        </div>
+                                     <h6>파일</h6>
+                                          <p id="file"><a href="${path }/risk/fileDown.do?riskId=${fileInfo.riskId}">${fileInfo.originalName }</a></p>
+                                        
                                     </div>
+                                    
 			                        <div class="col-md-1">
 					                    <fieldset class="form-group">
 					                    <label for="basicSelect">진행 상태</label>

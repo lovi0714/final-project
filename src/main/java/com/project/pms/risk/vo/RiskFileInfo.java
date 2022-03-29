@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class RiskFileInfo {
 	private int rFileId;
-	private int boardId;
+	private int riskId;
 	private String originalName;
 	private String saveName;
 	private String extension;
@@ -14,11 +14,11 @@ public class RiskFileInfo {
 	public RiskFileInfo() {
 
 	}
-	public RiskFileInfo(int rFileId, int boardId, String originalName, String saveName, String extension, long volume,
+	public RiskFileInfo(int rFileId, int riskId, String originalName, String saveName, String extension, long volume,
 			Date createAt, Date updateAt) {
 		super();
 		this.rFileId = rFileId;
-		this.boardId = boardId;
+		this.riskId = riskId;
 		this.originalName = originalName;
 		this.saveName = saveName;
 		this.extension = extension;
@@ -32,11 +32,11 @@ public class RiskFileInfo {
 	public void setrFileId(int rFileId) {
 		this.rFileId = rFileId;
 	}
-	public int getBoardId() {
-		return boardId;
+	public int getRiskId() {
+		return riskId;
 	}
-	public void setBoardId(int boardId) {
-		this.boardId = boardId;
+	public void setRiskId(int riskId) {
+		this.riskId = riskId;
 	}
 	public String getOriginalName() {
 		return originalName;
