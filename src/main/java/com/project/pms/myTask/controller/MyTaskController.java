@@ -3,6 +3,8 @@ package com.project.pms.myTask.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +27,9 @@ public class MyTaskController {
 	
 	// 작업 목록
 	@GetMapping("/list.do")
-	public String getMyTaskList(Model d) {
+	public String getMyTaskList(HttpSession session, Model d) {
 		System.out.println("getMyTaskList Controller called...");
-		int empId = 3;
+		int empId = (int)session.getAttribute("empId");
 		d.addAttribute("MyTaskList", service.getMyTaskList(empId));
 		
 		return "myTask/list";

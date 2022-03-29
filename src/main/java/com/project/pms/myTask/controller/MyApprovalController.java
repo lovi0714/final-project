@@ -2,6 +2,8 @@ package com.project.pms.myTask.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +23,9 @@ public class MyApprovalController {
 	
 	// 내 결재 조회
 	@GetMapping("/approvalList.do")
-	public String getApprovalList(Model d) {
+	public String getApprovalList(HttpSession session, Model d) {
 		System.out.println("getApprovalList controller called...");
-		int empId = 3;
+		int empId = (int)session.getAttribute("empId");
 		d.addAttribute("WaitingList", service.getMyApprovalWaitingList(empId));
 		d.addAttribute("CompletedList", service.getMyApprovalCompletedList(empId));
 		d.addAttribute("RejectedList", service.getMyApprovalRejectedList(empId));		
