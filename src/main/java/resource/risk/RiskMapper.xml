@@ -136,7 +136,7 @@
 			#{rTypeId},
 			#{prjId},
 			#{rStatusId},
-			#{empId},
+			TO_NUMBER(#{empId}),
 			#{tName},
 			#{rContent},
 			#{empName},
