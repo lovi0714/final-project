@@ -29,17 +29,13 @@
 				tt.start_at,
 				tt.end_at,
 				tt.progress
-		FROM TBL_EMP te,
-			TBL_RESOURCE tr,
-			TBL_TASK tt,
-			TBL_PROJECT tp,
-			TBL_T_STATUS tts
-		WHERE te.emp_id = tr.emp_id AND 
-				tr.res_id = tt.res_id AND 
-				tt.prj_id = tp.prj_id AND
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp,
+				TBL_T_STATUS tts
+		WHERE tt.prj_id = tp.prj_id AND
 				tt.t_status_id = tts.t_status_id AND
 				tt.is_approval = 0 AND 
-				te.emp_id = #{empId}
+				tt.approver_id = #{empId}
 	</select>		
 	
 	<!-- 작업정보 조회 -->
@@ -53,13 +49,9 @@
 				tt.end_at,
 				tt.progress, 					
 				tt.content
-		FROM TBL_EMP te,
-			TBL_RESOURCE tr,
-			TBL_TASK tt,
+		FROM TBL_TASK tt,
 			TBL_PROJECT tp
-		WHERE  te.emp_id = tr.emp_id AND 
-				tr.res_id = tt.res_id AND 
-				tt.prj_id = tp.prj_id AND
+		WHERE  tt.prj_id = tp.prj_id AND
 				tt.task_id = #{taskId} 
 	</select>
 	

@@ -160,10 +160,8 @@
 		SELECT tts.t_status_id AS status_id, tts.t_status AS status, nvl(count, 0) AS count
 		FROM (SELECT t_status_id, count(*) AS count
 				FROM (SELECT tt.t_status_id
-					FROM TBL_RESOURCE tr, TBL_TASK tt
-					WHERE tr.res_id = tt.res_id 
-						AND tr.emp_id = #{empId}
-						AND tt.is_approval = 0) 
+					FROM TBL_TASK tt
+					WHERE tt.manager_id = #{empId} AND tt.is_approval = 0) 
 				GROUP BY t_status_id) trtt RIGHT JOIN TBL_T_STATUS tts
 		ON trtt.t_status_id = tts.t_status_id
 		ORDER BY status_id 

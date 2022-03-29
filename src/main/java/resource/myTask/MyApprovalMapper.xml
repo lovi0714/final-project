@@ -24,18 +24,14 @@
 				tas.ap_status,
 				ta.create_at
 		FROM TBL_TASK tt,
-				TBL_EMP te,
-				TBL_RESOURCE tr,
 				TBL_PROJECT tp,
 				TBL_APPROVAL ta,
 				TBL_AP_STATUS tas
 		WHERE tt.task_id = ta.task_id AND
-				te.emp_ID = tr.emp_ID AND 
-				tr.res_id = tt.res_id AND
 				ta.ap_status_id = tas.ap_status_id AND
 				tt.prj_id = tp.prj_id AND
 				ta.ap_status_id = 1 AND
-				te.emp_id = #{empId}
+				tt.manager_id = #{empId}
 	</select>		
 	
 	<!-- 승인완료 목록 -->
@@ -48,18 +44,14 @@
 				ta.create_at,
 				ta.approval_at
 		FROM TBL_TASK tt,
-				TBL_EMP te,
-				TBL_RESOURCE tr,
 				TBL_PROJECT tp,
 				TBL_APPROVAL ta,
 				TBL_AP_STATUS tas
 		WHERE tt.task_id = ta.task_id AND
-				te.emp_ID = tr.emp_ID AND 
-				tr.res_id = tt.res_id AND
 				ta.ap_status_id = tas.ap_status_id AND
 				tt.prj_id = tp.prj_id AND
 				ta.ap_status_id = 2 AND
-				te.emp_id = #{empId}
+				tt.manager_id = #{empId}
 	</select>		
 	
 	<!-- 반려 목록 -->
@@ -72,18 +64,14 @@
 				ta.create_at,
 				ta.reject_at
 		FROM TBL_TASK tt,
-				TBL_EMP te,
-				TBL_RESOURCE tr,
 				TBL_PROJECT tp,
 				TBL_APPROVAL ta,
 				TBL_AP_STATUS tas
 		WHERE tt.task_id = ta.task_id AND
-				te.emp_ID = tr.emp_ID AND 
-				tr.res_id = tt.res_id AND
 				ta.ap_status_id = tas.ap_status_id AND
 				tt.prj_id = tp.prj_id AND
 				ta.ap_status_id = 3 AND
-				te.emp_id = #{empId}
+				tt.manager_id = #{empId}
 	</select>		
 	
 	<!-- 회수 요청 -->
