@@ -29,14 +29,12 @@
 	<select id="getNoticeBoardList" resultMap="noticeMap">
 		SELECT no_id, title, writer, create_at
 		FROM TBL_NOTICE
-		ORDER BY create_at DESC
 	</select>
 	
 	<!-- 공지사항 등록 -->
 	<insert id="insertNotice" parameterType="notice">
 		INSERT INTO TBL_NOTICE
 		VALUES (notice_seq.nextVal, '관리자', #{title}, #{content}, 0, sysdate, sysdate)
-		WHERE no_id = #{noticeId}
 	</insert>
 	
 	<insert id="insertNoticeFileInfo" parameterType="noticeFile">
@@ -46,7 +44,7 @@
 	
 	<!-- 공지사항 조회 -->
 	<select id="getNoticeDetail" resultMap="noticeMap" parameterType="int">
-		SELECT title, writer, create_at, view_count, content
+		SELECT no_id, title, writer, create_at, view_count, content
 		FROM TBL_NOTICE
 		WHERE no_id = #{noticeId}
 	</select>

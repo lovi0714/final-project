@@ -24,12 +24,12 @@ public interface NoticeDAO {
 	public Notice getNoticeFileInfo(int noticeId);
 	
 	// 공지사항 수정
-	public void updateNotice(int noticeId);
+	public void updateNotice(Notice notice);
 	
 	// 공지사항 삭제
-	public void deleteNoitce(int noticeId);
+	public void deleteNotice(int noticeId);
 
-	public void deleteNoitceFileInfo(int noticeId);
+	public void deleteNoticeFileInfo(int noticeId);
 	
 	// 조회수 증가
 	public void updateViewCount(int noticeId);

@@ -642,9 +642,6 @@
 						reqContent: reqContent
 					};
 					
-					console.log(taskIdValues);
-					console.log(requestData);
-					
 					$.ajax({
 						url: "${path}/myTask/approvalRequest.do",
 						type: 'POST',
@@ -652,6 +649,7 @@
 						dataType:'json',
 						data: JSON.stringify(requestData), 
 						success: function(result) {
+							console.log(result);
 							if(result == "success") {
 								Swal.fire({
 							    	icon: 'success',

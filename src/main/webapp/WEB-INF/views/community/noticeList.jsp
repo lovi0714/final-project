@@ -79,12 +79,13 @@
 		],
 		"language": {
 	        "zeroRecords": "등록된 공지사항이 없습니다."
-	    }
+	    },
+		"order": [0, 'desc']
 	});    
 	
 	$(function() {
 		$('#regBtn').click(function() {
-			location.href = '${path}/community/noticeCreate.do';
+			location.href = '${path}/community/noticeForm.do';
 		});
 	});
     

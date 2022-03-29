@@ -22,9 +22,10 @@ public class NoticeService {
 	}
 	
 	// 공지사항 등록
-	public void insertNotice(Notice notice) {
-		
+	public boolean insertNotice(Notice notice) {
 		dao.insertNotice(notice);
+		
+		return true;
 	}
 	
 	public void insertNoticeFileInfo(NoticeFile noticeFile) {
@@ -32,9 +33,9 @@ public class NoticeService {
 		dao.insertNoticeFileInfo(noticeFile);
 	}
 	
-	// 공지사항 조회
+	// 공지사항 조회, 조회수 증가
 	public Notice getNoticeDetail(int noticeId) {
-		
+		dao.updateViewCount(noticeId);
 		return dao.getNoticeDetail(noticeId);
 	}
 	
@@ -44,26 +45,21 @@ public class NoticeService {
 	}
 	
 	// 공지사항 수정
-	public void updateNotice(int noticeId) {
+	public boolean updateNotice(Notice notice) {
+		dao.updateNotice(notice);
 		
-		dao.updateNotice(noticeId);
+		return true;
 	}
 	
 	// 공지사항 삭제
-	public void deleteNoitce(int noticeId) {
+	public boolean deleteNotice(int noticeId) {
+		dao.deleteNotice(noticeId);
 		
-		dao.deleteNoitce(noticeId);
+		return true;
 	}
 
-	public void deleteNoitceFileInfo(int noticeId) {
+	public void deleteNoticeFileInfo(int noticeId) {
 		
-		dao.deleteNoitceFileInfo(noticeId);
+		dao.deleteNoticeFileInfo(noticeId);
 	}
-	
-	// 조회수 증가
-	public void updateViewCount(int noticeId) {
-		
-		dao.updateViewCount(noticeId);
-	}
-	
 }
