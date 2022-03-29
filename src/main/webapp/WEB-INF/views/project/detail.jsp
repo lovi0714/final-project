@@ -42,7 +42,7 @@
 					<a class="nav-link" href="${path}/project/resource.do?projectId=${param.projectId}">리소스</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a class="nav-link" href="#">WBS</a>
+					<a class="nav-link" href="${path}/project/wbs.do?projectId=${param.projectId}">WBS</a>
 				</li>
 			</ul>
 			<div class="card">

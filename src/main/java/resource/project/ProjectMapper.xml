@@ -41,6 +41,29 @@
 		<result column="dept_name" property="deptName"/>
 	</resultMap>
 	
+	<resultMap type="task" id="taskMap">
+		<result column="task_id" property="id"/>
+		<result column="prj_id" property="projectId"/>
+		<result column="approver_id" property="approver"/>
+		<result column="manager_id" property="manager"/>
+		<result column="t_status_id" property="statusId"/>
+		<result column="content" property="description"/>
+		<result column="task_name" property="text"/>
+		<result column="start_at" property="start_date"/>
+		<result column="end_at" property="end_date"/>
+		<result column="progress" property="progress"/>
+		<result column="sortorder" property="sortorder"/>
+		<result column="parent" property="parent"/>
+	</resultMap>
+	
+	<resultMap type="link" id="linkMap">
+		<result column="link_id" property="id"/>
+		<result column="link_target" property="target"/>
+		<result column="link_source" property="source"/>
+		<result column="link_type" property="type"/>
+		<result column="project_id" property="projectId"/>
+	</resultMap>
+	
 	<select id="getList" resultMap="projectMap">
 		SELECT *
 		FROM TBL_PROJECT
@@ -118,4 +141,63 @@
 		    PMO_ID = #{pmoId}
 		WHERE PRJ_ID = #{projectId}
 	</update>
+	
+	<select id="getTasks" resultMap="taskMap" parameterType="string">
+		SELECT *
+		FROM TBL_TASK
+		WHERE prj_id = #{projectId}
+		ORDER BY task_id asc
+	</select>
+	
+	<select id="getTaskMaxId" resultType="int">
+		SELECT MAX(task_id)
+		FROM TBL_TASK
+	</select>
+	
+	<insert id="saveTask" parameterType="task">
+		INSERT INTO TBL_TASK(task_id, prj_id, approver_id, manager_id, t_status_id, content, task_name, start_at, end_at, progress, sortorder, parent, is_approval)
+		VALUES(task_seq.nextval, #{projectId}, #{approver}, #{manager}, 1, #{description}, #{text}, TO_DATE(#{start_date}, 'yyyy-MM-dd'), TO_DATE(#{end_date}, 'yyyy-MM-dd'), #{progress}, 0, #{parent}, 0)
+	</insert>
+	
+	<update id="updateTask" parameterType="task">
+		UPDATE TBL_TASK 
+		SET approver_id = #{approver},
+			manager_id = #{manager},
+			content = #{description},
+			task_name = #{text},
+			start_at = TO_DATE(#{start_date}, 'yyyy-MM-dd'),
+			end_at = TO_DATE(#{end_date}, 'yyyy-MM-dd'),
+			progress = #{progress},
+			parent = #{parent}
+		WHERE task_id = #{id}
+	</update>
+	
+	<delete id="deleteTask" parameterType="int">
+		DELETE 
+		FROM TBL_TASK
+		WHERE task_id = #{taskId}
+	</delete>
+	
+	<select id="getLinks" resultMap="linkMap" parameterType="string">
+		SELECT *
+		FROM TBL_LINK
+		WHERE project_id = #{projectId}
+		ORDER BY link_id asc
+	</select>
+	
+	<insert id="saveLink" parameterType="link">
+		INSERT INTO TBL_LINK(link_id, link_target, link_source, link_type, project_id)
+		VALUES(link_seq.nextval, #{target}, #{source}, #{type}, #{projectId})
+	</insert>
+	
+	<delete id="deleteLink" parameterType="int">
+		DELETE 
+		FROM TBL_LINK
+		WHERE link_id = #{linkId}
+	</delete>
+	
+	<select id="getLinkMaxId" resultType="int">
+		SELECT MAX(link_id)
+		FROM TBL_LINK
+	</select>
 </mapper>

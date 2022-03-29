@@ -24,6 +24,29 @@
 .nav {
 	padding-left: 10px;
 }
+.fa-pen-square, .fa-plus-square, .fa-trash-alt {
+	cursor: pointer;
+	text-align: center;
+	opacity: 0.4;
+}
+.fa-pen-square:hover, .fa-plus-square:hover, .fa-trash-alt:hover {
+	opacity: 1;
+}
+.fa-pen-square {
+	color: #ffa011;
+	font-size: 18px;
+	margin-right: 3px;
+}
+.fa-plus-square {
+	color: #328EA0;
+	font-size: 18px;
+	margin-right: 3px;
+}
+.fa-trash-alt {
+	color: red;
+	font-size: 16px;
+	padding-bottom: 1px;
+}
 </style>
 <div id="main-content">
 	<div class="page-heading">
@@ -49,6 +72,11 @@
 			</ul>
 			<div class="card">
 				<div class="card-body">
+				<div class="row" style="background-color: #f2f7ff; margin: 10px auto;">
+		                <div class="col-md-3">
+		                	<button id="btnEdit" class="btn btn-primary" style="margin: 10px 4px;">편집 모드</button>
+		                </div>
+            		</div>
 					<div class="tab-content" id="myTabContent">
 						<div id="gantt_here" style='width:100%; height:100vh;'></div>
 					</div>
@@ -57,61 +85,245 @@
 		</section>
      </div>
 <script type="text/javascript">
-$(function() {
+	gantt.config.date_format = "%Y-%m-%d %H:%i";
+	gantt.config.drag_move = true;
+	gantt.config.grid_width = 700;
+	gantt.config.readonly = true;
+	gantt.config.show_errors = false;
+	gantt.config.open_tree_initially = true;
+	gantt.config.touch = "force";
+
+	var formatter = gantt.ext.formatters.durationFormatter({
+		enter: "day", 
+		store: "day", 
+		format: "auto"
+	});
+	
+	var linksFormatter = gantt.ext.formatters.linkFormatter({durationFormatter: formatter});
+
+	var editors = {
+		text: {type: "text", map_to: "text"},
+		start_date: {type: "date", map_to: "start_date", min: new Date(2000, 0, 1), max: new Date(2050, 0, 1)},
+		end_date: {type: "date", map_to: "end_date", min: new Date(2000, 0, 1), max: new Date(2050, 0, 1)},
+		duration: {type: "duration", map_to: "duration", min:0, max: 100, formatter: formatter},
+		progress: {type: "number", map_to:"progress", min:0, max: 100}
+	};
+	
+	var colHeader = '<div class="gantt_grid_head_cell gantt_grid_head_add" onclick="createTaskBefore()"></div>',
+	colContent = function (task) {
+		return ('<i class="ml-1 mr-1 gantt_button_grid gantt_grid_edit fa fa-pen-square" onclick="clickGridButton(\'' + task.id + '\', \'edit\')"></i>' +
+			'<i class="ml-1 mr-1 gantt_button_grid gantt_grid_add fa-solid fa fa-plus-square" onclick="clickGridButton(\'' + task.id + '\', \'add\')"></i>' +
+			'<i class="ml-1 mr-1 gantt_button_grid gantt_grid_delete fa-solid fa fa-trash-alt" onclick="clickGridButton(\'' + task.id + '\', \'delete\')"></i>');
+	};
+	
 	$.ajax({
 	  url: "${path}/resource/api/wbs/projectMember.do?projectId=${param.projectId}",
 	  method: "get",
 	  dataType: "json",
 	}).done(function(resourceList) {
 		console.log(resourceList);
+		gantt.config.columns = [
+			{name: "wbs", label: "WBS", width: 30, align: "center", template: gantt.getWBSCode},
+			{name: "text", label: "작업명", tree: true, width: 150, editor: editors.text, resize: true, align: "left"},
+			{name: "duration", label: "기간",width:35, align: "center", editor: editors.duration, resize: true,  template: function(task){
+				return formatter.format(task.duration);
+			}},
+			{name: "start_date", label: "시작일", width:75, align: "center", editor: editors.start_date, resize: true},
+			{name: "end_date", label: "완료일", width:75, align: "center", editor: editors.end_date, resize: true},
+			{name: "progress", label: "진행도", align: "center", width: 40, resize: true, editor: editors.progress, template: function (task){
+		  		if (task.progress){
+		  			return Math.round(task.progress * 100) + "%";
+		  		}
+		  	}},
+			{name: "approver", label: "승인자", align: "center", width: 50 , template: function (task){
+				for(var i in resourceList){
+					if(resourceList[i].key == task.approver){
+						return resourceList[i].label;				
+					}
+					
+				}
+		  		
+		  	}},
+			{
+				name: "manager", label: "작업자", align: "center", width: 50, template: function (task){
+					for(var i in resourceList){
+						if(resourceList[i].key == task.manager){
+							return resourceList[i].label;				
+						}
+						
+					}
+			  		
+		  	}},
+			{
+				name: "buttons",
+				label: colHeader,
+				width: 70,
+				template: colContent,
+				align:"center"
+			}
+		];
 		
 		gantt.config.lightbox.sections = [
 			{name: "task", height: 38, map_to: "text", type: "textarea", focus: true},
 			{
-				name: "approver",
+				name: "approverId",
 				height: 22,
 				map_to: "approver",
 				type: "select",
 				options: resourceList
 			},
 			{
-				name: "manager",
+				name: "managerId",
 				height: 22,
 				map_to: "manager",
 				type: "select",
 				options: resourceList
 			},
-			{name: "time", type: "time", map_to: "auto", time_format: ["%d", "%m", "%Y"]},
+			{name: "time", type: "time", map_to: "auto", time_format: ["%Y", "%m", "%d"]},
 			{name: "description", height: 100, map_to: "description", type: "textarea"}
 		];
+		
 	}).fail(function(error) {
 		console.log(error);
 	});
 
+	// Task 생성 레이아웃 라벨
 	gantt.locale.labels.section_task = "작업명"
-	gantt.locale.labels.section_approver = "승인자";
-	gantt.locale.labels.section_manager = "담당자";
+	gantt.locale.labels.section_approverId = "승인자";
+	gantt.locale.labels.section_managerId = "담당자";
 	gantt.locale.labels.section_description = "작업 설명";
 	gantt.locale.labels.section_time = "날짜";
 	
-	gantt.init("gantt_here");
-	gantt.parse({
-	  data: [
-	    {id: 1, text: "Project #1", start_date: null, duration: null, parent:0, progress: 0, open: true},
-	    {id: 2, text: "Task #1", start_date: "2019-08-01 00:00", duration:5, parent:1, progress: 1},
-	    {id: 3, text: "Task #2", start_date	: "2019-08-06 00:00", duration:2, parent:1, progress: 0.5},
-	    {id: 4, text: "Task #3", start_date: null, duration: null, parent:1, progress: 0.8, open: true},
-	    {id: 5, text: "Task #3.1", start_date: "2019-08-09 00:00", duration:2, parent:4, progress: 0.2},
-	    {id: 6, text: "Task #3.2", start_date: "2019-08-11 00:00", duration:1, parent:4, progress: 0}
-	  ],
-	  links:[
-	    {id:1, source:2, target:3, type:"0"},
-	    {id:2, source:3, target:4, type:"0"},
-	    {id:3, source:5, target:6, type:"0"}
-	  ]
+	function createTaskBefore(){
+		if(!gantt.config.readonly){
+			gantt.createTask();
+		}
+	}
+	
+	// Task 생성후 이벤트 처리 
+	gantt.attachEvent("onAfterTaskAdd", function(id,item){
+		console.log("태스크생성후 출력", id, item.id);
+		$.ajax({
+		    type: 'GET',
+		    url: '/pms/project/api/wbs/task/maxId',
+		    dataType: 'text',
+		    contentType: 'application/json; charset=utf-8',
+		}).done(function (maxId) {
+			let new_id = parseInt(maxId) + 1; 
+			console.log('new : ' + new_id);
+			gantt.changeTaskId(item.id, new_id);
+		}).fail(function (error) {
+		    alert(JSON.stringify(error));
+		});
+		
 	});
 	
+	// Link 생성후 이벤트 처리
+	gantt.attachEvent("onAfterLinkAdd", function(id,item){
+		console.log("링크생성후 출력", id, item);
+		$.ajax({
+		    type: 'GET',
+		    url: '/pms/project/api/wbs/link/maxId',
+		    //async: false,
+		    dataType: 'text',
+		    contentType: 'application/json; charset=utf-8',
+		}).done(function (maxId) {
+			console.log(maxId);
+			new_id = parseInt(maxId) + 1;
+			gantt.changeLinkId(id, new_id);
+		}).fail(function (error) {
+		    alert(JSON.stringify(error));
+		});
+	});
 	
-});
+	gantt.ext.inlineEditors.attachEvent("onSave", function(state){
+		console.log('onSave');
+		var col = state.columnName;
+		if(gantt.autoSchedule && (col == "start_date" || col == "end_date" || col == "duration")){
+			gantt.autoSchedule();
+		}
+	});
+	
+	gantt.ext.inlineEditors.attachEvent("onEditStart", function(state){
+		if (state.columnName == "progress"){	
+		    var task = gantt.getTask(state.id);
+		    var element = document.getElementsByTagName("input").progress;
+		    element.value = parseInt(element.value * 100);
+		    console.log(task);
+	    }
+	});
+
+	function clickGridButton(id, action) {
+		if(!gantt.config.readonly){
+			switch (action) {
+			case "edit":
+				gantt.showLightbox(id);
+				break;
+			case "add":
+				gantt.createTask(null, id);
+				
+				break;
+			case "delete":
+				gantt.confirm({
+					title: gantt.locale.labels.confirm_deleting_title,
+					text: gantt.locale.labels.confirm_deleting,
+					callback: function (res) {
+						if (res)
+							gantt.deleteTask(id);
+					}
+				});
+				break;
+			}
+		}
+	}
+	
+	$('#btnEdit').click(function() {
+		gantt.config.readonly = !gantt.config.readonly;
+		if (!gantt.config.readonly)
+			$(this).html('편집 종료');
+		else
+			$(this).html('편집 모드')
+	});
+	
+	// 간트 생성
+	gantt.init("gantt_here");
+	
+	// 간트 생성시 데이터 서버에서 불러오기 
+	var apiUrl = "/pms/project/api/wbs/${param.projectId}";
+	
+	$.ajax({
+	    type: 'GET',
+	    url: apiUrl,
+	    dataType: 'json',	
+	    contentType: 'application/json; charset=utf-8',
+	}).done(function (data) {
+		console.log(data);
+		$.ajax({
+		    type: 'GET',
+		    url: apiUrl+'/link',
+		    dataType: 'json',	
+		    contentType: 'application/json; charset=utf-8',
+		}).done(function (link) {
+			console.log('link', link);
+			gantt.parse({data:data, links:link});
+		
+		}).fail(function (error) {
+			
+		    console.log("link Error", JSON.stringify(error));
+		});
+	}).fail(function (error) {
+		console.log(data);
+	    console.log("data Error", JSON.stringify(error));
+	});
+	
+	var dp = gantt.createDataProcessor({
+	      url: apiUrl,
+	      mode: "REST-JSON"
+	});
+	
+
+</script>
+<script type="text/javascript">
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

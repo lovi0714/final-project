@@ -25,6 +25,8 @@
 		<typeAlias alias="resource" type="com.project.pms.resource.vo.Resource"/>
 		<typeAlias alias="projectMember" type="com.project.pms.resource.vo.ProjectMember"/>
 		<typeAlias alias="wbsResource" type="com.project.pms.resource.vo.ResourceWbs"/>
+		<typeAlias alias="task" type="com.project.pms.project.vo.Task"/>
+		<typeAlias alias="link" type="com.project.pms.project.vo.Link"/>
 	</typeAliases>
 	
 	<typeHandlers>

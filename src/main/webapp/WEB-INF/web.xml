@@ -16,7 +16,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!--  ctrl+s를 눌러가며 진행 -->
 	<filter>
