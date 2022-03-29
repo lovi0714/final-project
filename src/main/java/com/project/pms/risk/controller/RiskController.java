@@ -70,7 +70,8 @@ public class RiskController {
 		
 		
 		riskService.saveRisk(riskSaveRequest);
-		if(file!=null) {
+		
+		if(file.getSize()!=0) {
 		String originalName = file.getOriginalFilename();
 		String extension = FilenameUtils.getExtension(originalName).toLowerCase();
 		File saveFile;
@@ -94,7 +95,7 @@ public class RiskController {
 		fileInfo.setExtension(extension);
 		fileInfo.setVolume(volume);
 
-		riskService.insertFile(fileInfo);
+		riskService.insertFile(fileInfo);		
 		
 		}
 		return "redirect:/risk/riskBoard.do";
