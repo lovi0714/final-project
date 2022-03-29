@@ -1,29 +1,29 @@
 package com.project.pms.community.vo;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Notice {
 	private int noticeId;
 	private String writer;
 	private String title;
 	private String content;
-	private int view_count;
-	private LocalDateTime createAt;
-	private LocalDateTime updateAt;
+	private int viewCount;
+	private Date createAt;
+	private Date updateAt;
 	
 	public Notice() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Notice(int noticeId, String writer, String title, String content, int view_count, LocalDateTime createAt,
-			LocalDateTime updateAt) {
+	public Notice(int noticeId, String writer, String title, String content, int viewCount, Date createAt,
+			Date updateAt) {
 		super();
 		this.noticeId = noticeId;
 		this.writer = writer;
 		this.title = title;
 		this.content = content;
-		this.view_count = view_count;
+		this.viewCount = viewCount;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
 	}
@@ -60,29 +60,29 @@ public class Notice {
 		this.content = content;
 	}
 
-	public int getView_count() {
-		return view_count;
+	public int getViewCount() {
+		return viewCount;
 	}
 
-	public void setView_count(int view_count) {
-		this.view_count = view_count;
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
 	}
 
-	public LocalDateTime getCreateAt() {
+	public Date getCreateAt() {
 		return createAt;
 	}
 
-	public void setCreateAt(LocalDateTime createAt) {
+	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 
-	public LocalDateTime getUpdateAt() {
+	public Date getUpdateAt() {
 		return updateAt;
 	}
 
-	public void setUpdateAt(LocalDateTime updateAt) {
+	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
 	
-	
+
 }

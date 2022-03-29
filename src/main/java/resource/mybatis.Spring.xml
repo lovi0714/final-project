@@ -32,6 +32,7 @@
     </typeHandlers>
     
 	<mappers>
+		<mapper resource="resource/community/NoticeMapper.xml"/>
 		<mapper resource="resource/dashboard/DashboardMapper.xml"/>
 		<mapper resource="resource/myTask/MyTaskMapper.xml"/>
 		<mapper resource="resource/myTask/MyApprovalMapper.xml"/>
@@ -39,7 +40,7 @@
 		<mapper resource="resource/project/ProjectMapper.xml"/>
 		<mapper resource="resource/resource/ResourceMapper.xml"/>
 		<mapper resource="resource/risk/RiskMapper.xml"/>
-		<mapper resource="resource/emp/EmpMapper.xml"/>
+		<mapper resource="resource/emp/EmpMapper.xml"/>	
 	</mappers>
 	
 </configuration>

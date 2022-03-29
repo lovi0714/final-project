@@ -28,19 +28,19 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-12">
-										<p class="fw-bold">자율 재택근무 관련 공지</p>
+										<p class="fw-bold">${NoticeDetailList.title}</p>
 									</div>
 									<div class="col-12">
 										<p class="fw-bold">
-											<span class="badge bg-primary">관리자</span>
-											<span class="badge bg-secondary">2022-03-01</span> 
+											<span class="badge bg-primary">${NoticeDetailList.writer}</span>
+											<span class="badge bg-secondary"><fmt:formatDate value="${NoticeDetailList.createAt}" pattern="yyyy-MM-dd"/></span> 
 											<span class="badge bg-secondary">
-												<span class="fa-fw select-all fas"></span> 39 <hr>
+												<span class="fa-fw select-all fas"></span> ${NoticeDetailList.viewCount} <hr>
 											</span>
                         				</p>
 									</div>
 								    <div class="col-12">
-								    	<p style="height: 300px">내용 영역</p><hr>
+								    	<p style="height: 300px">${NoticeDetailList.content}</p><hr>
                                    	</div>
 								    <div class="col-12">
 								    	<p>첨부파일 영역</p>

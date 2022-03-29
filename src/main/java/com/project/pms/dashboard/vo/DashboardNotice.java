@@ -3,6 +3,7 @@ package com.project.pms.dashboard.vo;
 import java.util.Date;
 
 public class DashboardNotice {
+	private int noticeId;
 	private String title;
 	private String writer;
 	private Date createAt;
@@ -12,11 +13,20 @@ public class DashboardNotice {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DashboardNotice(String title, String writer, Date createAt) {
+	public DashboardNotice(int noticeId, String title, String writer, Date createAt) {
 		super();
+		this.noticeId = noticeId;
 		this.title = title;
 		this.writer = writer;
 		this.createAt = createAt;
+	}
+
+	public int getNoticeId() {
+		return noticeId;
+	}
+
+	public void setNoticeId(int noticeId) {
+		this.noticeId = noticeId;
 	}
 
 	public String getTitle() {

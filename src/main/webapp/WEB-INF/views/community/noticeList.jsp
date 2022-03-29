@@ -40,7 +40,7 @@
 						</div>
 					</div>
 
-					<table class="table" id="table1">
+					<table class="table" id="noticeBoard">
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -50,12 +50,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td><a href="${path}/community/noticeDetail.do">자율 재택근무 관련 공지</a></td>
-								<td>관리자</td>
-								<td>2022-03-01</td>
-							</tr>
+							<c:forEach var="notice" items="${NoticeList}">
+								<tr>
+									<td>${notice.noticeId}</td>
+									<td><a href="${path}/community/noticeDetail.do?noticeId=${notice.noticeId}">${notice.title}</a></td>
+									<td>${notice.writer}</td>
+									<td><fmt:formatDate value="${notice.createAt}" pattern="yyyy-MM-dd"/></td>
+								</tr>
+							</c:forEach>	
 						</tbody>
 					</table>
 				</div>
@@ -68,13 +70,16 @@
 
 <script>
 	//Jquery Datatable
-	$("#table1").DataTable({
+	$("#noticeBoard").DataTable({
 		"searching": false,
 		"info" : false,
 		"lengthChange": false,
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"}
-		]
+		],
+		"language": {
+	        "zeroRecords": "등록된 공지사항이 없습니다."
+	    }
 	});    
 	
 	$(function() {

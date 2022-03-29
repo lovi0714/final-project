@@ -4,7 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
 
 <mapper namespace="com.project.pms.dashboard.repository.DashboardDAO">
-	<resultMap type="dashboardNotice" id="dashboardNoticeMap">
+	<resultMap type="dashboardnotice" id="dashboardNoticeMap">
+		<result column="no_id" property="noticeId"/>
 		<result column="title" property="title"/>
 		<result column="writer" property="writer"/>
 		<result column="create_at" property="createAt"/>
@@ -29,7 +30,7 @@
 	<!-- ***종합 대시보드*** -->
 	<!-- 공지사항: 최신 등록 공지사항 5개 조회 --> 
 	<select id="getNoticeList" resultMap="dashboardNoticeMap">
-		SELECT title, writer, create_at
+		SELECT no_id, title, writer, create_at
 		FROM TBL_NOTICE
 		WHERE <![CDATA[rownum<=5]]>
 		ORDER BY create_at DESC
@@ -161,7 +162,8 @@
 				FROM (SELECT tt.t_status_id
 					FROM TBL_RESOURCE tr, TBL_TASK tt
 					WHERE tr.res_id = tt.res_id 
-						AND tr.emp_id = #{empId}) 
+						AND tr.emp_id = #{empId}
+						AND tt.is_approval = 0) 
 				GROUP BY t_status_id) trtt RIGHT JOIN TBL_T_STATUS tts
 		ON trtt.t_status_id = tts.t_status_id
 		ORDER BY status_id 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="com.project.pms.community.repository.NoticeDAO">
+	<resultMap type="notice" id="noticeMap">
+		<result column="no_id" property="noticeId"/>
+		<result column="writer" property="writer"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="view_count" property="viewCount"/>
+		<result column="create_at" property="createAt"/>
+		<result column="update_at" property="updateAt"/>
+	</resultMap>
+	
+	<resultMap type="noticeFile" id="noticeFileMap">
+		<result column="no_file_id" property="noticeFileId"/>
+		<result column="no_id" property="noticeId"/>
+		<result column="original_name" property="originalName"/>
+		<result column="save_name" property="saveName"/>
+		<result column="ext" property="ext"/>
+		<result column="volume" property="volume"/>
+		<result column="create_at" property="createAt"/>
+		<result column="update_at" property="updateAt"/>
+	</resultMap>
+	
+	<!-- 공지사항 목록 --> 
+	<select id="getNoticeBoardList" resultMap="noticeMap">
+		SELECT no_id, title, writer, create_at
+		FROM TBL_NOTICE
+		ORDER BY create_at DESC
+	</select>
+	
+	<!-- 공지사항 등록 -->
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO TBL_NOTICE
+		VALUES (notice_seq.nextVal, '관리자', #{title}, #{content}, 0, sysdate, sysdate)
+		WHERE no_id = #{noticeId}
+	</insert>
+	
+	<insert id="insertNoticeFileInfo" parameterType="noticeFile">
+		INSERT INTO TBL_NO_FILE
+		VALUES (no_file_seq.nextVal, #{noticeId}, #{origianlName}, #{saveName}, #{ext}, #{volume}, sysdate, sysdate)
+	</insert>  	
+	
+	<!-- 공지사항 조회 -->
+	<select id="getNoticeDetail" resultMap="noticeMap" parameterType="int">
+		SELECT title, writer, create_at, view_count, content
+		FROM TBL_NOTICE
+		WHERE no_id = #{noticeId}
+	</select>
+	
+	<select id="getNoticeFileInfo" resultMap="noticeFileMap" parameterType="int">
+		SELECT original_name
+		FROM TBL_NO_FILE
+		WHERE no_id = #{noticeId}
+	</select>
+	
+	<!-- 공지사항 수정 -->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE TBL_NOTICE
+		SET title = #{title},
+			content = #{content},
+			update_at = sysdate
+		WHERE no_id = #{noticeId}
+	</update>
+	
+	<!-- 공지사항 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		DELETE FROM TBL_NOTICE
+		WHERE no_id = #{noticeId}
+	</delete>
+	
+	<delete id="deleteNoticeFileInfo" parameterType="int">
+		DELETE FROM TBL_NO_FILE
+		VALUES no_id = #{noticeId}
+	</delete>	
+	
+	<!-- 조회수 증가 --> 
+	<update id="updateViewCount" parameterType="int">
+		UPDATE TBL_NOTICE
+		SET view_count = view_count + 1
+		WHERE no_id = #{noticeId}
+	</update>
+	
+</mapper>	
+	

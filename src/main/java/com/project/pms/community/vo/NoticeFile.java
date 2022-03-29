@@ -1,6 +1,6 @@
 package com.project.pms.community.vo;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class NoticeFile {
 	private int noticeFileId;
@@ -9,8 +9,8 @@ public class NoticeFile {
 	private String saveName;
 	private String ext;
 	private String volume;
-	private LocalDateTime createAt;
-	private LocalDateTime updateAt;
+	private Date createAt;
+	private Date updateAt;
 	
 	public NoticeFile() {
 		super();
@@ -18,7 +18,7 @@ public class NoticeFile {
 	}
 
 	public NoticeFile(int noticeFileId, int noticeId, String originalName, String saveName, String ext, String volume,
-			LocalDateTime createAt, LocalDateTime updateAt) {
+			Date createAt, Date updateAt) {
 		super();
 		this.noticeFileId = noticeFileId;
 		this.noticeId = noticeId;
@@ -78,21 +78,22 @@ public class NoticeFile {
 		this.volume = volume;
 	}
 
-	public LocalDateTime getCreateAt() {
+	public Date getCreateAt() {
 		return createAt;
 	}
 
-	public void setCreateAt(LocalDateTime createAt) {
+	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 
-	public LocalDateTime getUpdateAt() {
+	public Date getUpdateAt() {
 		return updateAt;
 	}
 
-	public void setUpdateAt(LocalDateTime updateAt) {
+	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
+	
 	
 	
 }
