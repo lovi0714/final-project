@@ -57,7 +57,9 @@
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<option>OTP 개발</option>
+											<c:forEach items="${WaitingProject}" var="project">
+	                                    		<option value="${project.prjId}">${project.prjName}</option>
+	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
@@ -95,7 +97,7 @@
 												<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${wait.taskId}">
 											</td>
 											<td onclick="taskDetail(${wait.taskId})" style="color: #435ebe; cursor: pointer">${wait.taskName}</td>
-											<td>${wait.pTitle}</td>
+											<td>${wait.prjName}</td>
 											<td>${wait.approver}</td>
 											<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
 											<td><fmt:formatDate value="${wait.createAt}" pattern="yyyy-MM-dd"/></td>
@@ -112,7 +114,9 @@
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<option>5G 수신환경</option>
+											<c:forEach items="${CompletedProject}" var="project">
+	                                    		<option value="${project.prjId}">${project.prjName}</option>
+	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
@@ -140,7 +144,7 @@
 	                      			<c:forEach var="complete" items="${CompletedList}">
 										<tr>
 											<td onclick="taskDetail(${complete.taskId})" style="color: #435ebe; cursor: pointer">${complete.taskName}</td>
-											<td>${complete.pTitle}</td>
+											<td>${complete.prjName}</td>
 											<td>${complete.approver}</td>
 											<td><span class="badge bg-success">${complete.apStatus}</span></td>
 											<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd"/></td>
@@ -158,7 +162,9 @@
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<option>OTP 개발</option>
+											<c:forEach items="${RejectedProject}" var="project">
+	                                    		<option value="${project.prjId}">${project.prjName}</option>
+	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
@@ -197,7 +203,7 @@
 												<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${reject.taskId}">
 											</td>
 											<td onclick="taskDetail(${reject.taskId})" style="color: #435ebe; cursor: pointer">${reject.taskName}</td>
-											<td>${reject.pTitle}</td>
+											<td>${reject.prjName}</td>
 											<td>${reject.approver}</td>
 											<td><span class="badge bg-danger">${reject.apStatus}</span></td>
 											<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd"/></td>

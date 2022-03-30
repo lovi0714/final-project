@@ -28,6 +28,8 @@ public class DashboardController {
 		
 		// 프로젝트 현황
 		d.addAttribute("ProjectList", service.getProjectList());
+		d.addAttribute("Dept", service.getDeptList());
+		d.addAttribute("Status", service.getStatusList());
 		
 		// 부서별 프로젝트 현황
 		d.addAttribute("ProjectChart1", service.getProjectChart1());

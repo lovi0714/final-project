@@ -25,6 +25,12 @@ public interface DashboardDAO {
 	public List<StatusChart> getProjectChart4();
 	public List<StatusChart> getProjectChart5();
 	
+	// 부서 선택 옵션 리스트 
+	public List<DashboardProject> getDeptList();
+	
+	// 상태 선택 옵션 리스트
+	public List<DashboardProject> getStatusList();
+	
 	// 리스크 현황: 상태별
 	public List<StatusChart> getRiskStatusChart1();
 

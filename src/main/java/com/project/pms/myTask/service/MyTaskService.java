@@ -21,6 +21,18 @@ public class MyTaskService {
 		return dao.getMyTaskList(empId);
 	}
 	
+	// 프로젝트 선택 옵션 리스트
+	public List<Project> getProjectList(int empId) {
+		
+		return dao.getProjectList(empId);
+	}
+	
+	// 작업상태 선택 옵션 리스트
+	public List<MyTask> getStatusList() {
+		
+		return dao.getStatusList();
+	}	
+		
 	// 작업정보 조회
 	public MyTask getMyTaskDetail(int taskId) {
 		
@@ -47,9 +59,4 @@ public class MyTaskService {
 		return true;
 	}
 	
-	// 프로젝트 선택 옵션 리스트
-	public List<Project> getProjectList(int empId) {
-		
-		return dao.getProjectList(empId);
-	}
 }

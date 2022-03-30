@@ -7,7 +7,8 @@
 	<resultMap type="myApproval" id="myApprovalMap">
 		<result column="task_id" property="taskId"/>
 		<result column="task_name" property="taskName"/>
-		<result column="prj_name" property="pTitle"/>
+		<result column="prj_id" property="prjId"/>
+		<result column="prj_name" property="prjName"/>
 		<result column="approver" property="approver"/>
 		<result column="ap_status" property="apStatus"/>
 		<result column="create_at" property="createAt"/>
@@ -34,6 +35,21 @@
 				tt.manager_id = #{empId}
 	</select>		
 	
+	<!-- 승인대기 프로젝트 선택 옵션 리스트 -->
+	<select id="getWaitingProjectList" resultMap="myApprovalMap">
+		SELECT DISTINCT tp.prj_id, tp.name AS prj_name
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp,
+				TBL_APPROVAL ta,
+				TBL_AP_STATUS tas
+		WHERE tt.task_id = ta.task_id AND
+				ta.ap_status_id = tas.ap_status_id AND
+				tt.prj_id = tp.prj_id AND
+				ta.ap_status_id = 1 AND
+				tt.manager_id = #{empId}
+		ORDER BY tp.prj_id
+	</select>
+	
 	<!-- 승인완료 목록 -->
 	<select id="getMyApprovalCompletedList" resultMap="myApprovalMap" parameterType="int">
 		SELECT tt.task_id,
@@ -54,6 +70,21 @@
 				tt.manager_id = #{empId}
 	</select>		
 	
+	<!-- 승인완료 프로젝트 선택 옵션 리스트 -->
+	<select id="getCompletedProjectList" resultMap="myApprovalMap">
+		SELECT DISTINCT tp.prj_id, tp.name AS prj_name
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp,
+				TBL_APPROVAL ta,
+				TBL_AP_STATUS tas
+		WHERE tt.task_id = ta.task_id AND
+				ta.ap_status_id = tas.ap_status_id AND
+				tt.prj_id = tp.prj_id AND
+				ta.ap_status_id = 2 AND
+				tt.manager_id = #{empId}
+		ORDER BY tp.prj_id
+	</select>
+		
 	<!-- 반려 목록 -->
 	<select id="getMyApprovalRejectedList" resultMap="myApprovalMap" parameterType="int">
 		SELECT tt.task_id,
@@ -74,6 +105,21 @@
 				tt.manager_id = #{empId}
 	</select>		
 	
+	<!-- 반려 프로젝트 선택 옵션 리스트 -->
+	<select id="getRejectedProjectList" resultMap="myApprovalMap">
+		SELECT DISTINCT tp.prj_id, tp.name AS prj_name
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp,
+				TBL_APPROVAL ta,
+				TBL_AP_STATUS tas
+		WHERE tt.task_id = ta.task_id AND
+				ta.ap_status_id = tas.ap_status_id AND
+				tt.prj_id = tp.prj_id AND
+				ta.ap_status_id = 3 AND
+				tt.manager_id = #{empId}
+		ORDER BY tp.prj_id
+	</select>
+		
 	<!-- 회수 요청 -->
 	<update id="uptApprovalCancel" parameterType="int">
 		UPDATE TBL_task

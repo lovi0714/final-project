@@ -28,8 +28,13 @@ public class MyApprovalController {
 		System.out.println("getApprovalList controller called...");
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		d.addAttribute("WaitingList", service.getMyApprovalWaitingList(empId));
+		d.addAttribute("WaitingProject", service.getWaitingProjectList(empId));
+		
 		d.addAttribute("CompletedList", service.getMyApprovalCompletedList(empId));
+		d.addAttribute("CompletedProject", service.getCompletedProjectList(empId));
+		
 		d.addAttribute("RejectedList", service.getMyApprovalRejectedList(empId));		
+		d.addAttribute("RejectedProject", service.getRejectedProjectList(empId));
 		
 		return "myTask/approvalList";
 	}

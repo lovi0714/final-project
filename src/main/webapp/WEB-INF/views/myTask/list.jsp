@@ -52,8 +52,8 @@
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<c:forEach items="${prj}" var="prj">
-	                                    		<option value="${prj.projectId}">${prj.title}</option>
+											<c:forEach items="${Project}" var="project">
+	                                    		<option value="${project.projectId}">${project.title}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
@@ -62,9 +62,9 @@
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>작업상태를 선택하세요</option>
-											<option>시작전</option>
-											<option>정상진행</option>
-											<option>지연진행</option>
+											<c:forEach items="${Status}" var="status">
+	                                    		<option value="${status.statusId}">${status.status}</option>
+	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>

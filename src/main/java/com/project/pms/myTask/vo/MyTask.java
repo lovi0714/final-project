@@ -10,6 +10,7 @@ public class MyTask {
 	private String pTitle;
 	private int pmId;
 	private String pmName;
+	private int statusId;
 	private String status;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date startAt;
@@ -24,14 +25,15 @@ public class MyTask {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MyTask(int taskId, String taskName, String pTitle, int pmId, String pmName, String status, Date startAt,
-			Date endAt, int progress, String content, String reqContent) {
+	public MyTask(int taskId, String taskName, String pTitle, int pmId, String pmName, int statusId, String status,
+			Date startAt, Date endAt, int progress, String content, String reqContent) {
 		super();
 		this.taskId = taskId;
 		this.taskName = taskName;
 		this.pTitle = pTitle;
 		this.pmId = pmId;
 		this.pmName = pmName;
+		this.statusId = statusId;
 		this.status = status;
 		this.startAt = startAt;
 		this.endAt = endAt;
@@ -78,6 +80,14 @@ public class MyTask {
 
 	public void setPmName(String pmName) {
 		this.pmName = pmName;
+	}
+
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
 	public String getStatus() {

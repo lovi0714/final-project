@@ -10,6 +10,7 @@
 		<result column="prj_name" property="pTitle"/>
 		<result column="pm_id" property="pmId"/>
 		<result column="pm_name" property="pmName"/>
+		<result column="t_status_id" property="statusId"/>
 		<result column="t_status" property="status"/>
 		<result column="start_at" property="startAt"/>
 		<result column="end_at" property="endAt"/>
@@ -35,9 +36,26 @@
 		WHERE tt.prj_id = tp.prj_id AND
 				tt.t_status_id = tts.t_status_id AND
 				tt.is_approval = 0 AND 
-				tt.approver_id = #{empId}
+				tt.manager_id = #{empId}
 	</select>		
 	
+	<!-- 프로젝트 선택 옵션 리스트 -->
+	<select id="getProjectList" resultType="project">
+ 		SELECT DISTINCT tp.prj_id as projectId, tp.name as title 
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp
+		WHERE tt.prj_id = tp.prj_id AND
+				tt.is_approval = 0 AND 
+				tt.approver_id = #{empId}
+ 	</select>
+ 	
+ 	<!-- 작업상태 선택 옵션 리스트 -->
+	<select id="getStatusList" resultMap="myTaskMap">
+ 		SELECT t_status_id, t_status
+ 		FROM TBL_T_STATUS
+ 		ORDER BY t_status_id
+ 	</select>
+ 	
 	<!-- 작업정보 조회 -->
 	<select id="getMyTaskDetail" resultMap="myTaskMap" parameterType="int">
 		SELECT  tt.task_id,
@@ -73,15 +91,5 @@
 		INSERT INTO TBL_APPROVAL(approval_id, ap_status_id, task_id, req_content, approver, create_at, update_at)
 		VALUES (approval_seq.nextVal, 1, #{taskId}, #{reqContent, jdbcType=VARCHAR}, #{pmId}, sysdate, sysdate)
 	</insert>
-	
-	<!-- 프로젝트 선택 옵션 리스트 -->
-	<select id="getProjectList" resultType="project">
- 		SELECT DISTINCT tp.prj_id as projectId, tp.name as title 
-		FROM TBL_TASK tt,
-				TBL_PROJECT tp
-		WHERE tt.prj_id = tp.prj_id AND
-				tt.is_approval = 0 AND 
-				tt.approver_id = #{empId}
- 	</select>
  
 </mapper>

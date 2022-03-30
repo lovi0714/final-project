@@ -5,8 +5,10 @@ import java.util.Date;
 public class DashboardProject {
 	private String projectId;
 	private String title;
+	private int pmDeptId;
 	private String pmDeptName;
 	private String pmName;
+	private int statusId;
 	private String status;
 	private Date startAt;
 	private Date endAt;
@@ -16,13 +18,15 @@ public class DashboardProject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DashboardProject(String projectId, String title, String pmDeptName, String pmName, String status,
-			Date startAt, Date endAt) {
+	public DashboardProject(String projectId, String title, int pmDeptId, String pmDeptName, String pmName,
+			int statusId, String status, Date startAt, Date endAt) {
 		super();
 		this.projectId = projectId;
 		this.title = title;
+		this.pmDeptId = pmDeptId;
 		this.pmDeptName = pmDeptName;
 		this.pmName = pmName;
+		this.statusId = statusId;
 		this.status = status;
 		this.startAt = startAt;
 		this.endAt = endAt;
@@ -44,6 +48,14 @@ public class DashboardProject {
 		this.title = title;
 	}
 
+	public int getPmDeptId() {
+		return pmDeptId;
+	}
+
+	public void setPmDeptId(int pmDeptId) {
+		this.pmDeptId = pmDeptId;
+	}
+
 	public String getPmDeptName() {
 		return pmDeptName;
 	}
@@ -58,6 +70,14 @@ public class DashboardProject {
 
 	public void setPmName(String pmName) {
 		this.pmName = pmName;
+	}
+
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
 	public String getStatus() {
@@ -83,5 +103,7 @@ public class DashboardProject {
 	public void setEndAt(Date endAt) {
 		this.endAt = endAt;
 	}
+	
+	
 		
 }

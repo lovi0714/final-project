@@ -5,7 +5,8 @@ import java.util.Date;
 public class MyApproval {
 	private int taskId;
 	private String taskName;
-	private String pTitle;
+	private String prjId;
+	private String prjName;
 	private String approver;
 	private String apStatus;
 	private Date createAt;
@@ -17,12 +18,13 @@ public class MyApproval {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MyApproval(int taskId, String taskName, String pTitle, String approver, String apStatus, Date createAt,
-			Date approvalAt, Date rejectAt) {
+	public MyApproval(int taskId, String taskName, String prjId, String prjName, String approver, String apStatus,
+			Date createAt, Date approvalAt, Date rejectAt) {
 		super();
 		this.taskId = taskId;
 		this.taskName = taskName;
-		this.pTitle = pTitle;
+		this.prjId = prjId;
+		this.prjName = prjName;
 		this.approver = approver;
 		this.apStatus = apStatus;
 		this.createAt = createAt;
@@ -46,12 +48,20 @@ public class MyApproval {
 		this.taskName = taskName;
 	}
 
-	public String getpTitle() {
-		return pTitle;
+	public String getPrjId() {
+		return prjId;
 	}
 
-	public void setpTitle(String pTitle) {
-		this.pTitle = pTitle;
+	public void setPrjId(String prjId) {
+		this.prjId = prjId;
+	}
+
+	public String getPrjName() {
+		return prjName;
+	}
+
+	public void setPrjName(String prjName) {
+		this.prjName = prjName;
 	}
 
 	public String getApprover() {
@@ -93,8 +103,5 @@ public class MyApproval {
 	public void setRejectAt(Date rejectAt) {
 		this.rejectAt = rejectAt;
 	}
-	
-	
-	
 	
 }

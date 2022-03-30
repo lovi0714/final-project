@@ -60,20 +60,15 @@
 					<div style="display: flex; justify-content: flex-end;">
 						<select class="form-select" style="width: 150px;">
 							<option selected>부서</option>
-							<option value="1">인사</option>
-							<option value="2">회계</option>
-							<option value="3">경영지원</option>
-							<option value="4">생산관리</option>
-							<option value="5">기술지원</option>
-							<option value="6">연구개발</option>
+							<c:forEach items="${Dept}" var="dept">
+	                        	<option value="${dept.pmDeptId}">${dept.pmDeptName}</option>
+	                        </c:forEach>
 						</select> 
 						<select class="form-select" style="width: 150px; margin: 0 10px;">
 							<option selected>상태</option>
-							<option value="1">시작전</option>
-							<option value="2">정상진행</option>
-							<option value="3">지연진행</option>
-							<option value="4">완료</option>
-							<option value="5">중단</option>
+							<c:forEach items="${Status}" var="status">
+	                        	<option value="${status.statusId}">${status.status}</option>
+	                        </c:forEach>
 						</select> 
 						<a href="${path}/project/list.do" style="margin-top: 7px">더보기</a>
 					</div>

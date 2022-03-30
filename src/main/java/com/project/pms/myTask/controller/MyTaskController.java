@@ -32,7 +32,8 @@ public class MyTaskController {
 		System.out.println("getMyTaskList Controller called...");
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		d.addAttribute("MyTaskList", service.getMyTaskList(empId));
-		d.addAttribute("prj", service.getProjectList(empId));
+		d.addAttribute("Project", service.getProjectList(empId));
+		d.addAttribute("Status", service.getStatusList());
 		
 		return "myTask/list";
 	}

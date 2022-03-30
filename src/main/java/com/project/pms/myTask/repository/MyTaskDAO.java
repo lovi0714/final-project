@@ -13,6 +13,12 @@ public interface MyTaskDAO {
 	// 작업 목록
 	public List<MyTask> getMyTaskList(int empId);
 	
+	// 프로젝트 선택 옵션 리스트 
+	public List<Project> getProjectList(int empId);
+	
+	// 작업상태 선택 옵션 리스트
+	public List<MyTask> getStatusList();
+	
 	// 작업정보 조회
 	public MyTask getMyTaskDetail(int taskId);
 	
@@ -24,6 +30,4 @@ public interface MyTaskDAO {
 	
 	public void insertApproval(MyTask myTask);
 	
-	// 프로젝트 선택 옵션 리스트 
-	public List<Project> getProjectList(int empId);
 }
