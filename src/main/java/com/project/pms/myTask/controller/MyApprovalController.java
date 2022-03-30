@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.pms.emp.vo.Emp;
 import com.project.pms.myTask.service.MyApprovalService;
 
 @Controller
@@ -25,7 +26,7 @@ public class MyApprovalController {
 	@GetMapping("/approvalList.do")
 	public String getApprovalList(HttpSession session, Model d) {
 		System.out.println("getApprovalList controller called...");
-		int empId = (int)session.getAttribute("empId");
+		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		d.addAttribute("WaitingList", service.getMyApprovalWaitingList(empId));
 		d.addAttribute("CompletedList", service.getMyApprovalCompletedList(empId));
 		d.addAttribute("RejectedList", service.getMyApprovalRejectedList(empId));		

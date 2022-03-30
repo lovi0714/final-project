@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.pms.emp.vo.Emp;
 import com.project.pms.myTask.service.MyTaskService;
 import com.project.pms.myTask.vo.MyTask;
 
@@ -29,8 +30,9 @@ public class MyTaskController {
 	@GetMapping("/list.do")
 	public String getMyTaskList(HttpSession session, Model d) {
 		System.out.println("getMyTaskList Controller called...");
-		int empId = (int)session.getAttribute("empId");
+		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		d.addAttribute("MyTaskList", service.getMyTaskList(empId));
+		d.addAttribute("prj", service.getProjectList(empId));
 		
 		return "myTask/list";
 	}

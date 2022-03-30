@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.pms.emp.vo.Emp;
 import com.project.pms.myTask.service.CalendarService;
 import com.project.pms.myTask.vo.Calendar;
 
@@ -31,7 +32,8 @@ public class CalendarController {
 	@PostMapping("calendarList.do")
 	public String getCalendarList(HttpSession session, Model d) {
 		System.out.println("calendarList controller called...");
-		d.addAttribute("calendarList", service.getCalendarList((int)session.getAttribute("empId")));
+		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
+		d.addAttribute("calendarList", service.getCalendarList(empId));
 
 		return "pageJsonReport";
 	}
@@ -40,8 +42,8 @@ public class CalendarController {
 	@PostMapping("insertCalendar.do")
 	public String insertCalendar(HttpSession session, Calendar calendar) {
 		System.out.println("insertCalendar controller called...");		
-		calendar.setEmpId((int)session.getAttribute("empId"));
-		
+		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
+		calendar.setEmpId(empId);
 		service.insertCalendar(calendar);
 
 		return "redirect:/myTask/calendar.do";

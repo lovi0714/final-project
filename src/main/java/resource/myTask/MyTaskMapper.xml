@@ -73,4 +73,15 @@
 		INSERT INTO TBL_APPROVAL(approval_id, ap_status_id, task_id, req_content, approver, create_at, update_at)
 		VALUES (approval_seq.nextVal, 1, #{taskId}, #{reqContent, jdbcType=VARCHAR}, #{pmId}, sysdate, sysdate)
 	</insert>
+	
+	<!-- 프로젝트 선택 옵션 리스트 -->
+	<select id="getProjectList" resultType="project">
+ 		SELECT DISTINCT tp.prj_id as projectId, tp.name as title 
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp
+		WHERE tt.prj_id = tp.prj_id AND
+				tt.is_approval = 0 AND 
+				tt.approver_id = #{empId}
+ 	</select>
+ 
 </mapper>

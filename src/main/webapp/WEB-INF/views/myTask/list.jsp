@@ -52,8 +52,9 @@
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<option>5G 수신환경</option>
-											<option>빌링서비스 개발</option>
+											<c:forEach items="${prj}" var="prj">
+	                                    		<option value="${prj.projectId}">${prj.title}</option>
+	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.pms.dashboard.service.DashboardService;
+import com.project.pms.emp.vo.Emp;
 
 @Controller
 @RequestMapping("/dashboard/*")
@@ -46,7 +47,7 @@ public class DashboardController {
 	@GetMapping("/personal.do")
 	public String getDashboardPersonal(HttpSession session, Model d) {
 		System.out.println("getDashboardPersonal controller called...");
-		int empId = (int)session.getAttribute("empId");
+		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		
 		// 참여 프로젝트
 		d.addAttribute("MyProjectList", service.getMyProjectList(empId));

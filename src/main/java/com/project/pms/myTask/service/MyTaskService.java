@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.pms.myTask.repository.MyTaskDAO;
 import com.project.pms.myTask.vo.MyTask;
+import com.project.pms.project.vo.Project;
 
 @Service
 public class MyTaskService {
@@ -44,5 +45,11 @@ public class MyTaskService {
 		dao.insertApproval(myTask);
 		
 		return true;
+	}
+	
+	// 프로젝트 선택 옵션 리스트
+	public List<Project> getProjectList(int empId) {
+		
+		return dao.getProjectList(empId);
 	}
 }

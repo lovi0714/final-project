@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.project.pms.myTask.vo.MyTask;
+import com.project.pms.project.vo.Project;
 
 @Repository
 public interface MyTaskDAO {
@@ -23,4 +24,6 @@ public interface MyTaskDAO {
 	
 	public void insertApproval(MyTask myTask);
 	
+	// 프로젝트 선택 옵션 리스트 
+	public List<Project> getProjectList(int empId);
 }
