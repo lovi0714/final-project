@@ -27,6 +27,14 @@
 		<typeAlias alias="wbsResource" type="com.project.pms.resource.vo.ResourceWbs"/>
 		<typeAlias alias="task" type="com.project.pms.project.vo.Task"/>
 		<typeAlias alias="link" type="com.project.pms.project.vo.Link"/>
+		<typeAlias alias="output" type="com.project.pms.output.vo.Output"/>
+		<typeAlias alias="outputFile" type="com.project.pms.output.vo.OutputFile"/>
+		<typeAlias alias="outputListForm" type="com.project.pms.output.vo.OutputListForm"/>
+		<typeAlias alias="outputCategory" type="com.project.pms.output.vo.OutputCategory"/>
+		<typeAlias alias="outputType" type="com.project.pms.output.vo.OutputType"/>
+		<typeAlias alias="projectInfo" type="com.project.pms.output.vo.ProjectInfo"/>
+		<typeAlias alias="outputDetail" type="com.project.pms.output.vo.OutputDetail"/>
+		<typeAlias alias="outputFileInfo" type="com.project.pms.output.vo.OutputFileInfo"/>
 	</typeAliases>
 	
 	<typeHandlers>
@@ -43,6 +51,7 @@
 		<mapper resource="resource/resource/ResourceMapper.xml"/>
 		<mapper resource="resource/risk/RiskMapper.xml"/>
 		<mapper resource="resource/emp/EmpMapper.xml"/>	
+		<mapper resource="resource/output/OutputMapper.xml"/>	
 	</mappers>
 	
 </configuration>

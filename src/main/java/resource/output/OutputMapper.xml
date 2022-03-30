@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.project.pms.output.repository.OutputDAO">
+	<resultMap type="output" id="outputMap">
+		<result column="out_id" property="outputId"/>
+		<result column="out_type_id" property="outputType"/>
+		<result column="cat_id" property="categoryId"/>
+		<result column="task_id" property="taskId"/>
+		<result column="emp_id" property="empId"/>
+		<result column="content" property="content"/>
+		<result column="create_at" property="createAt"/>
+		<result column="update_at" property="updateAt"/>
+	</resultMap>
+	
+	<resultMap type="outputFile" id="outputFileMap">
+		<result column="out_file_id" property="outputFileId"/>
+		<result column="out_id" property="outputId"/>
+		<result column="original_name" property="originalName"/>
+		<result column="save_name" property="saveName"/>
+		<result column="ext" property="ext"/>
+		<result column="volume" property="volume"/>
+		<result column="create_at" property="createAt"/>
+		<result column="update_at" property="updateAt"/>
+	</resultMap>
+	
+	<resultMap type="outputListForm" id="outputListMap">
+		<result column="out_id" property="outputId"/>
+		<result column="original_name" property="originalName"/>
+		<result column="name" property="empName"/>
+		<result column="cat_id" property="categoryId"/>
+		<result column="project_name" property="projectName"/>
+		<result column="volume" property="volume"/>
+		<result column="volume_text" property="volumeText"/>
+		<result column="update_at" property="updateAt"/>
+	</resultMap>
+	
+	<resultMap type="outputCategory" id="outputCategoryMap">
+		<result column="cat_id" property="categoryId"/>
+		<result column="category" property="categoryName"/>
+	</resultMap>
+	
+	<resultMap type="outputType" id="outputTypeMap">
+		<result column="out_type_id" property="typeId"/>
+		<result column="out_type" property="typeName"/>
+	</resultMap>
+	
+	<resultMap type="projectInfo" id="projectInfoMap">
+		<result column="prj_id" property="projectId"/>
+		<result column="name" property="projectName"/>
+	</resultMap>
+	
+	<resultMap type="outputDetail" id="outputDetailMap">
+		<result column="out_id" property="outputId"/>
+		<result column="out_file_id" property="outputFileId"/>
+		<result column="original_name" property="originalName"/>
+		<result column="content" property="content"/>
+		<result column="prj_id" property="projectId"/>
+		<result column="project_name" property="projectName"/>
+		<result column="cat_id" property="categoryId"/>
+		<result column="out_type_id" property="typeId"/>
+		<result column="task_id" property="taskId"/>
+		<result column="task_name" property="taskName"/>
+	</resultMap>
+	
+	<resultMap type="outputFileInfo" id="outputFileInfoMap">
+		<result column="original_name" property="originalName"/>
+		<result column="save_name" property="saveName"/>
+	</resultMap>
+	
+	<select id="getOutputList" resultMap="outputListMap">
+		SELECT to2.OUT_ID, tof.ORIGINAL_NAME, tof.VOLUME, tof.VOLUME_TEXT, te.NAME, to2.CAT_ID, tof.UPDATE_AT, tp.NAME AS project_name
+		FROM TBL_OUTPUT to2, TBL_OUT_FILE tof, TBL_EMP te, TBL_TASK tt, TBL_PROJECT tp 
+		WHERE to2.OUT_ID = tof.OUT_ID
+		AND to2.emp_id = te.emp_id
+		AND to2.TASK_ID = tt.TASK_ID
+		AND tt.PRJ_ID = tp.PRJ_ID
+		ORDER BY to2.out_id desc
+	</select>
+	
+	<select id="getMaxOutputId" resultType="int">
+		SELECT MAX(out_id)
+		FROM TBL_OUTPUT		
+	</select>
+
+	<insert id="saveOutput" parameterType="output">
+		INSERT INTO TBL_OUTPUT
+		VALUES (output_seq.nextval, #{outputType}, #{categoryId}, #{taskId}, #{empId}, #{content}, sysdate, sysdate)
+	</insert>
+	
+	<insert id="saveOutputFile" parameterType="outputFile">
+		INSERT INTO TBL_OUT_FILE
+		VALUES (outputfile_seq.nextval, #{outputId}, #{originalName}, #{saveName}, #{ext}, #{volume}, sysdate, sysdate, #{volumeText})
+	</insert>
+	
+	<select id="getOutputCategory" resultMap="outputCategoryMap">
+		SELECT *
+		FROM TBL_OUT_CATEGORY toc
+	</select>
+	
+	<select id="getOutputType" resultMap="outputTypeMap">
+		SELECT *
+		FROM TBL_OUT_TYPE tot
+	</select>
+	
+	<select id="getProjectInfo" resultMap="projectInfoMap">
+		SELECT PRJ_ID, NAME 
+		FROM TBL_PROJECT tp
+	</select>
+	
+	<select id="getOutputDetail" resultMap="outputDetailMap" parameterType="int">
+		SELECT to2.OUT_ID, tof.OUT_FILE_ID, tof.ORIGINAL_NAME, to2.CONTENT, tp.PRJ_ID, tp.NAME AS project_name, to2.CAT_ID, to2.OUT_TYPE_ID, tt.TASK_ID, tt.TASK_NAME
+		FROM TBL_OUTPUT to2, TBL_OUT_FILE tof, TBL_EMP te, TBL_TASK tt, TBL_PROJECT tp 
+		WHERE to2.OUT_ID = #{outputId}
+		AND tof.OUT_ID = #{outputId}
+		AND to2.emp_id = te.emp_id
+		AND to2.TASK_ID = tt.TASK_ID
+		AND tt.PRJ_ID = tp.PRJ_ID
+	</select>
+	
+	<select id="getOutputFile" resultMap="outputFileInfoMap" parameterType="int">
+		SELECT ORIGINAL_NAME, SAVE_NAME
+		FROM TBL_OUT_FILE
+		WHERE OUT_FILE_ID = #{outputFileId}
+	</select>
+	
+	<update id="updateOutput" parameterType="output">
+		UPDATE TBL_OUTPUT
+		SET out_type_id = #{outputType},
+			cat_id = #{categoryId},
+			task_id = #{taskId},
+			content = #{content},
+			update_at = sysdate
+		WHERE OUT_ID = #{outputId}
+	</update>
+	
+	<delete id="deleteOutputFile" parameterType="int">
+		DELETE
+		FROM TBL_OUT_FILE
+		WHERE OUT_ID = #{outputId}
+	</delete>
+	
+	<delete id="deleteOutput" parameterType="int">
+		DELETE
+		FROM TBL_OUTPUT
+		WHERE OUT_ID = #{outputId}
+	</delete>
+</mapper>

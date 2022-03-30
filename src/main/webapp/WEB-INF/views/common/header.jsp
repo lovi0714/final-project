@@ -71,7 +71,7 @@
                                     <a href="${path}/project/list.do">프로젝트 현황</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="${path}/project/fileList.do">프로젝트 산출물</a>
+                                    <a href="${path}/output/list.do">프로젝트 산출물</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="${path}/project/approvalList.do">프로젝트 작업승인</a>

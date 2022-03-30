@@ -52,12 +52,6 @@ public class ProjectController {
 		service.create(project);
 	}
 	
-	@GetMapping("/fileList.do")
-	public String getFileList() {
-		
-		return "project/fileList";
-	}
-	
 	@GetMapping("/approvalList.do")
 	public String getApprovalList() {
 		

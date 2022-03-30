@@ -34,6 +34,7 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
 	</context:component-scan>	
 	<!-- 컨테이너에 공통 DB 설정 정보 가져오기  -->
 	<context:property-placeholder location="classpath:/resource/config"/>
@@ -91,10 +92,8 @@
 		return "download"
 	 -->
 	<bean id="download" class="com.project.pms.community.util.DownloadViewer"/>
-	
-	<!-- json 뷰 선언
-		return "pageJsonReport"
-	 -->
+	<bean id="download2" class="com.project.pms.utils.DownloadViewer"/>
+	 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <!-- @ResponseBody application/json 으로 변경 -->
         <property name="messageConverters">
