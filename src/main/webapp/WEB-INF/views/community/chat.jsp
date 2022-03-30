@@ -4,6 +4,8 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm" var="today" />
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>    
 <link rel="stylesheet" href="${path}/resources/css/widgets/chat.css">
@@ -16,7 +18,106 @@
 		<jsp:param name="isCommunitySide" value="active"/>
 		<jsp:param name="isCommunityList" value="active"/>
 </jsp:include>
+<script type="text/javascript">
+	var ws;
+	
+	$(document).ready(function(){
+		
+		
+		$("#exitBtn").hide();
+		// 접속 종료를 처리했을 시
+		$("#exitBtn").click(function(){	
+			alert($("#userName").val()+'님 접속 종료합니다.');
+			$("#yourName").show();
+			$("#exitBtn").hide();
+			ws.close();
+		});
+	});
+		
+	function wsOpen(){
+		ws = new WebSocket("ws:/localhost:7080/${path}/chat-ws.do");
+		wsEvt();
+	}
+		
+	function wsEvt() {
+		ws.onopen = function(data){
+			//소켓이 열리면 동작
+		}
+		
+		ws.onmessage = function(data) {
+			//메시지를 받으면 동작
+			var msg = data.data;
+			if(msg != null && msg.trim() != ''){
+				var d = JSON.parse(msg);
+				if(d.type == "getId"){
+					var si = d.sessionId != null ? d.sessionId : "";
+					if(si != ''){
+						$("#sessionId").val(si); 
+					}
+				}else if(d.type == "message"){
+					if(d.sessionId == $("#sessionId").val()){
+						$("#chating").append(
+							"<div class='chat'>"+
+                        	"<div class='chat-body'>"+
+                        	"<div class='chat-message'>"+"("+"<c:out value='${today}'/>"+")"+"<br>"+d.msg+"</div>"+
+                    		"</div>"+
+               				"</div>");	
+					}else{
+						$("#chating").append(
+						"<div class='chat chat-left'>"+
+                        "<div class='chat-body'>"+ 
+                        "<div class='chat-message'>"+"("+"<c:out value='${today}'/>"+")"+"<br>"+d.userName+" : "+d.msg +"</div>" +                      
+                    	"</div>"+
+                		"</div>"
+                		);
+					}
+						
+				}else{
+					console.warn("unknown type!")
+				}
+			}
+			
+		}
+		
+		ws.onclose=function(){
 
+		}
+		
+		document.addEventListener("keypress", function(e){
+			if(e.keyCode == 13){ //enter press
+				send();
+			}
+		});
+	}
+
+	function chatName(){
+		var userName = $("#userName").val();
+		if(userName == null || userName.trim() == ""){
+			alert("사용자 이름을 입력해주세요.");
+			$("#userName").focus();
+		}else{
+			wsOpen();
+			alert($("#userName").val()+'님 반갑습니다.');
+			$("#yourName").hide();
+			$("#yourMsg").show();
+			$("#exitBtn").show();
+		}
+	}
+
+	function send() {
+		var option ={
+			type: "message",
+			sessionId : $("#sessionId").val(),
+			userName : $("#userName").val(),
+			msg : $("#chatting").val()
+		}
+		ws.send(JSON.stringify(option))
+		$('#chatting').val("");	
+	}
+	
+	var mx = parseInt($('#chating').height())
+	$('#chatingArea').scrollTop(mx);
+</script>
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
     <div class="page-title">
@@ -26,70 +127,69 @@
             </div>
         </div>
     </div>
+   
+   
     <section class="section">
         <div class="row">
             <div class="col-4">
-                <div class="card col-9" style="height:625px">
+                <div class="card col-9" style="height:625px;">
                     <div class="card-header">
                     	<div class="d-grid gap-2">
-  							<button class="btn btn-primary" type="button">대화상대 추가</button>
+                    	<h4>채팅방 목록</h4>
+  							<div id="yourName">
+								<table class="inputTable" style="width:100%">
+									<tr>
+										<th><input type="hidden" name="userName" id="userName" value="${sessionScope.emp.name }"></th>
+										<th><button onclick="chatName()" id="startBtn" class="btn btn-primary btn-block">대화 참여하기</button></th>
+									</tr>
+								</table>							
+							</div>
+							<input type="button" class="btn btn-danger btn-block" value="나가기" id="exitBtn" style="float:right"/>
 						</div>
                     </div>    
                 </div>
             </div>
-     
-        
+     		<input type="hidden" id="sessionId" value="">
 
             <div class="col-8">
-                <div class="card col-12" style="float:right; height:625px; margin-right:50px">
-                    <div class="card-header">
+                <div class="card col-12" style="float:right; height:625px; margin-right:50px;">
+                    <div class="card-header" style="border-bottom:1px solid #dedfe0">
                         <div class="media d-flex align-items-center">                    
                             <div class="name flex-grow-1">
-                                <h6 class="mb-0">홍길동</h6>
-                                <span class="text-xs">Online</span>
+                                <h4 class="mb-0">${sessionScope.emp.name}</h4>
                             </div>
-                            <button class="btn btn-sm">
-                                <i data-feather="x"></i>
-                            </button>
+        
                         </div>
                     </div>
-                    <div class="card-body pt-4 bg-grey">
-                        <div class="chat-content">
-                            <div class="chat">
-                                <div class="chat-body">
-                                    <div class="chat-message">Hi Alfy, how can i help you?</div>
-                                </div>
-                            </div>
-                            <div class="chat chat-left">
-                                <div class="chat-body">
-                                    <div class="chat-message">I'm looking for the best admin dashboard template</div>
-                                    <div class="chat-message">With bootstrap certainly</div>
-                                </div>
-                            </div>
-                            <div class="chat">
-                                <div class="chat-body">
-                                    <div class="chat-message">I recommend you to use Mazer Dashboard</div>
-                                </div>
-                            </div>
-                            <div class="chat chat-left">
-                                <div class="chat-body">
-                                    <div class="chat-message">That"s great! I like it so much :)</div>
-                                </div>
-                            </div>
+        
+        
+                    <div class="card-body pt-4 bg-grey" id="chatingArea" style="overflow:auto;" >
+                           <div id="chating" class="chating">
+						   </div>					
+                      
                         </div>
-                    </div>
+				
+					
+					
                     <div class="card-footer">
                         <div class="message-form d-flex flex-direction-column align-items-center">
-                            <a href="http://" class="black"><i data-feather="smile"></i></a>
                             <div class="d-flex flex-grow-1 ml-6">
-                                <input type="text" class="form-control" placeholder="메세지를 입력하세요.">
+                               <div id="yourMsg">
+							   		<table class="inputTable">
+										<tr>
+											<th width="800px"><input id="chatting" class="form-control" placeholder="보내실 메시지를 입력하세요."></th>
+											<th width="20%"><button onclick="send()" id="sendBtn" class="btn btn-primary">전송</button></th>											
+										</tr>
+									</table>
+								</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-     </div>
+         	</div>
+     
+  	</div>
     </section>
-</div>
+
 	
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

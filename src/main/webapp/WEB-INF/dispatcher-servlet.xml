@@ -38,7 +38,16 @@
 	</context:component-scan>	
 	<!-- 컨테이너에 공통 DB 설정 정보 가져오기  -->
 	<context:property-placeholder location="classpath:/resource/config"/>
-		
+	<!-- 웹 소켓 통신을 위한 handelr 선언 
+		component로 선언한 이름과 url패턴을 mapping
+		server handler와 client에서 js로 호출할 url형식을 선언..
+	-->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+	<mvc:default-servlet-handler/>
+	<websocket:handlers>
+		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
+	</websocket:handlers>	
 	<!--  lib에 있는 만들어진 객체들을 생성하고 사용
 	1. DB 처리를 위한 연결객체 선언화 활용.
 		config 안에 선언된 key를 아래 DB 연결 처리하는 정보에 설정.
