@@ -8,7 +8,7 @@ public class NoticeFile {
 	private String originalName;
 	private String saveName;
 	private String ext;
-	private String volume;
+	private long volume;
 	private Date createAt;
 	private Date updateAt;
 	
@@ -17,7 +17,15 @@ public class NoticeFile {
 		// TODO Auto-generated constructor stub
 	}
 
-	public NoticeFile(int noticeFileId, int noticeId, String originalName, String saveName, String ext, String volume,
+	public NoticeFile(String originalName, String saveName, String ext, long volume) {
+		super();
+		this.originalName = originalName;
+		this.saveName = saveName;
+		this.ext = ext;
+		this.volume = volume;
+	}
+	
+	public NoticeFile(int noticeFileId, int noticeId, String originalName, String saveName, String ext, long volume,
 			Date createAt, Date updateAt) {
 		super();
 		this.noticeFileId = noticeFileId;
@@ -70,11 +78,11 @@ public class NoticeFile {
 		this.ext = ext;
 	}
 
-	public String getVolume() {
+	public long getVolume() {
 		return volume;
 	}
 
-	public void setVolume(String volume) {
+	public void setVolume(long volume) {
 		this.volume = volume;
 	}
 
@@ -93,7 +101,6 @@ public class NoticeFile {
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
-	
 	
 	
 }

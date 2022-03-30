@@ -27,30 +27,34 @@
 									<div class="col-12">
 										<p class="fw-bold">
 											<span class="badge bg-primary">${NoticeDetailList.writer}</span>
-											<span class="badge bg-secondary"><fmt:formatDate value="${NoticeDetailList.createAt}" pattern="yyyy-MM-dd"/></span> 
+											<span class="badge bg-success"><fmt:formatDate value="${NoticeDetailList.createAt}" pattern="yyyy-MM-dd"/></span> 
 											<span class="badge bg-secondary">
-												<span class="fa-fw select-all fas"></span> ${NoticeDetailList.viewCount} <hr>
+												<span class="fa-fw select-all fas"></span> ${NoticeDetailList.viewCount}
 											</span>
                         				</p>
 									</div>
 								    <div class="col-12">
-								    	<p style="height: 300px">${NoticeDetailList.content}</p><hr>
+								    	<p style="height: 300px; border: 1px solid #dce7f1; border-radius: 0.25rem; padding: 15px 15px;">${NoticeDetailList.content}</p>
                                    	</div>
-								    <div class="col-12">
-								    	<p>첨부파일 영역</p>
-                                   	</div>
+                                   	<c:if test="${NoticeFileInfo.originalName ne null}">
+	                                   	<div class="col-12">
+	                                   		<div class="form-group">
+												<label for="file" class="form-label">첨부파일</label>
+												<input onclick="downFile('${NoticeFileInfo.originalName}')" type="text" id="file" class="form-control" value="${NoticeFileInfo.originalName}" readonly style="background-color: white; cursor: pointer;"/>
+											</div>
+										</div>
+									</c:if>
 									<div class="col-12 d-flex justify-content-end">
 										<button type="button" class="btn btn-primary me-1 mb-1" id="uptBtn">수정</button>
 										<button type="button" class="btn btn-secondary me-1 mb-1" id="cancelBtn">삭제</button>
-									</div>
+									</div>	
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-	</div>
+			</section>
+		</div>
 	
 <script>
 	$('#uptBtn').click(function() {
@@ -93,6 +97,11 @@
 		});
 	});
 
+	function downFile(fname) {
+		console.log(fname);
+		location.href="${path}/community/noticeFileDownload.do?fname=" + fname;
+	}
+	
 </script>
     
         

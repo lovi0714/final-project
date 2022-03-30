@@ -90,7 +90,8 @@
 		컨트롤러에서 아래와 같이 viewer를 호출 처리..
 		return "download"
 	 -->
-	<!-- <bean id="download" class=" springweb.z01_util.DownloadViewer"/> -->
+	<bean id="download" class="com.project.pms.community.util.DownloadViewer"/>
+	
 	<!-- json 뷰 선언
 		return "pageJsonReport"
 	 -->

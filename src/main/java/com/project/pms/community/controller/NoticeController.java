@@ -37,17 +37,11 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/noticeInsert.do")
-	@ResponseBody
-	public String insertNotice(Notice notice, String result) {
+	public String insertNotice(Model d, Notice notice) {
 		System.out.println("insertNotice Controller called...");
+		d.addAttribute("msg", service.insertNotice(notice));
 		
-		if (service.insertNotice(notice)) {
-			result = "success";
-		} else {
-			result = "false";
-		}
-		
-		return result;
+		return "community/noticeForm";
 	}
 	
 	// 공지사항 조회
@@ -55,8 +49,17 @@ public class NoticeController {
 	public String getNoticeDetail(Model d, @RequestParam("noticeId") int noticeId) {
 		System.out.println("getNoticeDetail Controller called...");
 		d.addAttribute("NoticeDetailList", service.getNoticeDetail(noticeId));
+		d.addAttribute("NoticeFileInfo", service.getNoticeFileInfo(noticeId));
 		
 		return "community/noticeDetail";
+	}
+	
+	// 첨부파일 다운로드
+	@GetMapping("noticeFileDownload.do")
+	public String noticeFileDownload(Model d, @RequestParam("fname") String fname) {
+		d.addAttribute("downloadfile", fname);
+		
+		return "download";
 	}
 	
 	// 공지사항 수정
@@ -64,7 +67,8 @@ public class NoticeController {
 	public String updateNoticeForm(Model d, @RequestParam("noticeId") int noticeId) {
 		System.out.println("updateNotice Controller called...");
 		d.addAttribute("NoticeDetailList", service.getNoticeDetail(noticeId));
-	
+		d.addAttribute("NoticeFileInfo", service.getNoticeFileInfo(noticeId));
+		
 		return "community/noticeModify";
 	}
 	

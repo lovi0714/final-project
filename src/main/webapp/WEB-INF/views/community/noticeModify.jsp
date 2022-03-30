@@ -26,17 +26,19 @@
 										<input type="hidden" name="noticeId" value="${NoticeDetailList.noticeId}"/>
 										<div class="col-12">
 											<div class="form-group">
+												<label for="first-name-vertical">제목</label>
 												<input type="text" id="first-name-vertical" name="title" class="form-control" value="${NoticeDetailList.title}"/>
 											</div>
 										</div>
 										<div class="col-12">
-	                                    	<div class="form-group">	                            				
+	                                    	<div class="form-group">	  
+	                                    		<label for="exampleFormControlTextarea1">내용</label>                          				
 											    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="10">${NoticeDetailList.content}</textarea>
 	                                        </div>
 										</div>
 									    <div class="col-12">
                                         	<div class="form-group">
-                                            	<input type="file" id="first-name-vertical" class="form-control">
+                                        		<input type="file" id="first-name-vertical" class="form-control">
                                         	</div>
                                     	</div>
 										<div class="col-12 d-flex justify-content-end">

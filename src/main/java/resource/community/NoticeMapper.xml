@@ -39,7 +39,7 @@
 	
 	<insert id="insertNoticeFileInfo" parameterType="noticeFile">
 		INSERT INTO TBL_NO_FILE
-		VALUES (no_file_seq.nextVal, #{noticeId}, #{origianlName}, #{saveName}, #{ext}, #{volume}, sysdate, sysdate)
+		VALUES (no_file_seq.nextVal, notice_seq.currVal, #{originalName}, #{saveName}, #{ext}, #{volume}, sysdate, sysdate)
 	</insert>  	
 	
 	<!-- 공지사항 조회 -->
@@ -72,7 +72,7 @@
 	
 	<delete id="deleteNoticeFileInfo" parameterType="int">
 		DELETE FROM TBL_NO_FILE
-		VALUES no_id = #{noticeId}
+		WHERE no_id = #{noticeId}
 	</delete>	
 	
 	<!-- 조회수 증가 --> 

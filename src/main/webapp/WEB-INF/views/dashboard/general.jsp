@@ -193,7 +193,7 @@
 		"autoWidth" : false,
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"},
-		    {"width": "50%", "targets": 0},
+		    {"width": "50%", "targets": 0}
 		],
 		"language": {
 	        "zeroRecords": "등록된 공지사항이 없습니다."

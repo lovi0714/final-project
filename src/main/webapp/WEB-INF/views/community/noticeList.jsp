@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <fmt:requestEncoding value="utf-8" />
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="isCommunitySide" value="active" />
 	<jsp:param name="isCommunityList" value="active" />
@@ -75,7 +76,11 @@
 		"info" : false,
 		"lengthChange": false,
 		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"}
+		    {"className": "dt-center", "targets": "_all"},
+		    {"width": "20%", "targets": 0},
+		    {"width": "40%", "targets": 1},
+		    {"width": "20%", "targets": 2},
+		    {"width": "20%", "targets": 3}
 		],
 		"language": {
 	        "zeroRecords": "등록된 공지사항이 없습니다."

@@ -1,6 +1,9 @@
 package com.project.pms.community.vo;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
 	private int noticeId;
@@ -10,6 +13,7 @@ public class Notice {
 	private int viewCount;
 	private Date createAt;
 	private Date updateAt;
+	private MultipartFile[] report;
 	
 	public Notice() {
 		super();
@@ -17,7 +21,7 @@ public class Notice {
 	}
 
 	public Notice(int noticeId, String writer, String title, String content, int viewCount, Date createAt,
-			Date updateAt) {
+			Date updateAt, MultipartFile[] report) {
 		super();
 		this.noticeId = noticeId;
 		this.writer = writer;
@@ -26,6 +30,7 @@ public class Notice {
 		this.viewCount = viewCount;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
+		this.report = report;
 	}
 
 	public int getNoticeId() {
@@ -83,6 +88,12 @@ public class Notice {
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
-	
 
+	public MultipartFile[] getReport() {
+		return report;
+	}
+
+	public void setReport(MultipartFile[] report) {
+		this.report = report;
+	}
 }

@@ -21,7 +21,7 @@ public interface NoticeDAO {
 	// 공지사항 조회
 	public Notice getNoticeDetail(int noticeId);
 	
-	public Notice getNoticeFileInfo(int noticeId);
+	public NoticeFile getNoticeFileInfo(int noticeId);
 	
 	// 공지사항 수정
 	public void updateNotice(Notice notice);
