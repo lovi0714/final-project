@@ -27,7 +27,7 @@ public class ProjectController {
 	public String getList(Model model) {
 		
 		model.addAttribute("list", service.getList());
-		
+		System.out.println(service.getList());
 		return "project/list";
 	}
 	

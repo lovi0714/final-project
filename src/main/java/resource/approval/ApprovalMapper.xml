@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.project.pms.approval.repository.ApprovalDAO">
+	<resultMap type="approvalForm" id="approvalFormMap">
+		<result column="approval_id" property="approvalId"/>
+		<result column="task_name" property="taskName"/>
+		<result column="project_name" property="projectName"/>
+		<result column="AP_STATUS_ID" property="statusId"/>
+		<result column="emp_name" property="empName"/>
+		<result column="create_at" property="approvalDate"/>
+	</resultMap>
+	
+	<select id="getApprovalList" resultMap="approvalFormMap" parameterType="int">
+		SELECT ta.APPROVAL_ID, tt.TASK_NAME, tp.NAME AS project_name, ta.AP_STATUS_ID, te.NAME AS emp_name, ta.CREATE_AT 
+		FROM TBL_APPROVAL ta, TBL_TASK tt, TBL_PROJECT tp, TBL_EMP te 
+		WHERE ta.TASK_ID = tt.TASK_ID AND tt.PRJ_ID = tp.PRJ_ID AND tt.MANAGER_ID = te.EMP_ID AND ta.APPROVER = #{approverId}
+		ORDER BY ta.APPROVAL_ID desc
+	</select>
+	
+	<!-- 승인 처리 -->
+	<update id="setApproval" parameterType="int">
+		UPDATE TBL_APPROVAL 
+		SET AP_STATUS_ID = 2,
+		APPROVAL_AT = sysdate,
+		UPDATE_AT = sysdate
+		WHERE APPROVAL_ID = #{approvalId}
+	</update>
+	
+	<!-- 반려 처리 -->
+	<update id="setReject" parameterType="int">
+		UPDATE TBL_APPROVAL
+		SET AP_STATUS_ID = 3,
+		REJECT_AT = sysdate,
+		UPDATE_AT = sysdate
+		WHERE APPROVAL_ID = #{approvalId}
+	</update>
+	
+	
+</mapper>

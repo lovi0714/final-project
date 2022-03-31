@@ -35,10 +35,12 @@
 		<typeAlias alias="projectInfo" type="com.project.pms.output.vo.ProjectInfo"/>
 		<typeAlias alias="outputDetail" type="com.project.pms.output.vo.OutputDetail"/>
 		<typeAlias alias="outputFileInfo" type="com.project.pms.output.vo.OutputFileInfo"/>
+		<typeAlias alias="approvalForm" type="com.project.pms.approval.vo.ApprovalForm"/>
 	</typeAliases>
 	
 	<typeHandlers>
         <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" javaType="java.time.LocalDate"/>
+        <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" javaType="java.time.LocalDateTime"/>
     </typeHandlers>
     
 	<mappers>
@@ -52,6 +54,7 @@
 		<mapper resource="resource/risk/RiskMapper.xml"/>
 		<mapper resource="resource/emp/EmpMapper.xml"/>	
 		<mapper resource="resource/output/OutputMapper.xml"/>	
+		<mapper resource="resource/approval/ApprovalMapper.xml"/>	
 	</mappers>
 	
 </configuration>

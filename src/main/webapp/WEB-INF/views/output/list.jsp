@@ -78,7 +78,8 @@
                   			<c:forEach var="output" items="${list}">
 								<tr>
 		                           <td><span class="badge bg-${output.categoryId == 1 ? 'primary">필수' : 'secondary">선택'}</span></td>
-		                           <td><div><a href="javascript:outputDetail(${output.outputId})">${output.originalName}</a></div><div>${output.empName} on ${output.updateAt} file size ${output.volumeText}</div></td>
+		                           <td><div><a href="javascript:outputDetail(${output.outputId})">${output.originalName}</a></div>
+		                           <div>${output.empName} on ${output.updateAt} file size ${output.volumeText}</div></td>
 		                           <td>${output.projectName}</td>
                     			</tr>
                    			</c:forEach>
