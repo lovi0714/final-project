@@ -117,6 +117,12 @@
 				                            	 <c:when test = "${myTask.status eq '지연진행'}">
 				                            	 	<td><span class="badge bg-danger">${myTask.status}</span></td>
 				                           		 </c:when>
+				                           		 <c:when test = "${myTask.status eq '완료'}">
+				                            	 	<td><span class="badge bg-primary">${myTask.status}</span></td>
+				                           		 </c:when>
+				                            	 <c:when test = "${myTask.status eq '중단'}">
+				                            	 	<td><span class="badge bg-warning">${myTask.status}</span></td>
+				                           		 </c:when>
 				                            </c:choose>
 				                            <td><fmt:formatDate value="${myTask.startAt}" pattern="yyyy-MM-dd"/></td>
 				                            <td><fmt:formatDate value="${myTask.endAt}" pattern="yyyy-MM-dd"/></td>
