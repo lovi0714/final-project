@@ -36,11 +36,14 @@
 											    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="10">${NoticeDetailList.content}</textarea>
 	                                        </div>
 										</div>
-									    <div class="col-12">
-                                        	<div class="form-group">
-                                        		<input type="file" id="first-name-vertical" class="form-control">
-                                        	</div>
-                                    	</div>
+	                                   	<c:if test="${NoticeFileInfo.originalName ne null}">
+		                                   	<div class="col-12">
+		                                   		<div class="form-group">
+													<label for="file" class="form-label">첨부파일</label>
+													<input type="text" id="file" class="form-control" value="${NoticeFileInfo.originalName}" readonly style="background-color: white; cursor: pointer;"/>
+												</div>
+											</div>
+										</c:if>
 										<div class="col-12 d-flex justify-content-end">
 											<button type="button" class="btn btn-primary me-1 mb-1" id="regBtn" onclick="updateNotice();">등록</button>
 											<button type="button" class="btn btn-light-secondary me-1 mb-1" id="cancelBtn">취소</button>
