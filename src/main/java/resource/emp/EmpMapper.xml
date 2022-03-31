@@ -20,12 +20,12 @@
  		<result column="update_at" property="updateAt"/>
  	</resultMap>
  	 
-	<!-- 사원추가 -->	
+	<!-- 사원추가 -->
 	<insert id="saveEmp" parameterType="emp">
 		INSERT INTO TBL_EMP
 		(emp_id, dept_id, auth_id, pos_id, password, name, emp_email, phone, join_at, leave_at, is_leave, create_at, update_at)
-		VALUES(empId_seq.NEXTVAL, #{deptId}, #{authId}, #{posId}, 1234, #{name}, #{empEmail}, #{phone}, sysdate, NULL, 0, sysdate, NULL)
-	</insert>
+		VALUES(empId_seq.NEXTVAL, #{deptId}, #{authId}, #{posId}, #{password}, #{name}, #{empEmail}, #{phone}, sysdate, null, 0, sysdate, null)
+	</insert>	
 	
 	<!-- 직원정보조회 -->
 	<select id="empInfo" resultMap="empMap">

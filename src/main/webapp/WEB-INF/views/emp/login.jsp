@@ -28,10 +28,10 @@
 <body>
     <div id="auth">   
 <div class="row h-100">
-    <div class="col-lg-5 col-12">
+    <div class="col-lg-5 col-12" style="width: 70%; padding-left: 30%;">
         <div id="auth-left">
             <div class="auth-logo">
-                <a href="index.html"><img src="assets/images/logo/logo.png" alt="Logo"></a>
+                <h1>CPMS</h1>
             </div>
             <h1 class="auth-title">로그인</h1>
             
@@ -62,11 +62,7 @@
 
         </div>
     </div>
-    <div class="col-lg-7 d-none d-lg-block">
-        <div id="auth-right">
-
-        </div>
-    </div>
+    
 </div>
 
     </div>

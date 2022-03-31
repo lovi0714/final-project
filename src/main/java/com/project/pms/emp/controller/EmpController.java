@@ -1,15 +1,21 @@
 package com.project.pms.emp.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
 import com.project.pms.emp.service.EmailManagement;
 import com.project.pms.emp.service.EmpService;
 import com.project.pms.emp.service.LoginVerification;
@@ -63,10 +69,10 @@ public class EmpController {
 	/* 사원정보 저장 */
 	@PostMapping("/addEmp.do")
 	public String joinEmp(Emp emp, Email vo) {
-		// String rawPassword = emp.getPassword();
-		empService.joinEmp(emp); //, rawPassword
-		emailManagement.sendMail(vo);
-		return "redirect:/emp/addEmp.do";
+		empService.joinEmp(emp, vo);
+		emailManagement.sendMail(emp, vo);
+		return "redirect:/emp/addEmp.do";  
+					
 	}
 	
 	/* 사원정보 조회 */
