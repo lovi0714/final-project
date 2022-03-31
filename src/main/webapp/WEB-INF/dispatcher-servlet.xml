@@ -28,8 +28,6 @@
    		http://www.springframework.org/schema/websocket
 		http://www.springframework.org/schema/websocket/spring-websocket.xsd" >
 	
-	<mvc:default-servlet-handler />
-		
 	<context:component-scan base-package="com.project.pms">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
@@ -43,7 +41,6 @@
 		server handler와 client에서 js로 호출할 url형식을 선언..
 	-->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
 	<mvc:default-servlet-handler/>
 	<websocket:handlers>
 		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
