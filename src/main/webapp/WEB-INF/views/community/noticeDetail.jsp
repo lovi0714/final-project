@@ -40,7 +40,7 @@
 	                                   	<div class="col-12">
 	                                   		<div class="form-group">
 												<label for="file" class="form-label">첨부파일</label>
-												<input onclick="downFile('${NoticeFileInfo.originalName}')" type="text" id="file" class="form-control" value="${NoticeFileInfo.originalName}" readonly style="background-color: white; cursor: pointer;"/>
+												<input onclick="downFile('${NoticeFileInfo.noticeFileId}')" type="text" id="file" class="form-control" value="${NoticeFileInfo.originalName}" readonly style="background-color: white; cursor: pointer;"/>
 											</div>
 										</div>
 									</c:if>
@@ -97,9 +97,9 @@
 		});
 	});
 
-	function downFile(fname) {
-		console.log(fname);
-		location.href="${path}/community/noticeFileDownload.do?fname=" + fname;
+	function downFile(noticeFileId) {
+		console.log(noticeFileId);
+		location.href="${path}/community/noticeFile.do?noticeFileId=" + noticeFileId;
 	}
 	
 </script>

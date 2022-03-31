@@ -50,9 +50,15 @@
 	</select>
 	
 	<select id="getNoticeFileInfo" resultMap="noticeFileMap" parameterType="int">
-		SELECT original_name
+		SELECT *
 		FROM TBL_NO_FILE
 		WHERE no_id = #{noticeId}
+	</select>
+	
+	<select id="getFileInfoByFileId" resultMap="noticeFileMap" parameterType="int">
+		SELECT *
+		FROM TBL_NO_FILE
+		WHERE no_file_id = #{noticeFileId}
 	</select>
 	
 	<!-- 공지사항 수정 -->

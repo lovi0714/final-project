@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.pms.community.service.NoticeService;
 import com.project.pms.community.vo.Notice;
+import com.project.pms.community.vo.NoticeFile;
 
 @Controller
 @RequestMapping("/community/*")
@@ -55,9 +56,12 @@ public class NoticeController {
 	}
 	
 	// 첨부파일 다운로드
-	@GetMapping("noticeFileDownload.do")
-	public String noticeFileDownload(Model d, @RequestParam("fname") String fname) {
-		d.addAttribute("downloadfile", fname);
+	@GetMapping("noticeFile.do")
+	public String noticeFileDownload(Model d, @RequestParam("noticeFileId") int noticeFileId, NoticeFile noticeFile) {
+		System.out.println("noticeFileDownload Controller called...");
+		NoticeFile noticefile = service.getFileInfoByFileId(noticeFileId);
+		d.addAttribute("storeFileName", noticefile.getOriginalName());
+		d.addAttribute("uploadFileName", noticefile.getSaveName());
 		
 		return "download";
 	}

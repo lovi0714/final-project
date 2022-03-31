@@ -83,6 +83,11 @@ public class NoticeService {
 		return dao.getNoticeFileInfo(noticeId);
 	}
 	
+	public NoticeFile getFileInfoByFileId(int noticeFileId) {
+		
+		return dao.getFileInfoByFileId(noticeFileId);
+	}
+	
 	// 공지사항 수정
 	public boolean updateNotice(Notice notice) {
 		dao.updateNotice(notice);

@@ -23,6 +23,8 @@ public interface NoticeDAO {
 	
 	public NoticeFile getNoticeFileInfo(int noticeId);
 	
+	public NoticeFile getFileInfoByFileId(int noticeFileId);
+	
 	// 공지사항 수정
 	public void updateNotice(Notice notice);
 	
