@@ -100,8 +100,7 @@
 		컨트롤러에서 아래와 같이 viewer를 호출 처리..
 		return "download"
 	 -->
-	<bean id="download" class="com.project.pms.community.util.DownloadViewer"/>
-	<bean id="download2" class="com.project.pms.utils.DownloadViewer"/>
+	<bean id="download" class="com.project.pms.utils.DownloadViewer"/>
 	 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <!-- @ResponseBody application/json 으로 변경 -->

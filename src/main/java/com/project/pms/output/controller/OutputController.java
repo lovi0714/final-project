@@ -75,7 +75,7 @@ public class OutputController {
 		model.addAttribute("storeFileName", outputFile.getSaveName());
 		model.addAttribute("uploadFileName", outputFile.getOriginalName());
 		
-		return "download2";
+		return "download";
 	}
 	
 	@ResponseBody
