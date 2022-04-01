@@ -2,8 +2,9 @@ package com.project.pms.output.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.pms.emp.vo.Emp;
 import com.project.pms.output.service.OutputService;
 import com.project.pms.output.vo.Output;
 import com.project.pms.output.vo.OutputDetail;
@@ -48,9 +50,12 @@ public class OutputController {
 	}
 	
 	@PostMapping("/save.do")
-	public ResponseEntity<String> saveOutput(OutputForm form) {
+	public ResponseEntity<String> saveOutput(HttpSession session, OutputForm form) {
+		
+		Emp emp = (Emp) session.getAttribute("emp");
+		
 		Output output = new Output();
-		output.setEmpId(1); // session에서 가져올것
+		output.setEmpId(emp.getEmpId()); // session에서 가져올것
 		output.setOutputType(form.getOutputType());
 		output.setCategoryId(form.getCategoryId());
 		output.setTaskId(form.getTaskId());

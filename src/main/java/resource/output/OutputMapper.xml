@@ -54,6 +54,7 @@
 	
 	<resultMap type="outputDetail" id="outputDetailMap">
 		<result column="out_id" property="outputId"/>
+		<result column="emp_id" property="empId"/>
 		<result column="out_file_id" property="outputFileId"/>
 		<result column="original_name" property="originalName"/>
 		<result column="content" property="content"/>
@@ -111,7 +112,7 @@
 	</select>
 	
 	<select id="getOutputDetail" resultMap="outputDetailMap" parameterType="int">
-		SELECT to2.OUT_ID, tof.OUT_FILE_ID, tof.ORIGINAL_NAME, to2.CONTENT, tp.PRJ_ID, tp.NAME AS project_name, to2.CAT_ID, to2.OUT_TYPE_ID, tt.TASK_ID, tt.TASK_NAME
+		SELECT to2.OUT_ID, te.EMP_ID, tof.OUT_FILE_ID, tof.ORIGINAL_NAME, to2.CONTENT, tp.PRJ_ID, tp.NAME AS project_name, to2.CAT_ID, to2.OUT_TYPE_ID, tt.TASK_ID, tt.TASK_NAME
 		FROM TBL_OUTPUT to2, TBL_OUT_FILE tof, TBL_EMP te, TBL_TASK tt, TBL_PROJECT tp 
 		WHERE to2.OUT_ID = #{outputId}
 		AND tof.OUT_ID = #{outputId}

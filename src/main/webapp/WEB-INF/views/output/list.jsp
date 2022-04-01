@@ -249,18 +249,6 @@
                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="editBtn" class="btn btn-primary ml-1" >
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">수정</span>
-                </button>
-                <button type="button" id="updateBtn" style="display: none;" class="btn btn-primary ml-1" >
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">저장</span>
-                </button>
-                <button type="button" id="delBtn" class="btn btn-danger ml-1" >
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">삭제</span>
-                </button>
                 <button type="button" id="closeBtn" class="btn btn-light-secondary" data-bs-dismiss="modal">
                     <i class="bx bx-x d-block d-sm-none"></i>
                     <span class="d-none d-sm-block">닫기</span>
@@ -273,6 +261,9 @@
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 <script>
+	const authId = ${emp.authId};
+	const empId = ${emp.empId};
+	
 	//Jquery Datatable
 	$("#table1").DataTable({
 		"searching": false,
@@ -322,6 +313,10 @@
 	}
 	
 	const outputDetail = (id) => {
+		$('#editBtn').remove();
+		$('#delBtn').remove();
+		$('#updateBtn').remove();
+		
 		$.ajax({
 		  	url: "${path}/output/detail/" + id,
 		  	method: "get",
@@ -339,6 +334,22 @@
 				$('#outputType').val(data.typeId);
 				$('#content').val(data.content);
 				$('#outputId').val(data.outputId);
+				
+				if (authId !== 1 || empId === data.empId) {
+					$('#closeBtn').before(
+							`<button type="button" id="editBtn" class="btn btn-primary ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">수정</span>
+		                </button>
+		                <button type="button" id="updateBtn" style="display: none;" class="btn btn-primary ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">저장</span>
+		                </button>
+		                <button type="button" id="delBtn" class="btn btn-danger ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">삭제</span>
+		                </button>`);
+				}
 				
 			}).fail(function(error) {
 				console.log(error);
@@ -377,11 +388,11 @@
 			getMdoalTasks();
 		});
 		
-		$('#closeBtn').click(function() {
+		$(document).on('click', '#closeBtn', function() {
 			toggleModelForm(true);
 		});
 		
-		$('#updateBtn').click(function() {
+		$(document).on('click', '#updateBtn', function() {
 			let data = {
 				"outputId": parseInt($('#outputId').val()),
 				"outputType": parseInt($('#outputType').val()),
@@ -425,12 +436,12 @@
 			}
 		});
 		
-		$('#editBtn').click(function() {
+		$(document).on('click', '#editBtn', function() {
 			isEdit = true;
 			toggleModelForm(false);
 		});
 		
-		$('#delBtn').click(function() {
+		$(document).on('click', '#delBtn', function() {
 			 $.ajax({
 	            type: "POST",
 	            url: "${path}/output/delete/" + $('#outputId').val(),
@@ -439,30 +450,30 @@
 	            	console.log(result);
 	            	if (result === 'success') {
 	            		Swal.fire({
-            			  icon: 'success',
-            			  title: '삭제 성공',
-            			  text: '산출물을 삭제하였습니다.'
-            			}).then((result) => {
-           				  if (result.isConfirmed) {
-      	            		location.href = '${path}/output/list.do';
-   						  };
-           				})
+	        			  icon: 'success',
+	        			  title: '삭제 성공',
+	        			  text: '산출물을 삭제하였습니다.'
+	        			}).then((result) => {
+	       				  if (result.isConfirmed) {
+	  	            		location.href = '${path}/output/list.do';
+							  };
+	       				})
 	            	}
 	            },
 	            error: function(error) {
 	            	console.log(error);
 	            	if (error === 'fail') {
 	            		Swal.fire({
-            			  icon: 'error',
-            			  title: '삭제 실패',
-            			  text: '산출물 삭제에 실패하였습니다.'
-            			});
+	        			  icon: 'error',
+	        			  title: '삭제 실패',
+	        			  text: '산출물 삭제에 실패하였습니다.'
+	        			});
 	            	}
 	            }
 	        });
 		});
 		
-		$('#saveBtn').click(function() {
+		$(document).on('click', '#saveBtn', function() {
 			var form = $("#outputForm");
 			
 		    // you can't pass Jquery form it has to be javascript form object
@@ -479,24 +490,24 @@
 	            	console.log(error);
 	            	if (error === 'fail') {
 	            		Swal.fire({
-            			  icon: 'error',
-            			  title: '등록 실패',
-            			  text: '산출물 등록에 실패하였습니다.'
-            			});
+	        			  icon: 'error',
+	        			  title: '등록 실패',
+	        			  text: '산출물 등록에 실패하였습니다.'
+	        			});
 	            	}
 	            },
 	            success: function(result) {
 	            	console.log(result);
 	            	if (result === 'success') {
 	            		Swal.fire({
-            			  icon: 'success',
-            			  title: '등록 성공',
-            			  text: '산출물을 등록하였습니다.'
-            			}).then((result) => {
-           				  if (result.isConfirmed) {
-      	            		location.href = '${path}/output/list.do';
-   						  };
-           				})
+	        			  icon: 'success',
+	        			  title: '등록 성공',
+	        			  text: '산출물을 등록하였습니다.'
+	        			}).then((result) => {
+	       				  if (result.isConfirmed) {
+	  	            		location.href = '${path}/output/list.do';
+							  };
+	       				})
 	            	}
 	            }
 	        });

@@ -2,6 +2,7 @@ package com.project.pms.output.vo;
 
 public class OutputDetail {
 	private Integer outputId;
+	private Integer empId;
 	private Integer outputFileId;
 	private String originalName;
 	private String projectId;
@@ -16,10 +17,11 @@ public class OutputDetail {
 		super();
 	}
 
-	public OutputDetail(Integer outputId, Integer outputFileId, String originalName, String projectId,
+	public OutputDetail(Integer outputId, Integer empId, Integer outputFileId, String originalName, String projectId,
 			String projectName, String content, Integer categoryId, Integer typeId, Integer taskId, String taskName) {
 		super();
 		this.outputId = outputId;
+		this.empId = empId;
 		this.outputFileId = outputFileId;
 		this.originalName = originalName;
 		this.projectId = projectId;
@@ -37,6 +39,14 @@ public class OutputDetail {
 
 	public void setOutputId(Integer outputId) {
 		this.outputId = outputId;
+	}
+
+	public Integer getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
 	}
 
 	public Integer getOutputFileId() {
@@ -113,10 +123,10 @@ public class OutputDetail {
 
 	@Override
 	public String toString() {
-		return "OutputDetail [outputId=" + outputId + ", outputFileId=" + outputFileId + ", originalName="
-				+ originalName + ", projectId=" + projectId + ", projectName=" + projectName + ", content=" + content
-				+ ", categoryId=" + categoryId + ", typeId=" + typeId + ", taskId=" + taskId + ", taskName=" + taskName
-				+ "]";
+		return "OutputDetail [outputId=" + outputId + ", empId=" + empId + ", outputFileId=" + outputFileId
+				+ ", originalName=" + originalName + ", projectId=" + projectId + ", projectName=" + projectName
+				+ ", content=" + content + ", categoryId=" + categoryId + ", typeId=" + typeId + ", taskId=" + taskId
+				+ ", taskName=" + taskName + "]";
 	}
 
 }
