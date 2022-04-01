@@ -87,7 +87,7 @@
 										<th>프로젝트</th>
 										<th>승인자</th>
 										<th>상태</th>
-										<th>요청일</th>
+										<th>결재요청일</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -100,7 +100,7 @@
 											<td>${wait.prjName}</td>
 											<td>${wait.approver}</td>
 											<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
-											<td><fmt:formatDate value="${wait.createAt}" pattern="yyyy-MM-dd"/></td>
+											<td><fmt:formatDate value="${wait.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 										</tr>
 	                       			</c:forEach>	
 			                    </tbody>				
@@ -136,8 +136,8 @@
 										<th>프로젝트</th>
 										<th>승인자</th>
 										<th>상태</th>
-										<th>요청일</th>
-										<th>승인일</th>
+										<th>결재요청일</th>
+										<th>결재승인일</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -147,8 +147,8 @@
 											<td>${complete.prjName}</td>
 											<td>${complete.approver}</td>
 											<td><span class="badge bg-success">${complete.apStatus}</span></td>
-											<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd"/></td>
-											<td><fmt:formatDate value="${complete.approvalAt}" pattern="yyyy-MM-dd"/></td>
+											<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+											<td><fmt:formatDate value="${complete.approvalAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 										</tr>
 	                       			</c:forEach>	
 								</tbody>
@@ -192,8 +192,8 @@
 										<th>프로젝트</th>
 										<th>승인자</th>
 										<th>상태</th>
-										<th>요청일</th>
-										<th>반려일</th>
+										<th>결재요청일</th>
+										<th>결재반려일</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -206,8 +206,8 @@
 											<td>${reject.prjName}</td>
 											<td>${reject.approver}</td>
 											<td><span class="badge bg-danger">${reject.apStatus}</span></td>
-											<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd"/></td>
-											<td><fmt:formatDate value="${reject.rejectAt}" pattern="yyyy-MM-dd"/></td>
+											<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+											<td><fmt:formatDate value="${reject.rejectAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 										</tr>
 	                       			</c:forEach>
 								</tbody>
@@ -300,13 +300,9 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary ml-1">
-								<i class="bx bx-check d-block d-sm-none"></i>
-								<span class="d-none d-sm-block">등록</span>
-							</button>
 							<button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
 								<i class="bx bx-x d-block d-sm-none"></i> 
-								<span class="d-none d-sm-block">취소</span>
+								<span class="d-none d-sm-block">닫기</span>
 							</button>
 						</div>
 					</div>
@@ -345,14 +341,10 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary ml-1">
-								<i class="bx bx-check d-block d-sm-none"></i>
-								<span class="d-none d-sm-block">등록</span>
-							</button>
 							<button type="button" class="btn btn-light-secondary"
 								data-bs-dismiss="modal">
 								<i class="bx bx-x d-block d-sm-none"></i> 
-								<span class="d-none d-sm-block">취소</span>
+								<span class="d-none d-sm-block">닫기</span>
 							</button>
 						</div>
 					</div>
@@ -366,20 +358,6 @@
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 
 <script>
-	$(document).ready(function() {
-		$.ajax({
-			url: "${path}/myTask/detail.do",
-			type: 'GET',
-			data: {"taskId": 1},
-			dateType: "json",
-			success: function(data) {
-				console.log(data);
-				let task = data;
-				console.log(task[1]);
-			}
-		});
-	});
-	
 	// Jquery Datatable
 	$("#table1").DataTable({
 		"searching": false,
@@ -390,8 +368,8 @@
 		    {"className": "dt-center", "targets": "_all"},
 		    {"orderable": false, "targets": 0},
 		    {"width": "5%", "targets": 0},
-		    {"width": "25%", "targets": 1},
-		    {"width": "25%", "targets": 2}
+		    {"width": "20%", "targets": 1},
+		    {"width": "20%", "targets": 2}
 		],
 		"language": {
 	        "zeroRecords": "승인 대기중인 결재가 없습니다."
@@ -406,8 +384,8 @@
 		"autoWidth" : false,
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"},
-		    {"width": "25%", "targets": 0},
-		    {"width": "25%", "targets": 1}
+		    {"width": "20%", "targets": 0},
+		    {"width": "20%", "targets": 1}
 		],
 		"language": {
 	        "zeroRecords": "승인 완료된 결재가 없습니다."
@@ -424,8 +402,8 @@
 		    {"className": "dt-center", "targets": "_all"},
 		    {"orderable": false, "targets": 0},
 		    {"width": "5%", "targets": 0},
-		    {"width": "25%", "targets": 1},
-		    {"width": "25%", "targets": 2}
+		    {"width": "20%", "targets": 1},
+		    {"width": "20%", "targets": 2}
 		],
 		"language": {
 	        "zeroRecords": "반려된 결재가 없습니다."
@@ -495,34 +473,32 @@
 				var htmlStr = "";
 				
 				for (var i=0; i<myOutputInfo.length; i++) {	
-					console.log(myOutputInfo.length)
-					let text = "산출물";
 					htmlStr += "<div class=\"row\">";
 					htmlStr += "<div class=\"form-group\">";
-					htmlStr += "<details>"
-					htmlStr += "<summary>"
-					htmlStr += "<span class=\"fw-bold\">" + myOutputInfo[i].originalName + "</span>"
-					htmlStr += "</summary>"
-					htmlStr += "<div style=\"margin-top: 10px; padding: 10px 10px; background-color: #f2f7ff;\">"
-					htmlStr += "<div class=\"row\">"
-					htmlStr += "<div class=\"col-md-6 col-12\">"
-					htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 카테고리</label>"
-					htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].category + " readonly style=\"background-color: white;\" >"
+					htmlStr += "<details>";
+					htmlStr += "<summary>";
+					htmlStr += "<span class=\"fw-bold\">" + myOutputInfo[i].originalName + "</span>";
+					htmlStr += "</summary>";
+					htmlStr += "<div style=\"margin-top: 10px; padding: 10px 10px; background-color: #f2f7ff;\">";
+					htmlStr += "<div class=\"row\">";
+					htmlStr += "<div class=\"col-md-6 col-12\">";
+					htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 카테고리</label>";
+					htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].category + " readonly style=\"background-color: white;\" >";
 					htmlStr += "</div>";
-					htmlStr += "<div class=\"col-md-6 col-12\">"
-					htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 종류</label>"
-					htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].outType + " readonly style=\"background-color: white;\">"
+					htmlStr += "<div class=\"col-md-6 col-12\">";
+					htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 종류</label>";
+					htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].outType + " readonly style=\"background-color: white;\">";
 					htmlStr += "</div>";
-					htmlStr += "<div class=\"col-12\">"
-					htmlStr += "<label for=\"exampleFormControlTextarea1\" class=\"exampleFormControlTextarea1\" style=\"margin-top: 10px\">산출물 설명</label>"
-					htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" readonly style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>"
+					htmlStr += "<div class=\"col-12\">";
+					htmlStr += "<label for=\"exampleFormControlTextarea1\" class=\"exampleFormControlTextarea1\" style=\"margin-top: 10px\">산출물 설명</label>";
+					htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" readonly style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
 					htmlStr += "</div>";
 					htmlStr += "</div>";
 					htmlStr += "</div>";
 					htmlStr += "</details>"
 					htmlStr += "</div>";
-					htmlStr += "</div>";
-					htmlStr += "</div>";	
+					htmlStr += "</div>"
+					htmlStr += "</div>"
 				}
 				
 				$("#detail").html(htmlStr);
@@ -626,6 +602,6 @@
 		}
 	}
 	
-	// document.getElementById("test0").open = true;
+	
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
