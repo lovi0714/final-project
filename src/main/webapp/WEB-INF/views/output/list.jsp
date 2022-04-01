@@ -307,7 +307,8 @@
 		$.ajax({
 			  url: "${path}/project/api/wbs/" + $('#projectSelect_m').val(),
 			  method: "get",
-			  dataType: 'json',	
+			  dataType: 'json',
+			  async: false,
 			  contentType: 'application/json; charset=utf-8'
 			}).done(function(result) {
 				$('#taskSelect_m').empty();
