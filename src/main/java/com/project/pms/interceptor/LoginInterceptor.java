@@ -8,14 +8,16 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
+	private final String LOGIN_URL = "/emp/login.do";
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		if(session==null || session.getAttribute("emp")==null) { 
+		if (session == null || session.getAttribute("emp") == null) { 
 			
-			response.sendRedirect("/pms-project/emp/login.do");
+			response.sendRedirect(request.getContextPath() + LOGIN_URL);
 			
 			return false;
 		}
