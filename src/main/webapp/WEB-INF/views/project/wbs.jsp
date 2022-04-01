@@ -289,7 +289,7 @@
 	gantt.init("gantt_here");
 	
 	// 간트 생성시 데이터 서버에서 불러오기 
-	var apiUrl = "/pms/project/api/wbs/${param.projectId}";
+	var apiUrl = "${path}/project/api/wbs/${param.projectId}";
 	
 	$.ajax({
 	    type: 'GET',
