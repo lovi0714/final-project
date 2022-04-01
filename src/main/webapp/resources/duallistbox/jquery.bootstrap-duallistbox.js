@@ -35,7 +35,8 @@
       eventMoveOverride: false,                                                           // boolean, allows user to unbind default event behaviour and run their own instead
       eventMoveAllOverride: false,                                                        // boolean, allows user to unbind default event behaviour and run their own instead
       eventRemoveOverride: false,                                                         // boolean, allows user to unbind default event behaviour and run their own instead
-      eventRemoveAllOverride: false                                                       // boolean, allows user to unbind default event behaviour and run their own instead
+      eventRemoveAllOverride: false,
+      authId: 0                                                       // boolean, allows user to unbind default event behaviour and run their own instead
     },
     // Selections are invisible on android if the containing select is styled with CSS
     // http://code.google.com/p/android/issues/detail?id=16922
@@ -222,6 +223,11 @@
   }
 
   function move(dualListbox) {
+
+	if (dualListbox.settings.authId === 1) {
+		return;
+	}
+	
     if (dualListbox.settings.preserveSelectionOnMove === 'all' && !dualListbox.settings.moveOnSelect) {
       saveSelections(dualListbox, 1);
       saveSelections(dualListbox, 2);
@@ -246,6 +252,11 @@
   }
 
   function remove(dualListbox) {
+
+	if (dualListbox.settings.authId === 1) {
+		return;
+	}
+	
     if (dualListbox.settings.preserveSelectionOnMove === 'all' && !dualListbox.settings.moveOnSelect) {
       saveSelections(dualListbox, 1);
       saveSelections(dualListbox, 2);
@@ -463,7 +474,8 @@
       this.setEventMoveAllOverride(this.settings.eventMoveAllOverride);
       this.setEventRemoveOverride(this.settings.eventRemoveOverride);
       this.setEventRemoveAllOverride(this.settings.eventRemoveAllOverride);
-
+	
+	  this.authId = this.settings.authId;
       // Hide the original select
       this.element.hide();
 

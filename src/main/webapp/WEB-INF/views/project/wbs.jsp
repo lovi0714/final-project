@@ -73,8 +73,15 @@
 			<div class="card">
 				<div class="card-body">
 				<div class="row" style="background-color: #f2f7ff; margin: 10px auto;">
-		                <div class="col-md-3">
-		                	<button id="btnEdit" class="btn btn-primary" style="margin: 10px 4px;">편집 모드</button>
+		                <div class="col-md-6">
+							<c:choose>
+								<c:when test="${emp.authId eq 1}">
+									<h4 style="padding-top: 0.5em;">* 관리자 및 PM권한자만 편집이 가능합니다. *</h4>
+								</c:when>
+								<c:otherwise>
+				                	<button id="btnEdit" class="btn btn-primary" style="margin: 10px 4px;">편집 모드</button>
+								</c:otherwise>
+							</c:choose>
 		                </div>
             		</div>
 					<div class="tab-content" id="myTabContent">
@@ -279,10 +286,16 @@
 	
 	$('#btnEdit').click(function() {
 		gantt.config.readonly = !gantt.config.readonly;
-		if (!gantt.config.readonly)
+		if (!gantt.config.readonly) {
 			$(this).html('편집 종료');
-		else
+			$(this).removeClass('btn-primary');			
+			$(this).addClass('btn-danger');			
+		}
+		else {
 			$(this).html('편집 모드')
+			$(this).removeClass('btn-danger');
+			$(this).addClass('btn-primary');
+		}
 	});
 	
 	// 간트 생성

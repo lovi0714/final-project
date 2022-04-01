@@ -66,6 +66,8 @@
 <script type="text/javascript">
 $(function() {
 	let selectedMember = '';
+	const authId = ${emp.authId};
+
 	// label 추가
 	$("#demo").bootstrapDualListbox({
 		bootstrap3Compatible: true,
@@ -73,6 +75,7 @@ $(function() {
 		selectedListLabel: "프로젝트 참여자",
 		moveOnSelect: false,
 		infoText: false,
+		authId: authId
 	});
 	
 	$('#bootstrap-duallistbox-nonselected-list_').change(function() {
@@ -83,7 +86,19 @@ $(function() {
 	    selectedMember = $(this).val().join('');
 	})
 	
-	$('#addMember').click(function() {
+	$('#addMember').click(function(e) {
+		if (authId === 1) {
+			e.preventDefault();
+			Swal.fire({
+				  title: '추가 권한이 없습니다.',
+				  html: '실무진은 리소스를 추가할 수 없습니다.<br> PM및 관라자에게 문의하세요.',
+				  icon: 'error',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인',
+			});
+			return;
+		}
+		
 		let data = {
 			"projectId": '${param.projectId}',
 			"empId": selectMember
@@ -102,6 +117,18 @@ $(function() {
 	});
 	
 	$('#removeMember').click(function() {
+		if (authId === 1) {
+			Swal.fire({
+				  title: '삭제 권한이 없습니다.',
+				  html: '실무진은 리소스를 삭제할 수 없습니다.<br> PM및 관라자에게 문의하세요.',
+				  icon: 'error',
+				  confirmButtonColor: '#3085d6',
+				  confirmButtonText: '확인',
+			});
+			
+			return;
+		}
+		
 		let data = {
 			"projectId": '${param.projectId}',
 			"empId": selectedMember

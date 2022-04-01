@@ -52,12 +52,6 @@ public class ProjectController {
 		service.create(project);
 	}
 	
-	@GetMapping("/approvalList.do")
-	public String getApprovalList() {
-		
-		return "project/approvalList";
-	}
-	
 	@GetMapping("/resource.do")
 	public String getResource(@RequestParam("projectId") String projectId, Model m) {
 		

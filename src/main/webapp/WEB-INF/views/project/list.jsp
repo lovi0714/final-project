@@ -66,7 +66,9 @@
                         </div>
                         <div class="col-md-3">
    	                        <div class="input-group mb-3 justify-content-end">
-                            	<button class="btn btn-primary" type="button" id="regBtn">프로젝트 등록</button>
+   	                        	<c:if test="${emp.authId ne '1'}">
+                            		<button class="btn btn-primary" type="button" id="regBtn">프로젝트 등록</button>
+                            	</c:if>
                             </div>
                         </div>
                         
@@ -104,9 +106,6 @@
 	                        		</tr>
 	                       			</c:forEach>
 	                      		</c:when>
-	                      		<c:otherwise>
-	                      			<tr><td colspan="6" style="text-align: center;"><h6>등록된 프로젝가 없습니다.</h6></td></tr>
-	                      		</c:otherwise>
 	                      	</c:choose>
 	                    </tbody>
 	                </table>
@@ -133,6 +132,10 @@
 				    {"className": "dt-center", "targets": "_all"}
 				],
 				"order": [0, 'desc']
+				,
+				"language": {
+			        "zeroRecords": "등록된 프로젝트가 없습니다."
+			    }
 			});
 		}
 			

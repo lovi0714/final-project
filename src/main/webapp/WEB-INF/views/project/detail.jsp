@@ -51,7 +51,9 @@
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 						<div class="col-12 d-flex justify-content-end">
-                           <button type="submit" id="modBtn" class="btn btn-primary me-1 mb-1">편집모드</button>
+							<c:if test="${emp.authId ne '1' }">
+	                           <button type="button" id="modBtn" class="btn btn-primary me-1 mb-1">편집모드</button>
+							</c:if>
                       	</div>
 						<form class="form" id="prjForm" action="${path}/project/create.do" method="post">
                                 <div class="row">
