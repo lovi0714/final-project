@@ -9,6 +9,7 @@
 		<typeAlias alias="project" type="com.project.pms.project.vo.Project"/>
 		<typeAlias alias="myTask" type="com.project.pms.myTask.vo.MyTask"/>
 		<typeAlias alias="myApproval" type="com.project.pms.myTask.vo.MyApproval"/>
+		<typeAlias alias="MyOutputInfo" type="com.project.pms.myTask.vo.MyOutputInfo"/>
 		<typeAlias alias="calendar" type="com.project.pms.myTask.vo.Calendar"/>
 		<typeAlias alias="rndType" type="com.project.pms.project.vo.RndType"/>
 		<typeAlias alias="pm" type="com.project.pms.project.vo.Pm"/>
@@ -48,6 +49,7 @@
 		<mapper resource="resource/dashboard/DashboardMapper.xml"/>
 		<mapper resource="resource/myTask/MyTaskMapper.xml"/>
 		<mapper resource="resource/myTask/MyApprovalMapper.xml"/>
+		<mapper resource="resource/myTask/MyOutputMapper.xml"/>
 		<mapper resource="resource/myTask/CalendarMapper.xml"/>
 		<mapper resource="resource/project/ProjectMapper.xml"/>
 		<mapper resource="resource/resource/ResourceMapper.xml"/>

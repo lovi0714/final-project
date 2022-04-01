@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.pms.emp.vo.Emp;
+import com.project.pms.myTask.service.MyOutputService;
 import com.project.pms.myTask.service.MyTaskService;
 import com.project.pms.myTask.vo.MyTask;
 
@@ -25,6 +26,9 @@ public class MyTaskController {
 
 	@Autowired
 	private MyTaskService service;
+	
+	@Autowired
+	private MyOutputService service2;
 	
 	// 작업 목록
 	@GetMapping("/list.do")
@@ -40,9 +44,10 @@ public class MyTaskController {
 	
 	// 작업정보 조회
 	@GetMapping("/detail.do")
-	public String getMyTaskDetail(Model d, @RequestParam("taskId") int taskId) {
+	public String getMyTaskDetail(Model d, @RequestParam("taskId") int taskId, HttpSession session) {
 		System.out.println("getMyTaskDetail controller called...");
 		d.addAttribute("myTaskDetail", service.getMyTaskDetail(taskId));
+		d.addAttribute("myOutputInfo", service2.getMyOutputInfo(taskId));
 		
 		return "pageJsonReport";
 	}

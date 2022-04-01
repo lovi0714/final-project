@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="com.project.pms.myTask.repository.MyOutputDAO">
+	<resultMap type="myOutputInfo" id="myOutputInfoMap">
+		<result column="original_name" property="originalName"/>
+		<result column="save_name" property="saveName"/>
+		<result column="category" property="category"/>
+		<result column="out_type" property="outType"/>
+		<result column="content" property="content"/>
+		<result column="count" property="outCount"/> 
+	</resultMap>
+	
+	<!-- 산출물 정보 -->
+	<select id="getMyOutputInfo" resultMap="myOutputInfoMap" parameterType="int">
+		SELECT tof.original_name, tof.save_name, toc.category, tot.out_type, tou.content
+		FROM TBL_OUTPUT tou, 
+				TBL_OUT_FILE tof, 
+				TBL_OUT_TYPE tot, 
+				TBL_OUT_CATEGORY toc
+		WHERE tou.out_id = tof.out_id AND
+				tou.out_type_id = tot.out_type_id AND 	
+				tou.cat_id = toc.cat_id	AND
+				task_id = #{taskId}
+	</select>
+	
+</mapper>
