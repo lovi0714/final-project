@@ -2,12 +2,11 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath }" />
-<fmt:requestEncoding value="utf-8" />
-
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="isCommunitySide" value="active" />
-	<jsp:param name="isCommunityList" value="active" />
+	<jsp:param name="isCommunitySide" value="active"/>
+	<jsp:param name="isCommunityList" value="active"/>
 </jsp:include>
 
 <div id="main-content"> 
@@ -23,24 +22,24 @@
 							<div class="card-body">
 								<form class="form" id="noticeForm">
 									<div class="row">
-										<input type="hidden" name="noticeId" value="${NoticeDetailList.noticeId}"/>
+										<input type="hidden" name="noticeId" value="${noticeDetail.noticeId}"/>
 										<div class="col-12">
 											<div class="form-group">
 												<label for="first-name-vertical">제목</label>
-												<input type="text" id="first-name-vertical" name="title" class="form-control" value="${NoticeDetailList.title}"/>
+												<input type="text" id="first-name-vertical" name="title" class="form-control" value="${noticeDetail.title}"/>
 											</div>
 										</div>
 										<div class="col-12">
 	                                    	<div class="form-group">	  
 	                                    		<label for="exampleFormControlTextarea1">내용</label>                          				
-											    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="10">${NoticeDetailList.content}</textarea>
+											    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="10">${noticeDetail.content}</textarea>
 	                                        </div>
 										</div>
-	                                   	<c:if test="${NoticeFileInfo.originalName ne null}">
+	                                   	<c:if test="${noticeFileInfo.originalName ne null}">
 		                                   	<div class="col-12">
 		                                   		<div class="form-group">
 													<label for="file" class="form-label">첨부파일</label>
-													<input type="text" id="file" class="form-control" value="${NoticeFileInfo.originalName}" readonly style="background-color: white; cursor: pointer;"/>
+													<input type="text" id="file" class="form-control" value="${noticeFileInfo.originalName}" readonly style="background-color: white; cursor: pointer;"/>
 												</div>
 											</div>
 										</c:if>
@@ -59,7 +58,6 @@
 	</div>
 
 <script>
-
 	function updateNotice() {
 		if($("input[name=title]").val() == "") {
 			Swal.fire({

@@ -22,8 +22,7 @@ public class NoticeService {
 	private NoticeDAO dao;
 	
 	// 공지사항 목록
-	public List<Notice> getNoticeBoardList() {
-		
+	public List<Notice> getNoticeBoardList() {	
 		return dao.getNoticeBoardList();
 	}
 	
@@ -78,13 +77,11 @@ public class NoticeService {
 		return dao.getNoticeDetail(noticeId);
 	}
 	
-	public NoticeFile getNoticeFileInfo(int noticeId) {
-		
+	public NoticeFile getNoticeFileInfo(int noticeId) {	
 		return dao.getNoticeFileInfo(noticeId);
 	}
 	
-	public NoticeFile getFileInfoByFileId(int noticeFileId) {
-		
+	public NoticeFile getFileInfoByFileId(int noticeFileId) {	
 		return dao.getFileInfoByFileId(noticeFileId);
 	}
 	

@@ -15,14 +15,11 @@ public interface NoticeDAO {
 	
 	// 공지사항 등록
 	public void insertNotice(Notice notice);
-	
 	public void insertNoticeFileInfo(NoticeFile noticeFile);
 	
 	// 공지사항 조회
 	public Notice getNoticeDetail(int noticeId);
-	
 	public NoticeFile getNoticeFileInfo(int noticeId);
-	
 	public NoticeFile getFileInfoByFileId(int noticeFileId);
 	
 	// 공지사항 수정
@@ -30,7 +27,6 @@ public interface NoticeDAO {
 	
 	// 공지사항 삭제
 	public void deleteNotice(int noticeId);
-
 	public void deleteNoticeFileInfo(int noticeId);
 	
 	// 조회수 증가

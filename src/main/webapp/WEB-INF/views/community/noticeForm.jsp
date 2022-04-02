@@ -2,9 +2,8 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath }" />
-<fmt:requestEncoding value="utf-8" />
-
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="isCommunitySide" value="active" />
 	<jsp:param name="isCommunityList" value="active" />
@@ -56,8 +55,9 @@
 	
 <script>
 	$(document).ready(function(){
-		var msg = "${msg}";
-		if (msg == "success") {
+		// 공지사항 등록
+		let result = "${result}";
+		if (result == "success") {
 			Swal.fire({
 		    	icon: 'success',
 		    	title: '공지사항이 등록되었습니다.' 
@@ -91,6 +91,7 @@
 			}
 		});
 
+		// 취소
 		$('#cancelBtn').click(function() {
 			location.href = '${path}/community/noticeList.do';
 		});

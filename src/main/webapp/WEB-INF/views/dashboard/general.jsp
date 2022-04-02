@@ -5,7 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <fmt:requestEncoding value="utf-8"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="isDashboardSide" value="active"/>
 	<jsp:param name="isDashboardList" value="active"/>
@@ -38,11 +37,11 @@
 							</tr>
 						</thead>
 						<tbody>
-	                      	<c:forEach var="n" items="${notice}">
+	                      	<c:forEach var="list" items="${notice}">
 								<tr>
-				                	<td><a href="${path}/community/noticeDetail.do?noticeId=${n.noticeId}">${n.title}</a></td>
-				                	<td>${n.writer}</td>
-				                    <td><fmt:formatDate value="${n.createAt}" pattern="yyyy-MM-dd"/></td>
+				                	<td><a href="${path}/community/noticeDetail.do?noticeId=${list.noticeId}">${list.title}</a></td>
+				                	<td>${list.writer}</td>
+				                    <td><fmt:formatDate value="${list.createAt}" pattern="yyyy-MM-dd"/></td>
 		                        </tr>
 	                       	</c:forEach>	
 						</tbody>
@@ -87,31 +86,31 @@
 							</tr>
 						</thead>
 						<tbody>
-                    		<c:forEach var="p" items="${project}">
+                    		<c:forEach var="list" items="${project}">
 								<tr>
-		                            <td><a href="${path}/project/detail.do?projectId=${p.projectId}">${p.projectId}</a></td>
-		                            <td>${p.title}</td>
-		                            <td>${p.pmDeptName}</td>
-		                            <td>${p.pmName}</td>
+		                            <td><a href="${path}/project/detail.do?projectId=${list.projectId}">${list.projectId}</a></td>
+		                            <td>${list.title}</td>
+		                            <td>${list.pmDeptName}</td>
+		                            <td>${list.pmName}</td>
 		                            <c:choose>
-		                            	 <c:when test = "${p.status eq '시작전'}">
-		                           			<td><span class="badge bg-secondary">${p.status}</span></td>
+		                            	 <c:when test = "${list.status eq '시작전'}">
+		                           			<td><span class="badge bg-secondary">${list.status}</span></td>
 		                            	 </c:when>
-		                            	 <c:when test = "${p.status eq '정상진행'}">
-		                            	 	<td><span class="badge bg-success">${p.status}</span></td>
+		                            	 <c:when test = "${list.status eq '정상진행'}">
+		                            	 	<td><span class="badge bg-success">${list.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${p.status eq '지연진행'}">
-		                            	 	<td><span class="badge bg-danger">${p.status}</span></td>
+		                            	 <c:when test = "${list.status eq '지연진행'}">
+		                            	 	<td><span class="badge bg-danger">${list.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${p.status eq '완료'}">
-		                            	 	<td><span class="badge bg-primary">${p.status}</span></td>
+		                            	 <c:when test = "${list.status eq '완료'}">
+		                            	 	<td><span class="badge bg-primary">${list.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${p.status eq '중단'}">
-		                            	 	<td><span class="badge bg-warning">${p.status}</span></td>
+		                            	 <c:when test = "${list.status eq '중단'}">
+		                            	 	<td><span class="badge bg-warning">${list.status}</span></td>
 		                           		 </c:when>
 		                            </c:choose>
-		                            <td><fmt:formatDate value="${p.startAt}" pattern="yyyy-MM-dd"/></td>
-		                            <td><fmt:formatDate value="${p.endAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${list.startAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${list.endAt}" pattern="yyyy-MM-dd"/></td>
                        			</tr>
                      		</c:forEach>
 						</tbody>
@@ -209,7 +208,7 @@
 		"language": {
 	        "zeroRecords": "등록된 프로젝트가 없습니다."
 	    },
-		"order": [5, 'desc']
+		"order": [0, 'desc']
 	});
 	
 	// 부서별 프로젝트 현황 chart		

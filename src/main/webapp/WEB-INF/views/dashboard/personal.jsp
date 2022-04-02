@@ -5,7 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <fmt:requestEncoding value="utf-8" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="isDashboardSide" value="active" />
 	<jsp:param name="isDashboardList" value="active" />
@@ -42,31 +41,31 @@
 							</tr>
 						</thead>
 						<tbody>
-                   			<c:forEach var="mp" items="${myProject}">
+                   			<c:forEach var="list" items="${myProject}">
 								<tr>
-		                            <td><a href="${path}/project/detail.do?projectId=${mp.projectId}">${mp.projectId}</a></td>
-		                            <td>${mp.title}</td>
-		                            <td>${mp.pmDeptName}</td>
-		                            <td>${mp.pmName}</td>
+		                            <td><a href="${path}/project/detail.do?projectId=${list.projectId}">${list.projectId}</a></td>
+		                            <td>${list.title}</td>
+		                            <td>${list.pmDeptName}</td>
+		                            <td>${list.pmName}</td>
 		                            <c:choose>
-		                            	 <c:when test = "${mp.status eq '시작전'}">
-		                           			<td><span class="badge bg-secondary">${mp.status}</span></td>
+		                            	 <c:when test = "${list.status eq '시작전'}">
+		                           			<td><span class="badge bg-secondary">${list.status}</span></td>
 		                            	 </c:when>
-		                            	 <c:when test = "${mp.status eq '정상진행'}">
-		                            	 	<td><span class="badge bg-success">${mp.status}</span></td>
+		                            	 <c:when test = "${list.status eq '정상진행'}">
+		                            	 	<td><span class="badge bg-success">${list.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${mp.status eq '지연진행'}">
-		                            	 	<td><span class="badge bg-danger">${mp.status}</span></td>
+		                            	 <c:when test = "${list.status eq '지연진행'}">
+		                            	 	<td><span class="badge bg-danger">${list.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${mp.status eq '완료'}">
-		                            	 	<td><span class="badge bg-primary">${mp.status}</span></td>
+		                            	 <c:when test = "${list.status eq '완료'}">
+		                            	 	<td><span class="badge bg-primary">${list.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${mp.status eq '중단'}">
-		                            	 	<td><span class="badge bg-warning">${mp.status}</span></td>
+		                            	 <c:when test = "${list.status eq '중단'}">
+		                            	 	<td><span class="badge bg-warning">${list.status}</span></td>
 		                           		 </c:when>
 		                            </c:choose>
-		                            <td><fmt:formatDate value="${mp.startAt}" pattern="yyyy-MM-dd"/></td>
-		                            <td><fmt:formatDate value="${mp.endAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${list.startAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${list.endAt}" pattern="yyyy-MM-dd"/></td>
                       			</tr>
                     		</c:forEach>
 						</tbody>

@@ -22,9 +22,8 @@ public class NoticeController {
 	
 	// 공지사항 목록
 	@GetMapping("/noticeList.do")
-	public String getNoticeList(Model d) {
-		System.out.println("getNoticeList Controller called...");
-		d.addAttribute("NoticeList", service.getNoticeBoardList());
+	public String getNoticeList(Model model) {
+		model.addAttribute("notice", service.getNoticeBoardList());
 		
 		return "community/noticeList";
 	}
@@ -32,76 +31,60 @@ public class NoticeController {
 	// 공지사항 등록
 	@GetMapping("/noticeForm.do")
 	public String getNoticeForm() {
-		System.out.println("insertNoticeForm Controller called...");
-		
 		return "community/noticeForm";
 	}
 	
 	@PostMapping("/noticeInsert.do")
-	public String insertNotice(Model d, Notice notice) {
-		System.out.println("insertNotice Controller called...");
-		d.addAttribute("msg", service.insertNotice(notice));
+	public String insertNotice(Notice notice, Model model) {
+		model.addAttribute("result", service.insertNotice(notice));
 		
 		return "community/noticeForm";
 	}
 	
 	// 공지사항 조회
 	@GetMapping("/noticeDetail.do")
-	public String getNoticeDetail(Model d, @RequestParam("noticeId") int noticeId) {
-		System.out.println("getNoticeDetail Controller called...");
-		d.addAttribute("NoticeDetailList", service.getNoticeDetail(noticeId));
-		d.addAttribute("NoticeFileInfo", service.getNoticeFileInfo(noticeId));
+	public String getNoticeDetail(@RequestParam("no") int noticeId, Model model) {
+		model.addAttribute("noticeDetail", service.getNoticeDetail(noticeId));
+		model.addAttribute("noticeFileInfo", service.getNoticeFileInfo(noticeId));
 		
 		return "community/noticeDetail";
 	}
 	
 	// 첨부파일 다운로드
 	@GetMapping("noticeFile.do")
-	public String noticeFileDownload(Model d, @RequestParam("noticeFileId") int noticeFileId, NoticeFile noticeFile) {
-		System.out.println("noticeFileDownload Controller called...");
+	public String noticeFileDownload(@RequestParam("fileId") int noticeFileId, NoticeFile noticeFile, Model model) {
+		
 		NoticeFile noticefile = service.getFileInfoByFileId(noticeFileId);
-		d.addAttribute("storeFileName", noticefile.getOriginalName());
-		d.addAttribute("uploadFileName", noticefile.getSaveName());
+		
+		model.addAttribute("storeFileName", noticefile.getOriginalName());
+		model.addAttribute("uploadFileName", noticefile.getSaveName());
 		
 		return "download";
 	}
 	
 	// 공지사항 수정
 	@GetMapping("/noticeUpdateForm.do")
-	public String updateNoticeForm(Model d, @RequestParam("noticeId") int noticeId) {
-		System.out.println("updateNotice Controller called...");
-		d.addAttribute("NoticeDetailList", service.getNoticeDetail(noticeId));
-		d.addAttribute("NoticeFileInfo", service.getNoticeFileInfo(noticeId));
+	public String updateNoticeForm(@RequestParam("no") int noticeId, Model model) {
+		model.addAttribute("noticeDetail", service.getNoticeDetail(noticeId));
+		model.addAttribute("noticeFileInfo", service.getNoticeFileInfo(noticeId));
 		
 		return "community/noticeModify";
 	}
 	
 	@PostMapping("/noticeUpdate.do")
 	@ResponseBody
-	public String updateNotice(Model d, Notice notice, String result) {
-		System.out.println("updateNotice Controller called...");
+	public String updateNotice(Notice notice) {
+		boolean result = service.updateNotice(notice);
 		
-		if(service.updateNotice(notice)) {
-			result = "success";
-		} else {
-			result = "false";
-		}
-		
-		return result;
+		return result ? "success" : "false";
 	}
 	
 	// 공지사항 삭제
 	@GetMapping("/noticeDelete.do")
 	@ResponseBody
-	public String deleteNotice(@RequestParam("noticeId") int noticeId, String result) {
-		System.out.println("deleteNotice Controller called...");
+	public String deleteNotice(@RequestParam("no") int noticeId) {
+		boolean result = service.deleteNotice(noticeId);
 		
-		if(service.deleteNotice(noticeId)) {
-			result = "success";
-		} else {
-			result = "false";
-		}
-	
-		return result;
+		return result ? "success" : "false";
 	}
 }
