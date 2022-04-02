@@ -1,12 +1,14 @@
 package com.project.pms.emp.controller;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.net.PasswordAuthentication;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -14,13 +16,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
+import com.project.pms.emp.repository.EmpDAO;
 import com.project.pms.emp.service.EmailManagement;
 import com.project.pms.emp.service.EmpService;
 import com.project.pms.emp.service.LoginVerification;
 import com.project.pms.emp.vo.Email;
 import com.project.pms.emp.vo.Emp;
+
 
 @Controller
 @RequestMapping("/emp/*")
@@ -100,4 +105,21 @@ public class EmpController {
 	public String status() {
 		return "emp/status";
 	}
+	
+	/* 비밀번호 변경 */
+	@GetMapping("/modifyPassword.do")
+	public String modifyPassword() {
+		return "emp/modifyPassword";
+	}
+	
+	/* 비밀번호 변경 처리 */
+	@PostMapping("/modifyPassword.do")
+	public String modifyPassword(HttpSession session, Emp emp) {
+		int empId = ((Emp) session.getAttribute("emp")).getEmpId();
+		emp.setEmpId(empId);
+		empService.modifyPassword(emp);
+		return "redirect:/emp/modifyPassword.do";
+		
+	}
+	
 }

@@ -22,7 +22,7 @@
             <div class="col-md-6 col-12" style="margin-left: 50px">
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title">사용자 추가</h6>
+                        <h6 class="card-title">사원 추가</h6>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -112,7 +112,7 @@
                                         
                                          
                                         <div class="col-sm-12 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">전송</button>
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">사원추가</button>
                                         </div>
                                        </div> 
                                     </div>

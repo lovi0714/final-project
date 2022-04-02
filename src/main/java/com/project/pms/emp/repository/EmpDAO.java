@@ -13,4 +13,7 @@ public interface EmpDAO {
 	// 사원추가
 	public void saveEmp(Emp emp);
 	
+	// 비밀번호 변경
+	public void modifyPassword(Emp emp);
+	
 }

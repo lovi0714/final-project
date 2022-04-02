@@ -46,5 +46,8 @@ public class EmpService {
 		session.invalidate();
 	}
 	
-	
+	/* 비밀번호 변경 */
+	public void modifyPassword(Emp emp) {
+		empDAO.modifyPassword(emp);
+	}
 }

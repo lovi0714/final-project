@@ -38,13 +38,13 @@
 
             <form name=loginForm action="${path}/emp/loginProcess.do" method="post">
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" name="empId" id="empId" placeholder="UserId">
+                    <input type="text" class="form-control form-control-xl" name="empId" id="empId" placeholder="아이디">
                     <div class="form-control-icon">
                         <i class="bi bi-person"></i>
                     </div>
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" name="password" id="password" placeholder="Password">
+                    <input type="password" class="form-control form-control-xl" name="password" id="password" placeholder="비밀번호">
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>
                     </div>

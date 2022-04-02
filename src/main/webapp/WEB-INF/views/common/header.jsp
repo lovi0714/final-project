@@ -219,8 +219,8 @@
                                         </c:if>
                                            
                                     </li>
-                                    <li><a class="dropdown-item" href="${path}/emp/profile.do"><i class="icon-mid bi bi-person me-2"></i> 프로필</a></li>
-                                    
+                                    <li><a class="dropdown-item" href="${path}/emp/profile.do"><i class="icon-mid bi bi-person me-2"></i>프로필</a></li>
+                                    <li><a class="dropdown-item" href="${path}/emp/modifyPassword.do"><i class="icon-mid bi bi-person me-2"></i>비밀번호 변경</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>

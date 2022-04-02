@@ -33,6 +33,13 @@
 		FROM TBL_EMP
 		WHERE emp_id = #{empId}
 	</select>
-	
+
+	<!-- 비밀번호 변경 -->
+	<update id="modifyPassword" parameterType="emp">
+		update TBL_EMP
+		set password = #{password},
+			update_at = sysdate
+		where emp_id = #{empId}
+	</update>	
 	
  </mapper>
