@@ -2,10 +2,13 @@ package com.project.pms.risk.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.pms.emp.vo.Emp;
 import com.project.pms.myTask.vo.MyTask;
@@ -45,11 +48,47 @@ public class RiskService {
 		dao.setComAt(riskSaveRequest);
 	}
 	// 파일 저장
-	public void saveFile(RiskFileInfo fileInfo) throws Exception {
+	public void saveFile(RiskFileInfo fileInfo, MultipartFile file) throws Exception {		
+		
+		
+		String riskId = fileInfo.getRiskId();
+		String rFileId = fileInfo.getrFileId();
+
+				
+		// riskId 가 있으면 수정이므로 있던 파일 삭제하고 새로 등록
+		if(rFileId!=null) {
+			if(rFileId.isBlank()==false && riskId != null) {
+				deleteFile(Integer.parseInt(riskId));
+			}
+		}
+	String originalName = file.getOriginalFilename();
+	String extension = FilenameUtils.getExtension(originalName).toLowerCase();
+	File saveFile;
+	String saveName;
+	long volume;
+	String path = upload;
+	
+	do {
+		saveName = UUID.randomUUID() + "." + extension;
+		saveFile = new File(path,saveName);
+		volume = file.getSize();
+		
+	} while (saveFile.exists());
+	
+	saveFile.getParentFile().mkdirs();
+	file.transferTo(saveFile);
+	
+	if(riskId==null) riskId="0";
+	if(rFileId==null) rFileId="0";
+	fileInfo.setRiskId(riskId);
+	fileInfo.setrFileId(rFileId);		
+	fileInfo.setOriginalName(originalName);
+	fileInfo.setSaveName(saveName);
+	fileInfo.setExtension(extension);
+	fileInfo.setVolume(volume);
 		
 		dao.saveFile(fileInfo);		
 	}
-	
 	// 수정 정보
 	public RiskSaveRequest getModifyInfo(int riskId) {
 		return dao.getModifyInfo(riskId);

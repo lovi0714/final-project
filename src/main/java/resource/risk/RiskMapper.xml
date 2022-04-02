@@ -23,8 +23,7 @@
  		<result column="com_at" property="comAt"/>
  		<result column="create_at" property="createAt"/>
  		<result column="update_at" property="updateAt"/>
- 	</resultMap>
- 	
+ 	</resultMap> 	
  	
  	 <!-- 리스크 목록 -->
  	 <select id="getRiskList" resultType="riskBoard">
@@ -95,22 +94,22 @@
  	
  	<!-- 리스크 저장 -->
  	<update id="saveRisk" parameterType="riskSaveRequest">
-	MERGE INTO SCOTT.TBL_RISK tr
-	USING dual ON (
-	tr.RISK_ID = #{riskId}
-	)
-	WHEN MATCHED THEN 
-		UPDATE SET
-			TITLE = #{title, jdbcType=VARCHAR},
-			R_TYPE_ID = #{rTypeId, jdbcType=INTEGER},
-			PRJ_ID = #{prjId, jdbcType=VARCHAR},
-			R_STATUS_ID = #{rStatusId, jdbcType=INTEGER},
-			T_NAME = #{tName, jdbcType=VARCHAR},
-			R_CONTENT = #{rContent, jdbcType=CLOB},
-			ACTIVATOR = #{activator, jdbcType=VARCHAR},
-			A_CONTENT = #{aContent, jdbcType=CLOB},
-			DUE_AT = TO_DATE(#{dueAt, jdbcType=VARCHAR}, 'YYYY-MM-DD'),
-			UPDATE_AT = sysdate
+ 		MERGE INTO SCOTT.TBL_RISK tr
+		USING dual ON (
+		tr.RISK_ID = #{riskId}
+		)
+		WHEN MATCHED THEN 
+			UPDATE SET
+				TITLE = #{title, jdbcType=VARCHAR},
+				R_TYPE_ID = #{rTypeId, jdbcType=INTEGER},
+				PRJ_ID = #{prjId, jdbcType=VARCHAR},
+				R_STATUS_ID = #{rStatusId, jdbcType=INTEGER},
+				T_NAME = #{tName, jdbcType=VARCHAR},
+				R_CONTENT = #{rContent, jdbcType=CLOB},
+				ACTIVATOR = #{activator, jdbcType=VARCHAR},
+				A_CONTENT = #{aContent, jdbcType=CLOB},
+				DUE_AT = TO_DATE(#{dueAt, jdbcType=VARCHAR}, 'YYYY-MM-DD'),
+				UPDATE_AT = sysdate
 		WHEN NOT MATCHED THEN 
 			INSERT
 			(
@@ -158,7 +157,7 @@
  	<update id="saveFile" parameterType="rFileInfo">
  		MERGE INTO TBL_R_FILE rf
  		USING DUAL ON (
- 		rf.R_FILE_ID = #{rFileId}
+ 		rf.R_FILE_ID = TO_NUMBER(#{rFileId})
  		)
  		WHEN MATCHED THEN
  			UPDATE SET
@@ -168,8 +167,15 @@
  			volume = #{volume},
  			update_at = sysdate
  		WHEN NOT MATCHED THEN
+ 		<if test="riskId==0">
  		INSERT (r_file_id, risk_id, original_name, save_name, ext, volume, create_at, update_at)
  		VALUES (R_FILE_SEQ.NEXTVAL, RISK_SEQ.CURRVAL, #{originalName}, #{saveName}, #{extension}, #{volume}, sysdate, sysdate)
+		</if> 	
+ 		<if test="riskId!=0">
+ 			INSERT (r_file_id, risk_id, original_name, save_name, ext, volume, create_at, update_at)
+ 			VALUES (R_FILE_SEQ.NEXTVAL, TO_NUMBER(#{riskId}), #{originalName}, #{saveName}, #{extension}, #{volume}, sysdate, sysdate)
+ 		</if>
+ 	
  	</update>
  	
  	<!-- 사원정보 -->

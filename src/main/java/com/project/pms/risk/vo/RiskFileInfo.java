@@ -3,8 +3,8 @@ package com.project.pms.risk.vo;
 import java.util.Date;
 
 public class RiskFileInfo {
-	private Integer rFileId;
-	private int riskId;
+	private String rFileId;
+	private String riskId;
 	private String originalName;
 	private String saveName;
 	private String extension;
@@ -14,9 +14,9 @@ public class RiskFileInfo {
 	public RiskFileInfo() {
 
 	}
-	public RiskFileInfo(Integer rFileId, int riskId, String originalName, String saveName, String extension, long volume,
+	
+	public RiskFileInfo(String rFileId, String riskId, String originalName, String saveName, String extension, long volume,
 			Date createAt, Date updateAt) {
-		super();
 		this.rFileId = rFileId;
 		this.riskId = riskId;
 		this.originalName = originalName;
@@ -26,16 +26,16 @@ public class RiskFileInfo {
 		this.createAt = createAt;
 		this.updateAt = updateAt;
 	}
-	public Integer getrFileId() {
+	public String getrFileId() {
 		return rFileId;
 	}
-	public void setrFileId(Integer rFileId) {
+	public void setrFileId(String rFileId) {
 		this.rFileId = rFileId;
 	}
-	public int getRiskId() {
+	public String getRiskId() {
 		return riskId;
 	}
-	public void setRiskId(int riskId) {
+	public void setRiskId(String riskId) {
 		this.riskId = riskId;
 	}
 	public String getOriginalName() {
@@ -73,6 +73,13 @@ public class RiskFileInfo {
 	}
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
+	}
+
+	@Override
+	public String toString() {
+		return "RiskFileInfo [rFileId=" + rFileId + ", riskId=" + riskId + ", originalName=" + originalName
+				+ ", saveName=" + saveName + ", extension=" + extension + ", volume=" + volume + ", createAt="
+				+ createAt + ", updateAt=" + updateAt + "]";
 	}
 	
 	

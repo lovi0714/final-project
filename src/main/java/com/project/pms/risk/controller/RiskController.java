@@ -80,40 +80,12 @@ public class RiskController {
 		
 		
 		riskService.saveRisk(riskSaveRequest);
-		int riskId  = riskSaveRequest.getRiskId();
-		Integer rFileId = fileInfo.getrFileId(); 
+		
 		
 		// 파일 등록할 때
 		if(file.getSize()!=0) {
-			// riskId 가 있으면 수정이므로 있던 파일 삭제하고 새로 등록
-			if(riskId!=0 && rFileId!=null) riskService.deleteFile(riskId);
-		
-		String originalName = file.getOriginalFilename();
-		String extension = FilenameUtils.getExtension(originalName).toLowerCase();
-		File saveFile;
-		String saveName;
-		long volume;
-		String path = upload;
-		
-		do {
-			saveName = UUID.randomUUID() + "." + extension;
-			saveFile = new File(path,saveName);
-			volume = file.getSize();
-			
-		} while (saveFile.exists());
-		
-		saveFile.getParentFile().mkdirs();
-		file.transferTo(saveFile);
-		
-		if(rFileId==null) rFileId=0;
-		fileInfo.setrFileId(rFileId);
-		fileInfo.setRiskId(riskId);
-		fileInfo.setOriginalName(originalName);
-		fileInfo.setSaveName(saveName);
-		fileInfo.setExtension(extension);
-		fileInfo.setVolume(volume);
-
-		riskService.saveFile(fileInfo);		
+	
+		riskService.saveFile(fileInfo, file);		
 		
 		}
 		return "redirect:/risk/riskBoard.do";
