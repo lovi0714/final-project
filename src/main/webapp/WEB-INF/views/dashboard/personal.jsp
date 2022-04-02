@@ -21,7 +21,7 @@
 			</div>
 		</div>
 
-		<!-- Basic Tables start -->
+		<!-- 참여 프로젝트 start -->
 		<section class="section">
 			<div class="card">
 				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
@@ -42,31 +42,31 @@
 							</tr>
 						</thead>
 						<tbody>
-                   			<c:forEach var="project" items="${MyProjectList}">
+                   			<c:forEach var="mp" items="${myProject}">
 								<tr>
-		                            <td><a href="${path}/project/detail.do?projectId=${project.projectId}">${project.projectId}</a></td>
-		                            <td>${project.title}</td>
-		                            <td>${project.pmDeptName}</td>
-		                            <td>${project.pmName}</td>
+		                            <td><a href="${path}/project/detail.do?projectId=${mp.projectId}">${mp.projectId}</a></td>
+		                            <td>${mp.title}</td>
+		                            <td>${mp.pmDeptName}</td>
+		                            <td>${mp.pmName}</td>
 		                            <c:choose>
-		                            	 <c:when test = "${project.status eq '시작전'}">
-		                           			<td><span class="badge bg-secondary">${project.status}</span></td>
+		                            	 <c:when test = "${mp.status eq '시작전'}">
+		                           			<td><span class="badge bg-secondary">${mp.status}</span></td>
 		                            	 </c:when>
-		                            	 <c:when test = "${project.status eq '정상진행'}">
-		                            	 	<td><span class="badge bg-success">${project.status}</span></td>
+		                            	 <c:when test = "${mp.status eq '정상진행'}">
+		                            	 	<td><span class="badge bg-success">${mp.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${project.status eq '지연진행'}">
-		                            	 	<td><span class="badge bg-danger">${project.status}</span></td>
+		                            	 <c:when test = "${mp.status eq '지연진행'}">
+		                            	 	<td><span class="badge bg-danger">${mp.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${project.status eq '완료'}">
-		                            	 	<td><span class="badge bg-primary">${project.status}</span></td>
+		                            	 <c:when test = "${mp.status eq '완료'}">
+		                            	 	<td><span class="badge bg-primary">${mp.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${project.status eq '중단'}">
-		                            	 	<td><span class="badge bg-warning">${project.status}</span></td>
+		                            	 <c:when test = "${mp.status eq '중단'}">
+		                            	 	<td><span class="badge bg-warning">${mp.status}</span></td>
 		                           		 </c:when>
 		                            </c:choose>
-		                            <td><fmt:formatDate value="${project.startAt}" pattern="yyyy-MM-dd"/></td>
-		                            <td><fmt:formatDate value="${project.endAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${mp.startAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${mp.endAt}" pattern="yyyy-MM-dd"/></td>
                       			</tr>
                     		</c:forEach>
 						</tbody>
@@ -74,10 +74,11 @@
 				</div>
 			</div>
 		</section>
-		<!-- Basic Tables end -->
+		<!-- 참여 프로젝트 end -->
 		
 		<section id="basic-horizontal-layouts">
 			<div class="row match-height">
+				<!-- 작업 진행상태 start -->
 				<div class="col-md-6 col-12">
 					<div class="card">
 						<div class="card-header">
@@ -97,6 +98,8 @@
 						</div>
 					</div>
 				</div>
+				<!-- 작업 진행상태 end -->
+				<!-- 리스크 현황 start -->
 				<div class="col-md-6 col-12">
 					<div class="card">
 						<div class="card-header" style="display: flex; justify-content: space-between;">
@@ -112,10 +115,10 @@
 									<div class="form-body">
 										<div class="row"></div>
 										<div id="chart1" style="height: 300px">
-											<canvas id="MyRiskStatusChart1"></canvas>
+											<canvas id="myRiskStatusChart1"></canvas>
 										</div>
 										<div id="chart2" style="display: none; height: 300px">
-											<canvas id="MyRiskStatusChart2"></canvas>
+											<canvas id="myRiskStatusChart2"></canvas>
 										</div>
 									</div>
 								</form>
@@ -124,15 +127,15 @@
 					</div>
 				</div>
 			</div>
+			<!-- 리스크 현황 end -->
 		</section>
 	</div>
 
 <script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
-
 <script>	
-	// 참여 프로젝트
+	// 참여 프로젝트 datatable
 	$("#myProjectList").DataTable({
 		"searching": false,
 		"info": false,
@@ -147,13 +150,13 @@
 	    }
 	});
 	
-	// 작업 진행상태
+	// 작업 진행상태 chart
 	let myTaskStatusList = [];
 	let myTaskCountList = [];
 	
-	<c:forEach var="task" items="${MyTaskStatusChart}" >		
-		myTaskStatusList.push('${task.status}');
-		myTaskCountList.push(${task.count});
+	<c:forEach var="mtsc" items="${myTaskStatusChart}" >		
+		myTaskStatusList.push('${mtsc.status}');
+		myTaskCountList.push(${mtsc.count});
 	</c:forEach>
 
 	const mtsc = document.getElementById('myTaskStatusChart');
@@ -184,7 +187,7 @@
 		}
 	});
 
-	// 리스크 현황 (select / option)
+	// 리스크 현황 select option
 	$(document).ready(function(){
 		$("#chart2").hide()
 		
@@ -200,16 +203,16 @@
 		});
 	});
 	
-	// 리스크 현황: 상태별
-	var myRiskStatusList1 = [];
-	var myRiskCountList1 = [];
+	// 리스크 현황 chart (상태별)
+	let myRiskStatusList1 = [];
+	let myRiskCountList1 = [];
 	
-	<c:forEach var="risk" items="${MyRiskStatusChart1}" >		
-		myRiskStatusList1.push('${risk.status}');
-		myRiskCountList1.push(${risk.count});
+	<c:forEach var="mrsc1" items="${myRiskStatusChart1}" >		
+		myRiskStatusList1.push('${mrsc1.status}');
+		myRiskCountList1.push(${mrsc1.count});
 	</c:forEach>
 
-	const mrsc1 = document.getElementById('MyRiskStatusChart1');
+	const mrsc1 = document.getElementById('myRiskStatusChart1');
 	const MyRiskStatusChart1 = new Chart(mrsc1, {
 		type : 'doughnut',
 		data : {
@@ -237,16 +240,16 @@
 		}
 	});
 	
-	// 리스크 현황: 유형별
-	var myRiskStatusList2 = [];
-	var myRiskCountList2 = [];
+	// 리스크 현황 chart (유형별)
+	let myRiskStatusList2 = [];
+	let myRiskCountList2 = [];
 	
-	<c:forEach var="risk" items="${MyRiskStatusChart2}" >		
-		myRiskStatusList2.push('${risk.status}');
-		myRiskCountList2.push(${risk.count});
+	<c:forEach var="mrsc2" items="${myRiskStatusChart2}" >		
+		myRiskStatusList2.push('${mrsc2.status}');
+		myRiskCountList2.push(${mrsc2.count});
 	</c:forEach>
 
-	const mrsc2 = document.getElementById('MyRiskStatusChart2');
+	const mrsc2 = document.getElementById('myRiskStatusChart2');
 	const MyRiskStatusChart2 = new Chart(mrsc2, {
 		type : 'doughnut',
 		data : {

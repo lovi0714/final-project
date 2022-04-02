@@ -18,89 +18,71 @@ public class DashboardService {
 	
 	// *** 종합 대시보드 ***
 	// 공지사항
-	public List<DashboardNotice> getNoticeList() {
-		
+	public List<DashboardNotice> getNoticeList() {	
 		return dao.getNoticeList();
 	}
 	
 	// 프로젝트 현황
-	public List<DashboardProject> getProjectList() {
-		
-		return dao.getProjectList();
-	}
-	
-	// 부서 선택 옵션 리스트 
 	public List<DashboardProject> getDeptList() {
-		
-		return dao.getDeptList();
+		return dao.getDeptList(); // 부서 선택 옵션
 	}
 	
-	// 상태 선택 옵션 리스트
 	public List<DashboardProject> getStatusList() {
-		
-		return dao.getStatusList();
+		return dao.getStatusList(); // 상태 선택 옵션
+	}
+	
+	public List<DashboardProject> getProjectList() {
+		return dao.getProjectList();
 	}
 	
 	// 부서별 프로젝트 현황
 	public List<StatusChart> getProjectChart1() {
-		
 		return dao.getProjectChart1();
 	}
 	
 	public List<StatusChart> getProjectChart2() {
-		
 		return dao.getProjectChart2();
 	}
 	
-	public List<StatusChart> getProjectChart3() {
-		
+	public List<StatusChart> getProjectChart3() {	
 		return dao.getProjectChart3();
 	}
 	
-	public List<StatusChart> getProjectChart4() {
-		
+	public List<StatusChart> getProjectChart4() {		
 		return dao.getProjectChart4();
 	}
 	
-	public List<StatusChart> getProjectChart5() {
-		
+	public List<StatusChart> getProjectChart5() {		
 		return dao.getProjectChart5();
 	}
 	
-	// 리스크 현황: 상태별
-	public List<StatusChart> getRiskStatusChart1() {
-		
-		return dao.getRiskStatusChart1();
+	// 리스크 현황
+	public List<StatusChart> getRiskStatusChart1() { 
+		return dao.getRiskStatusChart1(); // 상태별
 	}
 	
-	// 리스크 현황: 유형별
-	public List<StatusChart> getRiskStatusChart2() {
-		
-		return dao.getRiskStatusChart2();
+	public List<StatusChart> getRiskStatusChart2() { 
+		return dao.getRiskStatusChart2(); // 유형별	
 	}
 	
 	// *** 개인 대시보드 ***
 	// 참여 프로젝트 
-	public List<DashboardProject> getMyProjectList(int empId) {
-		
+	public List<DashboardProject> getMyProjectList(int empId) {		
 		return dao.getMyProjectList(empId);
 	}	
 	
 	// 작업 진행상태
-	public List<StatusChart> getMyTaskStatusChart(int empId) {
-		
+	public List<StatusChart> getMyTaskStatusChart(int empId) {		
 		return dao.getMyTaskStatusChart(empId);
 	}
 	
-	// 리스크 현황: 상태별
+	// 리스크 현황
 	public List<StatusChart> getMyRiskStatusChart1(int empId) {	
-		
-		return dao.getMyRiskStatusChart1(empId);
+		return dao.getMyRiskStatusChart1(empId); // 상태별
 	}
 	
-	// 리스크 현황: 유형별
-	public List<StatusChart> getMyRiskStatusChart2(int empId) {
-		
-		return dao.getMyRiskStatusChart2(empId);
+	public List<StatusChart> getMyRiskStatusChart2(int empId) {	
+		return dao.getMyRiskStatusChart2(empId); // 유형별
 	}
+	
 }

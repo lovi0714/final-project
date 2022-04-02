@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath }" />
-<fmt:requestEncoding value="utf-8" />
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<fmt:requestEncoding value="utf-8"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="isDashboardSide" value="active" />
-	<jsp:param name="isDashboardList" value="active" />
+	<jsp:param name="isDashboardSide" value="active"/>
+	<jsp:param name="isDashboardList" value="active"/>
 </jsp:include>
 
 <div id="main-content" style="padding-top: 0">
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 
-		<!-- Basic Tables start -->
+		<!-- 공지사항 start -->
 		<section class="section">
 			<div class="card">
 				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
@@ -38,11 +38,11 @@
 							</tr>
 						</thead>
 						<tbody>
-	                      	<c:forEach var="notice" items="${NoticeList}">
+	                      	<c:forEach var="n" items="${notice}">
 								<tr>
-				                	<td><a href="${path}/community/noticeDetail.do?noticeId=${notice.noticeId}">${notice.title}</a></td>
-				                	<td>${notice.writer}</td>
-				                    <td><fmt:formatDate value="${notice.createAt}" pattern="yyyy-MM-dd"/></td>
+				                	<td><a href="${path}/community/noticeDetail.do?noticeId=${n.noticeId}">${n.title}</a></td>
+				                	<td>${n.writer}</td>
+				                    <td><fmt:formatDate value="${n.createAt}" pattern="yyyy-MM-dd"/></td>
 		                        </tr>
 	                       	</c:forEach>	
 						</tbody>
@@ -50,9 +50,9 @@
 				</div>
 			</div>
 		</section>
-		<!-- Basic Tables end -->
-	
-		<!-- Basic Tables start -->
+		<!-- 공지사항 end -->
+		
+		<!-- 프로젝트 현황 start -->
 		<section class="section">
 			<div class="card">
 				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
@@ -60,14 +60,14 @@
 					<div style="display: flex; justify-content: flex-end;">
 						<select class="form-select" style="width: 150px;">
 							<option selected>부서</option>
-							<c:forEach items="${Dept}" var="dept">
-	                        	<option value="${dept.pmDeptId}">${dept.pmDeptName}</option>
+							<c:forEach var="d" items="${dept}" >
+	                        	<option value="${d.pmDeptId}">${d.pmDeptName}</option>
 	                        </c:forEach>
 						</select> 
 						<select class="form-select" style="width: 150px; margin: 0 10px;">
 							<option selected>상태</option>
-							<c:forEach items="${Status}" var="status">
-	                        	<option value="${status.statusId}">${status.status}</option>
+							<c:forEach var="s" items="${status}">
+	                        	<option value="${s.statusId}">${s.status}</option>
 	                        </c:forEach>
 						</select> 
 						<a href="${path}/project/list.do" style="margin-top: 7px">더보기</a>
@@ -87,43 +87,43 @@
 							</tr>
 						</thead>
 						<tbody>
-                    		<c:forEach var="project" items="${ProjectList}">
+                    		<c:forEach var="p" items="${project}">
 								<tr>
-		                            <td><a href="${path}/project/detail.do?projectId=${project.projectId}">${project.projectId}</a></td>
-		                            <td>${project.title}</td>
-		                            <td>${project.pmDeptName}</td>
-		                            <td>${project.pmName}</td>
+		                            <td><a href="${path}/project/detail.do?projectId=${p.projectId}">${p.projectId}</a></td>
+		                            <td>${p.title}</td>
+		                            <td>${p.pmDeptName}</td>
+		                            <td>${p.pmName}</td>
 		                            <c:choose>
-		                            	 <c:when test = "${project.status eq '시작전'}">
-		                           			<td><span class="badge bg-secondary">${project.status}</span></td>
+		                            	 <c:when test = "${p.status eq '시작전'}">
+		                           			<td><span class="badge bg-secondary">${p.status}</span></td>
 		                            	 </c:when>
-		                            	 <c:when test = "${project.status eq '정상진행'}">
-		                            	 	<td><span class="badge bg-success">${project.status}</span></td>
+		                            	 <c:when test = "${p.status eq '정상진행'}">
+		                            	 	<td><span class="badge bg-success">${p.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${project.status eq '지연진행'}">
-		                            	 	<td><span class="badge bg-danger">${project.status}</span></td>
+		                            	 <c:when test = "${p.status eq '지연진행'}">
+		                            	 	<td><span class="badge bg-danger">${p.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${project.status eq '완료'}">
-		                            	 	<td><span class="badge bg-primary">${project.status}</span></td>
+		                            	 <c:when test = "${p.status eq '완료'}">
+		                            	 	<td><span class="badge bg-primary">${p.status}</span></td>
 		                           		 </c:when>
-		                            	 <c:when test = "${project.status eq '중단'}">
-		                            	 	<td><span class="badge bg-warning">${project.status}</span></td>
+		                            	 <c:when test = "${p.status eq '중단'}">
+		                            	 	<td><span class="badge bg-warning">${p.status}</span></td>
 		                           		 </c:when>
 		                            </c:choose>
-		                            <td><fmt:formatDate value="${project.startAt}" pattern="yyyy-MM-dd"/></td>
-		                            <td><fmt:formatDate value="${project.endAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${p.startAt}" pattern="yyyy-MM-dd"/></td>
+		                            <td><fmt:formatDate value="${p.endAt}" pattern="yyyy-MM-dd"/></td>
                        			</tr>
                      		</c:forEach>
 						</tbody>
 					</table>
 				</div>
 			</div>
-	
 		</section>
-		<!-- Basic Tables end -->
+		<!-- 프로젝트 현황 end -->
 	
 		<section id="basic-horizontal-layouts">
-			<div class="row match-height">
+			<div class="row match-height">		
+				<!-- 부서별 프로젝트 현황 start -->
 				<div class="col-md-6 col-12">
 					<div class="card">
 						<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
@@ -143,6 +143,8 @@
 						</div>
 					</div>
 				</div>
+				<!-- 부서별 프로젝트 현황 end -->				
+				<!-- 리스크 현황 start -->
 				<div class="col-md-6 col-12">
 					<div class="card">
 						<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
@@ -169,6 +171,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- 리스크 현황 end -->
 			</div>
 		</section>
 	</div>	
@@ -176,10 +179,8 @@
 <script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
-
-
 <script>
-	// 공지사항
+	// 공지사항 datatable
 	$("#noticeList").DataTable({
 		"searching": false,
 		"info": false,
@@ -196,7 +197,7 @@
 		"order": [2, 'desc']
 	});
 	
-	// 프로젝트 현황
+	// 프로젝트 현황 datatable
 	$("#projectList").DataTable({
 		"searching": false,
 		"info": false,
@@ -211,31 +212,31 @@
 		"order": [5, 'desc']
 	});
 	
-	// 부서별 프로젝트 현황		
-	var projectCountList1 = [];
-	var projectCountList2 = [];
-	var projectCountList3 = [];
-	var projectCountList4 = [];
-	var projectCountList5 = [];
+	// 부서별 프로젝트 현황 chart		
+	let projectCountList1 = [];
+	let projectCountList2 = [];
+	let projectCountList3 = [];
+	let projectCountList4 = [];
+	let projectCountList5 = [];
 	
-	<c:forEach var="project" items="${ProjectChart1}">	
-		projectCountList1.push(${project.count});
+	<c:forEach var="pc1" items="${projectChart1}">	
+		projectCountList1.push(${pc1.count});
 	</c:forEach>
 	
-	<c:forEach var="project" items="${ProjectChart2}">	
-		projectCountList2.push(${project.count});
+	<c:forEach var="pc2" items="${projectChart2}">	
+		projectCountList2.push(${pc2.count});
 	</c:forEach>
 	
-	<c:forEach var="project" items="${ProjectChart3}">	
-		projectCountList3.push(${project.count});
+	<c:forEach var="pc3" items="${projectChart3}">	
+		projectCountList3.push(${pc3.count});
 	</c:forEach>
 	
-	<c:forEach var="project" items="${ProjectChart4}">	
-		projectCountList4.push(${project.count});
+	<c:forEach var="pc4" items="${projectChart4}">	
+		projectCountList4.push(${pc4.count});
 	</c:forEach>
 	
-	<c:forEach var="project" items="${ProjectChart5}">	
-		projectCountList5.push(${project.count});
+	<c:forEach var="pc5" items="${projectChart5}">	
+		projectCountList5.push(${pc5.count});
 	</c:forEach>
 	
 	const pc = document.getElementById('projectChart');
@@ -246,27 +247,27 @@
 	        datasets: [ {
 	        	label: '시작전',
 	            data: projectCountList1,
-	            backgroundColor: 'rgba(170, 170, 170, 0.5)'
+	            backgroundColor: 'rgba(170, 170, 170, 0.5)' // 시작전(회색)
 	        },
 	        {
 	        	label: '정상진행',
 	            data: projectCountList2,
-	            backgroundColor: 'rgba(75, 192, 192, 0.5)'
+	            backgroundColor: 'rgba(75, 192, 192, 0.5)' // 정상진행(초록색)
 	        },
 	        {
 	            label: '지연진행',
 	            data: projectCountList3,
-	            backgroundColor: 'rgba(255, 99, 132, 0.5)'
+	            backgroundColor: 'rgba(255, 99, 132, 0.5)' // 지연진행(빨강색)
 	        },
 	        {
 	            label: '완료',
 	            data: projectCountList4,
-	            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+	            backgroundColor: 'rgba(54, 162, 235, 0.5)' // 완료(파랑색)
 	        },
 	        {
 	            label: '중단',
 	            data: projectCountList5,
-	            backgroundColor: 'rgba(255, 206, 86, 0.5)'
+	            backgroundColor: 'rgba(255, 206, 86, 0.5)' // 중단(노랑색)
 	        }]
 		},	
 		options: {
@@ -290,7 +291,7 @@
 		}
 	});
 	
-	// 리스크 현황 (select / option)
+	// 리스크 현황 select option
 	$(document).ready(function(){
 		$("#chart2").hide()
 		
@@ -306,13 +307,13 @@
 		 });
 	});
 	
-	// 리스크 현황: 상태별
-	var riskStatusList1 = [];
-	var riskCountList2 = [];
+	// 리스크 현황 chart (상태별)
+	let riskStatusList1 = [];
+	let riskCountList1 = [];
 	
-	<c:forEach var="risk" items="${RiskStatusChart1}" >		
-		riskStatusList1.push('${risk.status}');
-		riskCountList2.push(${risk.count});
+	<c:forEach var="rsc1" items="${riskStatusChart1}" >		
+		riskStatusList1.push('${rsc1.status}');
+		riskCountList1.push(${rsc1.count});
 	</c:forEach>
 	
 	const rsc1 = document.getElementById('riskStatusChart1');
@@ -321,7 +322,7 @@
 		data: {
 			labels: riskStatusList1,
 			datasets: [ {
-				data: riskCountList2,
+				data: riskCountList1,
 				backgroundColor: [
 					'rgba(170, 170, 170, 0.5)', // 오픈(회색)
 					'rgba(75, 192, 192, 0.5)', // 진행(초록색)
@@ -343,13 +344,13 @@
 		}
 	});
 	
-	// 리스크 현황: 유형별
+	// 리스크 현황 chart (유형별)
 	var riskStatusList2 = [];
 	var riskCountList2 = [];
 	
-	<c:forEach var="risk" items="${RiskStatusChart2}" >		
-		riskStatusList2.push('${risk.status}');
-		riskCountList2.push(${risk.count});
+	<c:forEach var="rsc2" items="${riskStatusChart2}" >		
+		riskStatusList2.push('${rsc2.status}');
+		riskCountList2.push(${rsc2.count});
 	</c:forEach>
 	
 	const rsc2 = document.getElementById('riskStatusChart2');
@@ -378,7 +379,6 @@
 			}
 		}
 	});
-	
 </script>
 										
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
