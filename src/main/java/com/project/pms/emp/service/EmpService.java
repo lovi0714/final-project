@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.pms.emp.repository.EmpDAO;
@@ -22,7 +23,7 @@ public class EmpService {
 	@Autowired
 	private EmpDAO empDAO;
 	
-	
+	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	// @Autowired
 	// PasswordManagement passwordManagement;
@@ -47,7 +48,9 @@ public class EmpService {
 	}
 	
 	/* 비밀번호 변경 */
-	public void modifyPassword(Emp emp) {
+	public void modifyPassword(Emp emp, String rawPassword) {
+		String encryptPassword = passwordEncoder.encode(rawPassword);
+		emp.setPassword(encryptPassword);
 		empDAO.modifyPassword(emp);
 	}
 }

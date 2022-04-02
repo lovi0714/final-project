@@ -115,9 +115,11 @@ public class EmpController {
 	/* 비밀번호 변경 처리 */
 	@PostMapping("/modifyPassword.do")
 	public String modifyPassword(HttpSession session, Emp emp) {
+		String rawPassword = emp.getPassword();
 		int empId = ((Emp) session.getAttribute("emp")).getEmpId();
+		
 		emp.setEmpId(empId);
-		empService.modifyPassword(emp);
+		empService.modifyPassword(emp, rawPassword);
 		return "redirect:/emp/modifyPassword.do";
 		
 	}
