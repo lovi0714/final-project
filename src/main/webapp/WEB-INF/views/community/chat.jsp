@@ -30,6 +30,7 @@
 			alert($("#userName").val()+'님 접속 종료합니다.');
 			$("#yourName").show();
 			$("#exitBtn").hide();
+			$('#chating').text("");
 			ws.close();
 		});
 	});
@@ -59,14 +60,14 @@
 						$("#chating").append(
 							"<div class='chat'>"+
                         	"<div class='chat-body'>"+
-                        	"<div class='chat-message'>"+"("+"<c:out value='${today}'/>"+")"+"<br>"+d.msg+"</div>"+
+                        	"<div class='chat-message'>"+"<c:out value='${today}'/>"+"<br>"+d.msg+"</div>"+
                     		"</div>"+
                				"</div>");	
 					}else{
 						$("#chating").append(
 						"<div class='chat chat-left'>"+
                         "<div class='chat-body'>"+ 
-                        "<div class='chat-message'>"+"("+"<c:out value='${today}'/>"+")"+"<br>"+d.userName+" : "+d.msg +"</div>" +                      
+                        "<div class='chat-message'>"+"<c:out value='${today}'/>"+"<br>"+"<strong>"+d.userName+"</strong>"+" : "+d.msg +"</div>" +                      
                     	"</div>"+
                 		"</div>"
                 		);
@@ -80,7 +81,7 @@
 		}
 		
 		ws.onclose=function(){
-
+			
 		}
 		
 		document.addEventListener("keypress", function(e){
@@ -105,6 +106,7 @@
 	}
 
 	function send() {
+		if($('#chatting').val()!=""){
 		var option ={
 			type: "message",
 			sessionId : $("#sessionId").val(),
@@ -113,11 +115,13 @@
 		}
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");	
+		}
 	}
 	
-	var mx = parseInt($('#chating').height())
-	$('#chatingArea').scrollTop(mx);
+	
+
 </script>
+
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
     <div class="page-title">
@@ -163,7 +167,7 @@
                     </div>
         
         
-                    <div class="card-body pt-4 bg-grey" id="chatingArea" style="overflow:auto;" >
+                    <div class="card-body pt-4 bg-grey" id="chatingArea" style=" display:flex; overflow:auto; height:625px; flex-direction: column-reverse;" >
                            <div id="chating" class="chating">
 						   </div>					
                       

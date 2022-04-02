@@ -64,7 +64,7 @@
                         <div class="col-md-3">
    	                        <div class="input-group mb-3 justify-content-end">
                             	<button class="btn btn-primary" type="button" id="regBtn" 
-                            	onclick=location.href="write.do">리스크 등록</button>
+                            	onclick="location.href='write.do'">리스크 등록</button>
                             </div>
                         </div>
                         

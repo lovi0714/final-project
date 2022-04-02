@@ -5,6 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="currentTime"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
 <fmt:requestEncoding value="utf-8"/>     
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
@@ -102,7 +104,7 @@
                                 	<div class="col-md-6 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">조치 희망일</label>
-                                          	<input type="date" id="dueAt" class="form-control mt-2" name="dueAt" value="${risk.dueAt }" required>
+                                          	<input type="date" id="dueAt" class="form-control mt-2" name="dueAt" min="${currentTime}" value="${risk.dueAt }" required>
                                           	
                                         </div>
                                 	</div>
