@@ -5,6 +5,7 @@
 
 <mapper namespace="com.project.pms.myTask.repository.MyTaskDAO">
 	<resultMap type="myTask" id="myTaskMap">
+		<result column="emp_id" property="empId"/>
 		<result column="task_id" property="taskId"/>
 		<result column="task_name" property="taskName"/>
 		<result column="prj_name" property="pTitle"/>
@@ -18,7 +19,24 @@
 		<result column="content" property="content"/>
 		<result column="req_content" property="reqContent"/>
 	</resultMap>
-		
+	
+	<!-- 작업 프로젝트 선택 옵션 -->
+	<select id="getProjectList" resultType="project">
+ 		SELECT DISTINCT tp.prj_id as projectId, tp.name as title 
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp
+		WHERE tt.prj_id = tp.prj_id AND
+				tt.is_approval = 0 AND 
+				tt.manager_id = #{empId}
+ 	</select>
+ 	
+ 	<!-- 작업상태 선택 옵션 -->
+	<select id="getStatusList" resultMap="myTaskMap">
+ 		SELECT t_status_id, t_status
+ 		FROM TBL_T_STATUS
+ 		ORDER BY t_status_id
+ 	</select>
+ 		
 	<!-- 작업 목록 -->
 	<select id="getMyTaskList" resultMap="myTaskMap" parameterType="int">
 		SELECT tt.task_id,
@@ -38,24 +56,7 @@
 				tt.is_approval = 0 AND 
 				tt.manager_id = #{empId}
 	</select>		
-	
-	<!-- 프로젝트 선택 옵션 리스트 -->
-	<select id="getProjectList" resultType="project">
- 		SELECT DISTINCT tp.prj_id as projectId, tp.name as title 
-		FROM TBL_TASK tt,
-				TBL_PROJECT tp
-		WHERE tt.prj_id = tp.prj_id AND
-				tt.is_approval = 0 AND 
-				tt.approver_id = #{empId}
- 	</select>
- 	
- 	<!-- 작업상태 선택 옵션 리스트 -->
-	<select id="getStatusList" resultMap="myTaskMap">
- 		SELECT t_status_id, t_status
- 		FROM TBL_T_STATUS
- 		ORDER BY t_status_id
- 	</select>
- 	
+
 	<!-- 작업정보 조회 -->
 	<select id="getMyTaskDetail" resultMap="myTaskMap" parameterType="int">
 		SELECT  tt.task_id,

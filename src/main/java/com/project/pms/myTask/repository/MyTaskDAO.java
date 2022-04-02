@@ -11,13 +11,9 @@ import com.project.pms.project.vo.Project;
 public interface MyTaskDAO {
 
 	// 작업 목록
-	public List<MyTask> getMyTaskList(int empId);
-	
-	// 프로젝트 선택 옵션 리스트 
 	public List<Project> getProjectList(int empId);
-	
-	// 작업상태 선택 옵션 리스트
 	public List<MyTask> getStatusList();
+	public List<MyTask> getMyTaskList(int empId);
 	
 	// 작업정보 조회
 	public MyTask getMyTaskDetail(int taskId);
@@ -27,7 +23,6 @@ public interface MyTaskDAO {
 
 	// 승인요청
 	public void uptApprovalRequest(int taskId);
-	
 	public void insertApproval(MyTask myTask);
-	
+
 }

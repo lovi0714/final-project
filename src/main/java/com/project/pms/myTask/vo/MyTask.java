@@ -5,6 +5,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MyTask {
+	private int empId;
 	private int taskId;
 	private String taskName;
 	private String pTitle;
@@ -24,10 +25,11 @@ public class MyTask {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public MyTask(int taskId, String taskName, String pTitle, int pmId, String pmName, int statusId, String status,
-			Date startAt, Date endAt, int progress, String content, String reqContent) {
+	
+	public MyTask(int empId, int taskId, String taskName, String pTitle, int pmId, String pmName, int statusId,
+			String status, Date startAt, Date endAt, int progress, String content, String reqContent) {
 		super();
+		this.empId = empId;
 		this.taskId = taskId;
 		this.taskName = taskName;
 		this.pTitle = pTitle;
@@ -41,99 +43,82 @@ public class MyTask {
 		this.content = content;
 		this.reqContent = reqContent;
 	}
-
+	
+	public int getEmpId() {
+		return empId;
+	}
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
 	public int getTaskId() {
 		return taskId;
 	}
-
 	public void setTaskId(int taskId) {
 		this.taskId = taskId;
 	}
-
 	public String getTaskName() {
 		return taskName;
 	}
-
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
-
 	public String getpTitle() {
 		return pTitle;
 	}
-
 	public void setpTitle(String pTitle) {
 		this.pTitle = pTitle;
 	}
-
 	public int getPmId() {
 		return pmId;
 	}
-
 	public void setPmId(int pmId) {
 		this.pmId = pmId;
 	}
-
 	public String getPmName() {
 		return pmName;
 	}
-
 	public void setPmName(String pmName) {
 		this.pmName = pmName;
 	}
-
 	public int getStatusId() {
 		return statusId;
 	}
-
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
 	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 	public Date getStartAt() {
 		return startAt;
 	}
-
 	public void setStartAt(Date startAt) {
 		this.startAt = startAt;
 	}
-
 	public Date getEndAt() {
 		return endAt;
 	}
-
 	public void setEndAt(Date endAt) {
 		this.endAt = endAt;
 	}
-
 	public int getProgress() {
 		return progress;
 	}
-
 	public void setProgress(int progress) {
 		this.progress = progress;
 	}
-
 	public String getContent() {
 		return content;
 	}
-
 	public void setContent(String content) {
 		this.content = content;
 	}
-
 	public String getReqContent() {
 		return reqContent;
 	}
-
 	public void setReqContent(String reqContent) {
 		this.reqContent = reqContent;
 	}

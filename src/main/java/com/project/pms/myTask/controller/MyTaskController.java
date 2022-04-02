@@ -19,35 +19,48 @@ import com.project.pms.emp.vo.Emp;
 import com.project.pms.myTask.service.MyOutputService;
 import com.project.pms.myTask.service.MyTaskService;
 import com.project.pms.myTask.vo.MyTask;
+import com.project.pms.output.service.OutputService;
 
 @Controller
 @RequestMapping("/myTask/*")
 public class MyTaskController {
 
 	@Autowired
-	private MyTaskService service;
+	private MyTaskService taskService;
 	
 	@Autowired
-	private MyOutputService service2;
+	private MyOutputService myOutputService;
 	
-	// 작업 목록
+	@Autowired
+	private OutputService outputService;
+	
+	// 내 작업 목록
 	@GetMapping("/list.do")
-	public String getMyTaskList(HttpSession session, Model d) {
-		System.out.println("getMyTaskList Controller called...");
+	public String getMyTaskList(HttpSession session, Model model) {
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
-		d.addAttribute("MyTaskList", service.getMyTaskList(empId));
-		d.addAttribute("Project", service.getProjectList(empId));
-		d.addAttribute("Status", service.getStatusList());
+		
+		// 작업 목록
+		model.addAttribute("taskProject", taskService.getProjectList(empId));
+		model.addAttribute("status", taskService.getStatusList());
+		model.addAttribute("taskList", taskService.getMyTaskList(empId));
+		
+		// 산출물 목록
+		model.addAttribute("outputProject", myOutputService.getProjectList(empId));
+		model.addAttribute("category", outputService.getOutputCategory());
+		model.addAttribute("type", outputService.getOutputType());
+		model.addAttribute("outputList", myOutputService.getMyOutputList(empId));
 		
 		return "myTask/list";
 	}
 	
 	// 작업정보 조회
 	@GetMapping("/detail.do")
-	public String getMyTaskDetail(Model d, @RequestParam("taskId") int taskId, HttpSession session) {
-		System.out.println("getMyTaskDetail controller called...");
-		d.addAttribute("myTaskDetail", service.getMyTaskDetail(taskId));
-		d.addAttribute("myOutputInfo", service2.getMyOutputInfo(taskId));
+	public String getMyTaskDetail(@RequestParam("taskId") int taskId, MyTask myTask, HttpSession session, Model model) {
+		myTask.setEmpId(((Emp)session.getAttribute("emp")).getEmpId());
+		myTask.setTaskId(taskId);
+		
+		model.addAttribute("myTaskDetail", taskService.getMyTaskDetail(taskId));
+		model.addAttribute("myOutputInfo", myOutputService.getMyOutputInfo(myTask));
 		
 		return "pageJsonReport";
 	}
@@ -55,22 +68,16 @@ public class MyTaskController {
 	// 작업정보 수정
 	@PostMapping("/uptDetail.do")
 	@ResponseBody
-	public String uptMyTaskDetail(MyTask myTask, String result) {
-		System.out.println("uptMyTaskDetail controller called...");		
-		if(service.uptMyTaskDetail(myTask)) {
-			result = "success";
-		} else {
-			result = "false";
-		}
-	
-		return result;
+	public String uptMyTaskDetail(MyTask myTask) {
+		boolean result = taskService.uptMyTaskDetail(myTask);
+		
+		return result ? "success" : "false";
 	}
 	
 	// 승인요청
 	@PostMapping(value="/approvalRequest.do", consumes = "application/json")
 	@ResponseBody
-	public String uptApprovalRequest(@RequestBody Map<String, Object> map, MyTask myTask, String result) {
-		System.out.println("uptApprovalRequest controller called...");
+	public String uptApprovalRequest(@RequestBody Map<String, Object> map, MyTask myTask, boolean result) {
 		
 		String tid = map.get("taskId").toString();
 		String pid = map.get("pmId").toString(); 
@@ -82,15 +89,10 @@ public class MyTaskController {
 		
 		for (int i=0; i<taskId.length; i++) {
 			myTask.setTaskId(taskId[i]);
-			myTask.setPmId(pmId[i]);
-			
-			if(service.uptApprovalRequest(taskId[i]) && service.insertApproval(myTask)) {
-				result = "success";	
-			} else {
-				result = "false";
-			}	
+			myTask.setPmId(pmId[i]);	
+			result = taskService.uptApprovalRequest(taskId[i]) && taskService.insertApproval(myTask);
 		}
 		
-		return result;	
+		return result ? "success" : "false";	
 	}
 }

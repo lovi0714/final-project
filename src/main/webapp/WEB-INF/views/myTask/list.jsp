@@ -2,16 +2,12 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath}" />
-<fmt:requestEncoding value="utf-8" />
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="isTaskSide" value="active" />
-	<jsp:param name="isTaskList" value="active" />
+	<jsp:param name="isTaskSide" value="active"/>
+	<jsp:param name="isTaskList" value="active"/>
 </jsp:include>
-
-<link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
-<link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
-
 <style>
 .nav-tabs .nav-link.active {
 	color: white;
@@ -39,21 +35,22 @@
 				<div class="card-body">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item" role="presentation">
-							<a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">작업</a>
+							<a class="nav-link active" id="task-tab" data-bs-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="true">작업</a>
 						</li>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">산출물</a>
+							<a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#output" role="tab" aria-controls="output" aria-selected="false">산출물</a>
 						</li>
 					</ul>
 					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+						<!-- 작업 tap start -->
+						<div class="tab-pane fade show active" id="task" role="tabpanel" aria-labelledby="task-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<c:forEach items="${Project}" var="project">
-	                                    		<option value="${project.projectId}">${project.title}</option>
+											<c:forEach var="p" items="${taskProject}">
+	                                    		<option value="${p.projectId}">${p.title}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
@@ -62,8 +59,8 @@
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>작업상태를 선택하세요</option>
-											<c:forEach items="${Status}" var="status">
-	                                    		<option value="${status.statusId}">${status.status}</option>
+											<c:forEach var="s" items="${status}" >
+	                                    		<option value="${s.statusId}">${s.status}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
@@ -76,17 +73,15 @@
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3 justify-content-end">
-										<button type="button" class="btn btn-primary" id="regBtn" onclick="approvalRequest();">승인요청</button>
+										<button type="button" class="btn btn-primary" onclick="approvalRequest();">승인요청</button>
 									</div>
 								</div>
 							</div>
-
-							<!-- Basic Tables start -->
-							<table class="table" id="table1">
+							<table class="table" id="myTask">
 								<thead>
 									<tr>
 										<th>
-											<input type="checkbox" id="cbx_chkAll" class="form-check-input">
+											<input type="checkbox" id="checkAll" class="form-check-input">
 										</th>
 										<th>작업</th>
 										<th>프로젝트</th>
@@ -98,37 +93,37 @@
 									</tr>
 								</thead>
 								<tbody>
-	                      			<c:forEach var="myTask" items="${MyTaskList}">
+	                      			<c:forEach var="tl" items="${taskList}">
 										<tr>
 											<td>
-												<input type="checkbox" id="checkbox1" name="chk" class="form-check-input" value="${myTask.taskId}">
-												<input type="hidden" name="pmId" value="${myTask.pmId}"/>
+												<input type="checkbox" id="checkbox1" name="chk" class="form-check-input" value="${tl.taskId}">
+												<input type="hidden" name="pmId" value="${tl.pmId}"/>
 											</td>
-				                            <td onclick="taskDetail(${myTask.taskId})" style="color: #435ebe; cursor: pointer">${myTask.taskName}</td>
-				                            <td>${myTask.pTitle}</td>
-				                            <td>${myTask.pmName}</td>
+				                            <td onclick="taskDetail(${tl.taskId})" style="color: #435ebe; cursor: pointer">${tl.taskName}</td>
+				                            <td>${tl.pTitle}</td>
+				                            <td>${tl.pmName}</td>
 				                            <c:choose>
-				                            	 <c:when test = "${myTask.status eq '시작전'}">
-				                           			<td><span class="badge bg-secondary">${myTask.status}</span></td>
+				                            	 <c:when test = "${tl.status eq '시작전'}">
+				                           			<td><span class="badge bg-secondary">${tl.status}</span></td>
 				                            	 </c:when>
-				                            	 <c:when test = "${myTask.status eq '정상진행'}">
-				                            	 	<td><span class="badge bg-success">${myTask.status}</span></td>
+				                            	 <c:when test = "${tl.status eq '정상진행'}">
+				                            	 	<td><span class="badge bg-success">${tl.status}</span></td>
 				                           		 </c:when>
-				                            	 <c:when test = "${myTask.status eq '지연진행'}">
-				                            	 	<td><span class="badge bg-danger">${myTask.status}</span></td>
+				                            	 <c:when test = "${tl.status eq '지연진행'}">
+				                            	 	<td><span class="badge bg-danger">${tl.status}</span></td>
 				                           		 </c:when>
-				                           		 <c:when test = "${myTask.status eq '완료'}">
-				                            	 	<td><span class="badge bg-primary">${myTask.status}</span></td>
+				                           		 <c:when test = "${tl.status eq '완료'}">
+				                            	 	<td><span class="badge bg-primary">${tl.status}</span></td>
 				                           		 </c:when>
-				                            	 <c:when test = "${myTask.status eq '중단'}">
-				                            	 	<td><span class="badge bg-warning">${myTask.status}</span></td>
+				                            	 <c:when test = "${tl.status eq '중단'}">
+				                            	 	<td><span class="badge bg-warning">${tl.status}</span></td>
 				                           		 </c:when>
 				                            </c:choose>
-				                            <td><fmt:formatDate value="${myTask.startAt}" pattern="yyyy-MM-dd"/></td>
-				                            <td><fmt:formatDate value="${myTask.endAt}" pattern="yyyy-MM-dd"/></td>
+				                            <td><fmt:formatDate value="${tl.startAt}" pattern="yyyy-MM-dd"/></td>
+				                            <td><fmt:formatDate value="${tl.endAt}" pattern="yyyy-MM-dd"/></td>
 				                            <td>
 												<div class="progress progress-primary">
-													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${myTask.progress}%" 
+													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${tl.progress}%" 
 														aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</td>
@@ -136,18 +131,21 @@
 	                       			</c:forEach>
 								</tbody>
 							</table>
-							<!-- Basic Tables end -->
 						</div>
-
-						<div class="tab-pane fade" id="profile" role="tabpanel"
-							aria-labelledby="profile-tab">
+						<!-- 작업 tap end -->
+						
+						<!-- 산출물 tap start -->
+						<div class="tab-pane fade" id="output" role="tabpanel"
+							aria-labelledby="output-tab">
 							<div>
 								<div class="row pt-3" style="background-color: #f2f7ff;">
 									<div class="col-md-3">
 										<fieldset class="form-group">
 											<select class="form-select" id="basicSelect">
 												<option>프로젝트를 선택하세요</option>
-												<option>공공SI 사업 프로젝트</option>
+												<c:forEach var="op" items="${outputProject}">
+		                                    		<option value="${op.projectId}">${op.title}</option>
+		                                    	</c:forEach>
 											</select>
 										</fieldset>
 									</div>
@@ -155,8 +153,9 @@
 										<fieldset class="form-group">
 											<select class="form-select" id="basicSelect">
 												<option>카테고리를 선택하세요</option>
-												<option>필수 산출물</option>
-												<option>추가 산출물</option>
+			   		                            <c:forEach var="c" items="${category}">
+				                                    <option value="${c.categoryId}">${c.categoryName}</option>
+					                        	</c:forEach>
 											</select>
 										</fieldset>
 									</div>
@@ -169,15 +168,11 @@
 									</div>
 									<div class="col-md-3">
 										<div class="input-group mb-3 justify-content-end">
-											<button type="button" class="btn btn-primary"
-												data-bs-toggle="modal" data-bs-target="#primary3"
-												id="regBtn">산출물 등록</button>
+											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary3" id="regBtn">산출물 등록</button>
 										</div>
 									</div>
 								</div>
-
-								<!-- Basic Tables start -->
-								<table class="table" id="table2">
+								<table class="table" id="myOutput">
 									<thead>
 										<tr>
 											<th>카테고리</th>
@@ -186,60 +181,46 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td><span class="badge bg-primary">필수</span></td>
-											<td>
-												<div>
-													<a href="#">필수스타일목록.txt</a>
-												</div>
-												<div>sysadmin on 2021-01-19 file size 2.8kb</div>
-											</td>
-											<td>공공SI 사업 프로젝트</td>
-										</tr>
-										<tr>
-											<td><span class="badge bg-secondary">선택</span></td>
-											<td>
-												<div>
-													<a href="#">프로젝트 메뉴얼.pptx</a>
-												</div>
-												<div>sysadmin on 2021-01-19 file size 13.8mb</div>
-											</td>
-											<td>공공SI 사업 프로젝트</td>
-										</tr>
+			                  			<c:forEach var="list" items="${outputList}">
+											<tr>
+					                           <td><span class="badge bg-${list.categoryId == 1 ? 'primary">필수' : 'secondary">선택'}</span></td>
+					                           <td><div><a href="javascript:outputDetail(${output.outputId})">${list.originalName}</a></div>
+					                           <div>${list.empName} on ${list.updateAt} file size ${list.volumeText}</div></td>
+					                           <td>${list.projectName}</td>
+			                    			</tr>
+			                   			</c:forEach>
 									</tbody>
 								</table>
-								<!-- Basic Tables end -->
 							</div>
 						</div>
+						<!-- 산출물 tap end -->
 					</div>
 				</div>
 			</div>
 		</section>
 	</div>
 
-	<!-- 작업정보 modal 버튼 -->
+	<!-- 작업정보 modal button -->
 	<button type="button" class="callModal" data-bs-toggle="modal" data-bs-target="#primary" style="display: none"></button>
 	
-	<!-- 작업정보 modal -->
-	<div class="modal fade text-left" id="primary" tabindex="-1"
-		role="dialog" data-bs-backdrop="static"
+	<!-- 작업정보 modal start -->
+	<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" data-bs-backdrop="static"
 		aria-labelledby="myModalLabel160" aria-hidden="true">
-		<div
-			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-			role="document">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header" style="padding-bottom: 0;">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item" role="presentation">
-							<a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="true">작업정보</a>
+							<a class="nav-link active" id="taskInfo-tab" data-bs-toggle="tab" href="#taskInfo" role="tab" aria-controls="taskInfo" aria-selected="true">작업정보</a>
 						</li>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false">산출물</a>
+							<a class="nav-link" id="outputInfo-tab" data-bs-toggle="tab" href="#outputInfo" role="tab" aria-controls="outputInfo" aria-selected="false">산출물</a>
 						</li>
 					</ul>
 				</div>
 				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab">
+					<!-- 작업정보 tap start -->
+					<div class="tab-pane fade show active" id="taskInfo" role="tabpanel" aria-labelledby="taskInfo-tab">
 						<div class="modal-body">
 							<form class="form" id="taskDetail">
 								<div class="row">
@@ -247,43 +228,37 @@
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">작업</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="taskName" readonly>
+                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="taskName" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">프로젝트</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="pTitle" readonly>
+                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="pTitle" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">시작일</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="startAt" readonly>
+                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="startAt" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">완료일</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="endAt" readonly>
+                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="endAt" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
-                                            <input type="number" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="progress" min="0" max="100"/>
+                                            <input type="number" style="background-color: white;" id="first-name-column" class="form-control" name="progress" min="0" max="100"/>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">승인자</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="pmName" readonly>
+                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="pmName" readonly>
 										</div>
 									</div>
 									<div class="col-12">
@@ -306,17 +281,17 @@
 							</button>
 						</div>
 					</div>
+					<!-- 작업정보 tap end -->
 					
-					<div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab">
+					<!-- 산출물 tap start -->
+					<div class="tab-pane fade" id="outputInfo" role="tabpanel" aria-labelledby="outputInfo-tab">
 						<div class="modal-body">
 							<form class="form">
 								<div class="row">
 									<div class="col-12">
 										<div class="form-group">
 											<label for="first-name-vertical" class="form-label">파일</label>
-											<input type="file" id="first-name-vertical"
-												class="form-control" placeholder="산출물 제목을 입력하세요."
-												name="pname" maxlength="120">
+											<input type="file" id="first-name-vertical" class="form-control" name="pname"/>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
@@ -324,8 +299,9 @@
 											<label for="basicSelect">산출물 카테고리</label>
 											<fieldset class="form-group mt-2">
 												<select class="form-select" id="basicSelect">
-													<option>필수 산출물</option>
-													<option>추가 산출물</option>
+				   		                            <c:forEach var="c" items="${category}">
+					                                    <option value="${c.categoryId}">${c.categoryName}</option>
+						                        	</c:forEach>
 												</select>
 											</fieldset>
 										</div>
@@ -335,10 +311,9 @@
 											<label for="basicSelect">산출물 종류</label>
 											<fieldset class="form-group mt-2">
 												<select class="form-select" id="basicSelect">
-													<option>사업기획서</option>
-													<option>프로그램 메뉴얼</option>
-													<option>프로젝트 리소스</option>
-													<option>테스트 메뉴얼</option>
+													<c:forEach var="t" items="${type}">
+					                                    <option value="${t.typeId}">${t.typeName}</option>
+						                        	</c:forEach>
 												</select>
 											</fieldset>
 										</div>
@@ -364,18 +339,17 @@
 							</button>
 						</div>
 					</div>
+					<!-- 산출물 tap end -->
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- 승인요청 modal -->	
-	<div class="modal fade text-left" id="primary2" tabindex="-1"
-		role="dialog" data-bs-backdrop="static"
+	<!-- 작업정보 modal end -->
+	
+	<!-- 승인요청 modal start -->	
+	<div class="modal fade text-left" id="primary2" tabindex="-1" role="dialog" data-bs-backdrop="static"
 		aria-labelledby="myModalLabel160" aria-hidden="true">
-		<div
-			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-			role="document">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-primary">
 					<h5 class="modal-title white" id="myModalLabel160">승인요청</h5>
@@ -406,7 +380,8 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 승인요청 modal end -->
+	
 	<!-- 산출물 등록 modal -->
 	<div class="modal fade text-left" id="primary3" tabindex="-1" role="dialog" data-bs-backdrop="static"
 		aria-labelledby="myModalLabel160" aria-hidden="true">
@@ -420,9 +395,8 @@
 						<div class="row">
 							<div class="col-12">
 								<div class="form-group">
-									<label for="first-name-vertical" class="form-label">파일</label> <input
-										type="file" id="first-name-vertical" class="form-control"
-										placeholder="산출물 제목을 입력하세요." name="pname" maxlength="120">
+									<label for="first-name-vertical" class="form-label">파일</label> 
+									<input type="file" id="first-name-vertical" class="form-control" name="pname">
 								</div>
 							</div>
 							<div class="col-md-6 col-12">
@@ -450,8 +424,9 @@
 									<label for="basicSelect">산출물 카테고리</label>
 									<fieldset class="form-group mt-2">
 										<select class="form-select" id="basicSelect">
-											<option>필수 산출물</option>
-											<option>추가 산출물</option>
+											<c:forEach var="c" items="${category}">
+			                                    <option value="${c.categoryId}">${c.categoryName}</option>
+				                        	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
@@ -461,10 +436,9 @@
 									<label for="basicSelect">산출물 종류</label>
 									<fieldset class="form-group mt-2">
 										<select class="form-select" id="basicSelect">
-											<option>사업기획서</option>
-											<option>프로그램 메뉴얼</option>
-											<option>프로젝트 리소스</option>
-											<option>테스트 메뉴얼</option>
+											<c:forEach var="t" items="${type}">
+			                                    <option value="${t.typeId}">${t.typeName}</option>
+				                        	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
@@ -492,14 +466,14 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 산출물 등록 modal end -->
+	
 <script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
-
 <script>
-	// Jquery Datatable
-	$("#table1").DataTable({
+	// 작업 datatable
+	$("#myTask").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false,
@@ -516,7 +490,8 @@
 		"order": [5, 'desc']
 	});
 
-	$("#table2").DataTable({
+	// 산출물 datatable
+	$("#myOutput").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false,
@@ -530,9 +505,10 @@
 	    }
 	});
 
+	// 작업 체크박스 전체 선택 및 해제
 	$(document).ready(function() {
-		$("#cbx_chkAll").click(function() {	
-			if($("#cbx_chkAll").is(":checked")) 
+		$("#checkAll").click(function() {	
+			if($("#checkAll").is(":checked")) 
 				$("input[name=chk]").prop("checked", true);
 			else 
 				$("input[name=chk]").prop("checked", false);
@@ -543,12 +519,13 @@
 			let checked = $("input[name=chk]:checked").length;
 			
 			if(total != checked) 
-				$("#cbx_chkAll").prop("checked", false);
+				$("#checkAll").prop("checked", false);
 			else 
-				$("#cbx_chkAll").prop("checked", true); 
+				$("#checkAll").prop("checked", true); 
 		});
 	});
 	
+	// 작업정보 조회
 	function taskDetail(taskId){
 		$.ajax({
 			url: "${path}/myTask/detail.do",
@@ -556,7 +533,6 @@
 			data: "taskId="+taskId,
 			dataType: "json",
 			success: function(data) {
-				console.log(data);
 				let myTaskDetail = data.myTaskDetail;
 				
 				$("input[name=taskId]").val(myTaskDetail.taskId);
@@ -569,11 +545,11 @@
 				$("textarea[name=content]").val(myTaskDetail.content);
 				
 				$(".callModal").click();
-				
 			}
 		});
 	}
 	
+	// 작업정보 수정
 	function uptDetail() {		
 		if($("input[name=progress]").val() >= 0 && $("input[name=progress]").val() <= 100) {
 			Swal.fire({
@@ -590,7 +566,10 @@
 					let progress = $("input[name=progress]").val();
 					let content = $("textarea[name=content]").val();
 					
-					let taskDetail = {"taskId": taskId, "progress": progress, "content": content};
+					let taskDetail = {
+						"taskId": taskId, 
+						"progress": progress, 
+						"content": content};
 					
 					$.ajax({
 						url: "${path}/myTask/uptDetail.do",
@@ -620,6 +599,7 @@
 		}
 	} 
 	
+	// 승인요청
 	function approvalRequest() {	
 		if($("input[name=chk]").is(":checked")) {
 			Swal.fire({
@@ -656,7 +636,6 @@
 						dataType:'json',
 						data: JSON.stringify(requestData), 
 						success: function(result) {
-							console.log(result);
 							if(result == "success") {
 								Swal.fire({
 							    	icon: 'success',
@@ -678,7 +657,6 @@
 			})
 		}		
 	}
-
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -16,32 +16,26 @@ public class MyTaskService {
 	private MyTaskDAO dao;
 
 	// 작업 목록
-	public List<MyTask> getMyTaskList(int empId) {
-		
-		return dao.getMyTaskList(empId);
-	}
-	
-	// 프로젝트 선택 옵션 리스트
 	public List<Project> getProjectList(int empId) {
-		
 		return dao.getProjectList(empId);
 	}
 	
-	// 작업상태 선택 옵션 리스트
-	public List<MyTask> getStatusList() {
-		
+	public List<MyTask> getStatusList() {		
 		return dao.getStatusList();
 	}	
+	
+	public List<MyTask> getMyTaskList(int empId) {
+		return dao.getMyTaskList(empId);
+	}
 		
 	// 작업정보 조회
-	public MyTask getMyTaskDetail(int taskId) {
-		
+	public MyTask getMyTaskDetail(int taskId) {		
 		return dao.getMyTaskDetail(taskId); 
 	}
 	
 	// 작업정보 수정
 	public boolean uptMyTaskDetail(MyTask myTask) {
-		dao.uptMyTaskDetail(myTask);
+		dao.uptMyTaskDetail(myTask);		
 		
 		return true;
 	}

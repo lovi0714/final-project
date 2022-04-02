@@ -4,6 +4,17 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
 
 <mapper namespace="com.project.pms.myTask.repository.MyOutputDAO">
+	<resultMap type="outputListForm" id="outputListMap">
+		<result column="out_id" property="outputId"/>
+		<result column="original_name" property="originalName"/>
+		<result column="name" property="empName"/>
+		<result column="cat_id" property="categoryId"/>
+		<result column="project_name" property="projectName"/>
+		<result column="volume" property="volume"/>
+		<result column="volume_text" property="volumeText"/>
+		<result column="update_at" property="updateAt"/>
+	</resultMap>
+	
 	<resultMap type="myOutputInfo" id="myOutputInfoMap">
 		<result column="original_name" property="originalName"/>
 		<result column="save_name" property="saveName"/>
@@ -13,8 +24,33 @@
 		<result column="count" property="outCount"/> 
 	</resultMap>
 	
+	<!-- 산출물 프로젝트 선택 옵션  -->
+	<select id="getProjectList" resultType="project" parameterType="int">
+ 		SELECT DISTINCT tp.prj_id as projectId, tp.name as title 
+		FROM TBL_TASK tt,
+				TBL_PROJECT tp
+		WHERE tt.prj_id = tp.prj_id AND
+				tt.manager_id = #{empId}
+ 	</select>
+	
+	<!-- 산출물 목록 -->
+	<select id="getMyOutputList" resultMap="outputListMap" parameterType="int">
+		SELECT tou.OUT_ID, tof.original_name, tof.volume, tof.volume_text, te.name, tou.cat_id, tof.update_at, tp.name AS project_name
+		FROM TBL_OUTPUT tou, 
+			TBL_OUT_FILE tof, 
+			TBL_EMP te, 
+			TBL_TASK tt, 
+			TBL_PROJECT tp 
+		WHERE tou.OUT_ID = tof.OUT_ID AND 
+				tou.emp_id = te.emp_id AND 
+				tou.TASK_ID = tt.TASK_ID AND 
+				tt.PRJ_ID = tp.PRJ_ID AND 
+				tou.emp_id = #{empId}
+		ORDER BY tou.out_id desc
+	</select>
+	
 	<!-- 산출물 정보 -->
-	<select id="getMyOutputInfo" resultMap="myOutputInfoMap" parameterType="int">
+	<select id="getMyOutputInfo" resultMap="myOutputInfoMap" parameterType="myTask">
 		SELECT tof.original_name, tof.save_name, toc.category, tot.out_type, tou.content
 		FROM TBL_OUTPUT tou, 
 				TBL_OUT_FILE tof, 
@@ -23,7 +59,7 @@
 		WHERE tou.out_id = tof.out_id AND
 				tou.out_type_id = tot.out_type_id AND 	
 				tou.cat_id = toc.cat_id	AND
-				task_id = #{taskId}
+				tou.task_id = #{taskId} AND
+				tou.emp_id = #{empId}
 	</select>
-	
 </mapper>
