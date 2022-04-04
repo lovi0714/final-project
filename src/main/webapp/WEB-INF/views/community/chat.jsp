@@ -23,6 +23,7 @@
 	
 	$(document).ready(function(){
 		
+		$("#chatBox").hide();
 		
 		$("#exitBtn").hide();
 		// 접속 종료를 처리했을 시
@@ -31,10 +32,11 @@
 			$("#yourName").show();
 			$("#exitBtn").hide();
 			$('#chating').text("");
+			$("#roomName").text("");
 			ws.close();
 		});
 	});
-		
+
 	function wsOpen(){
 		ws = new WebSocket("ws:/localhost:7080/${path}/chat-ws.do");
 		wsEvt();
@@ -43,6 +45,8 @@
 	function wsEvt() {
 		ws.onopen = function(data){
 			//소켓이 열리면 동작
+			$("#chatBox").fadeIn();
+			$("#roomName").append("<h4>"+"채팅방"+"</h4>")
 		}
 		
 		ws.onmessage = function(data) {
@@ -67,7 +71,7 @@
 						$("#chating").append(
 						"<div class='chat chat-left'>"+
                         "<div class='chat-body'>"+ 
-                        "<div class='chat-message'>"+"<c:out value='${today}'/>"+"<br>"+"<strong>"+d.userName+"</strong>"+" : "+d.msg +"</div>" +                      
+                        "<div class='chat-message'>"+"<c:out value='${today}'/>"+"<br>"+"<strong>"+d.userName+"</strong>"+"<br>"+d.msg +"</div>" +                      
                     	"</div>"+
                 		"</div>"
                 		);
@@ -81,7 +85,7 @@
 		}
 		
 		ws.onclose=function(){
-			
+			$("#chatBox").fadeOut();
 		}
 		
 		document.addEventListener("keypress", function(e){
@@ -141,11 +145,12 @@
                     	<div class="d-grid gap-2">
                     	<h4>채팅방 목록</h4>
   							<div id="yourName">
+  							<input type="hidden" name="userName" id="userName" value="${sessionScope.emp.name }">
 								<table class="inputTable" style="width:100%">
 									<tr>
-										<th><input type="hidden" name="userName" id="userName" value="${sessionScope.emp.name }"></th>
-										<th><button onclick="chatName()" id="startBtn" class="btn btn-primary btn-block">대화 참여하기</button></th>
+										<td><button onclick="chatName()" id="startBtn" class="btn btn-primary btn-block">대화 참여하기</button></td>
 									</tr>
+		
 								</table>							
 							</div>
 							<input type="button" class="btn btn-danger btn-block" value="나가기" id="exitBtn" style="float:right"/>
@@ -155,12 +160,12 @@
             </div>
      		<input type="hidden" id="sessionId" value="">
 
-            <div class="col-8">
+            <div class="col-8" id="chatBox">
                 <div class="card col-12" style="float:right; height:625px; margin-right:50px;">
                     <div class="card-header" style="border-bottom:1px solid #dedfe0">
                         <div class="media d-flex align-items-center">                    
-                            <div class="name flex-grow-1">
-                                <h4 class="mb-0">${sessionScope.emp.name}</h4>
+                            <div class="name flex-grow-1" id="roomName">
+                               
                             </div>
         
                         </div>
