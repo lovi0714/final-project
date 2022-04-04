@@ -64,6 +64,11 @@
 		<result column="project_id" property="projectId"/>
 	</resultMap>
 	
+	<resultMap type="projectStatus" id="projectStatusMap">
+		<result column="prj_status_id" property="statusId"/>
+		<result column="prj_status" property="status"/>
+	</resultMap>
+	
 	<select id="getList" resultMap="projectMap">
 		SELECT *
 		FROM TBL_PROJECT
@@ -120,6 +125,11 @@
 		SELECT te.EMP_ID, te.DEPT_ID, te.NAME
 		FROM TBL_PROJECT tp, TBL_EMP te 
 		WHERE tp.PRJ_ID = #{projectId} AND tp.PMO_ID = te.EMP_ID
+	</select>
+	
+	<select id="getProjectStatus" resultMap="projectStatusMap">
+		SELECT *
+		FROM TBL_PRJ_STATUS
 	</select>
 	
 	<select id="getProjectMaxId" resultType="string">

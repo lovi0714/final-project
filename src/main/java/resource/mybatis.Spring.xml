@@ -37,6 +37,7 @@
 		<typeAlias alias="outputDetail" type="com.project.pms.output.vo.OutputDetail"/>
 		<typeAlias alias="outputFileInfo" type="com.project.pms.output.vo.OutputFileInfo"/>
 		<typeAlias alias="approvalForm" type="com.project.pms.approval.vo.ApprovalForm"/>
+		<typeAlias alias="projectStatus" type="com.project.pms.project.vo.ProjectStatus"/>
 	</typeAliases>
 	
 	<typeHandlers>

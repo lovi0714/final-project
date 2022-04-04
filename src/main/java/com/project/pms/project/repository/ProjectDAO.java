@@ -8,6 +8,7 @@ import com.project.pms.project.vo.DeptType;
 import com.project.pms.project.vo.Link;
 import com.project.pms.project.vo.Pm;
 import com.project.pms.project.vo.Project;
+import com.project.pms.project.vo.ProjectStatus;
 import com.project.pms.project.vo.ProjectType;
 import com.project.pms.project.vo.RndType;
 import com.project.pms.project.vo.Task;
@@ -23,6 +24,7 @@ public interface ProjectDAO {
 	public List<DeptType> getDeptType();
 	public List<Pm> getPmByDeptId(Integer deptId);
 	public List<Pm> getPmoByDeptId(Integer deptId);
+	public List<ProjectStatus> getProjectStatus();
 	public Pm getPmByProjectId(String projectId);
 	public Pm getPmoByProjectId(String projectId);
 	public String getProjectMaxId();

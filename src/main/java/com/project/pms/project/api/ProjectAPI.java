@@ -19,6 +19,7 @@ import com.project.pms.project.vo.DeptType;
 import com.project.pms.project.vo.Link;
 import com.project.pms.project.vo.Pm;
 import com.project.pms.project.vo.Project;
+import com.project.pms.project.vo.ProjectStatus;
 import com.project.pms.project.vo.ProjectType;
 import com.project.pms.project.vo.RndType;
 import com.project.pms.project.vo.Task;
@@ -51,6 +52,13 @@ public class ProjectAPI {
 	public List<DeptType> getDeptType() {
 		
 		return service.getDeptType(); 
+	}
+	
+	@ResponseBody
+	@GetMapping("/status.do")
+	public List<ProjectStatus> getProjectStatus() {
+		
+		return service.getProjectStatus(); 
 	}
 	
 	@ResponseBody

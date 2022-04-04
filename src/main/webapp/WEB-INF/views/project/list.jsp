@@ -80,7 +80,7 @@
 	                            <th>프로젝트</th>
 	                            <th>시작일</th>
 	                            <th>완료일</th>
-	                            <th>진행률(%)</th>
+	                            <th>프로젝트 상태</th>
 	                            <th>산출물</th>
 	                        </tr>
 	                    </thead>
@@ -94,9 +94,23 @@
 			                            <td>${project.startAt}</td>
 			                            <td>${project.endAt}</td>
 			                            <td>
-			                            	<div class="progress progress-primary">
-						                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-						                	</div>			
+			                            	<c:choose>
+			                            		<c:when test="${project.statusId eq 1}">
+			                            		<span class="badge bg-secondary">시작전</span>
+			                            		</c:when>
+			                            		<c:when test="${project.statusId eq 2}">
+			                            		<span class="badge bg-success">정상진행</span>
+			                            		</c:when>
+			                            		<c:when test="${project.statusId eq 3}">
+			                            		<span class="badge bg-danger">지연진행</span>
+			                            		</c:when>
+			                            		<c:when test="${project.statusId eq 4}">
+			                            		<span class="badge bg-primary">완료</span>
+			                            		</c:when>
+			                            		<c:when test="${project.statusId eq 5}">
+			                            		<span class="badge bg-warning">중단</span>
+			                            		</c:when>
+			                            	</c:choose>
 		                				</td>
 			                            <td>
 			                            	<div class="avatar bg-info me-3">

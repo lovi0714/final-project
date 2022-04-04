@@ -11,6 +11,7 @@ import com.project.pms.project.vo.DeptType;
 import com.project.pms.project.vo.Link;
 import com.project.pms.project.vo.Pm;
 import com.project.pms.project.vo.Project;
+import com.project.pms.project.vo.ProjectStatus;
 import com.project.pms.project.vo.ProjectType;
 import com.project.pms.project.vo.RndType;
 import com.project.pms.project.vo.Task;
@@ -126,6 +127,11 @@ public class ProjectService {
 	public void deleteTask(Integer taskId) {
 		
 		dao.deleteTask(taskId);
+	}
+
+	public List<ProjectStatus> getProjectStatus() {
+		
+		return dao.getProjectStatus();
 	}
 
 }
