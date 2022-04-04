@@ -130,9 +130,6 @@
 		</section>
 	</div>
 
-<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
-<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
-<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 <script>	
 	// 참여 프로젝트 datatable
 	$("#myProjectList").DataTable({
