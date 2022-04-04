@@ -19,7 +19,16 @@
  		<result column="create_at" property="createAt"/>
  		<result column="update_at" property="updateAt"/>
  	</resultMap>
+ 	
+ 	<resultMap type="empProfile" id="empProfile">
+ 		<
+		<result column="dept_id" property="deptId"/>
+		<result column="dept_name" property="deptName"/>
+	</resultMap>
  	 
+ 	<!-- 부서 -->
+ 	<select id="getEmpProfile" resultMap="getEmpProfile">
+ 		SELECT  
 	<!-- 사원추가 -->
 	<insert id="saveEmp" parameterType="emp">
 		INSERT INTO TBL_EMP
@@ -41,5 +50,17 @@
 			update_at = sysdate
 		where emp_id = #{empId}
 	</update>	
+	
+	<!-- 사원정보 변경 -->
+	<update id="profileModify" parameterType="emp">
+		update TBL_EMP
+		set emp_email = #{empEmail},
+			phone = #{phone},
+			update_at = sysdate
+		where emp_id = #{empId}
+	</update>	
+	
+	
+	
 	
  </mapper>

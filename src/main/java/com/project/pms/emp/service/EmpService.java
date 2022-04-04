@@ -53,4 +53,9 @@ public class EmpService {
 		emp.setPassword(encryptPassword);
 		empDAO.modifyPassword(emp);
 	}
-}
+	
+	public void profileModify(Emp emp) {
+		empDAO.profileModify(emp);
+	}
+	}
+	    

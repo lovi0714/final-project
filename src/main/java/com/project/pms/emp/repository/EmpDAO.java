@@ -16,4 +16,5 @@ public interface EmpDAO {
 	// 비밀번호 변경
 	public void modifyPassword(Emp emp);
 	
+	public void profileModify(Emp emp);
 }

@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-horizontal" action="${path}/emp/profileModify.do" method="post">
+                            <form class="form form-horizontal" action="${path}/emp/profileModify.do" method="get">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -34,14 +34,14 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="first-name" class="form-control" name="fname"
-                                                value="홍길동">
+                                                value="${sessionScope.emp.name}">   
                                         </div>
                                         <div class="col-md-4">
                                             <label>부서</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="email-id" class="form-control" name="email-id"
-                                                value="인사">
+                                                value="${sessionScope.emp.deptId}">
                                         </div>
                                         <div class="col-md-4">
                                             <label>직급</label>

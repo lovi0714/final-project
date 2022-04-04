@@ -1,6 +1,6 @@
 package com.project.pms.emp.controller;
 
-import java.lang.ProcessBuilder.Redirect;
+
 import java.net.PasswordAuthentication;
 import java.util.UUID;
 
@@ -38,6 +38,7 @@ public class EmpController {
 	@Autowired
 	EmailManagement emailManagement;
 	
+	
 	/* 로그인 화면 */
 	@GetMapping("/login.do")
 	public String login() {
@@ -47,9 +48,9 @@ public class EmpController {
 	/* 로그인 처리 */
 	@PostMapping("/loginProcess.do")
 	public String loginProcess(Emp emp, HttpServletRequest req) {
-		// String rawPassword = emp.getPassword();
+		String rawPassword = emp.getPassword();
 		emp = empService.empInfo(emp.getEmpId());
-		if(loginVerification.loginVerification(emp)) { // , rawPassword
+		if(loginVerification.loginVerification(emp, rawPassword)) {
 			HttpSession session = req.getSession();
 			session.setAttribute("emp", emp);					
 			session.setMaxInactiveInterval(60 * 30);			
@@ -94,17 +95,26 @@ public class EmpController {
 		return "emp/profile";
 	}
 	
-	/* 프로필 수정 */
-	@PostMapping("/profileModify.do")
+	/* 프로필 수정 화면 */
+	@GetMapping("/profileModify.do")
 	public String profileModify() {
 		return "emp/profileModify";
 	}
 	
-	/* 사용자 현황 */
-	@GetMapping("/status.do")
-	public String status() {
-		return "emp/status";
+	@PostMapping("/profileModify.do")
+	public String profileModify(HttpSession session, Emp emp) {
+		String empEmail = emp.getEmpEmail();
+		String phone = emp.getPhone();
+		int empId = ((Emp) session.getAttribute("emp")).getEmpId();
+		
+		emp.setEmpId(empId);
+		emp.setEmpEmail(empEmail);
+		emp.setPhone(phone);
+		empService.profileModify(emp);
+		return "redirect:/emp/profileModify.do";
+		
 	}
+	
 	
 	/* 비밀번호 변경 */
 	@GetMapping("/modifyPassword.do")
@@ -124,4 +134,9 @@ public class EmpController {
 		
 	}
 	
+	/* 사용자 현황 */
+	@GetMapping("/status.do")
+	public String status() {
+		return "emp/status";
+	}
 }

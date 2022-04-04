@@ -54,14 +54,14 @@
                                             <label>이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="email" id="email-id" class="form-control" name="email-id"
+                                            <input type="email" id="email-id" class="form-control" name="empEmail"
                                                 placeholder="이메일을 입력해주세요.">
                                         </div>
                                         <div class="col-md-4">
                                             <label>번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="email-id" class="form-control" name="email-id"
+                                            <input type="text" id="email-id" class="form-control" name="phone"
                                                 placeholder="번호를 입력해주세요.">
                                         </div>
                                                                             
