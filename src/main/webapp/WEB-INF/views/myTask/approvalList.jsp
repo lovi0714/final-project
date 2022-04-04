@@ -459,7 +459,13 @@
 						htmlStr += "<div class=\"row\">";
 						htmlStr += "<div class=\"col-md-6 col-12\">";
 						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 카테고리</label>";
-						htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].category + " readonly style=\"background-color: white;\" >";
+						
+						if(myOutputInfo[i].category == "필수 산출물") {
+							htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" readonly value=\"필수 산출물\" style=\"background-color: white;\" >";
+						} else {
+							htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" readonly value=\"추가 산출물\" style=\"background-color: white;\" >";
+						}
+						
 						htmlStr += "</div>";
 						htmlStr += "<div class=\"col-md-6 col-12\">";
 						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 종류</label>";
@@ -467,7 +473,13 @@
 						htmlStr += "</div>";
 						htmlStr += "<div class=\"col-12\">";
 						htmlStr += "<label for=\"exampleFormControlTextarea1\" class=\"exampleFormControlTextarea1\" style=\"margin-top: 10px\">산출물 설명</label>";
-						htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" readonly style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
+						
+						if(myOutputInfo[i].content == null) {
+							htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" readonly rows=\"3\" style=\"background-color: white;\"></textarea>";
+							} else {
+							htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" readonly rows=\"3\" style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
+						}
+						
 						htmlStr += "</div>";
 						htmlStr += "</div>";
 						htmlStr += "</div>";

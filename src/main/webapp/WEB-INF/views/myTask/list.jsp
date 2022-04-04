@@ -333,12 +333,12 @@
 								<i class="bx bx-check d-block d-sm-none"></i>
 								<span class="d-none d-sm-block">등록</span>
 							</button>
-							<button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+							<button type="button" class="btn btn-light-secondary" id="cancelBtn">
 								<i class="bx bx-x d-block d-sm-none"></i> 
 								<span class="d-none d-sm-block">취소</span>
 							</button>
 	               		</div>
-	               		<form class="form" id="detail">
+	               		<form class="form" id="outputDetail">
 						</form>
 					</div>
 						<div class="modal-footer">
@@ -642,7 +642,7 @@
 				if (myOutputInfo.length == 0){
 					htmlStr += "<p style=\"margin-bottom: 10px;\">등록된 산출물이 없습니다.</p>"	
 
-					$("#detail").html(htmlStr);	
+					$("#outputDetail").html(htmlStr);	
 					$(".callModal").click();
 					
 				} else {
@@ -658,7 +658,13 @@
 						htmlStr += "<div class=\"row\">";
 						htmlStr += "<div class=\"col-md-6 col-12\">";
 						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 카테고리</label>";
-						htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" readonly value=" + myOutputInfo[i].category + " style=\"background-color: white;\" >";
+						
+						if(myOutputInfo[i].category == "필수 산출물") {
+							htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" readonly value=\"필수 산출물\" style=\"background-color: white;\" >";
+						} else {
+							htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" readonly value=\"추가 산출물\" style=\"background-color: white;\" >";
+						}
+						
 						htmlStr += "</div>";
 						htmlStr += "<div class=\"col-md-6 col-12\">";
 						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 종류</label>";
@@ -666,7 +672,13 @@
 						htmlStr += "</div>";
 						htmlStr += "<div class=\"col-12\">";
 						htmlStr += "<label for=\"exampleFormControlTextarea1\" class=\"exampleFormControlTextarea1\" style=\"margin-top: 10px\">산출물 설명</label>";
-						htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" readonly rows=\"3\" style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
+						
+						if(myOutputInfo[i].content == null) {
+							htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" readonly rows=\"3\" style=\"background-color: white;\"></textarea>";
+							} else {
+							htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" readonly rows=\"3\" style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
+						}
+						
 						htmlStr += "</div>";
 						htmlStr += "</div>";
 						htmlStr += "</div>";
@@ -676,7 +688,7 @@
 						htmlStr += "</div>"
 					}		
 					
-					$("#detail").html(htmlStr);
+					$("#outputDetail").html(htmlStr);
 					$(".callModal").click();
 				
 				}
@@ -1082,6 +1094,12 @@
 		    $("#outputFormDiv").hide();
 		}
 	} 	
+	
+	$(document).ready(function() {
+		$("#cancelBtn").click(function() {
+			 $("#outputFormDiv").hide();
+		});
+	});
 	
 </script>
 
