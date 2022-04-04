@@ -46,9 +46,10 @@ public class MyTaskController {
 		
 		// 산출물 목록
 		model.addAttribute("outputProject", myOutputService.getProjectList(empId));
+		model.addAttribute("outputList", myOutputService.getMyOutputList(empId));
+		model.addAttribute("project", myOutputService.getOutputProject(empId));
 		model.addAttribute("category", outputService.getOutputCategory());
 		model.addAttribute("type", outputService.getOutputType());
-		model.addAttribute("outputList", myOutputService.getMyOutputList(empId));
 		
 		return "myTask/list";
 	}

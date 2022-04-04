@@ -38,10 +38,10 @@
 							<a class="nav-link active" id="task-tab" data-bs-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="true">작업</a>
 						</li>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#output" role="tab" aria-controls="output" aria-selected="false">산출물</a>
+							<a class="nav-link" id="output-tab" data-bs-toggle="tab" href="#output" role="tab" aria-controls="output" aria-selected="false">산출물</a>
 						</li>
 					</ul>
-					<div class="tab-content" id="myTabContent">
+					<div class="tab-content" id="myTabContent2">
 						<!-- 작업 tap start -->
 						<div class="tab-pane fade show active" id="task" role="tabpanel" aria-labelledby="task-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
@@ -168,7 +168,7 @@
 									</div>
 									<div class="col-md-3">
 										<div class="input-group mb-3 justify-content-end">
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary3" id="regBtn">산출물 등록</button>
+											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary">산출물 등록</button>
 										</div>
 									</div>
 								</div>
@@ -184,7 +184,7 @@
 			                  			<c:forEach var="list" items="${outputList}">
 											<tr>
 					                           <td><span class="badge bg-${list.categoryId == 1 ? 'primary">필수' : 'secondary">선택'}</span></td>
-					                           <td><div><a href="javascript:outputDetail(${output.outputId})">${list.originalName}</a></div>
+					                           <td><div><a href="javascript:outputDetail(${list.outputId})">${list.originalName}</a></div>
 					                           <div>${list.empName} on ${list.updateAt} file size ${list.volumeText}</div></td>
 					                           <td>${list.projectName}</td>
 			                    			</tr>
@@ -201,10 +201,10 @@
 	</div>
 
 	<!-- 작업정보 modal button -->
-	<button type="button" class="callModal" data-bs-toggle="modal" data-bs-target="#primary" style="display: none"></button>
+	<button type="button" class="callModal" data-bs-toggle="modal" data-bs-target="#primary2" style="display: none"></button>
 	
 	<!-- 작업정보 modal start -->
-	<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" data-bs-backdrop="static"
+	<div class="modal fade text-left" id="primary2" tabindex="-1" role="dialog" data-bs-backdrop="static"
 		aria-labelledby="myModalLabel160" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
 			<div class="modal-content">
@@ -264,7 +264,7 @@
 									<div class="col-12">
 										<div class="form-group">
 											<label for="exampleFormControlTextarea1" class="form-label">작업 세부내용</label>
-											<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3"></textarea>
+											<textarea class="form-control" id="exampleFormControlTextarea1" name="taskContent" rows="3"></textarea>
 										</div>
 									</div>
 								</div>
@@ -286,54 +286,54 @@
 					<!-- 산출물 tap start -->
 					<div class="tab-pane fade" id="outputInfo" role="tabpanel" aria-labelledby="outputInfo-tab">
 						<div class="modal-body">
-							<form class="form">
-								<div class="row">
-									<div class="col-12">
-										<div class="form-group">
-											<label for="first-name-vertical" class="form-label">파일</label>
-											<input type="file" id="first-name-vertical" class="form-control" name="pname"/>
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="basicSelect">산출물 카테고리</label>
-											<fieldset class="form-group mt-2">
-												<select class="form-select" id="basicSelect">
-				   		                            <c:forEach var="c" items="${category}">
-					                                    <option value="${c.categoryId}">${c.categoryName}</option>
-						                        	</c:forEach>
-												</select>
-											</fieldset>
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="basicSelect">산출물 종류</label>
-											<fieldset class="form-group mt-2">
-												<select class="form-select" id="basicSelect">
-													<c:forEach var="t" items="${type}">
-					                                    <option value="${t.typeId}">${t.typeName}</option>
-						                        	</c:forEach>
-												</select>
-											</fieldset>
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-group">
-											<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
-											<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
+							<form id="outputForm" name="output" class="form" action="${path}/output/save.do" method="post" enctype="multipart/form-data">
+	                   		<input type="hidden" name="taskId">
+	                   		<div class="row">
+	                       		<div class="col-12">
+	                           		<div class="form-group">
+	                               		<label for="first-name-vertical" class="form-label">파일</label>
+	                               		<input type="file" name="file" id="first-name-vertical" class="form-control" >
+	                           </div>
+	                       	</div>
+	                   		<div class="col-md-6 col-12">
+	                       	<div class="form-group">
+	                        	<label for="basicSelect">산출물 카테고리</label>
+	                         	<fieldset class="form-group mt-2">
+	                             	<select class="form-select" id="basicSelect" name="categoryId">
+	                                	<c:forEach var="c" items="${category}">
+	                                    	<option value="${c.categoryId}">${c.categoryName}</option>
+		                        	 	</c:forEach>
+	                             	</select>
+	                         	</fieldset>
+	                    	</div>
+	                   		</div>
+		                   	<div class="col-md-6 col-12">
+		                       	<div class="form-group">
+		                       		<label for="basicSelect">산출물 종류</label>
+		                         	<fieldset class="form-group mt-2">
+		                            	<select class="form-select" id="basicSelect" name="outputType">
+		                                	<c:forEach var="t" items="${type}">
+		                                    	<option value="${t.typeId}">${t.typeName}</option>
+			                        	 	</c:forEach>
+		                            	 </select>
+		                         	</fieldset>
+		                    	</div>
+		                   	</div>
+	                       	<div class="col-12">
+	                       		<div class="form-group">
+	                          		<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
+	               					<textarea class="form-control" id="exampleFormControlTextarea2" name="content" rows="3"></textarea>
+	                           </div>
+	                   		</div>
+	                  	</div>
+	               		</form>
+					</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary ml-1">
+							<button type="button" id="saveBtn" class="btn btn-primary ml-1">
 								<i class="bx bx-check d-block d-sm-none"></i>
 								<span class="d-none d-sm-block">등록</span>
 							</button>
-							<button type="button" class="btn btn-light-secondary"
-								data-bs-dismiss="modal">
+							<button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
 								<i class="bx bx-x d-block d-sm-none"></i> 
 								<span class="d-none d-sm-block">취소</span>
 							</button>
@@ -382,89 +382,172 @@
 	</div>
 	<!-- 승인요청 modal end -->
 	
-	<!-- 산출물 등록 modal -->
-	<div class="modal fade text-left" id="primary3" tabindex="-1" role="dialog" data-bs-backdrop="static"
-		aria-labelledby="myModalLabel160" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-primary">
-					<h5 class="modal-title white" id="myModalLabel160">산출물 등록</h5>
-				</div>
-				<div class="modal-body">
-					<form class="form">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group">
-									<label for="first-name-vertical" class="form-label">파일</label> 
-									<input type="file" id="first-name-vertical" class="form-control" name="pname">
-								</div>
-							</div>
-							<div class="col-md-6 col-12">
-								<div class="form-group">
-									<label for="basicSelect">프로젝트</label>
-									<fieldset class="form-group mt-2">
-										<select class="form-select" id="basicSelect">
-											<option>공공SI 프로젝트</option>
-										</select>
-									</fieldset>
-								</div>
-							</div>
-							<div class="col-md-6 col-12">
-								<div class="form-group">
-									<label for="basicSelect">작업</label>
-									<fieldset class="form-group mt-2">
-										<select class="form-select" id="basicSelect">
-											<option>공공SI 사업 기획서 작성</option>
-										</select>
-									</fieldset>
-								</div>
-							</div>
-							<div class="col-md-6 col-12">
-								<div class="form-group">
-									<label for="basicSelect">산출물 카테고리</label>
-									<fieldset class="form-group mt-2">
-										<select class="form-select" id="basicSelect">
-											<c:forEach var="c" items="${category}">
-			                                    <option value="${c.categoryId}">${c.categoryName}</option>
-				                        	</c:forEach>
-										</select>
-									</fieldset>
-								</div>
-							</div>
-							<div class="col-md-6 col-12">
-								<div class="form-group">
-									<label for="basicSelect">산출물 종류</label>
-									<fieldset class="form-group mt-2">
-										<select class="form-select" id="basicSelect">
-											<c:forEach var="t" items="${type}">
-			                                    <option value="${t.typeId}">${t.typeName}</option>
-				                        	</c:forEach>
-										</select>
-									</fieldset>
-								</div>
-							</div>
-							<div class="col-12">
-								<div class="form-group">
-									<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
-									<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary ml-1">
-						<i class="bx bx-check d-block d-sm-none"></i> 
-						<span class="d-none d-sm-block">등록</span>
-					</button>
-					<button type="button" class="btn btn-light-secondary"
-						data-bs-dismiss="modal">
-						<i class="bx bx-x d-block d-sm-none"></i> 
-						<span class="d-none d-sm-block">취소</span>
-					</button>
-				</div>
-			</div>
-		</div>
+	<!-- 산출물 정보 modal start -->
+	<div class="modal fade text-left" id="detail" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="myModalLabel160" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header bg-primary">
+	                <h5 class="modal-title white" id="myModalLabel160">산출물 정보
+	                </h5>
+	            </div>
+	            <div class="modal-body">
+	            	<input type="hidden" id="outputId" value="">
+	                <form id="outputForm" id="outputInfoForm" name="output" class="form" method="post">
+	                   <div class="row">
+	                       <div class="col-12">
+	                           <div class="form-group">
+	                               <label for="fileName" class="form-label">파일 정보</label>
+	                               <div><a href="#" id="fileName"></a></div>
+	                           </div>
+	                       </div>
+	                       <div class="col-md-6 col-12">
+	                       <div class="form-group">
+	                    	   <label for="basicSelect">프로젝트</label>
+	                       	   <fieldset class="form-group mt-2">
+	                               <select class="form-select" id="projectSelect_m" disabled>
+	                                   <c:forEach var="p" items="${project}">
+			                               <option value="${p.projectId}">${p.projectName}</option>
+		                        	   </c:forEach>
+	                               </select>
+	                           </fieldset>
+	                        </div>
+	                   	</div>
+	                   	<div class="col-md-6 col-12">
+	                       	<div class="form-group">
+	                            <label for="basicSelect">작업</label>
+	                            <fieldset class="form-group mt-2">
+	                                <select class="form-select" id="taskSelect_m" name="taskId" disabled>
+	                                </select>
+	                            </fieldset>
+	                        </div>
+	                   	</div>
+	                   	<div class="col-md-6 col-12">
+	                       <div class="form-group">
+	                           <label for="basicSelect">산출물 카테고리</label>
+	                           <fieldset class="form-group mt-2">
+	                               <select class="form-select" id="category" name="categoryId" disabled>
+	                                   <c:forEach var="c" items="${category}">
+	                                       <option value="${c.categoryId}">${c.categoryName}</option>
+		                        	   </c:forEach>
+	                               </select>
+	                           </fieldset>
+	                        </div>
+	                   	</div>
+	                   	<div class="col-md-6 col-12">
+	                       	<div class="form-group">
+	                            <label for="basicSelect">산출물 종류</label>
+	                            <fieldset class="form-group mt-2">
+	                                <select class="form-select" id="outputType" name="outputType" disabled>
+	                                    <c:forEach var="t" items="${type}">
+	                                        <option value="${t.typeId}">${t.typeName}</option>
+		                        	    </c:forEach>
+	                                </select>
+	                            </fieldset>
+	                        </div>
+	                   	</div>
+	                       <div class="col-12">
+	                       	    <div class="form-group">
+	                               <label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
+	               			       <textarea class="form-control" id="content" name="content" rows="3" disabled></textarea>
+	                           </div>
+	                   	   </div>
+	                   </div>
+	               </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" id="closeBtn" class="btn btn-light-secondary" data-bs-dismiss="modal">
+	                    <i class="bx bx-x d-block d-sm-none"></i>
+	                    <span class="d-none d-sm-block">닫기</span>
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- 산출물 정보 modal end -->
+	
+	<!-- 산출물 등록 modal start -->
+	<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="myModalLabel160" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header bg-primary">
+	                <h5 class="modal-title white" id="myModalLabel160">산출물 등록
+	                </h5>
+	            </div>
+	            <div class="modal-body">
+	                <form id="outputForm2" name="output" class="form" action="${path}/output/save.do" method="post" enctype="multipart/form-data">
+	                   <div class="row">
+	                       <div class="col-12">
+	                           <div class="form-group">
+	                               <label for="first-name-vertical" class="form-label">파일</label>
+	                               <input type="file" name="file" id="first-name-vertical" class="form-control" >
+	                           </div>
+	                       </div>
+	                       <div class="col-md-6 col-12">
+		                       <div class="form-group">
+		                           <label for="basicSelect">프로젝트</label>
+		                           <fieldset class="form-group mt-2">
+		                               <select class="form-select" id="projectSelect">
+		                                   <c:forEach var="p" items="${project}">
+				                               <option value="${p.projectId}">${p.projectName}</option>
+			                        	   </c:forEach>
+			                           </select>
+			                        </fieldset>
+			                    </div>
+		                   	</div>
+		                   	<div class="col-md-6 col-12">
+		                       	<div class="form-group">
+		                            <label for="basicSelect">작업</label>
+		                            <fieldset class="form-group mt-2">
+		                                <select class="form-select" id="taskSelect" name="taskId">
+		                                </select>
+		                         	</fieldset>
+		                    	</div>
+		                   	</div>
+		                   	<div class="col-md-6 col-12">
+		                    	<div class="form-group">
+		                        	<label for="basicSelect">산출물 카테고리</label>
+		                         	<fieldset class="form-group mt-2">
+		                            	<select class="form-select" id="basicSelect" name="categoryId">
+		                                	<c:forEach var="c" items="${category}">
+		                                    	<option value="${c.categoryId}">${c.categoryName}</option>
+			                        	 	</c:forEach>
+		                             	</select>
+		                         	</fieldset>
+		                    	</div>
+		                   	</div>
+		                   	<div class="col-md-6 col-12">
+		                       	<div class="form-group">
+		                        	<label for="basicSelect">산출물 종류</label>
+		                         	<fieldset class="form-group mt-2">
+		                            	<select class="form-select" id="basicSelect" name="outputType">
+		                                	<c:forEach var="t" items="${type}">
+		                                    	<option value="${t.typeId}">${t.typeName}</option>
+			                        	 	</c:forEach>
+		                             	</select>
+		                         	</fieldset>
+		                    	</div>
+		                   	</div>
+		                    <div class="col-12">
+		                    	<div class="form-group">
+		                        	<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
+		               				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3"></textarea>
+		                   		</div>
+		                   	</div>
+	            		</div>
+	            	</form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" id="saveBtn2" class="btn btn-primary ml-1" >
+	                    <i class="bx bx-check d-block d-sm-none"></i>
+	                    <span class="d-none d-sm-block">등록</span>
+	                </button>
+	                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+	                    <i class="bx bx-x d-block d-sm-none"></i>
+	                    <span class="d-none d-sm-block">취소</span>
+	                </button>
+	            </div>
+	        </div>
+	    </div>
 	</div>
 	<!-- 산출물 등록 modal end -->
 	
@@ -542,7 +625,7 @@
 				$("input[name=endAt]").val(myTaskDetail.endAt);
 				$("input[name=progress]").val(myTaskDetail.progress);
 				$("input[name=pmName]").val(myTaskDetail.pmName);
-				$("textarea[name=content]").val(myTaskDetail.content);
+				$("textarea[name=taskContent]").val(myTaskDetail.content);
 				
 				$(".callModal").click();
 			}
@@ -564,7 +647,7 @@
 				if (result.isConfirmed) {
 					let taskId = $("input[name=taskId").val();
 					let progress = $("input[name=progress]").val();
-					let content = $("textarea[name=content]").val();
+					let content = $("textarea[name=taskContent]").val();
 					
 					let taskDetail = {
 						"taskId": taskId, 
@@ -657,6 +740,290 @@
 			})
 		}		
 	}
+	
+	// 산출물
+	const authId = ${emp.authId};
+	const empId = ${emp.empId};
+	
+	const outputDetail = (id) => {
+		$('#editBtn').remove();
+		$('#delBtn').remove();
+		$('#updateBtn').remove();
+		
+		$.ajax({
+		  	url: "${path}/output/detail/" + id,
+		  	method: "get",
+		  	dataType: 'json',	
+			contentType: 'application/json; charset=utf-8'
+			}).done(function(data) {
+				console.log(data);
+				$('#fileName').attr('href', '${path}/output/attach/' + data.outputFileId);
+				
+				$('#fileName').text(data.originalName);
+				$('#projectSelect_m').val(data.projectId);
+				getMdoalTasks();
+				$('#taskSelect_m').val(data.taskId);
+				$('#category').val(data.categoryId);
+				$('#outputType').val(data.typeId);
+				$('#content').val(data.content);
+				$('#outputId').val(data.outputId);
+				
+				console.log(data.categoryId);
+				console.log(data.outputId);
+				console.log("-----------");
+				if (authId !== 1 || empId === data.empId) {
+					$('#closeBtn').before(
+							`<button type="button" id="editBtn" class="btn btn-primary ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">수정</span>
+		                </button>
+		                <button type="button" id="updateBtn" style="display: none;" class="btn btn-primary ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">저장</span>
+		                </button>
+		                <button type="button" id="delBtn" class="btn btn-danger ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">삭제</span>
+		                </button>`);
+				}
+				
+			}).fail(function(error) {
+				console.log(error);
+		});
+		
+		$('#detail').modal('show');	
+	};
+	
+	const getTasks = () => {
+		$.ajax({
+			  url: "${path}/project/api/wbs/" + $('#projectSelect').val(),
+			  method: "get",
+			  dataType: 'json',	
+			  contentType: 'application/json; charset=utf-8'
+			}).done(function(result) {
+				$('#taskSelect').empty();
+				if (result.length == 0) $('#taskSelect').append(`<option selected disabled>작업이 없습니다.</option>`);
+			    result.map((data, idx) => {
+			    	$('#taskSelect').append(`<option value="\${data.id}">\${data.text}</option>`);
+			    });
+			}).fail(function(error) {
+				console.log(error);
+		});
+	}
+	
+	const getMdoalTasks = () => {
+		$.ajax({
+			  url: "${path}/project/api/wbs/" + $('#projectSelect_m').val(),
+			  method: "get",
+			  dataType: 'json',
+			  async: false,
+			  contentType: 'application/json; charset=utf-8'
+			}).done(function(result) {
+				$('#taskSelect_m').empty();
+				if (result.length == 0) $('#taskSelect_m').append(`<option selected disabled>작업이 없습니다.</option>`);
+			    result.map((data, idx) => {
+			    	$('#taskSelect_m').append(`<option value="\${data.id}">\${data.text}</option>`);
+			    });
+			}).fail(function(error) {
+				console.log(error);
+		});
+	}
+	
+	const toggleModelForm = (isDisabled) => {
+		$('#projectSelect_m').attr('disabled', isDisabled);
+		$('#taskSelect_m').attr('disabled', isDisabled);
+		$('#category').attr('disabled', isDisabled);
+		$('#outputType').attr('disabled', isDisabled);
+		$('#content').attr('disabled', isDisabled);
+		
+		if (isDisabled) {
+			$('#editBtn').show();
+			$('#updateBtn').hide();
+		} else {
+			$('#editBtn').hide();
+			$('#updateBtn').show();
+		}
+	};
+	
+	$(function() {
+		let isEdit = false;
+		getTasks();
+
+		$('#projectSelect').change(() => {
+			getTasks();
+		});
+		
+		$('#projectSelect_m').change(() => {
+			getMdoalTasks();
+		});
+		
+		$(document).on('click', '#closeBtn', function() {
+			toggleModelForm(true);
+		});
+		
+		$(document).on('click', '#updateBtn', function() {
+			let data = {
+				"outputId": parseInt($('#outputId').val()),
+				"outputType": parseInt($('#outputType').val()),
+				"categoryId":parseInt( $('#category').val()),
+				"taskId": parseInt($('#taskSelect_m').val()),
+				"content": $('#content').val()
+			}
+			
+			if (isEdit) {
+				console.log(data);
+				$.ajax({
+		            type: "POST",
+		            url: "${path}/output/update/" + $('#outputId').val(),
+		            data: data,
+				  	dataType: 'json',
+		            success: function(result) {
+		            	console.log(result);
+		            	if (result === 'success') {
+		            		Swal.fire({
+	            			  icon: 'success',
+	            			  title: '수정 성공',
+	            			  text: '산출물을 수정하였습니다.'
+	            			}).then((result) => {
+	           				  if (result.isConfirmed) {
+	           					location.href = '${path}/myTask/list.do';
+	   						  };
+	           				})
+		            	}
+		            },
+		            error: function(error) {
+		            	console.log(error);
+		            	if (error === 'fail') {
+		            		Swal.fire({
+	            			  icon: 'error',
+	            			  title: '수정 실패',
+	            			  text: '산출물 수정에 실패하였습니다.'
+	            			});
+		            	}
+		            }
+		        });
+			}
+		});
+		
+		$(document).on('click', '#editBtn', function() {
+			isEdit = true;
+			toggleModelForm(false);
+		});
+		
+		$(document).on('click', '#delBtn', function() {
+			 $.ajax({
+	            type: "POST",
+	            url: "${path}/output/delete/" + $('#outputId').val(),
+			  	dataType: 'json',
+	            success: function(result) {
+	            	console.log(result);
+	            	if (result === 'success') {
+	            		Swal.fire({
+	        			  icon: 'success',
+	        			  title: '삭제 성공',
+	        			  text: '산출물을 삭제하였습니다.'
+	        			}).then((result) => {
+	       				  if (result.isConfirmed) {
+	  	            		location.href = '${path}/myTask/list.do';
+							  };
+	       				})
+	            	}
+	            },
+	            error: function(error) {
+	            	console.log(error);
+	            	if (error === 'fail') {
+	            		Swal.fire({
+	        			  icon: 'error',
+	        			  title: '삭제 실패',
+	        			  text: '산출물 삭제에 실패하였습니다.'
+	        			});
+	            	}
+	            }
+	        });
+		});
+		
+		$(document).on('click', '#saveBtn', function() {
+			var form = $("#outputForm");
+			
+		    // you can't pass Jquery form it has to be javascript form object
+		    var formData = new FormData(form[0]);
+		    $.ajax({
+	            type: "POST",
+	            url: $(form).prop("action"),
+	            //dataType: 'json', //not sure but works for me without this
+	            data: formData,
+	            contentType: false, //this is requireded please see answers above
+	            processData: false, //this is requireded please see answers above
+	            //cache: false, //not sure but works for me without this
+	            error: function(error) {
+	            	console.log(error);
+	            	if (error === 'fail') {
+	            		Swal.fire({
+	        			  icon: 'error',
+	        			  title: '등록 실패',
+	        			  text: '산출물 등록에 실패하였습니다.'
+	        			});
+	            	}
+	            },
+	            success: function(result) {
+	            	console.log(result);
+	            	if (result === 'success') {
+	            		Swal.fire({
+	        			  icon: 'success',
+	        			  title: '등록 성공',
+	        			  text: '산출물을 등록하였습니다.'
+	        			}).then((result) => {
+	       				  if (result.isConfirmed) {
+	  	            		location.href = '${path}/myTask/list.do';
+							  };
+	       				})
+	            	}
+	            }
+	        });
+		});
+		
+		$(document).on('click', '#saveBtn2', function() {
+			var form = $("#outputForm2");
+			
+		    // you can't pass Jquery form it has to be javascript form object
+		    var formData = new FormData(form[0]);
+		    $.ajax({
+	            type: "POST",
+	            url: $(form).prop("action"),
+	            //dataType: 'json', //not sure but works for me without this
+	            data: formData,
+	            contentType: false, //this is requireded please see answers above
+	            processData: false, //this is requireded please see answers above
+	            //cache: false, //not sure but works for me without this
+	            error: function(error) {
+	            	console.log(error);
+	            	if (error === 'fail') {
+	            		Swal.fire({
+	        			  icon: 'error',
+	        			  title: '등록 실패',
+	        			  text: '산출물 등록에 실패하였습니다.'
+	        			});
+	            	}
+	            },
+	            success: function(result) {
+	            	console.log(result);
+	            	if (result === 'success') {
+	            		Swal.fire({
+	        			  icon: 'success',
+	        			  title: '등록 성공',
+	        			  text: '산출물을 등록하였습니다.'
+	        			}).then((result) => {
+	       				  if (result.isConfirmed) {
+	  	            		location.href = '${path}/myTask/list.do';
+							  };
+	       				})
+	            	}
+	            }
+	        });
+		});
+		
+	});
+	
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

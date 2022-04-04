@@ -30,5 +30,9 @@ public class MyOutputService {
 	public List<MyOutputInfo> getMyOutputInfo(MyTask myTask) {
 		return dao.getMyOutputInfo(myTask);
 	}
+
+	public List<Project> getOutputProject(int empId) {
+		return dao.getOutputProject(empId);	
+	}
 	
 }

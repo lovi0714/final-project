@@ -19,6 +19,7 @@ public interface MyOutputDAO {
 	// 산출물 정보
 	public List<MyOutputInfo> getMyOutputInfo(MyTask myTask);
 	
-	
+	//
+	public List<Project> getOutputProject(int empId);
 	
 }

@@ -24,29 +24,37 @@
 		<result column="count" property="outCount"/> 
 	</resultMap>
 	
+	<resultMap type="projectInfo" id="projectInfoMap">
+		<result column="prj_id" property="projectId"/>
+		<result column="name" property="projectName"/>
+	</resultMap>
+	
 	<!-- 산출물 프로젝트 선택 옵션  -->
 	<select id="getProjectList" resultType="project" parameterType="int">
- 		SELECT DISTINCT tp.prj_id as projectId, tp.name as title 
-		FROM TBL_TASK tt,
-				TBL_PROJECT tp
-		WHERE tt.prj_id = tp.prj_id AND
-				tt.manager_id = #{empId}
+ 		SELECT DISTINCT tp.prj_id AS projectId, tp.name AS title
+		FROM TBL_OUTPUT tou, 
+			TBL_TASK tt, 
+			TBL_PROJECT tp 
+		WHERE tou.task_id = tt.task_id AND 
+				tt.prj_id = tp.prj_id AND 
+				tou.emp_id = #{empId}
+		ORDER BY title ASC
  	</select>
 	
 	<!-- 산출물 목록 -->
 	<select id="getMyOutputList" resultMap="outputListMap" parameterType="int">
-		SELECT tou.OUT_ID, tof.original_name, tof.volume, tof.volume_text, te.name, tou.cat_id, tof.update_at, tp.name AS project_name
+		SELECT tou.out_id, tof.original_name, tof.volume, tof.volume_text, te.name, tou.cat_id, tof.update_at, tp.name AS project_name
 		FROM TBL_OUTPUT tou, 
 			TBL_OUT_FILE tof, 
 			TBL_EMP te, 
 			TBL_TASK tt, 
 			TBL_PROJECT tp 
-		WHERE tou.OUT_ID = tof.OUT_ID AND 
+		WHERE tou.out_id = tof.out_id AND 
 				tou.emp_id = te.emp_id AND 
-				tou.TASK_ID = tt.TASK_ID AND 
-				tt.PRJ_ID = tp.PRJ_ID AND 
+				tou.task_id = tt.task_id AND 
+				tt.prj_id = tp.prj_id AND 
 				tou.emp_id = #{empId}
-		ORDER BY tou.out_id desc
+		ORDER BY tou.out_id DESC
 	</select>
 	
 	<!-- 산출물 정보 -->
@@ -61,5 +69,16 @@
 				tou.cat_id = toc.cat_id	AND
 				tou.task_id = #{taskId} AND
 				tou.emp_id = #{empId}
+	</select>
+	
+	<!-- 프로젝트 목록 -->
+	<select id="getOutputProject" resultMap="projectInfoMap">
+		SELECT DISTINCT tp.prj_id, tp.name 
+		FROM TBL_PROJECT tp,
+				TBL_RESOURCE tr
+		WHERE tp.prj_id = tr.prj_id AND
+				tp.prj_status_id BETWEEN 1 AND 3 AND 
+				tr.emp_id = #{empId}
+		ORDER BY tp.name
 	</select>
 </mapper>
