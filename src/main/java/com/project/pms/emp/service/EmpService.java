@@ -33,6 +33,8 @@ public class EmpService {
 		UUID uid = UUID.randomUUID();  
 		String randomPassword = uid.toString().substring(0,6);
 		emp.setPassword(randomPassword);
+//		String encryptPassword = passwordEncoder.encode(randomPassword);
+//		emp.setPassword(encryptPassword);
 		empDAO.saveEmp(emp);
 		return true;
 	}	
