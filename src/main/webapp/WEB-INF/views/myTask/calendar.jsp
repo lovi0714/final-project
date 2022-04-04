@@ -8,12 +8,9 @@
 	<jsp:param name="isTaskSide" value="active" />
 	<jsp:param name="isTaskList" value="active" />
 </jsp:include>
-
 <link href="${path}/resources/fullcalendar-5.10.2/lib/main.css" rel='stylesheet' />
-
 <script src="${path}/resources/fullcalendar-5.10.2/lib/main.js"></script>
 <script src="${path}/resources/fullcalendar-5.10.2/lib/locales-all.js"></script>
-
 <script>
 	$(document).ready(function() {
 		var calendarEl = document.getElementById('calendar');
@@ -165,6 +162,48 @@
 			$("#calendarForm").submit();
 		});		
 	});
+	
+	// 일정 제목 및 내용 글자수 입력 제한
+	function textByte(obj, maxByte){
+		let str = obj.value;
+		let str_len = str.length;
+		
+		let rbyte = 0; 
+		let rlen = 0; 
+		
+		let one_char = "";
+		let str2 = "";
+	
+		//문자 byte 계산
+		for(var i=0; i<str_len; i++) {
+			one_char = str.charAt(i); 
+			
+			if(escape(one_char).length > 4){ 
+			    rbyte += 3; // 한글 3Byte
+			} else {
+			    rbyte++; // 그 외 1Byte
+			}
+	
+			if(rbyte <= maxByte) { 
+			    rlen = i+1;
+			}
+		}
+	
+		//문자열 자르기
+		if(rbyte > maxByte){
+			Swal.fire({
+				title: '입력 실패',
+				text: '한글 ' + (maxByte/3) + '자 혹은 영문 ' + maxByte + '자를 초과할 수 없습니다.',
+				icon: 'error'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					str2 = str.substr(0,rlen); 
+				    obj.value = str2;
+				    textByte(obj, maxByte);
+				}
+			});
+		}
+	}
 </script>
 
 <div id="main-content" style="padding-top: 0">
@@ -195,7 +234,7 @@
 	<!-- 산출물 등록 modal 버튼 -->
 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary" id="modalBtn" style="display: none"></button>
 
-	<!-- 산출물 등록 modal -->
+	<!-- 산출물 등록 modal start -->
 	<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" 
 		data-bs-backdrop="static" aria-labelledby="myModalLabel160" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal" role="document">
@@ -210,7 +249,7 @@
 							<div class="col-12">
 								<div class="form-group">
 									<label for="title" class="form-label">일정</label> 
-									<input type="text" name="title" class="form-control" placeholder="일정 제목을 입력하세요"/>
+									<input type="text" name="title" class="form-control" placeholder="일정 제목을 입력하세요" onKeyup="javascript:textByte(this, 90)"/>
 								</div>
 							</div>
 							<div class="col-md-6 col-12">
@@ -243,7 +282,7 @@
 							<div class="col-12">
 								<div class="form-group">
 									<label for="content" class="form-label">내용</label>
-									<textarea class="form-control" name="content" rows="3" placeholder="일정 내용을 입력하세요"></textarea>
+									<textarea class="form-control" name="content" rows="3" placeholder="일정 내용을 입력하세요" onKeyup="javascript:textByte(this, 180)"></textarea>
 								</div>
 							</div>
 						</div>
@@ -258,5 +297,6 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 산출물 등록 modal end -->
+	
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

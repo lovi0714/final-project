@@ -24,16 +24,13 @@ public class CalendarController {
 	// 캘린더 조회
 	@GetMapping("/calendar.do")
 	public String getCalendar() {
-		System.out.println("getCalendar controller called...");
-
 		return "myTask/calendar";
 	}
 
 	@PostMapping("calendarList.do")
-	public String getCalendarList(HttpSession session, Model d) {
-		System.out.println("calendarList controller called...");
+	public String getCalendarList(HttpSession session, Model model) {
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
-		d.addAttribute("calendarList", service.getCalendarList(empId));
+		model.addAttribute("calendarList", service.getCalendarList(empId));
 
 		return "pageJsonReport";
 	}
@@ -41,7 +38,6 @@ public class CalendarController {
 	// 캘린더 등록
 	@PostMapping("insertCalendar.do")
 	public String insertCalendar(HttpSession session, Calendar calendar) {
-		System.out.println("insertCalendar controller called...");		
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		calendar.setEmpId(empId);
 		service.insertCalendar(calendar);
@@ -52,7 +48,6 @@ public class CalendarController {
 	// 캘린더 수정
 	@PostMapping("updateCalendar.do")
 	public String updateCalendar(Calendar calendar){
-		System.out.println("updateCalendar controller called...");
 		service.updateCalendar(calendar);
 		
 		return "redirect:/myTask/calendar.do";
@@ -61,7 +56,6 @@ public class CalendarController {
 	// 캘린더 삭제
 	@GetMapping("deleteCalendar.do")
 	public String deleteCalendar(@RequestParam("id") int id){
-		System.out.println("deleteCalendar controller called...");
 		service.deleteCalendar(id);
 		
 		return "redirect:/myTask/calendar.do";		
