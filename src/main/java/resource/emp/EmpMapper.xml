@@ -7,8 +7,11 @@
  	<resultMap type="emp" id="empMap">
  		<result column="emp_id" property="empId"/>
  		<result column="dept_id" property="deptId"/>
- 		<result column="auth_id" property="authId"/>		
- 		<result column="pos_id" property="posId"/> 		 		
+ 		<result column="dept_name" property="deptName"/>
+ 		<result column="auth_id" property="authId"/>
+ 		<result column="auth_name" property="authName"/>		
+ 		<result column="pos_id" property="posId"/> 		 
+ 		<result column="pos_name" property="posName"/>		
  		<result column="password" property="password"/>
  		<result column="name" property="name"/>
  		<result column="emp_email" property="empEmail"/>
@@ -19,6 +22,28 @@
  		<result column="create_at" property="createAt"/>
  		<result column="update_at" property="updateAt"/>
  	</resultMap>
+ 	
+ 	<!--	
+ 	<resultMap type="empProfile" id="empProfile">
+ 		<result column="emp_id" property="empId"/>
+ 		<result column="name" property="name"/>
+		<result column="dept_id" property="deptId"/>
+		<result column="dept_name" property="deptName"/>
+		<result column="auth_id" property="authId"/>
+		<result column="auth_name" property="authName"/>
+		<result column="pos_id" property="posId"/>
+		<result column="pos_name" property="posName"/>
+		<result column="emp_email" property="empEmail"/>
+		<result column="phone" property="phone"/>
+	</resultMap>
+ 	
+ 	
+ 	<select id="getEmpProfile" resultMap="emp">
+ 		SELECT tr.EMP_ID, tr.NAME, td.DEPT_NAME, tp.POS_NAME, tr.emp_email, tr.phone
+ 		FROM tbl_emp tr, tbl_dept td, tbl_pos tp 
+ 		WHERE tr.DEPT_ID = td.DEPT_ID AND tr.POS_ID = tp.POS_ID
+ 	</select>
+ 	-->
  	 
 	<!-- 사원추가 -->
 	<insert id="saveEmp" parameterType="emp">
@@ -27,13 +52,17 @@
 		VALUES(empId_seq.NEXTVAL, #{deptId}, #{authId}, #{posId}, #{password}, #{name}, #{empEmail}, #{phone}, sysdate, null, 0, sysdate, null)
 	</insert>	
 	
-	<!-- 직원정보조회 -->
+	<!-- 사원정보조회 -->
 	<select id="empInfo" resultMap="empMap">
-		SELECT *
-		FROM TBL_EMP
-		WHERE emp_id = #{empId}
+		SELECT te.EMP_ID, te.NAME, te.DEPT_ID, te.POS_ID, te.EMP_EMAIL, te.PHONE, td.DEPT_NAME, tp.POS_NAME   
+		FROM SCOTT.TBL_EMP te 
+		INNER JOIN SCOTT.TBL_DEPT td 
+		ON te.DEPT_ID = td.DEPT_ID
+		INNER JOIN SCOTT.TBL_pos tp 
+		ON te.pos_ID = tp.pos_ID
+		WHERE EMP_ID = #{empId}
 	</select>
-
+	
 	<!-- 비밀번호 변경 -->
 	<update id="modifyPassword" parameterType="emp">
 		update TBL_EMP
@@ -42,16 +71,14 @@
 		where emp_id = #{empId}
 	</update>	
 	
-	
-	<update id="profileModify" parameterType="emp">
+	<!-- 프로필 수정 -->
+	<update id="modifyProfile" parameterType="emp">
 		update TBL_EMP
 		set emp_email = #{empEmail},
 			phone = #{phone},
 			update_at = sysdate
 		where emp_id = #{empId}
 	</update>	
-	
-	
 	
 	
  </mapper>

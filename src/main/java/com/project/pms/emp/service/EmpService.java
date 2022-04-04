@@ -1,15 +1,11 @@
 package com.project.pms.emp.service;
 
-import java.util.Random;
+import java.util.List;
 import java.util.UUID;
 
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +24,7 @@ public class EmpService {
 	// @Autowired
 	// PasswordManagement passwordManagement;
 	
-	// 사원추가
+	/* 사원추가 */
 	public boolean joinEmp(Emp emp, Email vo) { 
 		UUID uid = UUID.randomUUID();  
 		String randomPassword = uid.toString().substring(0,6);
@@ -39,12 +35,12 @@ public class EmpService {
 		return true;
 	}	
 	
-	// 사원정보조회	
+	/* 사원정보조회 */	
 	public Emp empInfo(int empId) {
 		return empDAO.empInfo(empId);
 	}
 	
-	// 로그아웃
+	/* 로그아웃 */
 	public void logout(HttpSession session) {
 		session.invalidate();
 	}
@@ -56,8 +52,10 @@ public class EmpService {
 		empDAO.modifyPassword(emp);
 	}
 	
-	public void profileModify(Emp emp) {
-		empDAO.profileModify(emp);
+	/* 프로필 수정 */
+	public void modifyProfile(Emp emp) {
+		empDAO.modifyProfile(emp);
 	}
-	}
+	
+}
 	    

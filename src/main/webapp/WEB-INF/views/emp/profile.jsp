@@ -33,42 +33,44 @@
                                             <label>이름</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="first-name" class="form-control" name="fname"
+                                            <input type="text" id="first-name" class="form-control" name="fname" readonly
                                                 value="${sessionScope.emp.name}">   
                                         </div>
                                         <div class="col-md-4">
                                             <label>부서</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="email-id" class="form-control" name="email-id"
-                                                value="${sessionScope.emp.deptId}">
+                                            <input type="text" id="email-id" class="form-control" name="email-id" readonly
+                                                value="${emp.deptName}">
                                         </div>
                                         <div class="col-md-4">
                                             <label>직급</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="email-id" class="form-control" name="email-id"
-                                                value="사원">
+                                            <input type="text" id="email-id" class="form-control" name="email-id" readonly
+                                                value="${emp.posName}">
                                         </div>
                                         <div class="col-md-4">
                                             <label>이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="email-id" class="form-control" name="email-id"
-                                                value="test@gmail.com">
+                                            <input type="text" id="email-id" class="form-control" name="email-id" readonly
+                                                value="${emp.empEmail}">
                                         </div>
                                         <div class="col-md-4">
                                             <label>번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="email-id" class="form-control" name="email-id"
-                                                value="010-1234-1234">
+                                            <input type="text" id="email-id" class="form-control" name="email-id" readonly
+                                                value="${emp.phone}">
                                         </div>
                                                                             
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary me-1 mb-1">수정</button>
                                             
                                         </div>
+
+                                        
                                     </div>
                                 </div>
                             </form>

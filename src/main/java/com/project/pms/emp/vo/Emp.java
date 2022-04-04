@@ -8,6 +8,8 @@ public class Emp {
 	private int authId;
 	private int posId;
 	private String deptName;
+	private String authName;
+	private String posName;
 	private String password;
 	private String name;
 	private String empEmail;
@@ -17,19 +19,20 @@ public class Emp {
 	private int isLeave;
 	private LocalDateTime createAt;
 	private LocalDateTime updateAt;
-	private String authName;
 	
 	public Emp() {}
 
-	public Emp(int empId, int deptId, int authId, int posId, String deptName, String password, String name,
-			String empEmail, String phone, LocalDateTime joinAt, LocalDateTime leaveAt, int isLeave,
-			LocalDateTime createAt, LocalDateTime updateAt, String authName) {
+	public Emp(int empId, int deptId, int authId, int posId, String deptName, String authName, String posName,
+			String password, String name, String empEmail, String phone, LocalDateTime joinAt, LocalDateTime leaveAt,
+			int isLeave, LocalDateTime createAt, LocalDateTime updateAt) {
 		super();
 		this.empId = empId;
 		this.deptId = deptId;
 		this.authId = authId;
 		this.posId = posId;
 		this.deptName = deptName;
+		this.authName = authName;
+		this.posName = posName;
 		this.password = password;
 		this.name = name;
 		this.empEmail = empEmail;
@@ -39,7 +42,6 @@ public class Emp {
 		this.isLeave = isLeave;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
-		this.authName = authName;
 	}
 
 	public int getEmpId() {
@@ -80,6 +82,22 @@ public class Emp {
 
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
+	}
+
+	public String getAuthName() {
+		return authName;
+	}
+
+	public void setAuthName(String authName) {
+		this.authName = authName;
+	}
+
+	public String getPosName() {
+		return posName;
+	}
+
+	public void setPosName(String posName) {
+		this.posName = posName;
 	}
 
 	public String getPassword() {
@@ -154,21 +172,15 @@ public class Emp {
 		this.updateAt = updateAt;
 	}
 
-	public String getAuthName() {
-		return authName;
-	}
-
-	public void setAuthName(String authName) {
-		this.authName = authName;
-	}
-
 	@Override
 	public String toString() {
 		return "Emp [empId=" + empId + ", deptId=" + deptId + ", authId=" + authId + ", posId=" + posId + ", deptName="
-				+ deptName + ", password=" + password + ", name=" + name + ", empEmail=" + empEmail + ", phone=" + phone
-				+ ", joinAt=" + joinAt + ", leaveAt=" + leaveAt + ", isLeave=" + isLeave + ", createAt=" + createAt
-				+ ", updateAt=" + updateAt + ", authName=" + authName + "]";
+				+ deptName + ", authName=" + authName + ", posName=" + posName + ", password=" + password + ", name="
+				+ name + ", empEmail=" + empEmail + ", phone=" + phone + ", joinAt=" + joinAt + ", leaveAt=" + leaveAt
+				+ ", isLeave=" + isLeave + ", createAt=" + createAt + ", updateAt=" + updateAt + "]";
 	}
+
+	
 
 	
 	

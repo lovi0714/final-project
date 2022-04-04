@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
+import com.lowagie.text.List;
 import com.project.pms.emp.repository.EmpDAO;
 import com.project.pms.emp.service.EmailManagement;
 import com.project.pms.emp.service.EmpService;
 import com.project.pms.emp.service.LoginVerification;
 import com.project.pms.emp.vo.Email;
 import com.project.pms.emp.vo.Emp;
+import com.project.pms.emp.vo.EmpProfile;
 
 
 @Controller
@@ -66,13 +68,13 @@ public class EmpController {
 		return "redirect:/emp/login.do";
 	}
 	
-	/* 사원추가 페이지 */
+	/* 사원추가 화면 */
 	@GetMapping("/addEmp.do")
 	public String addEmp() {
 		return "emp/addEmp";
 	}
 	
-	/* 사원정보 저장 */
+	/* 사원정보 저장처리 */
 	@PostMapping("/addEmp.do")
 	public String joinEmp(Emp emp, Email vo) {
 		empService.joinEmp(emp, vo);
@@ -81,18 +83,12 @@ public class EmpController {
 					
 	}
 	
-	/* 사원정보 조회 */
-	@GetMapping("/empInfo")
+	/* 프로필 화면 */
+	@GetMapping("/profile.do")
 	public String empInfo(HttpSession session, Model m) {
 		int empId = ((Emp) session.getAttribute("emp")).getEmpId();
 		m.addAttribute("emp", empService.empInfo(empId));
-		return "emp/modify";		
-	}
-	
-	/* 프로필 화면 */
-	@GetMapping("/profile.do")
-	public String profile() {
-		return "emp/profile";
+		return "emp/profile";		
 	}
 	
 	/* 프로필 수정 화면 */
@@ -101,22 +97,18 @@ public class EmpController {
 		return "emp/profileModify";
 	}
 	
+	/* 프로필 수정 처리 */
 	@PostMapping("/profileModify.do")
 	public String profileModify(HttpSession session, Emp emp) {
-		String empEmail = emp.getEmpEmail();
-		String phone = emp.getPhone();
 		int empId = ((Emp) session.getAttribute("emp")).getEmpId();
-		
 		emp.setEmpId(empId);
-		emp.setEmpEmail(empEmail);
-		emp.setPhone(phone);
-		empService.profileModify(emp);
+		empService.modifyProfile(emp);
 		return "redirect:/emp/profileModify.do";
 		
 	}
 	
 	
-	/* 비밀번호 변경 */
+	/* 비밀번호 변경 화면 */
 	@GetMapping("/modifyPassword.do")
 	public String modifyPassword() {
 		return "emp/modifyPassword";
