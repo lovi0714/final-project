@@ -129,6 +129,15 @@
                                           	<input type="date" id="projectEndAt" class="form-control mt-2" name="endAt" value="${project.endAt}" disabled>
                                         </div>
                                 	</div>
+                                	<div class="col-md-6 col-12">
+                                    	<div class="form-group">
+                                            <label for="basicSelect">프로젝트 상태</label>
+		                                    <fieldset class="form-group mt-2">
+		                                        <select class="form-select" id="statusId" name="statusId" disabled>
+		                                        </select>
+		                                    </fieldset>
+                                        </div>
+                                	</div>
                                     <div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">프로젝트 설명</label>
@@ -168,14 +177,14 @@ $(function() {
 			  	 var data = {
 			  		projectId: '${param.projectId}',
 					title: $('#projectTitle').val(),
-					statusId: '1',
 					typeId: $('#projectTypeId').val(),
 		            rndTypeId: $('#rndTypeId').val(),
 		            pmId: $('#projectPmId').val(),
 		            pmoId: $('#projectPmoId').val(),
 		            startAt: $('#projectStartAt').val(),
 		            endAt: $('#projectEndAt').val(),
-		            content: $('#projectContent').val()
+		            content: $('#projectContent').val(),
+		            statusId: $('#statusId').val()
 		    	  };
 						
 			  	toggleDisabled(true);
@@ -222,6 +231,7 @@ $(function() {
 		          $('#projectStartAt').val(beforeData.startAt);
 		          $('#projectEndAt').val(beforeData.endAt);
 		          $('#projectContent').val(beforeData.content);
+		          $('#statusId').val(beforeData.statusId);
 				  getPmList(beforeData.pmId);
 				  getPmoList(beforeData.pmoId);
 				
@@ -242,7 +252,8 @@ $(function() {
             pmoId: $('#projectPmoId').val(),
             startAt: $('#projectStartAt').val(),
             endAt: $('#projectEndAt').val(),
-            content: $('#projectContent').val()
+            content: $('#projectContent').val(),
+            statusId: $('#statusId').val()
 		};
 	}
 	
@@ -264,6 +275,7 @@ $(function() {
         $('#projectStartAt').attr('disabled', isDisabled);
         $('#projectEndAt').attr('disabled', isDisabled);
         $('#projectContent').attr('disabled', isDisabled);
+        $('#statusId').attr('disabled', isDisabled);
 	}
 	
 	const getPmoList = (id) => {
@@ -296,6 +308,24 @@ $(function() {
 			    		$('#projectPmId').append(`<option value="\${data.pmId}" selected>\${data.pmName}</option>`);
 			    	else 
 			    		$('#projectPmId').append(`<option value="\${data.pmId}">\${data.pmName}</option>`);
+			    });
+			}).fail(function(error) {
+				console.log(error);
+		});
+	}
+	
+	const getProjectStatus = () => {
+		$.ajax({
+			  url: "${path}/project/api/status.do",
+			  method: "get"
+			}).done(function(result) {
+				$('#statusId').empty();
+				if (result.length == 0) $('#statusId').append(`<option selected disabled>프로젝트 상태 에러.</option>`);
+			    result.map((data, idx) => {
+			    	if (data.statusId === ${project.statusId})
+			    		$('#statusId').append(`<option value="\${data.statusId}" selected>\${data.status}</option>`);
+			    	else 
+			    		$('#statusId').append(`<option value="\${data.statusId}">\${data.status}</option>`);
 			    });
 			}).fail(function(error) {
 				console.log(error);
@@ -352,6 +382,7 @@ $(function() {
 				}).fail(function(error) {
 					console.log(error);
 			});
+		    getProjectStatus();
 		    
 		}).fail(function(error) {
 			console.log(error);
