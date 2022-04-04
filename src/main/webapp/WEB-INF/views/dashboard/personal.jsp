@@ -143,7 +143,7 @@
 		"columnDefs": [
 		    {"className": "dt-center", "targets": "_all"}
 		],
-		"order": [5, 'desc'],
+		"order": [0, 'desc'],
 		"language": {
 	        "zeroRecords": "참여중인 프로젝트가 없습니다."
 	    }

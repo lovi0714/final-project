@@ -310,34 +310,6 @@
 					<div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab">
 						<div class="modal-body">
 							<form class="form" id="detail">
-								<div class="row">
-									<div class="col-12">
-										<div class="form-group">
-											<details>
-											<summary>
-												<span class="fw-bold" id="originalName">보고서</span>
-                                            	<!--  <input type="text" style="background-color: white; cursor: pointer" id="first-name-column" class="form-control" name="fname-column" readonly>  -->
-                                            </summary>    
-                                            <div style="margin-top: 10px; padding: 10px 10px; background-color: #f2f7ff;">
-                                            	<div class="row">
-		                                            <div class="col-md-6 col-12">
-		                                            	<label for="first-name-column" style="padding-bottom: 6px;">산출물 카테고리</label>
-		                                            	<input type="text" class="form-control" id="first-name-column" name="category" readonly style="background-color: white;" >
-													</div>
-													<div class="col-md-6 col-12">
-														<label for="first-name-column" style="padding-bottom: 6px;">산출물 종류</label>
-			                                            <input type="text" class="form-control" id="first-name-column" name="outType" readonly style="background-color: white;" >
-			                                        </div>
-			                                        <div class="col-12">
-			                                            <label for="exampleFormControlTextarea1" class="exampleFormControlTextarea1" style="margin-top: 10px">산출물 설명</label>
-														<textarea class="form-control" id="exampleFormControlTextarea1" name="outContent" rows="3" readonly style="background-color: white;"></textarea>
-													</div>
-												</div>
-											</div>
-										</details>
-										</div>
-									</div>
-								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -456,8 +428,6 @@
 			data: "taskId="+taskId,
 			dataType: "json",
 			success: function(data) {
-				console.log(data);
-				
 				let myTaskDetail = data.myTaskDetail;
 				let myOutputInfo = data.myOutputInfo;
 				
@@ -469,45 +439,49 @@
 				$("input[name=pmName]").val(myTaskDetail.pmName);
 				$("textarea[name=content]").val(myTaskDetail.content);
 				
-				
 				var htmlStr = "";
 				
-				for (var i=0; i<myOutputInfo.length; i++) {	
-					htmlStr += "<div class=\"row\">";
-					htmlStr += "<div class=\"form-group\">";
-					htmlStr += "<details>";
-					htmlStr += "<summary>";
-					htmlStr += "<span class=\"fw-bold\">" + myOutputInfo[i].originalName + "</span>";
-					htmlStr += "</summary>";
-					htmlStr += "<div style=\"margin-top: 10px; padding: 10px 10px; background-color: #f2f7ff;\">";
-					htmlStr += "<div class=\"row\">";
-					htmlStr += "<div class=\"col-md-6 col-12\">";
-					htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 카테고리</label>";
-					htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].category + " readonly style=\"background-color: white;\" >";
-					htmlStr += "</div>";
-					htmlStr += "<div class=\"col-md-6 col-12\">";
-					htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 종류</label>";
-					htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].outType + " readonly style=\"background-color: white;\">";
-					htmlStr += "</div>";
-					htmlStr += "<div class=\"col-12\">";
-					htmlStr += "<label for=\"exampleFormControlTextarea1\" class=\"exampleFormControlTextarea1\" style=\"margin-top: 10px\">산출물 설명</label>";
-					htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" readonly style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
-					htmlStr += "</div>";
-					htmlStr += "</div>";
-					htmlStr += "</div>";
-					htmlStr += "</details>"
-					htmlStr += "</div>";
-					htmlStr += "</div>"
-					htmlStr += "</div>"
+				if (myOutputInfo.length == 0){
+					htmlStr += "<p style=\"margin-bottom: 0px;\">등록된 산출물이 없습니다.</p>"	
+
+					$("#detail").html(htmlStr);	
+					$(".callModal").click();
+					
+				} else {
+					for (var i=0; i<myOutputInfo.length; i++) {	
+						htmlStr += "<div class=\"row\">";
+						htmlStr += "<div class=\"form-group\">";
+						htmlStr += "<details>";
+						htmlStr += "<summary>";
+						htmlStr += "<span class=\"fw-bold\">" + myOutputInfo[i].originalName + "</span>";
+						htmlStr += "</summary>";
+						htmlStr += "<div style=\"margin-top: 10px; padding: 10px 10px; background-color: #f2f7ff;\">";
+						htmlStr += "<div class=\"row\">";
+						htmlStr += "<div class=\"col-md-6 col-12\">";
+						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 카테고리</label>";
+						htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].category + " readonly style=\"background-color: white;\" >";
+						htmlStr += "</div>";
+						htmlStr += "<div class=\"col-md-6 col-12\">";
+						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 종류</label>";
+						htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" value=" + myOutputInfo[i].outType + " readonly style=\"background-color: white;\">";
+						htmlStr += "</div>";
+						htmlStr += "<div class=\"col-12\">";
+						htmlStr += "<label for=\"exampleFormControlTextarea1\" class=\"exampleFormControlTextarea1\" style=\"margin-top: 10px\">산출물 설명</label>";
+						htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" readonly style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
+						htmlStr += "</div>";
+						htmlStr += "</div>";
+						htmlStr += "</div>";
+						htmlStr += "</details>"
+						htmlStr += "</div>";
+						htmlStr += "</div>"
+						htmlStr += "</div>"
+					}
+					
+					$("#detail").html(htmlStr);				
+					$(".callModal").click();
 				}
-				
-				$("#detail").html(htmlStr);
-				
-				$(".callModal").click();
-				
 			}
 		});	
-		
 	}
 
 	function MyApprovalCancel1() {
@@ -602,6 +576,7 @@
 		}
 	}
 	
+
 	
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -286,49 +286,49 @@
 					<!-- 산출물 tap start -->
 					<div class="tab-pane fade" id="outputInfo" role="tabpanel" aria-labelledby="outputInfo-tab">
 						<div class="modal-body">
-							<form id="outputForm" name="output" class="form" action="${path}/output/save.do" method="post" enctype="multipart/form-data">
-	                   		<input type="hidden" name="taskId">
-	                   		<div class="row">
-	                       		<div class="col-12">
-	                           		<div class="form-group">
-	                               		<label for="first-name-vertical" class="form-label">파일</label>
-	                               		<input type="file" name="file" id="first-name-vertical" class="form-control" >
-	                           </div>
-	                       	</div>
-	                   		<div class="col-md-6 col-12">
-	                       	<div class="form-group">
-	                        	<label for="basicSelect">산출물 카테고리</label>
-	                         	<fieldset class="form-group mt-2">
-	                             	<select class="form-select" id="basicSelect" name="categoryId">
-	                                	<c:forEach var="c" items="${category}">
-	                                    	<option value="${c.categoryId}">${c.categoryName}</option>
-		                        	 	</c:forEach>
-	                             	</select>
-	                         	</fieldset>
-	                    	</div>
-	                   		</div>
-		                   	<div class="col-md-6 col-12">
+							<button type="button" class="btn btn-outline-primary" id="outputBtn" onclick="formClick();" style="margin-bottom: 10px">산출물 등록</button>
+							<div id="outputFormDiv" style="border: solid 1px #E6EAEE; border-radius: 5px; padding: 10px 10px; margin-bottom: 10px; display: none;">
+								<form id="outputForm" name="output" class="form" action="${path}/output/save.do" method="post" enctype="multipart/form-data">
+		                   			<input type="hidden" name="taskId">
+		                   		<div class="row">
+		                       		<div class="col-12">
+		                           		<div class="form-group">
+		                               		<label for="first-name-vertical" class="form-label">파일</label>
+		                               		<input type="file" name="file" id="first-name-vertical" class="form-control" >
+		                           </div>
+		                       	</div>
+		                   		<div class="col-md-6 col-12">
 		                       	<div class="form-group">
-		                       		<label for="basicSelect">산출물 종류</label>
+		                        	<label for="basicSelect">산출물 카테고리</label>
 		                         	<fieldset class="form-group mt-2">
-		                            	<select class="form-select" id="basicSelect" name="outputType">
-		                                	<c:forEach var="t" items="${type}">
-		                                    	<option value="${t.typeId}">${t.typeName}</option>
+		                             	<select class="form-select" id="basicSelect" name="categoryId">
+		                                	<c:forEach var="c" items="${category}">
+		                                    	<option value="${c.categoryId}">${c.categoryName}</option>
 			                        	 	</c:forEach>
-		                            	 </select>
+		                             	</select>
 		                         	</fieldset>
 		                    	</div>
-		                   	</div>
-	                       	<div class="col-12">
-	                       		<div class="form-group">
-	                          		<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
-	               					<textarea class="form-control" id="exampleFormControlTextarea2" name="content" rows="3"></textarea>
-	                           </div>
-	                   		</div>
-	                  	</div>
-	               		</form>
-					</div>
-						<div class="modal-footer">
+		                   		</div>
+			                   	<div class="col-md-6 col-12">
+			                       	<div class="form-group">
+			                       		<label for="basicSelect">산출물 종류</label>
+			                         	<fieldset class="form-group mt-2">
+			                            	<select class="form-select" id="basicSelect" name="outputType">
+			                                	<c:forEach var="t" items="${type}">
+			                                    	<option value="${t.typeId}">${t.typeName}</option>
+				                        	 	</c:forEach>
+			                            	 </select>
+			                         	</fieldset>
+			                    	</div>
+			                   	</div>
+		                       	<div class="col-12">
+		                       		<div class="form-group">
+		                          		<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
+		               					<textarea class="form-control" id="exampleFormControlTextarea2" name="content" rows="3"></textarea>
+		                           </div>
+		                   		</div>
+		                  	</div>
+		               		</form>
 							<button type="button" id="saveBtn" class="btn btn-primary ml-1">
 								<i class="bx bx-check d-block d-sm-none"></i>
 								<span class="d-none d-sm-block">등록</span>
@@ -336,6 +336,15 @@
 							<button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
 								<i class="bx bx-x d-block d-sm-none"></i> 
 								<span class="d-none d-sm-block">취소</span>
+							</button>
+	               		</div>
+	               		<form class="form" id="detail">
+						</form>
+					</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+								<i class="bx bx-x d-block d-sm-none"></i> 
+								<span class="d-none d-sm-block">닫기</span>
 							</button>
 						</div>
 					</div>
@@ -617,6 +626,7 @@
 			dataType: "json",
 			success: function(data) {
 				let myTaskDetail = data.myTaskDetail;
+				let myOutputInfo = data.myOutputInfo;
 				
 				$("input[name=taskId]").val(myTaskDetail.taskId);
 				$("input[name=taskName]").val(myTaskDetail.taskName);
@@ -627,7 +637,49 @@
 				$("input[name=pmName]").val(myTaskDetail.pmName);
 				$("textarea[name=taskContent]").val(myTaskDetail.content);
 				
-				$(".callModal").click();
+				var htmlStr = "";
+				
+				if (myOutputInfo.length == 0){
+					htmlStr += "<p style=\"margin-bottom: 10px;\">등록된 산출물이 없습니다.</p>"	
+
+					$("#detail").html(htmlStr);	
+					$(".callModal").click();
+					
+				} else {
+					
+					for (var i=0; i<myOutputInfo.length; i++) {	
+						htmlStr += "<div class=\"row\">";
+						htmlStr += "<div class=\"form-group\">";
+						htmlStr += "<details>";
+						htmlStr += "<summary>";
+						htmlStr += "<span class=\"fw-bold\">" + myOutputInfo[i].originalName + "</span>";
+						htmlStr += "</summary>";
+						htmlStr += "<div style=\"margin-top: 10px; padding: 10px 10px; background-color: #f2f7ff;\">";
+						htmlStr += "<div class=\"row\">";
+						htmlStr += "<div class=\"col-md-6 col-12\">";
+						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 카테고리</label>";
+						htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" readonly value=" + myOutputInfo[i].category + " style=\"background-color: white;\" >";
+						htmlStr += "</div>";
+						htmlStr += "<div class=\"col-md-6 col-12\">";
+						htmlStr += "<label for=\"first-name-column\" style=\"padding-bottom: 6px;\">산출물 종류</label>";
+						htmlStr += "<input type=\"text\" class=\"form-control\" id=\"first-name-column\" readonly value=" + myOutputInfo[i].outType + " style=\"background-color: white;\">";
+						htmlStr += "</div>";
+						htmlStr += "<div class=\"col-12\">";
+						htmlStr += "<label for=\"exampleFormControlTextarea1\" class=\"exampleFormControlTextarea1\" style=\"margin-top: 10px\">산출물 설명</label>";
+						htmlStr += "<textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" readonly rows=\"3\" style=\"background-color: white;\">" + myOutputInfo[i].content + "</textarea>";
+						htmlStr += "</div>";
+						htmlStr += "</div>";
+						htmlStr += "</div>";
+						htmlStr += "</details>"
+						htmlStr += "</div>";
+						htmlStr += "</div>"
+						htmlStr += "</div>"
+					}		
+					
+					$("#detail").html(htmlStr);
+					$(".callModal").click();
+				
+				}
 			}
 		});
 	}
@@ -1021,8 +1073,15 @@
 	            }
 	        });
 		});
-		
 	});
+	
+	function formClick() {
+		if($("#outputFormDiv").css("display") == "none"){
+		    $("#outputFormDiv").show();
+		} else {
+		    $("#outputFormDiv").hide();
+		}
+	} 	
 	
 </script>
 
