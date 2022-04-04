@@ -26,10 +26,7 @@
 	<script src="${path}/resources/js/extensions/sweetalert2.js"></script>
 	<script src="${path}/resources/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 	<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
-	
-	<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
-	<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
-    
+	 
     <script src="${path}/resources/js/mazer.js"></script>
     </body>
 </html>

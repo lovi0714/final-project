@@ -27,6 +27,9 @@
 
 <link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
+
+<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 </head>
 <body>
     <div id="app">
