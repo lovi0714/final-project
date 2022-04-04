@@ -62,9 +62,6 @@
 		</section>
 	</div>
 	
-<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
-<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
-<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 <script>
 	// 공지사항 datatable
 	$("#noticeBoard").DataTable({

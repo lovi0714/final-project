@@ -55,7 +55,6 @@
 		</section>
 	</div>
 	
-<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 <script>
 	$(document).ready(function(){	
 		// 관리자가 아닐 경우 수정 및 삭제버튼 숨김 처리

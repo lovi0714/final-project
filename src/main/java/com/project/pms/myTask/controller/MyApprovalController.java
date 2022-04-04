@@ -24,17 +24,20 @@ public class MyApprovalController {
 	
 	// 내 결재 조회
 	@GetMapping("/approvalList.do")
-	public String getApprovalList(HttpSession session, Model d) {
-		System.out.println("getApprovalList controller called...");
+	public String getApprovalList(HttpSession session, Model model) {
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
-		d.addAttribute("WaitingList", service.getMyApprovalWaitingList(empId));
-		d.addAttribute("WaitingProject", service.getWaitingProjectList(empId));
 		
-		d.addAttribute("CompletedList", service.getMyApprovalCompletedList(empId));
-		d.addAttribute("CompletedProject", service.getCompletedProjectList(empId));
+		// 승인대기
+		model.addAttribute("waitingList", service.getMyApprovalWaitingList(empId));
+		model.addAttribute("waitingProject", service.getWaitingProjectList(empId));
+	
+		// 승인완료
+		model.addAttribute("completedList", service.getMyApprovalCompletedList(empId));
+		model.addAttribute("completedProject", service.getCompletedProjectList(empId));
 		
-		d.addAttribute("RejectedList", service.getMyApprovalRejectedList(empId));		
-		d.addAttribute("RejectedProject", service.getRejectedProjectList(empId));
+		// 반려
+		model.addAttribute("rejectedList", service.getMyApprovalRejectedList(empId));		
+		model.addAttribute("rejectedProject", service.getRejectedProjectList(empId));
 		
 		return "myTask/approvalList";
 	}
@@ -42,18 +45,12 @@ public class MyApprovalController {
 	// 회수 요청
 	@GetMapping("/approvalCancel.do")
 	@ResponseBody
-	public String uptApprovalCancel(@RequestParam(value="taskId[]") List<Integer> taskId, String result) {
-		System.out.println("uptApprovalCancel controller called");
+	public String uptApprovalCancel(@RequestParam(value="taskId[]") List<Integer> taskId, boolean result) {
 		
 		for (int i=0; i<taskId.size(); i++) {
-			if(service.uptApprovalCancel(taskId.get(i)) && service.uptApprovalStatus(taskId.get(i))) {
-				result = "success";
-			} else {
-				result ="false";
-			}
+			result = service.uptApprovalCancel(taskId.get(i)) && service.uptApprovalStatus(taskId.get(i));
 		}
 		
-		return result;
-		
+		return result ? "success" : "false";	
 	}
 }

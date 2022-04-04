@@ -264,7 +264,7 @@
 									<div class="col-12">
 										<div class="form-group">
 											<label for="exampleFormControlTextarea1" class="form-label">작업 세부내용</label>
-											<textarea class="form-control" id="exampleFormControlTextarea1" name="taskContent" rows="3"></textarea>
+											<textarea class="form-control" id="exampleFormControlTextarea1" name="taskContent" rows="3" onKeyup="javascript:textByte(this, 360)"></textarea>
 										</div>
 									</div>
 								</div>
@@ -289,45 +289,45 @@
 							<button type="button" class="btn btn-outline-primary" id="outputBtn" onclick="formClick();" style="margin-bottom: 10px">산출물 등록</button>
 							<div id="outputFormDiv" style="border: solid 1px #E6EAEE; border-radius: 5px; padding: 10px 10px; margin-bottom: 10px; display: none;">
 								<form id="outputForm" name="output" class="form" action="${path}/output/save.do" method="post" enctype="multipart/form-data">
-		                   			<input type="hidden" name="taskId">
-		                   		<div class="row">
-		                       		<div class="col-12">
-		                           		<div class="form-group">
-		                               		<label for="first-name-vertical" class="form-label">파일</label>
-		                               		<input type="file" name="file" id="first-name-vertical" class="form-control" >
-		                           </div>
-		                       	</div>
-		                   		<div class="col-md-6 col-12">
-		                       	<div class="form-group">
-		                        	<label for="basicSelect">산출물 카테고리</label>
-		                         	<fieldset class="form-group mt-2">
-		                             	<select class="form-select" id="basicSelect" name="categoryId">
-		                                	<c:forEach var="c" items="${category}">
-		                                    	<option value="${c.categoryId}">${c.categoryName}</option>
-			                        	 	</c:forEach>
-		                             	</select>
-		                         	</fieldset>
-		                    	</div>
-		                   		</div>
-			                   	<div class="col-md-6 col-12">
+		                   			<div class="row">
+			                       		<div class="col-12">
+			                           		<div class="form-group">
+			                           			<input type="hidden" name="taskId">
+			                               		<label for="first-name-vertical" class="form-label">파일</label>
+			                               		<input type="file" name="file" id="first-name-vertical" class="form-control" >
+			                           </div>
+			                       	</div>
+			                   		<div class="col-md-6 col-12">
 			                       	<div class="form-group">
-			                       		<label for="basicSelect">산출물 종류</label>
+			                        	<label for="basicSelect">산출물 카테고리</label>
 			                         	<fieldset class="form-group mt-2">
-			                            	<select class="form-select" id="basicSelect" name="outputType">
-			                                	<c:forEach var="t" items="${type}">
-			                                    	<option value="${t.typeId}">${t.typeName}</option>
+			                             	<select class="form-select" id="basicSelect" name="categoryId">
+			                                	<c:forEach var="c" items="${category}">
+			                                    	<option value="${c.categoryId}">${c.categoryName}</option>
 				                        	 	</c:forEach>
-			                            	 </select>
+			                             	</select>
 			                         	</fieldset>
 			                    	</div>
-			                   	</div>
-		                       	<div class="col-12">
-		                       		<div class="form-group">
-		                          		<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
-		               					<textarea class="form-control" id="exampleFormControlTextarea2" name="content" rows="3"></textarea>
-		                           </div>
-		                   		</div>
-		                  	</div>
+			                   		</div>
+				                   	<div class="col-md-6 col-12">
+				                       	<div class="form-group">
+				                       		<label for="basicSelect">산출물 종류</label>
+				                         	<fieldset class="form-group mt-2">
+				                            	<select class="form-select" id="basicSelect" name="outputType">
+				                                	<c:forEach var="t" items="${type}">
+				                                    	<option value="${t.typeId}">${t.typeName}</option>
+					                        	 	</c:forEach>
+				                            	 </select>
+				                         	</fieldset>
+				                    	</div>
+				                   	</div>
+			                       	<div class="col-12">
+			                       		<div class="form-group">
+			                          		<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
+			               					<textarea class="form-control" id="exampleFormControlTextarea2" name="content" rows="3" onKeyup="javascript:textByte(this, 360)"></textarea>
+			                           </div>
+			                   		</div>
+			                  	</div>
 		               		</form>
 							<button type="button" id="saveBtn" class="btn btn-primary ml-1">
 								<i class="bx bx-check d-block d-sm-none"></i>
@@ -539,7 +539,7 @@
 		                    <div class="col-12">
 		                    	<div class="form-group">
 		                        	<label for="exampleFormControlTextarea1" class="form-label">산출물 설명</label>
-		               				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3"></textarea>
+		               				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" onKeyup="javascript:textByte(this, 360)"></textarea>
 		                   		</div>
 		                   	</div>
 	            		</div>
@@ -560,9 +560,6 @@
 	</div>
 	<!-- 산출물 등록 modal end -->
 	
-<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
-<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
-<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 <script>
 	// 작업 datatable
 	$("#myTask").DataTable({
@@ -580,21 +577,6 @@
 	        "zeroRecords": "등록된 작업이 없습니다."
 	    },
 		"order": [5, 'desc']
-	});
-
-	// 산출물 datatable
-	$("#myOutput").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"autoWidth" : false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"},
-		    {"width": "55%", "targets": 1}
-		],
-		"language": {
-	        "zeroRecords": "등록한 산출물이 없습니다."
-	    }
 	});
 
 	// 작업 체크박스 전체 선택 및 해제
@@ -726,7 +708,8 @@
 							if(result == "success") {
 								Swal.fire({
 							    	icon: 'success',
-							    	title: '작업정보가 등록되었습니다.' 
+							    	title: '등록 성공', 
+							    	text: '작업정보가 등록되었습니다.' 
 								}).then((result) => {
 									if(result.isConfirmed) {
 										location.href = "${path}/myTask/list.do"
@@ -739,12 +722,27 @@
 			})
 		} else {
 			Swal.fire({
-				title: '진행률을 다시 입력해주세요',
-				text: '0~100 사이의 숫자를 입력해주세요',
-				icon: 'error'
+				icon: 'error',
+				title: '등록 실패',
+				text: '진행률은 0~100 사이의 숫자를 입력해주세요',
 			})
 		}
 	} 
+	
+	// 작업정보 모달 산출물 탭 '산출물 등록' 버튼 클릭 옵션
+	function formClick() {
+		if($("#outputFormDiv").css("display") == "none"){
+		    $("#outputFormDiv").show();
+		} else {
+		    $("#outputFormDiv").hide();
+		}
+	} 	
+	
+	$(document).ready(function() {
+		$("#cancelBtn").click(function() {
+			 $("#outputFormDiv").hide();
+		});
+	});
 	
 	// 승인요청
 	function approvalRequest() {	
@@ -753,7 +751,7 @@
 				title: '승인을 요청하시겠습니까?',
 				icon: 'question',
 				input: 'textarea',
-				inputPlaceholder: '승인요청 내용을 입력해주세요.',
+				inputPlaceholder: '승인요청 내용을 입력해주세요. (한글 최대 120자)',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
 				cancelButtonColor: '#d33',
@@ -761,54 +759,93 @@
 				cancelButtonText: '취소'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					let taskIdValues = [];
-					let pmIdValues = [];
 					let reqContent = result.value;
+					let stringLength = reqContent.length;
+					let stringByteLength = 0;
+					
+					// 승인요청 내용 byte 계산
+					for(var i=0; i<stringLength; i++) {
+					    if(escape(reqContent.charAt(i)).length >= 4)
+					    	stringByteLength += 3;
+					    else if(escape(reqContent.charAt(i)) == "%A7")
+					        stringByteLength += 3;
+					    else if(escape(reqContent.charAt(i)) != "%0D")
+					    	stringByteLength++;
+					}
+					
+					if (stringByteLength <= 360) {
+						let taskIdValues = [];
+						let pmIdValues = [];
+							
+						$("input[name=chk]:checked").each(function(i) {
+							taskIdValues.push($(this).val());
+							pmIdValues.push($(this).next().val());
+						});	
 						
-					$("input[name=chk]:checked").each(function(i) {
-						taskIdValues.push($(this).val());
-						pmIdValues.push($(this).next().val());
-					});	
-					
-					let requestData = {
-						taskId: taskIdValues,
-						pmId: pmIdValues,
-						reqContent: reqContent
-					};
-					
-					$.ajax({
-						url: "${path}/myTask/approvalRequest.do",
-						type: 'POST',
-						contentType:'application/json; charset=UTF-8',
-						dataType:'json',
-						data: JSON.stringify(requestData), 
-						success: function(result) {
-							if(result == "success") {
-								Swal.fire({
-							    	icon: 'success',
-							    	title: '승인을 요청하였습니다.' 
-								}).then((result) => {
-									if(result.isConfirmed) {
-										location.href = "${path}/myTask/approvalList.do"
-									}
-								})
+						let requestData = {
+							taskId: taskIdValues,
+							pmId: pmIdValues,
+							reqContent: reqContent
+						};
+						
+						$.ajax({
+							url: "${path}/myTask/approvalRequest.do",
+							type: 'POST',
+							contentType:'application/json; charset=UTF-8',
+							dataType:'json',
+							data: JSON.stringify(requestData), 
+							success: function(result) {
+								if(result == "success") {
+									Swal.fire({
+								    	icon: 'success',
+								    	title: '승인요청 성공',
+								    	text: '승인을 요청하였습니다.' 
+									}).then((result) => {
+										if(result.isConfirmed) {
+											location.href = "${path}/myTask/approvalList.do"
+										}
+									})
+								}
 							}
-						}
-					});
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: '승인요청 실패',
+							text: '한글 120자 혹은 영문 360자 이내로 입력해주세요.'
+						})	
+					}
 				}
 			})
 		} else {
 			Swal.fire({
-				title: '작업을 선택해주세요',
-				icon: 'error'
+				icon: 'error',
+				title: '승인요청 실패',
+				text: '작업을 선택해주세요' 
 			})
 		}		
 	}
-	
-	// 산출물
+
+	// 산출물 datatable
+	$("#myOutput").DataTable({
+		"searching": false,
+		"info": false,
+		"lengthChange": false,
+		"autoWidth" : false,
+		"columnDefs": [
+		    {"className": "dt-center", "targets": "_all"},
+		    {"width": "55%", "targets": 1}
+		],
+		"language": {
+	        "zeroRecords": "등록한 산출물이 없습니다."
+	    }
+	});
+
+	// 권한 및 계정 확인
 	const authId = ${emp.authId};
 	const empId = ${emp.empId};
 	
+	// 산출물 정보 조회
 	const outputDetail = (id) => {
 		$('#editBtn').remove();
 		$('#delBtn').remove();
@@ -909,6 +946,7 @@
 		}
 	};
 	
+	// 산출물 등록, 수정, 삭제
 	$(function() {
 		let isEdit = false;
 		getTasks();
@@ -1007,100 +1045,148 @@
 		});
 		
 		$(document).on('click', '#saveBtn', function() {
-			var form = $("#outputForm");
+			var fileCheck = $("input[name=file]").val();
 			
-		    // you can't pass Jquery form it has to be javascript form object
-		    var formData = new FormData(form[0]);
-		    $.ajax({
-	            type: "POST",
-	            url: $(form).prop("action"),
-	            //dataType: 'json', //not sure but works for me without this
-	            data: formData,
-	            contentType: false, //this is requireded please see answers above
-	            processData: false, //this is requireded please see answers above
-	            //cache: false, //not sure but works for me without this
-	            error: function(error) {
-	            	console.log(error);
-	            	if (error === 'fail') {
-	            		Swal.fire({
-	        			  icon: 'error',
-	        			  title: '등록 실패',
-	        			  text: '산출물 등록에 실패하였습니다.'
-	        			});
-	            	}
-	            },
-	            success: function(result) {
-	            	console.log(result);
-	            	if (result === 'success') {
-	            		Swal.fire({
-	        			  icon: 'success',
-	        			  title: '등록 성공',
-	        			  text: '산출물을 등록하였습니다.'
-	        			}).then((result) => {
-	       				  if (result.isConfirmed) {
-	  	            		location.href = '${path}/myTask/list.do';
-							  };
-	       				})
-	            	}
-	            }
-	        });
+			if (!fileCheck) {
+				Swal.fire({
+      			  icon: 'error',
+      			  title: '등록 실패',
+      			  text: '파일을 첨부해주세요.'
+      			});
+			} else {
+				var form = $("#outputForm");
+				console.log(form);
+				
+			    // you can't pass Jquery form it has to be javascript form object
+			    var formData = new FormData(form[0]);
+			    console.log(formData);
+			    
+			    $.ajax({
+		            type: "POST",
+		            url: $(form).prop("action"),
+		            //dataType: 'json', //not sure but works for me without this
+		            data: formData,
+		            contentType: false, //this is requireded please see answers above
+		            processData: false, //this is requireded please see answers above
+		            //cache: false, //not sure but works for me without this
+		            error: function(error) {
+		            	console.log(error);
+		            	if (error === 'fail') {
+		            		Swal.fire({
+		        			  icon: 'error',
+		        			  title: '등록 실패',
+		        			  text: '산출물 등록에 실패하였습니다.'
+		        			});
+		            	}
+		            },
+		            success: function(result) {
+		            	console.log(result);
+		            	if (result === 'success') {
+		            		Swal.fire({
+		        			  icon: 'success',
+		        			  title: '등록 성공',
+		        			  text: '산출물을 등록하였습니다.'
+		        			}).then((result) => {
+		       				  if (result.isConfirmed) {
+		  	            		location.href = '${path}/myTask/list.do';
+								  };
+		       				})
+		            	}
+		            }
+		        });
+			}
 		});
 		
 		$(document).on('click', '#saveBtn2', function() {
-			var form = $("#outputForm2");
+			var fileCheck = $("input[name=file]").val();
 			
-		    // you can't pass Jquery form it has to be javascript form object
-		    var formData = new FormData(form[0]);
-		    $.ajax({
-	            type: "POST",
-	            url: $(form).prop("action"),
-	            //dataType: 'json', //not sure but works for me without this
-	            data: formData,
-	            contentType: false, //this is requireded please see answers above
-	            processData: false, //this is requireded please see answers above
-	            //cache: false, //not sure but works for me without this
-	            error: function(error) {
-	            	console.log(error);
-	            	if (error === 'fail') {
-	            		Swal.fire({
-	        			  icon: 'error',
-	        			  title: '등록 실패',
-	        			  text: '산출물 등록에 실패하였습니다.'
-	        			});
-	            	}
-	            },
-	            success: function(result) {
-	            	console.log(result);
-	            	if (result === 'success') {
-	            		Swal.fire({
-	        			  icon: 'success',
-	        			  title: '등록 성공',
-	        			  text: '산출물을 등록하였습니다.'
-	        			}).then((result) => {
-	       				  if (result.isConfirmed) {
-	  	            		location.href = '${path}/myTask/list.do';
-							  };
-	       				})
-	            	}
-	            }
-	        });
+			if (!fileCheck) {
+				Swal.fire({
+      			  icon: 'error',
+      			  title: '등록 실패',
+      			  text: '파일을 첨부해주세요.'
+      			});
+			} else {
+				// you can't pass Jquery form it has to be javascript form object
+			    var formData = new FormData(form[0]);
+			    $.ajax({
+		            type: "POST",
+		            url: $(form).prop("action"),
+		            //dataType: 'json', //not sure but works for me without this
+		            data: formData,
+		            contentType: false, //this is requireded please see answers above
+		            processData: false, //this is requireded please see answers above
+		            //cache: false, //not sure but works for me without this
+		            error: function(error) {
+		            	console.log(error);
+		            	if (error === 'fail') {
+		            		Swal.fire({
+		        			  icon: 'error',
+		        			  title: '등록 실패',
+		        			  text: '산출물 등록에 실패하였습니다.'
+		        			});
+		            	}
+		            },
+		            success: function(result) {
+		            	console.log(result);
+		            	if (result === 'success') {
+		            		Swal.fire({
+		        			  icon: 'success',
+		        			  title: '등록 성공',
+		        			  text: '산출물을 등록하였습니다.'
+		        			}).then((result) => {
+		       				  if (result.isConfirmed) {
+		  	            		location.href = '${path}/myTask/list.do';
+								  };
+		       				})
+		            	}
+		            }
+		        });
+			}  
 		});
 	});
 	
-	function formClick() {
-		if($("#outputFormDiv").css("display") == "none"){
-		    $("#outputFormDiv").show();
-		} else {
-		    $("#outputFormDiv").hide();
+	// 글자수 입력 제한
+	function textByte(obj, maxByte){
+		let str = obj.value;
+		let str_len = str.length;
+		
+		let rbyte = 0; 
+		let rlen = 0; 
+		
+		let one_char = "";
+		let str2 = "";
+	
+		//문자 byte 계산
+		for(var i=0; i<str_len; i++) {
+			one_char = str.charAt(i); 
+			
+			if(escape(one_char).length > 4){ 
+			    rbyte += 3; // 한글 3Byte
+			} else {
+			    rbyte++; // 그 외 1Byte
+			}
+	
+			if(rbyte <= maxByte) { 
+			    rlen = i+1;
+			}
 		}
-	} 	
 	
-	$(document).ready(function() {
-		$("#cancelBtn").click(function() {
-			 $("#outputFormDiv").hide();
-		});
-	});
-	
+		//문자열 자르기
+		if(rbyte > maxByte){
+			Swal.fire({
+				title: '입력 실패',
+				text: '한글 ' + (maxByte/3) + '자 혹은 영문 ' + maxByte + '자를 초과할 수 없습니다.',
+				icon: 'error'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					str2 = str.substr(0,rlen); 
+				    obj.value = str2;
+				    textByte(obj, maxByte);
+				}
+			});
+		}
+	}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

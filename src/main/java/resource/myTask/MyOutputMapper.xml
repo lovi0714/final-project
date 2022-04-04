@@ -29,18 +29,6 @@
 		<result column="name" property="projectName"/>
 	</resultMap>
 	
-	<!-- 산출물 프로젝트 선택 옵션  -->
-	<select id="getProjectList" resultType="project" parameterType="int">
- 		SELECT DISTINCT tp.prj_id AS projectId, tp.name AS title
-		FROM TBL_OUTPUT tou, 
-			TBL_TASK tt, 
-			TBL_PROJECT tp 
-		WHERE tou.task_id = tt.task_id AND 
-				tt.prj_id = tp.prj_id AND 
-				tou.emp_id = #{empId}
-		ORDER BY title ASC
- 	</select>
-	
 	<!-- 산출물 목록 -->
 	<select id="getMyOutputList" resultMap="outputListMap" parameterType="int">
 		SELECT tou.out_id, tof.original_name, tof.volume, tof.volume_text, te.name, tou.cat_id, tof.update_at, tp.name AS project_name
@@ -57,6 +45,18 @@
 		ORDER BY tou.out_id DESC
 	</select>
 	
+	<!-- 산출물 목록 프로젝트 선택 옵션  -->
+	<select id="getProjectList" resultType="project" parameterType="int">
+ 		SELECT DISTINCT tp.prj_id AS projectId, tp.name AS title
+		FROM TBL_OUTPUT tou, 
+			TBL_TASK tt, 
+			TBL_PROJECT tp 
+		WHERE tou.task_id = tt.task_id AND 
+				tt.prj_id = tp.prj_id AND 
+				tou.emp_id = #{empId}
+		ORDER BY title ASC
+ 	</select>
+	
 	<!-- 산출물 정보 -->
 	<select id="getMyOutputInfo" resultMap="myOutputInfoMap" parameterType="myTask">
 		SELECT tof.original_name, tof.save_name, toc.category, tot.out_type, tou.content
@@ -71,7 +71,7 @@
 				tou.emp_id = #{empId}
 	</select>
 	
-	<!-- 프로젝트 목록 -->
+	<!-- 산출물 등록 프로젝트 선택 옵션 -->
 	<select id="getOutputProject" resultMap="projectInfoMap">
 		SELECT DISTINCT tp.prj_id, tp.name 
 		FROM TBL_PROJECT tp,

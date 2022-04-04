@@ -39,12 +39,12 @@ public class MyTaskController {
 	public String getMyTaskList(HttpSession session, Model model) {
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		
-		// 작업 목록
+		// 작업
 		model.addAttribute("taskProject", taskService.getProjectList(empId));
 		model.addAttribute("status", taskService.getStatusList());
 		model.addAttribute("taskList", taskService.getMyTaskList(empId));
 		
-		// 산출물 목록
+		// 산출물
 		model.addAttribute("outputProject", myOutputService.getProjectList(empId));
 		model.addAttribute("outputList", myOutputService.getMyOutputList(empId));
 		model.addAttribute("project", myOutputService.getOutputProject(empId));

@@ -8,10 +8,6 @@
 	<jsp:param name="isTaskSide" value="active" />
 	<jsp:param name="isTaskList" value="active" />
 </jsp:include>
-
-<link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
-<link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
-
 <style>
 .nav-tabs .nav-link.active {
 	color: white;
@@ -31,34 +27,33 @@
 				</div>
 			</div>
 		</div>
-		
 		<section class="section">
 			<div class="card">
 				<div class="card-header">
 						<p class="fw-bold">내 결재</p>
 				</div>
-				
 				<div class="card-body">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item" role="presentation">
-							<a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">승인대기</a>
+							<a class="nav-link active" id="wait-tab" data-bs-toggle="tab" href="#wait" role="tab" aria-controls="wait" aria-selected="true">승인대기</a>
 						</li>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">승인완료</a>
+							<a class="nav-link" id="complete-tab" data-bs-toggle="tab" href="#complete" role="tab" aria-controls="complete" aria-selected="false">승인완료</a>
 						</li>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">반려</a>
+							<a class="nav-link" id="reject-tap" data-bs-toggle="tab" href="#reject" role="tab" aria-controls="reject" aria-selected="false">반려</a>
 						</li>
 					</ul>
 					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+						<!-- 승인대기 tap start -->
+						<div class="tab-pane fade show active" id="wait" role="tabpanel" aria-labelledby="wait-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<c:forEach items="${WaitingProject}" var="project">
-	                                    		<option value="${project.prjId}">${project.prjName}</option>
+											<c:forEach var="wp" items="${waitingProject}">
+	                                    		<option value="${wp.prjId}">${wp.prjName}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
@@ -71,17 +66,15 @@
 								</div>
 								<div class="col-md-6">
 									<div class="input-group mb-3 justify-content-end">
-										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" id="cancelBtn" onclick="MyApprovalCancel1();">회수</button>
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" id="cancelBtn" onclick="approvalCancel1();">회수</button>
 									</div>
 								</div>
 							</div>
-								
-							<!-- Basic Tables start -->
-							<table class="table" id="table1">
+							<table class="table" id="waitTable">
 								<thead>	
 									<tr>
 										<th>
-											<input type="checkbox" id="cbx_chkAll1" class="form-check-input">
+											<input type="checkbox" id="checkAll1" class="form-check-input">
 										</th>
 										<th>작업</th>
 										<th>프로젝트</th>
@@ -91,31 +84,32 @@
 									</tr>
 								</thead>
 								<tbody>
-	                      			<c:forEach var="wait" items="${WaitingList}">
-										<tr>
+	                      			<c:forEach var="list" items="${waitingList}">
+										<tr> 
 											<td>
-												<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${wait.taskId}">
+												<input type="checkbox" id="checkbox1" name="chk1" class="form-check-input" value="${list.taskId}">
 											</td>
-											<td onclick="taskDetail(${wait.taskId})" style="color: #435ebe; cursor: pointer">${wait.taskName}</td>
-											<td>${wait.prjName}</td>
-											<td>${wait.approver}</td>
-											<td><span class="badge bg-secondary">${wait.apStatus}</span></td>
-											<td><fmt:formatDate value="${wait.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+											<td onclick="taskDetail(${list.taskId})" style="color: #435ebe; cursor: pointer">${list.taskName}</td>
+											<td>${list.prjName}</td>
+											<td>${list.approver}</td>
+											<td><span class="badge bg-secondary">${list.apStatus}</span></td>
+											<td><fmt:formatDate value="${list.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 										</tr>
 	                       			</c:forEach>	
 			                    </tbody>				
 							</table>
-							<!-- Basic Tables end -->
 						</div>
-	
-						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+						<!-- 승인대기 tap end -->
+						
+						<!-- 승인완료 tap start -->
+						<div class="tab-pane fade" id="complete" role="tabpanel" aria-labelledby="complete-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<c:forEach items="${CompletedProject}" var="project">
-	                                    		<option value="${project.prjId}">${project.prjName}</option>
+											<c:forEach var="cp" items="${completedProject}">
+	                                    		<option value="${cp.prjId}">${cp.prjName}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
@@ -127,9 +121,7 @@
 									</div>
 								</div>
 							</div>
-									
-							<!-- Basic Tables start -->
-							<table class="table" id="table2">
+							<table class="table" id="completeTable">
 								<thead>
 									<tr>
 										<th>작업</th>
@@ -141,29 +133,30 @@
 									</tr>
 								</thead>
 								<tbody>
-	                      			<c:forEach var="complete" items="${CompletedList}">
+	                      			<c:forEach var="list" items="${completedList}">
 										<tr>
-											<td onclick="taskDetail(${complete.taskId})" style="color: #435ebe; cursor: pointer">${complete.taskName}</td>
-											<td>${complete.prjName}</td>
-											<td>${complete.approver}</td>
-											<td><span class="badge bg-success">${complete.apStatus}</span></td>
-											<td><fmt:formatDate value="${complete.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-											<td><fmt:formatDate value="${complete.approvalAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+											<td onclick="taskDetail(${list.taskId})" style="color: #435ebe; cursor: pointer">${list.taskName}</td>
+											<td>${list.prjName}</td>
+											<td>${list.approver}</td>
+											<td><span class="badge bg-success">${list.apStatus}</span></td>
+											<td><fmt:formatDate value="${list.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+											<td><fmt:formatDate value="${list.approvalAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 										</tr>
 	                       			</c:forEach>	
 								</tbody>
-							</table>
-							<!-- Basic Tables end -->			
+							</table>		
 						</div>
-							
-						<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+						<!-- 승인완료 tap end -->
+						
+						<!-- 반려 tap start -->
+						<div class="tab-pane fade" id="reject" role="tabpanel" aria-labelledby="reject-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
 										<select class="form-select" id="basicSelect">
 											<option>프로젝트를 선택하세요</option>
-											<c:forEach items="${RejectedProject}" var="project">
-	                                    		<option value="${project.prjId}">${project.prjName}</option>
+											<c:forEach items="${rejectedProject}" var="rp">
+	                                    		<option value="${rp.prjId}">${rp.prjName}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
@@ -176,17 +169,15 @@
 								</div>
 								<div class="col-md-6">
 									<div class="input-group mb-3 justify-content-end">
-										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" onclick="MyApprovalCancel2();">회수</button>
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" onclick="approvalCancel2();">회수</button>
 									</div>
 								</div>
 							</div>
-								
-							<!-- Basic Tables start -->
-							<table class="table" id="table3">
+							<table class="table" id="rejectTable">
 								<thead>
 									<tr>
 										<th>
-											<input type="checkbox" id="cbx_chkAll2" class="form-check-input">
+											<input type="checkbox" id="checkAll2" class="form-check-input">
 										</th>
 										<th>작업</th>
 										<th>프로젝트</th>
@@ -197,23 +188,23 @@
 									</tr>
 								</thead>
 								<tbody>
-	                      			<c:forEach var="reject" items="${RejectedList}">
+	                      			<c:forEach var="list" items="${rejectedList}">
 										<tr>
 											<td>
-												<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${reject.taskId}">
+												<input type="checkbox" id="checkbox1" name="chk2" class="form-check-input" value="${list.taskId}">
 											</td>
-											<td onclick="taskDetail(${reject.taskId})" style="color: #435ebe; cursor: pointer">${reject.taskName}</td>
-											<td>${reject.prjName}</td>
-											<td>${reject.approver}</td>
-											<td><span class="badge bg-danger">${reject.apStatus}</span></td>
-											<td><fmt:formatDate value="${reject.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-											<td><fmt:formatDate value="${reject.rejectAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+											<td onclick="taskDetail(${list.taskId})" style="color: #435ebe; cursor: pointer">${list.taskName}</td>
+											<td>${list.prjName}</td>
+											<td>${list.approver}</td>
+											<td><span class="badge bg-danger">${list.apStatus}</span></td>
+											<td><fmt:formatDate value="${list.createAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+											<td><fmt:formatDate value="${list.rejectAt}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 										</tr>
 	                       			</c:forEach>
 								</tbody>
 							</table>
-							<!-- Basic Tables end -->
 						</div>
+						<!-- 반려 tap end -->
 					</div>
 				</div>
 			</div>
@@ -223,71 +214,60 @@
 	<!-- 작업정보 modal 버튼 -->
 	<button type="button" class="callModal" data-bs-toggle="modal" data-bs-target="#primary" style="display: none"></button>
 	
-	<!-- 작업정보 modal -->
-	<div class="modal fade text-left" id="primary" tabindex="-1"
-		role="dialog" data-bs-backdrop="static"
+	<!-- 작업정보 modal start -->
+	<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" data-bs-backdrop="static"
 		aria-labelledby="myModalLabel160" aria-hidden="true">
-		<div
-			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-			role="document">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header" style="padding-bottom: 0;">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item" role="presentation">
-							<a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="true">작업정보</a>
+							<a class="nav-link active" id="taskInfo-tab" data-bs-toggle="tab" href="#taskInfo" role="tab" aria-controls="taskInfo" aria-selected="true">작업정보</a>
 						</li>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false">산출물</a>
+							<a class="nav-link" id="outputInfo-tab" data-bs-toggle="tab" href="#outputInfo" role="tab" aria-controls="outputInfo" aria-selected="false">산출물</a>
 						</li>
 					</ul>
 				</div>
 				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab">
+					<div class="tab-pane fade show active" id="taskInfo" role="tabpanel" aria-labelledby="taskInfo-tab">
 						<div class="modal-body">
 							<form class="form">
 								<div class="row">
-									<div class="col-12">
-									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">작업</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="taskName" readonly>
+                                            <input type="text" id="first-name-column" class="form-control" name="taskName" readonly style="background-color: white;" >
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">프로젝트</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="pTitle" readonly>
+											<label for="first-name-column" style="padding-bottom: 6px;">프로젝트</label>
+                                            <input type="text" id="first-name-column" class="form-control" name="pTitle" readonly style="background-color: white;">
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">시작일</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="startAt" readonly>
+											<label for="first-name-column" style="padding-bottom: 6px;">시작일</label>
+                                            <input type="text" id="first-name-column" class="form-control" name="startAt" readonly style="background-color: white;" >
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">완료일</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="endAt" readonly>
+											<label for="first-name-column" style="padding-bottom: 6px;">완료일</label>
+                                            <input type="text" id="first-name-column" class="form-control" name="endAt" readonly style="background-color: white;" >
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
-                                            <input type="number" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="progress" readonly>
+                                            <input type="number"id="first-name-column" class="form-control" name="progress" readonly style="background-color: white;" >
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="first-name-column"  style="padding-bottom: 6px;">승인자</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control"
-                                                name="pmName" readonly>
+                                            <input type="text"id="first-name-column" class="form-control" name="pmName" readonly style="background-color: white;" >
 										</div>
 									</div>
 									<div class="col-12">
@@ -306,8 +286,7 @@
 							</button>
 						</div>
 					</div>
-					
-					<div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="tab-pane fade" id="outputInfo" role="tabpanel" aria-labelledby="profile-tab">
 						<div class="modal-body">
 							<form class="form" id="detail">
 							</form>
@@ -324,14 +303,11 @@
 			</div>
 		</div>
 	</div>
+	<!-- 작업정보 modal end -->
 	
-<script src="${path}/resources/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
-<script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
-<script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
-
 <script>
-	// Jquery Datatable
-	$("#table1").DataTable({
+	// 승인대기 datatable
+	$("#waitTable").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false,
@@ -349,7 +325,77 @@
 		"order": [5, 'desc']
 	});
 
-	$("#table2").DataTable({
+	// 승인대기 체크박스 전체 선택 및 해제
+	$(document).ready(function() {
+		$("#checkAll1").click(function() {	
+			if($("#checkAll1").is(":checked")) 
+				$("input[name=chk1]").prop("checked", true);
+			else 
+				$("input[name=chk1]").prop("checked", false);
+		});
+			
+		$("input[name=chk1]").click(function() {			
+			let total = $("input[name=chk1]").length;
+			let checked = $("input[name=chk1]:checked").length;
+			
+			if(total != checked) 
+				$("#checkAll1").prop("checked", false);
+			else 
+				$("#checkAll1").prop("checked", true); 
+		});
+	});
+	
+	// 승인대기 회수
+	function approvalCancel1() {
+		if($("input[name=chk1]").is(":checked")) {
+			Swal.fire({
+				title: '결재를 회수하시겠습니까?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '확인',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					let taskIdValues = [];
+					$("input[name=chk1]:checked").each(function(i) {
+						taskIdValues.push($(this).val());
+					});	
+					
+					let taskIdData = {"taskId": taskIdValues};
+					
+					$.ajax({
+						url: "${path}/myTask/approvalCancel.do",
+						type: 'GET',
+						data: taskIdData,
+						success: function(result) {
+							if(result == "success") {
+								Swal.fire({
+							    	icon: 'success',
+							    	title: '회수 성공',
+							    	text: '결재가 회수되었습니다.' 
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href = "${path}/myTask/list.do"
+									}
+								})
+							}
+						}
+					});
+				}
+			})
+		} else {
+			Swal.fire({
+				icon: 'error',
+				title: '회수 실패',
+				text: '작업을 선택해주세요.'
+			})
+		}
+	}
+	
+	// 승인완료 datatable
+	$("#completeTable").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false,
@@ -365,7 +411,8 @@
 		"order": [5, 'desc']
 	});
 	
-	$("#table3").DataTable({
+	// 반려 datatable
+	$("#rejectTable").DataTable({
 		"searching": false,
 		"info": false,
 		"lengthChange": false,
@@ -383,28 +430,10 @@
 		"order": [6, 'desc']
 	});
 
+	// 반려 체크박스 전체 선택 및 해제
 	$(document).ready(function() {
-		$("#cbx_chkAll1").click(function() {	
-			if($("#cbx_chkAll1").is(":checked")) 
-				$("input[name=chk1]").prop("checked", true);
-			else 
-				$("input[name=chk1]").prop("checked", false);
-		});
-			
-		$("input[name=chk1]").click(function() {			
-			let total = $("input[name=chk1]").length;
-			let checked = $("input[name=chk1]:checked").length;
-			
-			if(total != checked) 
-				$("#cbx_chkAll1").prop("checked", false);
-			else 
-				$("#cbx_chkAll1").prop("checked", true); 
-		});
-	});
-	
-	$(document).ready(function() {
-		$("#cbx_chkAll2").click(function() {	
-			if($("#cbx_chkAll2").is(":checked")) 
+		$("#checkAll2").click(function() {	
+			if($("#checkAll2").is(":checked")) 
 				$("input[name=chk2]").prop("checked", true);
 			else 
 				$("input[name=chk2]").prop("checked", false);
@@ -415,12 +444,62 @@
 			let checked = $("input[name=chk2]:checked").length;
 			
 			if(total != checked) 
-				$("#cbx_chkAll2").prop("checked", false);
+				$("#checkAll2").prop("checked", false);
 			else 
-				$("#cbx_chkAll2").prop("checked", true); 
+				$("#checkAll2").prop("checked", true); 
 		});
 	});
 		
+	// 반려 회수
+	function approvalCancel2() {
+		if($("input[name=chk2]").is(":checked")) {
+			Swal.fire({
+				title: '결재를 회수하시겠습니까?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '확인',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					let taskIdValues = [];
+					$("input[name=chk2]:checked").each(function(i) {
+						taskIdValues.push($(this).val());
+					});	
+					
+					let taskIdData = {"taskId": taskIdValues};
+					
+					$.ajax({
+						url: "${path}/myTask/approvalCancel.do",
+						type: 'GET',
+						data: taskIdData,
+						success: function(result) {
+							if(result == "success") {
+								Swal.fire({
+							    	icon: 'success',
+							    	title: '회수 성공',
+							    	text: '결재가 회수되었습니다.' 
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href = "${path}/myTask/list.do"
+									}
+								})
+							}
+						}
+					});
+				}
+			})
+		} else {
+			Swal.fire({
+				icon: 'error',
+				title: '회수 실패',
+				text: '작업을 선택해주세요.'
+			})
+		}
+	}
+	
+	// 작업정보 조회
 	function taskDetail(taskId){
 		$.ajax({
 			url: "${path}/myTask/detail.do",
@@ -495,100 +574,6 @@
 			}
 		});	
 	}
-
-	function MyApprovalCancel1() {
-		if($("input[name=chk1]").is(":checked")) {
-			Swal.fire({
-				title: '결재를 회수하시겠습니까?',
-				icon: 'question',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: '확인',
-				cancelButtonText: '취소'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					let taskIdValues = [];
-					$("input[name=chk1]:checked").each(function(i) {
-						taskIdValues.push($(this).val());
-					});	
-					
-					let taskIdData = {"taskId": taskIdValues};
-					
-					$.ajax({
-						url: "${path}/myTask/approvalCancel.do",
-						type: 'GET',
-						data: taskIdData,
-						success: function(result) {
-							if(result == "success") {
-								Swal.fire({
-							    	icon: 'success',
-							    	title: '결재가 회수되었습니다.' 
-								}).then((result) => {
-									if(result.isConfirmed) {
-										location.href = "${path}/myTask/list.do"
-									}
-								})
-							}
-						}
-					});
-				}
-			})
-		} else {
-			Swal.fire({
-				title: '작업을 선택해주세요',
-				icon: 'error'
-			})
-		}
-	}
-	
-	function MyApprovalCancel2() {
-		if($("input[name=chk2]").is(":checked")) {
-			Swal.fire({
-				title: '결재를 회수하시겠습니까?',
-				icon: 'question',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: '확인',
-				cancelButtonText: '취소'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					let taskIdValues = [];
-					$("input[name=chk2]:checked").each(function(i) {
-						taskIdValues.push($(this).val());
-					});	
-					
-					let taskIdData = {"taskId": taskIdValues};
-					
-					$.ajax({
-						url: "${path}/myTask/approvalCancel.do",
-						type: 'GET',
-						data: taskIdData,
-						success: function(result) {
-							if(result == "success") {
-								Swal.fire({
-							    	icon: 'success',
-							    	title: '결재가 회수되었습니다.' 
-								}).then((result) => {
-									if(result.isConfirmed) {
-										location.href = "${path}/myTask/list.do"
-									}
-								})
-							}
-						}
-					});
-				}
-			})
-		} else {
-			Swal.fire({
-				title: '작업을 선택해주세요',
-				icon: 'error'
-			})
-		}
-	}
-	
-
-	
 </script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

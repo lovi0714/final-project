@@ -48,5 +48,4 @@
 		DELETE FROM TBL_CALENDAR
 		WHERE cal_id = #{id}
 	</delete>
-		
 </mapper>

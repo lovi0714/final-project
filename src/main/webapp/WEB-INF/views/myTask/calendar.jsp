@@ -131,7 +131,8 @@
 			if($("[name=title]").val()=="") {
 				Swal.fire({
 					  icon: 'error',
-					  title: '일정 제목을 입력해주세요.'
+					  title: '등록 실패',
+					  text: '일정 제목을 입력해주세요.'
 				})
 				return;
 			}
@@ -147,7 +148,8 @@
 			if($("[name=title]").val()=="") {
 				Swal.fire({
 					  icon: 'error',
-					  title: '일정 제목을 입력해주세요.'
+					  title: '수정 실패',
+					  text: '일정 제목을 입력해주세요.'
 				})
 				return;
 			}

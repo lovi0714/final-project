@@ -35,7 +35,7 @@
 				tt.manager_id = #{empId}
 	</select>		
 	
-	<!-- 승인대기 프로젝트 선택 옵션 리스트 -->
+	<!-- 승인대기 목록 프로젝트 선택 옵션 리스트 -->
 	<select id="getWaitingProjectList" resultMap="myApprovalMap">
 		SELECT DISTINCT tp.prj_id, tp.name AS prj_name
 		FROM TBL_TASK tt,
@@ -70,7 +70,7 @@
 				tt.manager_id = #{empId}
 	</select>		
 	
-	<!-- 승인완료 프로젝트 선택 옵션 리스트 -->
+	<!-- 승인완료 목록 프로젝트 선택 옵션 리스트 -->
 	<select id="getCompletedProjectList" resultMap="myApprovalMap">
 		SELECT DISTINCT tp.prj_id, tp.name AS prj_name
 		FROM TBL_TASK tt,
@@ -105,7 +105,7 @@
 				tt.manager_id = #{empId}
 	</select>		
 	
-	<!-- 반려 프로젝트 선택 옵션 리스트 -->
+	<!-- 반려 목록 프로젝트 선택 옵션 리스트 -->
 	<select id="getRejectedProjectList" resultMap="myApprovalMap">
 		SELECT DISTINCT tp.prj_id, tp.name AS prj_name
 		FROM TBL_TASK tt,
