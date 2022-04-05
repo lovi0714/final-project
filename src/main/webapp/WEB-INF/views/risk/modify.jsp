@@ -98,6 +98,9 @@
 		                                            	<option><c:out value="${emp.name }"/></option>
 		                                            </c:forEach>
 		                                        </select>
+		                                        <script>
+		                    						$('#activator').val('${risk.activator}').prop("selected",true);
+		                    					</script>
 		                                    </fieldset>
                                         </div>
                                 	</div>

@@ -92,7 +92,8 @@
  		R_CONTENT as rContent,
  		A_CONTENT as aContent,
  		TO_CHAR(DUE_AT,'YYYY-MM-DD') as dueAt,
- 		R_STATUS_ID as rStatusId
+ 		R_STATUS_ID as rStatusId,
+ 		ACTIVATOR as activator
 		FROM TBL_RISK
 		WHERE RISK_ID = #{riskId} 		
  	</select>
