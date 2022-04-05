@@ -22,13 +22,29 @@
 	var ws;
 	
 	$(document).ready(function(){
+			
+		const Toast = Swal.mixin({
+			toast: true, position: 'top',
+			showConfirmButton: false,
+			timer: 1500,
+			timerProgressBar: true,
+			didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer) 
+				} 
+			})
 		
 		$("#chatBox").hide();
 		
 		$("#exitBtn").hide();
+		
+		
 		// 접속 종료를 처리했을 시
 		$("#exitBtn").click(function(){	
-			alert($("#userName").val()+'님 접속 종료합니다.');
+			Toast.fire({
+                icon: 'success',
+                title: $("#userName").val()+'님 접속을 종료합니다.'
+            });
 			$("#yourName").show();
 			$("#exitBtn").hide();
 			$('#chating').text("");
@@ -103,12 +119,28 @@
 		var userName = $("#userName").val();
 		var deptInfo = dept;
 		document.getElementById("deptInfo").value = deptInfo;
+
+		const Toast = Swal.mixin({
+			toast: true, position: 'top',
+			showConfirmButton: false,
+			timer: 1500,
+			timerProgressBar: true,
+			didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer) 
+				} 
+			})
+
+		
 		if(userName == null || userName.trim() == "") {
 			alert("사용자 이름을 입력해주세요.");
 			$("#userName").focus();
 		}else{
 			wsOpen();
-			alert($("#userName").val()+'님 반갑습니다.');
+			Toast.fire({
+                icon: 'success',
+                title: $("#userName").val()+'님 반갑습니다.'
+            });
 			$("#roomName").append("<h3 style='margin-top:15px;'>"+deptInfo+"</h3>")
 			$("#yourName").hide();
 			$("#yourMsg").show();
