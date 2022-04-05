@@ -10,6 +10,8 @@
 	<jsp:param name="isProjectSide" value="active" />
 	<jsp:param name="isList" value="active" />
 </jsp:include>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
 <style>
 .nav-tabs .nav-link.active {
 	color: white;
@@ -21,6 +23,10 @@
 
 .nav {
 	padding-left: 10px;
+}
+
+.error {
+	color: #f44336 !important;
 }
 </style>
 <div id="main-content">
@@ -60,7 +66,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">프로젝트 제목</label>
-                                            <input type="text" id="projectTitle" class="form-control" placeholder="프로젝트 제목을 입력하세요." name="title" maxlength="120" value="${project.title}" disabled>
+                                            <input type="text" id="projectTitle" class="form-control" placeholder="프로젝트 제목을 입력하세요." name="title" maxlength="120" value='<c:out value="${project.title}"></c:out>' disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
@@ -141,7 +147,7 @@
                                     <div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">프로젝트 설명</label>
-                            				<textarea class="form-control" id="projectContent" rows="3" name="content" disabled>${project.content}</textarea>
+                            				<textarea class="form-control" id="projectContent" rows="3" name="content" disabled><c:out value="${project.content}"></c:out></textarea>
                                         </div>
                                 	</div>
                                     <div id="btnWrap" class="col-12 d-flex justify-content-end" style="display: none;">
@@ -163,47 +169,50 @@ $(function() {
 	$('#btnWrap').attr('style', 'display: none !important');
 	
 	$('#saveBtn').click(function() {
-		Swal.fire({
-			  title: '변경사항을 저장하시겠습니까?',
-			  text: '변경사항이 저장됩니다.',
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: '예',
-			  cancelButtonText: '아니오',
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				  
-			  	 var data = {
-			  		projectId: '${param.projectId}',
-					title: $('#projectTitle').val(),
-					typeId: $('#projectTypeId').val(),
-		            rndTypeId: $('#rndTypeId').val(),
-		            pmId: $('#projectPmId').val(),
-		            pmoId: $('#projectPmoId').val(),
-		            startAt: $('#projectStartAt').val(),
-		            endAt: $('#projectEndAt').val(),
-		            content: $('#projectContent').val(),
-		            statusId: $('#statusId').val()
-		    	  };
-						
-			  	toggleDisabled(true);
-			  	
-				$.ajax({
-				  url: "${path}/project/api/modify.do",
-				  method: "post",
-				  contentType: "application/json; charset=utf-8",
-				  data: JSON.stringify(data)
-				}).done(function(msg) {
-					Swal.fire('저장되었습니다.', '', 'success')
-				}).fail(function(error) {
-					console.log(error);
-					Swal.fire('오류가 발생하여 저장하지 못했습니다.', '', 'info')
-				});
-	  		}
-		})
+		const result = $('#prjForm').valid();
 		
+		if (result) {
+			Swal.fire({
+				  title: '변경사항을 저장하시겠습니까?',
+				  text: '변경사항이 저장됩니다.',
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '예',
+				  cancelButtonText: '아니오',
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  
+				  	 var data = {
+				  		projectId: '${param.projectId}',
+						title: $('#projectTitle').val(),
+						typeId: $('#projectTypeId').val(),
+			            rndTypeId: $('#rndTypeId').val(),
+			            pmId: $('#projectPmId').val(),
+			            pmoId: $('#projectPmoId').val(),
+			            startAt: $('#projectStartAt').val(),
+			            endAt: $('#projectEndAt').val(),
+			            content: $('#projectContent').val(),
+			            statusId: $('#statusId').val()
+			    	  };
+							
+				  	toggleDisabled(true);
+				  	
+					$.ajax({
+					  url: "${path}/project/api/modify.do",
+					  method: "post",
+					  contentType: "application/json; charset=utf-8",
+					  data: JSON.stringify(data)
+					}).done(function(msg) {
+						Swal.fire('저장되었습니다.', '', 'success')
+					}).fail(function(error) {
+						console.log(error);
+						Swal.fire('오류가 발생하여 저장하지 못했습니다.', '', 'info')
+					});
+		  		}
+			})
+		}
 		
 	});
 	
@@ -439,6 +448,50 @@ $(function() {
 		}).fail(function(error) {
 			console.log(error);
 		});
+	
+	$('#prjForm').validate({
+		rules: {
+			title: {
+				required: true,
+				maxlength: 120
+			},
+			pmId: {
+				required: true
+			},
+			pmoId: {
+				required: true
+			},
+			startAt: {
+				required: true,
+				date: true
+			},
+			endAt: {
+				required: true,
+				date: true
+			}
+		},
+		messages : {
+			title : {
+                required : '프로젝트명을 입력하세요',
+                maxlength : '프로젝트명은 최대 120자까지 입력가능합니다.'
+            },
+            pmId : {
+                required : '프로젝트 관리자를 지정하세요'
+            },
+            pmoId : {
+            	required : '프로젝트 담당자를 지정하세요'
+            },
+            startAt : {
+            	required : '시작날짜를 지정하세요.',
+            	date: '날짜형식을 확인하세요.'
+            },
+            endAt : {
+            	required : '종료날짜를 지정하세요.',
+            	date: '날짜형식을 확인하세요.'
+            }
+	    }
+	});
+	
 	
 });
 

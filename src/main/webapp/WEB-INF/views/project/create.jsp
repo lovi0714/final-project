@@ -10,6 +10,13 @@
 	<jsp:param name="isProjectSide" value="active" />
 	<jsp:param name="isList" value="active" />
 </jsp:include>
+<style>
+.error {
+	color: #f44336 !important;
+}
+</style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
             <div id="main-content">
 
                 <div class="page-heading">
@@ -27,7 +34,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">프로젝트 제목</label>
-                                            <input type="text" id="projectTitle" class="form-control" placeholder="프로젝트 제목을 입력하세요." name="title" maxlength="120">
+                                            <input type="text" id="projectTitle" class="form-control" placeholder="프로젝트 제목을 입력하세요." name="title" maxlength="120" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
@@ -152,7 +159,6 @@
 			  method: "get",
 			}).done(function(result) {
 			    result.map((data, idx) => {
-			    	console.log(data);
 			    	$('#pmDeptType').append(`<option value="\${data.deptId}">\${data.deptName}</option>`);
 			    	$('#pmoDeptType').append(`<option value="\${data.deptId}">\${data.deptName}</option>`);
 			    });
@@ -187,8 +193,6 @@
 				console.log(error);
 		});
 		
-		
-		
 		$.ajax({
 			  url: "${path}/project/api/projectType.do",
 			  method: "get",
@@ -213,31 +217,86 @@
 		
 		$('#regBtn').click(function(e) {
 			e.preventDefault();
-
-			 var data = {
-					title: $('#projectTitle').val(),
-					statusId: '1',
-					typeId: $('#projectTypeId').val(),
-		            rndTypeId: $('#rndTypeId').val(),
-		            pmId: $('#projectPmId').val(),
-		            pmoId: $('#projectPmoId').val(),
-		            startAt: $('#projectStartAt').val(),
-		            endAt: $('#projectEndAt').val(),
-		            content: $('#projectContent').val()
-		            };
-			 
-			$.ajax({
-			  url: "${path}/project/create.do",
-			  method: "post",
-			  contentType: "application/json; charset=utf-8",
-			  data: JSON.stringify(data)
-			}).done(function(msg) {
-				alert('프로젝트를 등록하였습니다.');
-				location.href = '${path}/project/list.do';
-			}).fail(function(error) {
-				console.log(error);
+			
+			$('#prjForm').validate({
+				rules: {
+					title: {
+						required: true,
+						maxlength: 120
+					},
+					pmId: {
+						required: true
+					},
+					pmoId: {
+						required: true
+					},
+					startAt: {
+						required: true,
+						date: true
+					},
+					endAt: {
+						required: true,
+						date: true
+					}
+				},
+				messages : {
+					title : {
+		                required : '프로젝트명을 입력하세요',
+		                maxlength : '프로젝트명은 최대 120자까지 입력가능합니다.'
+		            },
+		            pmId : {
+		                required : '프로젝트 관리자를 지정하세요'
+		            },
+		            pmoId : {
+		            	required : '프로젝트 담당자를 지정하세요'
+		            },
+		            startAt : {
+		            	required : '시작날짜를 지정하세요.',
+		            	date: '날짜형식을 확인하세요.'
+		            },
+		            endAt : {
+		            	required : '종료날짜를 지정하세요.',
+		            	date: '날짜형식을 확인하세요.'
+		            }
+			    }
 			});
+			
+			const result = $('#prjForm').valid();
+			
+			if (result) {
+				var data = {
+						title: $('#projectTitle').val(),
+						statusId: '1',
+						typeId: $('#projectTypeId').val(),
+			            rndTypeId: $('#rndTypeId').val(),
+			            pmId: $('#projectPmId').val(),
+			            pmoId: $('#projectPmoId').val(),
+			            startAt: $('#projectStartAt').val(),
+			            endAt: $('#projectEndAt').val(),
+			            content: $('#projectContent').val()
+		            };
+					 
+				$.ajax({
+				  url: "${path}/project/create.do",
+				  method: "post",
+				  contentType: "application/json; charset=utf-8",
+				  data: JSON.stringify(data)
+				}).done(function(msg) {
+					Swal.fire({
+						  title: '프로젝트가 등록 성공',
+						  text: '프로젝트가 등록되었습니다.',
+						  icon: 'success',
+						  cancelButtonColor: '#d33',
+						  cancelButtonText: '확인'
+						}).then(() => {
+							location.href = '${path}/project/list.do';
+						});
+				}).fail(function(error) {
+					console.log(error);
+				});
+			}
 		});
 	});
+
 </script>
                 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

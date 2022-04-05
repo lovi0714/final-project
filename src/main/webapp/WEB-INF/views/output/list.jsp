@@ -10,10 +10,16 @@
 	<jsp:param name="isProjectSide" value="active" />
 	<jsp:param name="isList" value="active" />
 </jsp:include>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
 
+<style>
+.error {
+	color: #f44336 !important;
+}
+</style>
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 	    <div class="page-title">
@@ -102,7 +108,7 @@
                        <div class="form-group">
                                <label for="basicSelect">프로젝트</label>
                          <fieldset class="form-group mt-2">
-                             <select class="form-select" id="projectSelect">
+                             <select class="form-select" id="projectSelect" name="projectId">
                                  <c:forEach var="p" items="${project}">
 		                            <option value="${p.projectId}">${p.projectName}</option>
 	                        	 </c:forEach>
@@ -176,7 +182,7 @@
             </div>
             <div class="modal-body">
             	<input type="hidden" id="outputId" value="">
-                <form id="outputForm" id="outputInfoForm" name="output" class="form" method="post">
+                <form id="outputForm2" id="outputInfoForm" name="output" class="form" method="post">
                    <div class="row">
                        <div class="col-12">
                            <div class="form-group">
@@ -309,16 +315,18 @@
 		});
 		
 		$(document).on('click', '#updateBtn', function() {
-			let data = {
-				"outputId": parseInt($('#outputId').val()),
-				"outputType": parseInt($('#outputType').val()),
-				"categoryId":parseInt( $('#category').val()),
-				"taskId": parseInt($('#taskSelect_m').val()),
-				"content": $('#content').val()
-			}
 			
-			if (isEdit) {
-				console.log(data);
+			const result = $('#outputForm2').valid();
+			
+			if (isEdit && result) {
+				let data = {
+					"outputId": parseInt($('#outputId').val()),
+					"outputType": parseInt($('#outputType').val()),
+					"categoryId":parseInt( $('#category').val()),
+					"taskId": parseInt($('#taskSelect_m').val()),
+					"content": $('#content').val()
+				}
+					
 				$.ajax({
 		            type: "POST",
 		            url: "${path}/output/update/" + $('#outputId').val(),
@@ -349,6 +357,7 @@
 		            	}
 		            }
 		        });
+				
 			}
 		});
 		
@@ -390,52 +399,56 @@
 		});
 		
 		$(document).on('click', '#saveBtn', function() {
-			var form = $("#outputForm");
+			const result = $('#outputForm').valid();
 			
-		    // you can't pass Jquery form it has to be javascript form object
-		    var formData = new FormData(form[0]);
-		    $.ajax({
-	            type: "POST",
-	            url: $(form).prop("action"),
-	            //dataType: 'json', //not sure but works for me without this
-	            data: formData,
-	            contentType: false, //this is requireded please see answers above
-	            processData: false, //this is requireded please see answers above
-	            //cache: false, //not sure but works for me without this
-	            error: function(error) {
-	            	console.log(error);
-	            	if (error === 'fail') {
-	            		Swal.fire({
-	        			  icon: 'error',
-	        			  title: '등록 실패',
-	        			  text: '산출물 등록에 실패하였습니다.'
-	        			});
-	            	}
-	            },
-	            success: function(result) {
-	            	console.log(result);
-	            	if (result === 'success') {
-	            		Swal.fire({
-	        			  icon: 'success',
-	        			  title: '등록 성공',
-	        			  text: '산출물을 등록하였습니다.'
-	        			}).then((result) => {
-	       				  if (result.isConfirmed) {
-	  	            		location.href = '${path}/output/list.do';
-							  };
-	       				})
-	            	}
-	            }
-	        });
+			if (result) {
+				var form = $("#outputForm");
+				
+			    // you can't pass Jquery form it has to be javascript form object
+			    var formData = new FormData(form[0]);
+			    $.ajax({
+		            type: "POST",
+		            url: $(form).prop("action"),
+		            //dataType: 'json', //not sure but works for me without this
+		            data: formData,
+		            contentType: false, //this is requireded please see answers above
+		            processData: false, //this is requireded please see answers above
+		            //cache: false, //not sure but works for me without this
+		            error: function(error) {
+		            	console.log(error);
+		            	if (error === 'fail') {
+		            		Swal.fire({
+		        			  icon: 'error',
+		        			  title: '등록 실패',
+		        			  text: '산출물 등록에 실패하였습니다.'
+		        			});
+		            	}
+		            },
+		            success: function(result) {
+		            	console.log(result);
+		            	if (result === 'success') {
+		            		Swal.fire({
+		        			  icon: 'success',
+		        			  title: '등록 성공',
+		        			  text: '산출물을 등록하였습니다.'
+		        			}).then((result) => {
+		       				  if (result.isConfirmed) {
+		  	            		location.href = '${path}/output/list.do';
+								  };
+		       				})
+		            	}
+		            }
+		        });
+			}
 		});
 		
 		$('#searchBtn').on('click', function() {
-			$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+			$('#table1').DataTable().ajax.reload();
 		});
 		
 		$('#keyword').on('keydown', function(e) {
 			if (e.keyCode === 13) {
-				$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+				$('#table1').DataTable().ajax.reload();
 			}
 		});
 		
@@ -554,5 +567,67 @@
 
         return date.getFullYear() + '-' + month + '-' + day;
 	};
+	
+	$('#outputForm').validate({
+		rules: {
+			file: {
+				required: true
+			},
+			taskId: {
+				required: true
+			},
+			projectId: {
+				required: true
+			},
+			categoryId: {
+				required: true
+			},
+			outputType: {
+				required: true
+			}
+		},
+		messages : {
+			file : {
+                required : '파일을 첨부하세요.',
+            },
+            taskId : {
+                required : '작업을 선택하세요.'
+            },
+            projectId : {
+            	required : '프로젝트를 선택하세요.'
+            },
+            categoryId : {
+            	required : '산출물 카테고리를 선택하세요.'
+            },
+            outputType : {
+            	required : '산출물 유형을 선택하세요.'
+            }
+	    }
+	});
+	
+	$('#outputForm2').validate({
+		rules: {
+			taskId: {
+				required: true
+			},
+			categoryId: {
+				required: true
+			},
+			outputType: {
+				required: true
+			}
+		},
+		messages : {
+            taskId : {
+                required : '작업을 선택하세요.'
+            },
+            categoryId : {
+            	required : '산출물 카테고리를 선택하세요.'
+            },
+            outputType : {
+            	required : '산출물 유형을 선택하세요.'
+            }
+	    }
+	});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
