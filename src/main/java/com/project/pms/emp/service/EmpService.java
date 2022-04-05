@@ -26,8 +26,6 @@ public class EmpService {
 	
 	/* 사원추가 */
 	public boolean joinEmp(Emp emp, Email vo) { 
-		// String encryptPassword = passwordEncoder.encode(randomPassword);
-		// emp.setPassword(encryptPassword);
 		empDAO.saveEmp(emp);
 		return true;
 	}	
@@ -56,6 +54,16 @@ public class EmpService {
 	/* 프로필 수정 */
 	public void modifyProfile(Emp emp) {
 		empDAO.modifyProfile(emp);
+	}
+	
+	/* 사원 정보 목록 */
+	public List<Emp> getEmpInfoList() {
+		return empDAO.getEmpInfoList();
+	}
+	
+	/* 사원 현황 */
+	public List<Emp> getEmpStatus() {
+		return empDAO.getEmpStatus();
 	}
 	
 }

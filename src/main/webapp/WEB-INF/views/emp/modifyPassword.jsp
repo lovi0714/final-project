@@ -34,13 +34,13 @@
                                             <label>새로운 비밀번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="first-name" class="form-control" name="password"
+                                            <input type="password" id="first-name" class="form-control" name="password"
                                                 placeholder="새로운 비밀번호를 입력해주세요.">
                                         </div><div class="col-md-4">
                                             <label>비밀번호 확인</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="first-name" class="form-control" name="CheckPassword"
+                                            <input type="password" id="first-name" class="form-control" name="CheckPassword"
                                                 placeholder="비밀번호를 확인해주세요.">
                                         </div>
                                                                             

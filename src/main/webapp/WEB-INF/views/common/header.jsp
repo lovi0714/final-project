@@ -126,9 +126,9 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a href="${path}/emp/status.do" class='sidebar-link'>
+                            <a href="${path}/emp/empStatus.do" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-medical-fill"></i>
-                                <span>사용자 현황</span>
+                                <span>사원 현황</span>
                             </a>
                         </li>
 
@@ -139,10 +139,10 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="${path}/admin/userInfo.do">사용자 정보</a>
+                                    <a href="${path}/emp/getEmpInfoList.do">사원 정보</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/emp/addEmp.do">사용자 추가</a>
+                                    <a href="${path}/emp/addEmp.do">사원 추가</a>
                                 </li>
                             </ul>
                         </li>

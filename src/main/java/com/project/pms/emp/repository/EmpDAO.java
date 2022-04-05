@@ -25,4 +25,10 @@ public interface EmpDAO {
 	// 프로필 수정
 	public void modifyProfile(Emp emp);
 	
+	// 사원 정보 목록 가져오기
+	public List<Emp> getEmpInfoList();
+	
+	// 사원 현황
+	public List<Emp> getEmpStatus();
+	
 }

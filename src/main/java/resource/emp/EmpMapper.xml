@@ -65,6 +65,30 @@
 		WHERE EMP_ID = #{empId}
 	</select>
 	
+	<!-- 사원 정보목록 -->
+	<select id="getEmpInfoList" resultMap="empMap">
+		SELECT te.EMP_ID, te.NAME, te.DEPT_ID, te.POS_ID, te.auth_id, te.name, td.DEPT_NAME, tp.POS_NAME, ta.auth_name  
+		FROM SCOTT.TBL_EMP te 
+		INNER JOIN SCOTT.TBL_DEPT td 
+				ON te.DEPT_ID = td.DEPT_ID
+		INNER JOIN SCOTT.TBL_pos tp 
+				ON te.pos_ID = tp.pos_ID
+		INNER JOIN SCOTT.TBL_auth ta 
+				ON te.auth_ID = ta.auth_ID
+		ORDER BY te.EMP_ID desc
+	</select>
+	
+	<!-- 사원 현황 -->
+	<select id="getEmpStatus" resultMap="empMap">
+		SELECT te.EMP_ID, te.NAME, te.DEPT_ID, te.POS_ID, te.name, te.phone, te.emp_email, td.DEPT_NAME, tp.POS_NAME   
+		FROM SCOTT.TBL_EMP te 
+		INNER JOIN SCOTT.TBL_DEPT td 
+				ON te.DEPT_ID = td.DEPT_ID
+		INNER JOIN SCOTT.TBL_pos tp 
+				ON te.pos_ID = tp.pos_ID
+		ORDER BY te.pos_id desc
+	</select>
+	
 	<!-- 로그인 정보 조회 -->
 	<select id="loginInfo" resultMap="empMap">
 		select *
@@ -88,6 +112,7 @@
 			update_at = sysdate
 		where emp_id = #{empId}
 	</update>	
+	
 	
 	
  </mapper>

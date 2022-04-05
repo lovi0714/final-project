@@ -18,7 +18,7 @@
 	    <div class="page-title">
 	        <div class="row"> 
 	            <div class="col-12 col-md-6 order-md-1 order-last">
-	                <h3>사용자 현황</h3>
+	                <h3>사원 현황</h3>
 	            </div>
 	        </div>
 	    </div>
@@ -27,7 +27,7 @@
 	    <section class="section">
 	        <div class="card">
 	            <div class="card-header">
-	                <p class="fw-bold">사용자 현황</p>
+	                <p class="fw-bold">사원 현황</p>
 	            </div>
 	          
 	            <div class="card-body">
@@ -65,50 +65,26 @@
 	                        </div>
                         </div>                                             
             		</div>
-	                <table class="table" id="table1">
+	                <table class="table" id="table1" style="text-align:center">
 	                    <thead>
 	                        <tr>
-	                            <th>이름</th>
-	                            <th>부서</th>
-	                            <th>직급</th>
-	                            <th>번호</th>
-	                            <th>프로젝트 참여수</th>	                            
+	                            <th width="10%">이름</th>
+	                            <th width="10%">부서</th>
+	                            <th width="10%">직급</th>
+	                            <th width="35%">번호</th>
+	                            <th width="35%">이메일</th>	                            
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr>
-	                            <td>홍길동</td>
-	                            <td>인사</td>
-	                            <td>대리</td>
-	                            <td>010-1234-1234</td>                          
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">4</span>
-					                </div>
-                				</td>
-	                        </tr>
-	                         <tr>
-	                            <td>김길동</td>
-	                            <td>경영관리</td>
-	                            <td>사원</td>
-	                            <td>010-1234-4321</td>	                            	                           
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">2</span>
-					                </div>
-                				</td>
-	                        </tr>
-	                        <tr>
-	                            <td>신길동</td>
-	                            <td>인사</td>
-	                            <td>PM</td>
-	                            <td>010-1234-1345</td>	                            	                           
-	                            <td>
-	                            	<div class="avatar bg-info me-3">
-					                    <span class="avatar-content">2</span>
-					                </div>
-                				</td>
-	                        </tr>	      
+	                        <c:forEach items="${empStatus}" var="list">
+		                       	<tr>
+		                       		<td>${list.name}</td>
+		                       		<td>${list.deptName}</td>
+		                       		<td>${list.posName}</td>
+		                       		<td>${list.phone}</td>
+		                       		<td>${list.empEmail}</td>
+		                       	</tr>
+	                       	</c:forEach>	     
 	                    </tbody>
 	          
 	                </table>

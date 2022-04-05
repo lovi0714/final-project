@@ -27,7 +27,7 @@
 	    <section class="section">
 	        <div class="card">
 	            <div class="card-header">
-	                <p class="fw-bold">사용자 정보</p>
+	                <p class="fw-bold">사원 정보</p>
 	            </div>
 	          
 	            <div class="card-body">
@@ -65,42 +65,27 @@
 	                        </div>
                         </div>                                             
             		</div>
-	                <table class="table" id="table1">
+	                <table class="table" id="table1" style="text-align:center">
 	                    <thead>
 	                        <tr>
-	                            <th>사용자 번호</th>
-	                            <th>권한</th>
-	                            <th>부서</th>
-	                            <th>이름</th>
-	                            <th>직급</th>
-	                            <th>최근 접속일</th>	                            
+	                            <th width="20%">사원 번호</th>
+	                            <th width="20%">권한</th>
+	                            <th width="20%">부서</th>
+	                            <th width="20%">이름</th>
+	                            <th width="20%">직급</th>
+	                            	                            
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr>
-	                            <td>001</td>
-	                            <td>실무진</td>
-	                            <td>인사</td>
-	                            <td>홍길동</td>
-	                            <td>대리</td>
-	                            <td>2022.03.20</td>                          	                        
-	                        </tr>
-	                         <tr>
-	                            <td>002</td>
-	                            <td>관리자</td>
-	                            <td>기술지원</td>
-	                            <td>신길동</td>
-	                            <td>대리</td>
-	                            <td>2022.03.22</td>                          	                        
-	                        </tr>
-	                         <tr>
-	                            <td>003</td>
-	                            <td>PM</td>
-	                            <td>연구개발</td>
-	                            <td>김길동</td>
-	                            <td>PM</td>
-	                            <td>2022.03.20</td>                          	                        
-	                        </tr>	                        	                            
+	                       <c:forEach items="${empInfoList}" var="list">
+	                       	<tr>
+	                       		<td>${list.empId}</td>
+	                       		<td>${list.authName}</td>
+	                       		<td>${list.deptName}</td>
+	                       		<td>${list.name}</td>
+	                       		<td>${list.posName}</td>
+	                       	</tr>	
+	                       </c:forEach>  	                            
 	                    </tbody>
 	          
 	                </table>

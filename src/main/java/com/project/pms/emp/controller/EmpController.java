@@ -82,8 +82,10 @@ public class EmpController {
 		UUID uid = UUID.randomUUID();  
 		String randomPassword = uid.toString().substring(0,6);
 		emp.setPassword(randomPassword);
-		emailManagement.sendMail(emp, vo);	
+		
 		empService.joinEmp(emp, vo);
+		emailManagement.sendMail(emp, vo);	
+		
 		return "redirect:/emp/addEmp.do";  
 					
 	}
@@ -98,7 +100,9 @@ public class EmpController {
 	
 	/* 프로필 수정 화면 */
 	@GetMapping("/profileModify.do")
-	public String profileModify() {
+	public String profileModify(HttpSession session, Model m) {
+		int empId = ((Emp) session.getAttribute("emp")).getEmpId();
+		m.addAttribute("emp", empService.empInfo(empId));
 		return "emp/profileModify";
 	}
 	
@@ -106,9 +110,10 @@ public class EmpController {
 	@PostMapping("/profileModify.do")
 	public String profileModify(HttpSession session, Emp emp) {
 		int empId = ((Emp) session.getAttribute("emp")).getEmpId();
+		
 		emp.setEmpId(empId);
 		empService.modifyProfile(emp);
-		return "redirect:/emp/profileModify.do";
+		return "redirect:/emp/profile.do";
 		
 	}
 	
@@ -132,8 +137,16 @@ public class EmpController {
 	}
 	
 	/* 사용자 현황 */
-	@GetMapping("/status.do")
-	public String status() {
+	@GetMapping("/empStatus.do")
+	public String status(Model m) {
+		m.addAttribute("empStatus", empService.getEmpStatus());
 		return "emp/status";
+	}
+	
+	/* 사용자 정보 화면 */
+	@GetMapping("/getEmpInfoList.do")
+	public String getEmpInfoList(Model m) {
+		m.addAttribute("empInfoList", empService.getEmpInfoList());
+		return "/admin/empInfoList";
 	}
 }
