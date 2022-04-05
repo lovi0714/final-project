@@ -54,12 +54,14 @@
 	
 	<!-- 사원정보조회 -->
 	<select id="empInfo" resultMap="empMap">
-		SELECT te.EMP_ID, te.NAME, te.DEPT_ID, te.POS_ID, te.EMP_EMAIL, te.PHONE, td.DEPT_NAME, tp.POS_NAME   
+		SELECT te.EMP_ID, te.NAME, te.DEPT_ID, te.POS_ID, te.auth_id, te.EMP_EMAIL, te.PHONE, td.DEPT_NAME, tp.POS_NAME   
 		FROM SCOTT.TBL_EMP te 
 		INNER JOIN SCOTT.TBL_DEPT td 
 		ON te.DEPT_ID = td.DEPT_ID
 		INNER JOIN SCOTT.TBL_pos tp 
 		ON te.pos_ID = tp.pos_ID
+		INNER JOIN SCOTT.TBL_auth ta 
+		ON te.auth_ID = ta.auth_ID
 		WHERE EMP_ID = #{empId}
 	</select>
 	
