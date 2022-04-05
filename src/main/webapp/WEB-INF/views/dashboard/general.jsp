@@ -276,7 +276,7 @@
 			    y: {
 			        stacked: true,
 					beginAtZero : true,
-					max: 30
+					max: 10
 			    }
 			},
 			plugins: {
