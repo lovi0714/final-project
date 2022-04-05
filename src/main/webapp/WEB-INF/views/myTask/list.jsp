@@ -17,7 +17,7 @@
 	background-color: #435ebe;
 }
 </style>
- 
+
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 		<div class="page-title">
@@ -233,32 +233,42 @@
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">프로젝트</label>
+											<label for="first-name-column" style="padding-bottom: 6px;">프로젝트</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="pTitle" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">시작일</label>
+											<label for="first-name-column" style="padding-bottom: 6px;">시작일</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="startAt" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">완료일</label>
+											<label for="first-name-column" style="padding-bottom: 6px;">완료일</label>
                                             <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="endAt" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
-                                            <input type="number" style="background-color: white;" id="first-name-column" class="form-control" name="progress" min="0" max="100"/>
+											<label for="first-name-column" style="padding-bottom: 6px;">승인자</label>
+                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="pmName" readonly>
 										</div>
 									</div>
-									<div class="col-md-6 col-12">
+									<div class="col-md-3 col-12">
 										<div class="form-group">
-											<label for="first-name-column"  style="padding-bottom: 6px;">승인자</label>
-                                            <input type="text" style="background-color: white;" id="first-name-column" class="form-control" name="pmName" readonly>
+											<label for="first-name-column" style="padding-bottom: 6px;">작업상태</label>
+											<select class="form-select" id="statusId">
+												<c:forEach var="s" items="${status}" >
+		                                    		<option value="${s.statusId}">${s.status}</option>
+		                                    	</c:forEach>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3 col-12">
+										<div class="form-group">
+											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
+                                            <input type="number" style="background-color: white;" id="first-name-column" class="form-control" name="progress" min="0" max="100"/>
 										</div>
 									</div>
 									<div class="col-12">
@@ -618,6 +628,7 @@
 				$("input[name=progress]").val(myTaskDetail.progress);
 				$("input[name=pmName]").val(myTaskDetail.pmName);
 				$("textarea[name=taskContent]").val(myTaskDetail.content);
+				$("#statusId").val(myTaskDetail.statusId);
 				
 				var htmlStr = "";
 				
@@ -694,11 +705,13 @@
 					let taskId = $("input[name=taskId").val();
 					let progress = $("input[name=progress]").val();
 					let content = $("textarea[name=taskContent]").val();
+					let statusId = $("#statusId").val();
 					
 					let taskDetail = {
 						"taskId": taskId, 
 						"progress": progress, 
-						"content": content};
+						"content": content,
+						"statusId": statusId};
 					
 					$.ajax({
 						url: "${path}/myTask/uptDetail.do",

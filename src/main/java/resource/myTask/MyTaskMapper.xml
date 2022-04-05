@@ -66,6 +66,7 @@
 				(SELECT name FROM TBL_EMP WHERE emp_id = tt.approver_id) AS pm_name,
 				tt.start_at,
 				tt.end_at,
+				tt.t_status_id,
 				tt.progress, 					
 				tt.content
 		FROM TBL_TASK tt,
@@ -77,7 +78,7 @@
 	<!-- 작업정보 수정 -->
 	<update id="uptMyTaskDetail" parameterType="myTask">
 		UPDATE TBL_TASK
-		SET progress = #{progress}, content = #{content}
+		SET progress = #{progress}, content = #{content}, t_status_id = #{statusId}
 		WHERE task_id = #{taskId}
 	</update>
 	
