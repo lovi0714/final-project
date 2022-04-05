@@ -109,7 +109,7 @@
 		}else{
 			wsOpen();
 			alert($("#userName").val()+'님 반갑습니다.');
-			$("#roomName").append("<h4>"+deptInfo+"</h4>")
+			$("#roomName").append("<h3 style='margin-top:15px;'>"+deptInfo+"</h3>")
 			$("#yourName").hide();
 			$("#yourMsg").show();
 			$("#exitBtn").show();
@@ -146,7 +146,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12">
-                <h3>팀챗</h3>                
+                <h3 style="margin-bottom:20px">팀챗</h3>                
             </div>
         </div>
     </div>
@@ -155,48 +155,34 @@
     <section class="section">
         <div class="row">
             <div class="col-4">
-                <div class="card col-9" style="height:625px;">
+                <div class="card col-9" style="height:480px; margin-left:20px;">
                     <div class="card-header">
                     	<div class="d-grid gap-2">
                     	<h4>채팅방 목록</h4>
   							<div id="yourName">
   							<input type="hidden" name="userName" id="userName" value="${sessionScope.emp.name }">
   							<input type="hidden" name="deptInfo" id="deptInfo" value="">
-								<table class="inputTable" style="width:100%">
-									
-									<tr>
-										<td>
-											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('인사')" value="인사">인사</button>
-                                		</td>
-									</tr>
-		
-									<tr>
-										<td>
-											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('회계')" value="회계">회계</button>
-                                		</td>
-									</tr>
-									<tr>
-										<td>
-											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('경영관리')" value="경영관리">경영관리</button>
-                                		</td>
-									</tr>
-									<tr>
-										<td>
-											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('생산관리')" value="생산관리">생산관리</button>
-                                		</td>
-									</tr>
-									<tr>
-										<td>
-											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('기술지원')" value="기술지원">기술지원</button>
-                                		</td>
-									</tr>
-									<tr>
-										<td>
-											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('연구개발')" value="연구개발">연구개발</button>
-                                		</td>
-									</tr>
-		
-								</table>							
+							
+								<div class="card-content">
+                        <div class="card-body">	
+								<div class="list-group" style="margin-right:-30px; margin-left:-30px;">
+											<button id="dept" name="dept" class="list-group-item list-group-item-action active" disabled>부서별</button>
+											
+											<button id="dept" name="dept" class="list-group-item list-group-item-action " onclick="chatName('인사')" value="인사">인사</button>
+                                
+											<button id="dept" name="dept" class="list-group-item list-group-item-action " onclick="chatName('회계')" value="회계">회계</button>
+                                
+											<button id="dept" name="dept" class="list-group-item list-group-item-action " onclick="chatName('경영관리')" value="경영관리">경영관리</button>
+                                
+											<button id="dept" name="dept"class="list-group-item list-group-item-action " onclick="chatName('생산관리')" value="생산관리">생산관리</button>
+                                	
+											<button id="dept" name="dept" class="list-group-item list-group-item-action " onclick="chatName('기술지원')" value="기술지원">기술지원</button>
+                                
+											<button id="dept" name="dept" class="list-group-item list-group-item-action " onclick="chatName('연구개발')" value="연구개발">연구개발</button>
+                          							
+								</div>
+								</div>
+								</div>
 							</div>
 							<input type="button" class="btn btn-danger btn-block" value="나가기" id="exitBtn" style="float:right"/>
 						</div>
@@ -206,7 +192,7 @@
      		<input type="hidden" id="sessionId" value="">
 
             <div class="col-8" id="chatBox">
-                <div class="card col-12" style="float:right; height:625px; margin-right:50px;">
+                <div class="card col-12" style="float:right; height:625px; margin-right:70px;">
                     <div class="card-header" style="border-bottom:1px solid #dedfe0">
                         <div class="media d-flex align-items-center">                    
                             <div class="name flex-grow-1" id="roomName">
