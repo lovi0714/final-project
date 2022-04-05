@@ -52,4 +52,9 @@ public class ResourceService {
 		dao.removeReource(resource);
 	}
 
+	public void removeResourceByProjectId(String projectId) {
+		
+		dao.removeReourceByProjectId(projectId);
+	}
+
 }

@@ -68,4 +68,9 @@
 		AND tr.PRJ_ID = #{projectId}
 	</select>
 	
+	<delete id="removeReourceByProjectId" parameterType="string">
+		DELETE
+		FROM TBL_RESOURCE
+		WHERE PRJ_ID = #{projectId}
+	</delete>
 </mapper>

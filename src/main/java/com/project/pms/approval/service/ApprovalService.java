@@ -29,4 +29,9 @@ public class ApprovalService {
 		
 		return dao.setReject(approvalId);
 	}
+
+	public void deleteApprovalByTaskId(Integer id) {
+		
+		dao.deleteApprovalByTaskId(id);
+	}
 }

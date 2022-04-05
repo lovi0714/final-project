@@ -140,6 +140,12 @@
 		WHERE OUT_FILE_ID = #{outputFileId}
 	</select>
 	
+	<select id="getOutputFileByTaskId" resultMap="outputFileInfoMap" parameterType="int">
+		SELECT ORIGINAL_NAME, SAVE_NAME 
+		FROM TBL_OUT_FILE to1, TBL_OUTPUT to2 		
+		WHERE to1.OUT_ID = to2.OUT_ID AND to2.TASK_ID = #{taskId}
+	</select>
+	
 	<update id="updateOutput" parameterType="output">
 		UPDATE TBL_OUTPUT
 		SET out_type_id = #{outputType},
@@ -156,9 +162,25 @@
 		WHERE OUT_ID = #{outputId}
 	</delete>
 	
+	<delete id="deleteOutputFileByTaskId" parameterType="int">
+		DELETE 
+		FROM TBL_OUT_FILE tof2
+		WHERE OUT_ID = (
+			SELECT to2.OUT_ID 
+			FROM TBL_OUTPUT to2
+			WHERE tof2.OUT_ID = to2.OUT_ID AND to2.TASK_ID = #{taskId}
+		)
+	</delete>
+	
 	<delete id="deleteOutput" parameterType="int">
 		DELETE
 		FROM TBL_OUTPUT
 		WHERE OUT_ID = #{outputId}
+	</delete>
+	
+	<delete id="deleteOutputByTaskId" parameterType="int">
+		DELETE
+		FROM TBL_OUTPUT
+		WHERE TASK_ID = #{taskId}
 	</delete>
 </mapper>

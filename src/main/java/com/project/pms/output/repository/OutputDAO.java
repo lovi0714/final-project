@@ -25,4 +25,7 @@ public interface OutputDAO {
 	public int deleteOutputFile(Integer outputId);
 	public int deleteOutput(Integer outputId);
 	public int updateOutput(Output output);
+	public OutputFileInfo getOutputFileByTaskId(Integer taskId);
+	public int deleteOutputFileByTaskId(Integer taskId);
+	public int deleteOutputByTaskId(Integer taskId);
 }

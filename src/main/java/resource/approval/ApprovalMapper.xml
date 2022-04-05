@@ -48,5 +48,9 @@
 		WHERE APPROVAL_ID = #{approvalId}
 	</update>
 	
-	
+	<delete id="deleteApprovalByTaskId" parameterType="int">
+		DELETE
+		FROM TBL_APPROVAL
+		WHERE TASK_ID = #{taskId}
+	</delete>
 </mapper>

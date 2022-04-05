@@ -40,4 +40,6 @@ public interface ProjectDAO {
 	public void updateTask(Task task);
 	public void deleteTask(Integer taskId);
 	public int getProjectCount();
+	public int deleteProject(String projectId);
+	public void deleteTaskByProjectId(String projectId);
 }

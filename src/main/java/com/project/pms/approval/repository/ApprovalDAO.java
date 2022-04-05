@@ -12,4 +12,5 @@ public interface ApprovalDAO {
 	public List<ApprovalForm> getApprovalList(ApprovalSearchCriteria sc);
 	public int setApproval(Integer approvalId);
 	public int setReject(Integer approvalId);
+	public void deleteApprovalByTaskId(Integer id);
 }

@@ -211,4 +211,22 @@
  		WHERE RISK_ID = #{riskId}
  	</delete>
  	
+ 	 <!-- 리스크 목록 -->
+ 	 <select id="getRiskByProjectId" resultType="riskBoard" parameterType="string">
+		SELECT tr.RISK_ID as riskId ,
+			tr.TITLE as title ,
+			trt.R_TYPE_NAME as rType ,
+			tp.NAME AS pName,
+			tr.PRESENTER as presenter,
+			tr.ACTIVATOR as activator ,
+			tr.DUE_AT as dueAt ,
+			tr.COM_AT as comAt 
+		FROM SCOTT.TBL_RISK tr
+			INNER JOIN SCOTT.TBL_R_STATUS trs on tr.R_STATUS_ID = trs.R_STATUS_ID
+			INNER JOIN SCOTT.TBL_R_TYPE trt ON tr.R_TYPE_ID = trt.R_TYPE_ID 
+			INNER JOIN SCOTT.TBL_PROJECT tp ON tr.PRJ_ID = tp.PRJ_ID
+		WHERE tr.PRJ_ID = #{projectId}
+		ORDER BY tr.RISK_ID DESC
+ 	 </select>
+ 	 
  </mapper> 

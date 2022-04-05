@@ -8,6 +8,7 @@ import com.project.pms.emp.vo.Emp;
 import com.project.pms.myTask.vo.MyTask;
 import com.project.pms.project.vo.Project;
 import com.project.pms.risk.vo.RiskFileInfo;
+import com.project.pms.risk.vo.Risk;
 import com.project.pms.risk.vo.RiskBoard;
 import com.project.pms.risk.vo.RiskDetail;
 import com.project.pms.risk.vo.RiskSaveRequest;
@@ -44,4 +45,6 @@ public interface RiskDAO {
 	
 	// 작업 리스트
 	public List<MyTask> getMyTaskList();
+
+	public List<RiskBoard> getRiskByProjectId(String projectId);
 }

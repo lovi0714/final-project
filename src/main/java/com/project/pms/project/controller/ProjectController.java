@@ -3,6 +3,7 @@ package com.project.pms.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,9 @@ public class ProjectController {
 	@GetMapping("/detail.do")
 	public String getProjectById(@RequestParam("projectId") String projectId, Model m) {
 		
+		Project project = service.getProjectByProjectId(projectId);
+		if (ObjectUtils.isEmpty(project))
+			return "error/404";
 		m.addAttribute("project", service.getProjectByProjectId(projectId));
 		m.addAttribute("pm", service.getPmByProjectId(projectId));
 		m.addAttribute("pmo", service.getPmoByProjectId(projectId));

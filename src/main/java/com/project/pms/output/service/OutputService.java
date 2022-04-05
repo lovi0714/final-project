@@ -65,6 +65,10 @@ public class OutputService {
 		return dao.getOutputFile(outputFileId);
 	}
 
+	public OutputFileInfo getOutputFileByTaskId(Integer taskId) {
+		return dao.getOutputFileByTaskId(taskId);
+	}
+	
 	@Transactional
 	public boolean deleteOutputWithFile(Integer outputId) {
 		OutputFileInfo fileInfo = dao.getOutputFile(outputId);
@@ -94,6 +98,35 @@ public class OutputService {
 		return (result == 1 && result2 == 1) ? true : false;
 	}
 
+	@Transactional
+	public boolean deleteOutputWithFileByTaskId(Integer taskId) {
+		OutputFileInfo fileInfo = dao.getOutputFileByTaskId(taskId);
+		// 파일을 먼저 삭제하고 산출물 삭제
+		int result = dao.deleteOutputFileByTaskId(taskId);
+		
+		// 파일이 존재하면서 삭제 실패일때 에러발생시켜야함
+		if (result == 1) {
+			try {
+				File file = new File(fileStore.getFullPath(fileInfo.getSaveName())); 
+				if(file.exists()) { 
+					if(file.delete()) 
+						System.out.println("파일삭제 성공"); 
+					else { 
+						System.out.println("파일삭제 실패");
+						throw new Exception();
+					} 
+				} else
+					System.out.println("파일이 존재하지 않습니다.");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		// 산출물 정보 삭제
+		int result2 = dao.deleteOutputByTaskId(taskId);
+		
+		return (result == 1 && result2 == 1) ? true : false;
+	}
+	
 	public boolean updateOutput(Output output) {
 		return (dao.updateOutput(output) == 1) ? true : false;
 	}

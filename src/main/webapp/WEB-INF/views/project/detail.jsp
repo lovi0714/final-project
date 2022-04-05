@@ -145,6 +145,7 @@
                                         </div>
                                 	</div>
                                     <div id="btnWrap" class="col-12 d-flex justify-content-end" style="display: none;">
+                                        <button type="button" id="deleteBtn" class="btn btn-danger me-1 mb-1">삭제</button>
                                         <button type="button" id="saveBtn" class="btn btn-primary me-1 mb-1">수정</button>
                                         <button type="button" id="cancleBtn" class="btn btn-light-secondary me-1 mb-1">취소</button>
                                     </div>
@@ -209,6 +210,35 @@ $(function() {
 	$('#modBtn').click(function() {
 		setBeforeData();
 		toggleDisabled(false);
+	});
+	
+	$('#deleteBtn').click(function() {
+		Swal.fire({
+		  title: '프로젝트 정말 삭제하시겠습니까?',
+		  text: '삭제후 복구가 불가능 합니다.',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: '삭제',
+		  cancelButtonText: '취소',
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			  $.ajax({
+				  url: "${path}/project/api/delete",
+				  method: "post",
+				  data: {"projectId": '${param.projectId}'}
+				}).done(function(msg) {
+					Swal.fire('삭제되었습니다.', '', 'success')
+					.then(() => {
+						location.href="${path}/project/list.do";
+					});
+				}).fail(function(error) {
+					console.log(error);
+					Swal.fire('오류가 발생하여 삭제하지 못했습니다.', '', 'info')
+				});
+  			}
+		});
 	});
 	
 	$('#cancleBtn').click(function() {

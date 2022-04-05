@@ -6,18 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.pms.approval.service.ApprovalService;
+import com.project.pms.output.service.OutputService;
 import com.project.pms.project.repository.ProjectDAO;
 import com.project.pms.project.vo.DeptType;
 import com.project.pms.project.vo.Link;
 import com.project.pms.project.vo.Pm;
 import com.project.pms.project.vo.Project;
+import com.project.pms.project.vo.ProjectSearchCriteria;
 import com.project.pms.project.vo.ProjectStatus;
 import com.project.pms.project.vo.ProjectType;
 import com.project.pms.project.vo.RndType;
-import com.project.pms.project.vo.ProjectSearchCriteria;
 import com.project.pms.project.vo.Task;
 import com.project.pms.resource.service.ResourceService;
 import com.project.pms.resource.vo.Resource;
+import com.project.pms.risk.service.RiskService;
 
 @Service
 public class ProjectService {
@@ -28,9 +31,14 @@ public class ProjectService {
 	@Autowired
 	private ResourceService service;
 	
-//	public List<Project> getList() {
-//		return dao.getList();
-//	}
+	@Autowired
+	private RiskService riskService;
+	
+	@Autowired
+	private OutputService outputService;
+	
+	@Autowired
+	private ApprovalService approvalService;
 	
 	public List<Project> getList(ProjectSearchCriteria sc) {
 		return dao.getList(sc);
@@ -137,6 +145,37 @@ public class ProjectService {
 	public List<ProjectStatus> getProjectStatus() {
 		
 		return dao.getProjectStatus();
+	}
+	
+	@Transactional
+	public void deleteTaskByProjectId(String projectId) {
+		
+		List<Task> list = dao.getTasks(projectId);
+		
+		// 산출물과 작업승인 목록 삭제
+		if (list.size() > 0) {
+			for (Task t : list) {
+				outputService.deleteOutputWithFileByTaskId(t.getId());
+				approvalService.deleteApprovalByTaskId(t.getId());
+			}
+		}
+	}
+	
+	@Transactional
+	public int deleteProject(String projectId) {
+		// * 연관관계 모두 삭제
+		// 1. 리스크 삭제 (파일포함)
+		riskService.deleteRiskByProjectId(projectId);
+		// 2. 산출물 및 작업승인 목록 삭제
+		deleteTaskByProjectId(projectId);
+		// 3. 태스크 삭제
+		dao.deleteTaskByProjectId(projectId);
+		// 4. 리소스 삭제
+		service.removeResourceByProjectId(projectId);
+		// 5. 프로젝트 삭제
+		int result = dao.deleteProject(projectId);
+		
+		return result;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.pms.emp.vo.Emp;
@@ -127,6 +128,25 @@ public class RiskService {
 	// 작업 리스트
 	public List<MyTask> getMyTaskList(){
 		return dao.getMyTaskList();
+	}
+
+	public void deleteRiskByProjectId(String projectId) {
+		// 1. 전체 리스크 목록 가져오기
+		// 2. 파일 삭제
+		// 3. 리스크 삭제
+		List<RiskBoard> riskList = dao.getRiskByProjectId(projectId);
+		for (RiskBoard r : riskList) {
+			try {
+				deleteFile(r.getRiskId());
+			} catch (Exception e) {
+				System.out.println("[RiskService] 파일 삭제중 에러");
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		for (RiskBoard r : riskList) {
+			deleteRisk(r.getRiskId());
+		}
 	}
 	
 	

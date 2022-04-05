@@ -23,4 +23,6 @@ public interface ResourceDAO {
 
 	public List<ResourceWbs> getWbsResourceList(String projectId);
 
+	public void removeReourceByProjectId(String projectId);
+
 }

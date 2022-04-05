@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ public class ProjectAPI {
 	private ProjectService service;
 	
 	@ResponseBody
-	@GetMapping(value =  "/list.do")
+	@GetMapping(value = "/list.do")
 	public Map<String, Object> getList(ProjectSearchCriteria sc) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -48,6 +49,15 @@ public class ProjectAPI {
 		map.put("iTotalDisplayRecords", service.getList(sc).size());
 		
 		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/delete")
+	public ResponseEntity<String> deleteProject(String projectId) {
+		
+		int result = service.deleteProject(projectId);
+		
+		return result == 1 ? ResponseEntity.ok("success") : ResponseEntity.badRequest().body("fail");
 	}
 	
 	@ResponseBody

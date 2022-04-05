@@ -80,14 +80,7 @@
 		AND prj_type_id = #{projectTypeId}
 		</if>
 	</sql>
-	
-	<!--  
-	<select id="getList" resultMap="projectMap">
-		SELECT *
-		FROM TBL_PROJECT
-		ORDER BY PRJ_ID DESC
-	</select>
-	-->
+
 	<select id="getList" resultMap="projectMap" parameterType="projectSearchCriteria">
 		SELECT prj_id, name, start_at, end_at, prj_status_id
 		FROM (
@@ -108,6 +101,12 @@
 		INSERT INTO TBL_PROJECT(prj_status_id, prj_type_id, rd_type_id, name, content, pm_id, start_at, end_at, create_at, update_at, pmo_id)
 		VALUES (#{statusId}, #{typeId}, #{rndTypeId}, #{title}, #{content}, #{pmId}, #{startAt}, #{endAt}, sysdate, sysdate, #{pmoId})
 	</insert>
+	
+	<delete id="deleteProject" parameterType="string">
+		DELETE 
+		FROM TBL_PROJECT
+		WHERE prj_id = #{projectId}
+	</delete>
 	
 	<select id="getProjectByProjectId" resultMap="projectMap" parameterType="string">
 		SELECT *
@@ -181,6 +180,12 @@
 		WHERE PRJ_ID = #{projectId}
 	</update>
 	
+	<delete id="deleteTaskByProjectId" parameterType="string">
+		DELETE
+		FROM TBL_TASK
+		WHERE PRJ_ID = #{projectId}
+	</delete>
+	
 	<select id="getTasks" resultMap="taskMap" parameterType="string">
 		SELECT *
 		FROM TBL_TASK
@@ -239,4 +244,5 @@
 		SELECT MAX(link_id)
 		FROM TBL_LINK
 	</select>
+	
 </mapper>
