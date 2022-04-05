@@ -46,12 +46,12 @@
 		ws.onopen = function(data){
 			//소켓이 열리면 동작
 			$("#chatBox").fadeIn();
-			$("#roomName").append("<h4>"+"채팅방"+"</h4>")
 		}
 		
 		ws.onmessage = function(data) {
 			//메시지를 받으면 동작
 			var msg = data.data;
+			var deptInfo = $("#deptInfo").val();
 			if(msg != null && msg.trim() != ''){
 				var d = JSON.parse(msg);
 				if(d.type == "getId"){
@@ -60,6 +60,9 @@
 						$("#sessionId").val(si); 
 					}
 				}else if(d.type == "message"){
+					
+					if(d.deptInfo == $("#deptInfo").val()){
+					
 					if(d.sessionId == $("#sessionId").val()){
 						$("#chating").append(
 							"<div class='chat'>"+
@@ -76,6 +79,7 @@
                 		"</div>"
                 		);
 					}
+				}
 						
 				}else{
 					console.warn("unknown type!")
@@ -94,20 +98,25 @@
 			}
 		});
 	}
-
-	function chatName(){
+	
+	function chatName(dept){
 		var userName = $("#userName").val();
-		if(userName == null || userName.trim() == ""){
+		var deptInfo = dept;
+		document.getElementById("deptInfo").value = deptInfo;
+		if(userName == null || userName.trim() == "") {
 			alert("사용자 이름을 입력해주세요.");
 			$("#userName").focus();
 		}else{
 			wsOpen();
 			alert($("#userName").val()+'님 반갑습니다.');
+			$("#roomName").append("<h4>"+deptInfo+"</h4>")
 			$("#yourName").hide();
 			$("#yourMsg").show();
 			$("#exitBtn").show();
 		}
+		
 	}
+	
 
 	function send() {
 		if($('#chatting').val()!=""){
@@ -115,13 +124,19 @@
 			type: "message",
 			sessionId : $("#sessionId").val(),
 			userName : $("#userName").val(),
-			msg : $("#chatting").val()
+			msg : $("#chatting").val(),
+			deptInfo : $("#deptInfo").val()
 		}
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");	
 		}
 	}
 	
+	$(function(){
+		$('#dept').on('click',function(){
+			var deptInfo = $(this).value();
+		})
+	})
 	
 
 </script>
@@ -135,7 +150,7 @@
             </div>
         </div>
     </div>
-   
+  
    
     <section class="section">
         <div class="row">
@@ -146,9 +161,39 @@
                     	<h4>채팅방 목록</h4>
   							<div id="yourName">
   							<input type="hidden" name="userName" id="userName" value="${sessionScope.emp.name }">
+  							<input type="hidden" name="deptInfo" id="deptInfo" value="">
 								<table class="inputTable" style="width:100%">
+									
 									<tr>
-										<td><button onclick="chatName()" id="startBtn" class="btn btn-primary btn-block">대화 참여하기</button></td>
+										<td>
+											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('인사')" value="인사">인사</button>
+                                		</td>
+									</tr>
+		
+									<tr>
+										<td>
+											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('회계')" value="회계">회계</button>
+                                		</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('경영관리')" value="경영관리">경영관리</button>
+                                		</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('생산관리')" value="생산관리">생산관리</button>
+                                		</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('기술지원')" value="기술지원">기술지원</button>
+                                		</td>
+									</tr>
+									<tr>
+										<td>
+											<button id="dept" name="dept" class="btn btn-success btn-block" onclick="chatName('연구개발')" value="연구개발">연구개발</button>
+                                		</td>
 									</tr>
 		
 								</table>							
