@@ -25,6 +25,11 @@
  		<result column="update_at" property="updateAt"/>
  	</resultMap> 	
  	
+ 	<resultMap type="emp" id="empList">
+ 		<result column="emp_id" property="empId"/>
+ 		<result column="name" property="name"/>		
+ 	</resultMap>
+ 	
  	 <!-- 리스크 목록 -->
  	 <select id="getRiskList" resultType="riskBoard">
 		SELECT tr.RISK_ID as riskId ,
@@ -179,8 +184,8 @@
  	</update>
  	
  	<!-- 사원정보 -->
- 	<select id="getEmpList" resultType="emp">
- 		SELECT emp_id, name 
+ 	<select id="getEmpList" resultMap="empList">
+ 		SELECT EMP_ID as empId, NAME 
  		FROM SCOTT.TBL_EMP
  		ORDER BY EMP_ID
  	</select>

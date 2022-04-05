@@ -77,11 +77,12 @@
                             				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="rContent" required></textarea>
                                         </div>
                                 	</div>                          
+                                
                                 	<div class="col-md-6 col-12">
                                     <div class="form-group">
                                             <label for="basicSelect">조치자</label>
 		                                    <fieldset class="form-group mt-2">
-		                                        <select class="form-select" id="basicSelect" name="activator">
+		                                        <select class="form-select" id="activator" name="activator">
 		                                        	<option value="">조치자를 선택하세요</option>
 		                                            <c:forEach items="${emp}" var="emp">
 		                                            	<option><c:out value="${emp.name }"/></option>
@@ -90,6 +91,7 @@
 		                                    </fieldset>
                                         </div>
                                 	</div>
+                                	
                                 	<div class="col-md-6 col-12">
                                     	<div class="form-group">
                                             <label for="basicSelect">조치 희망일</label>
