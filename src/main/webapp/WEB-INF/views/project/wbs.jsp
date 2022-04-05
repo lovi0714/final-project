@@ -217,7 +217,6 @@
 		    contentType: 'application/json; charset=utf-8',
 		}).done(function (maxId) {
 			let new_id = parseInt(maxId) + 1; 
-			console.log('new : ' + new_id);
 			gantt.changeTaskId(item.id, new_id);
 		}).fail(function (error) {
 		    alert(JSON.stringify(error));
@@ -235,7 +234,6 @@
 		    dataType: 'text',
 		    contentType: 'application/json; charset=utf-8',
 		}).done(function (maxId) {
-			console.log(maxId);
 			new_id = parseInt(maxId) + 1;
 			gantt.changeLinkId(id, new_id);
 		}).fail(function (error) {
@@ -256,10 +254,15 @@
 		    var task = gantt.getTask(state.id);
 		    var element = document.getElementsByTagName("input").progress;
 		    element.value = parseInt(element.value * 100);
-		    console.log(task);
 	    }
 	});
 
+	gantt.ext.inlineEditors.attachEvent("onBeforeSave", function(state){
+	  	if (state.columnName == "progress")
+	      	state.newValue /= 100;
+	   return true;
+	});
+	
 	function clickGridButton(id, action) {
 		if(!gantt.config.readonly){
 			switch (action) {
@@ -310,14 +313,12 @@
 	    dataType: 'json',	
 	    contentType: 'application/json; charset=utf-8',
 	}).done(function (data) {
-		console.log(data);
 		$.ajax({
 		    type: 'GET',
 		    url: apiUrl+'/link',
 		    dataType: 'json',	
 		    contentType: 'application/json; charset=utf-8',
 		}).done(function (link) {
-			console.log('link', link);
 			gantt.parse({data:data, links:link});
 		
 		}).fail(function (error) {
