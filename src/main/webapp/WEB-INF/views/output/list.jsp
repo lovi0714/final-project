@@ -35,8 +35,8 @@
 	            	<div class="row pt-3" style="background-color: #f2f7ff;">
 		                <div class="col-md-3">
 		                    <fieldset class="form-group">
-		                        <select class="form-select" id="basicSelect">
-		                            <option>프로젝트를 선택하세요.</option>
+		                        <select class="form-select" id="projectId">
+		                            <option value="">프로젝트를 선택하세요.</option>
 		                        	<c:forEach var="p" items="${project}">
 			                            <option value="${p.projectId}">${p.projectName}</option>
 		                        	</c:forEach>
@@ -45,8 +45,8 @@
 		                </div>
                          <div class="col-md-3">
 		                    <fieldset class="form-group">
-		                        <select class="form-select" id="basicSelect">
-   		                            <option>카테고리를 선택하세요.</option>
+		                        <select class="form-select" id="outputCategory">
+   		                            <option value="">카테고리를 선택하세요.</option>
    		                            <c:forEach var="c" items="${category}">
 	                                    <option value="${c.categoryId}">${c.categoryName}</option>
 		                        	</c:forEach>
@@ -55,7 +55,7 @@
 		                </div>
    		                <div class="col-md-3">
 	                        <div class="input-group mb-3">
-	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요">
+	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요" id="keyword">
    	                            <button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 	                        </div>
                         </div>
@@ -74,16 +74,6 @@
 	                            <th>프로젝트</th>
 	                        </tr>
 	                    </thead>
-	                    <tbody>
-                  			<c:forEach var="output" items="${list}">
-								<tr>
-		                           <td><span class="badge bg-${output.categoryId == 1 ? 'primary">필수' : 'secondary">선택'}</span></td>
-		                           <td><div><a href="javascript:outputDetail(${output.outputId})">${output.originalName}</a></div>
-		                           <div>${output.empName} on ${output.updateAt} file size ${output.volumeText}</div></td>
-		                           <td>${output.projectName}</td>
-                    			</tr>
-                   			</c:forEach>
-	                    </tbody>
 	                </table>
 	            </div>
 	        </div>
@@ -264,117 +254,43 @@
 	const authId = ${emp.authId};
 	const empId = ${emp.empId};
 	
-	//Jquery Datatable
-	$("#table1").DataTable({
-		"searching": false,
-		"info" : false,
-		"lengthChange": false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"}
-		],
-		"language": {
-	        "zeroRecords": "등록된 작업이 없습니다."
-	    }
-	});
-	
-	const getTasks = () => {
-		$.ajax({
-			  url: "${path}/project/api/wbs/" + $('#projectSelect').val(),
-			  method: "get",
-			  dataType: 'json',	
-			  contentType: 'application/json; charset=utf-8'
-			}).done(function(result) {
-				$('#taskSelect').empty();
-				if (result.length == 0) $('#taskSelect').append(`<option selected disabled>작업이 없습니다.</option>`);
-			    result.map((data, idx) => {
-			    	$('#taskSelect').append(`<option value="\${data.id}">\${data.text}</option>`);
-			    });
-			}).fail(function(error) {
-				console.log(error);
-		});
-	}
-	
-	const getMdoalTasks = () => {
-		$.ajax({
-			  url: "${path}/project/api/wbs/" + $('#projectSelect_m').val(),
-			  method: "get",
-			  dataType: 'json',
-			  async: false,
-			  contentType: 'application/json; charset=utf-8'
-			}).done(function(result) {
-				$('#taskSelect_m').empty();
-				if (result.length == 0) $('#taskSelect_m').append(`<option selected disabled>작업이 없습니다.</option>`);
-			    result.map((data, idx) => {
-			    	$('#taskSelect_m').append(`<option value="\${data.id}">\${data.text}</option>`);
-			    });
-			}).fail(function(error) {
-				console.log(error);
-		});
-	}
-	
-	const outputDetail = (id) => {
-		$('#editBtn').remove();
-		$('#delBtn').remove();
-		$('#updateBtn').remove();
-		
-		$.ajax({
-		  	url: "${path}/output/detail/" + id,
-		  	method: "get",
-		  	dataType: 'json',	
-			contentType: 'application/json; charset=utf-8'
-			}).done(function(data) {
-				console.log(data);
-				$('#fileName').attr('href', '${path}/output/attach/' + data.outputFileId);
-				
-				$('#fileName').text(data.originalName);
-				$('#projectSelect_m').val(data.projectId);
-				getMdoalTasks();
-				$('#taskSelect_m').val(data.taskId);
-				$('#category').val(data.categoryId);
-				$('#outputType').val(data.typeId);
-				$('#content').val(data.content);
-				$('#outputId').val(data.outputId);
-				
-				if (authId !== 1 || empId === data.empId) {
-					$('#closeBtn').before(
-							`<button type="button" id="editBtn" class="btn btn-primary ml-1" >
-		                    <i class="bx bx-check d-block d-sm-none"></i>
-		                    <span class="d-none d-sm-block">수정</span>
-		                </button>
-		                <button type="button" id="updateBtn" style="display: none;" class="btn btn-primary ml-1" >
-		                    <i class="bx bx-check d-block d-sm-none"></i>
-		                    <span class="d-none d-sm-block">저장</span>
-		                </button>
-		                <button type="button" id="delBtn" class="btn btn-danger ml-1" >
-		                    <i class="bx bx-check d-block d-sm-none"></i>
-		                    <span class="d-none d-sm-block">삭제</span>
-		                </button>`);
-				}
-				
-			}).fail(function(error) {
-				console.log(error);
-		});
-		
-		$('#detail').modal('show');	
-	};
-	
-	const toggleModelForm = (isDisabled) => {
-		$('#projectSelect_m').attr('disabled', isDisabled);
-		$('#taskSelect_m').attr('disabled', isDisabled);
-		$('#category').attr('disabled', isDisabled);
-		$('#outputType').attr('disabled', isDisabled);
-		$('#content').attr('disabled', isDisabled);
-		
-		if (isDisabled) {
-			$('#editBtn').show();
-			$('#updateBtn').hide();
-		} else {
-			$('#editBtn').hide();
-			$('#updateBtn').show();
-		}
-	};
-	
 	$(function() {
+		//Jquery Datatable
+		$("#table1").DataTable({
+			"searching": false,
+			"info" : false,
+			"lengthChange": false,
+			"serverSide": true,
+	        "processing": true, // 서버와 통신 시 응답을 받기 전이라는 ui를 띄울 것인지 여부
+	        "columns" : [
+	            {data: "categoryId", render: function(c) {
+	         			return getCategory(c);
+	    			}
+	            },
+	            {data: "originalName", render: function(data, type, row, meta) {
+	            		return '<div><a href="javascript:outputDetail(' + row.outputId + ')">' + row.originalName + '</a></div><div>' + row.empName + ' on ' + dateFormat(new Date(row.updateAt[0], row.updateAt[1], row.updateAt[2])) + ' file size' + row.volumeText + '</div>';
+	            	}
+	            },
+	            {data: "projectName"}
+	     	],
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"}
+			],
+			"language": {
+		        "zeroRecords": "등록된 작업이 없습니다."
+		    },
+		    "ajax": {
+	           url: '${path}/output/api/list.do',
+	           type: "GET",
+	           data: function (data) {
+	        	   console.log(data);
+	        	   data.projectId = $('#projectId').val();
+	        	   data.outputCategory = $('#outputCategory').val();
+	        	   data.keyword = $('#keyword').val();
+	               return data;
+	           }
+	       	 }
+		});
 		
 		let isEdit = false;
 		
@@ -513,9 +429,130 @@
 	        });
 		});
 		
+		$('#searchBtn').on('click', function() {
+			$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+		});
+		
+		$('#keyword').on('keydown', function(e) {
+			if (e.keyCode === 13) {
+				$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+			}
+		});
 		
 	});
 	
+	const getCategory = (c) => {
+		if (c === 1)
+			return '<span class="badge bg-primary">필수</span>';
+		else
+			return '<span class="badge bg-secondary">선택</span>';
+	}
 	
+	const getTasks = () => {
+		$.ajax({
+			  url: "${path}/project/api/wbs/" + $('#projectSelect').val(),
+			  method: "get",
+			  dataType: 'json',	
+			  contentType: 'application/json; charset=utf-8'
+			}).done(function(result) {
+				$('#taskSelect').empty();
+				if (result.length == 0) $('#taskSelect').append(`<option selected disabled>작업이 없습니다.</option>`);
+			    result.map((data, idx) => {
+			    	$('#taskSelect').append(`<option value="\${data.id}">\${data.text}</option>`);
+			    });
+			}).fail(function(error) {
+				console.log(error);
+		});
+	}
+	
+	const getMdoalTasks = () => {
+		$.ajax({
+			  url: "${path}/project/api/wbs/" + $('#projectSelect_m').val(),
+			  method: "get",
+			  dataType: 'json',
+			  async: false,
+			  contentType: 'application/json; charset=utf-8'
+			}).done(function(result) {
+				$('#taskSelect_m').empty();
+				if (result.length == 0) $('#taskSelect_m').append(`<option selected disabled>작업이 없습니다.</option>`);
+			    result.map((data, idx) => {
+			    	$('#taskSelect_m').append(`<option value="\${data.id}">\${data.text}</option>`);
+			    });
+			}).fail(function(error) {
+				console.log(error);
+		});
+	}
+	
+	const outputDetail = (id) => {
+		$('#editBtn').remove();
+		$('#delBtn').remove();
+		$('#updateBtn').remove();
+		
+		$.ajax({
+		  	url: "${path}/output/detail/" + id,
+		  	method: "get",
+		  	dataType: 'json',	
+			contentType: 'application/json; charset=utf-8'
+			}).done(function(data) {
+				console.log(data);
+				$('#fileName').attr('href', '${path}/output/attach/' + data.outputFileId);
+				
+				$('#fileName').text(data.originalName);
+				$('#projectSelect_m').val(data.projectId);
+				getMdoalTasks();
+				$('#taskSelect_m').val(data.taskId);
+				$('#category').val(data.categoryId);
+				$('#outputType').val(data.typeId);
+				$('#content').val(data.content);
+				$('#outputId').val(data.outputId);
+				
+				if (authId !== 1 || empId === data.empId) {
+					$('#closeBtn').before(
+							`<button type="button" id="editBtn" class="btn btn-primary ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">수정</span>
+		                </button>
+		                <button type="button" id="updateBtn" style="display: none;" class="btn btn-primary ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">저장</span>
+		                </button>
+		                <button type="button" id="delBtn" class="btn btn-danger ml-1" >
+		                    <i class="bx bx-check d-block d-sm-none"></i>
+		                    <span class="d-none d-sm-block">삭제</span>
+		                </button>`);
+				}
+				
+			}).fail(function(error) {
+				console.log(error);
+		});
+		
+		$('#detail').modal('show');	
+	};
+	
+	const toggleModelForm = (isDisabled) => {
+		$('#projectSelect_m').attr('disabled', isDisabled);
+		$('#taskSelect_m').attr('disabled', isDisabled);
+		$('#category').attr('disabled', isDisabled);
+		$('#outputType').attr('disabled', isDisabled);
+		$('#content').attr('disabled', isDisabled);
+		
+		if (isDisabled) {
+			$('#editBtn').show();
+			$('#updateBtn').hide();
+		} else {
+			$('#editBtn').hide();
+			$('#updateBtn').show();
+		}
+	};
+	
+	const dateFormat = (date) => {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+
+        return date.getFullYear() + '-' + month + '-' + day;
+	};
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

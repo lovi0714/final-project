@@ -36,24 +36,17 @@
 	            	<div class="row pt-3" style="background-color: #f2f7ff;">
 		                <div class="col-md-3">
 		                    <fieldset class="form-group">
-		                        <select class="form-select" id="basicSelect">
-		                            <option>프로젝트를 선택하세요.</option>
-		                            <option>공공SI 사업 프로젝트</option>
+		                        <select class="form-select" id="projectId">
+		                            <option value="">프로젝트를 선택하세요.</option>
+									<c:forEach var="p" items="${projectList}">
+										<option value="${p.projectId}">${p.projectName}</option>
+									</c:forEach>
 		                        </select>
-		                    </fieldset>
-		                </div>
-                         <div class="col-md-3">
-		                    <fieldset class="form-group">
-		                        <select class="form-select" id="basicSelect">
-   		                            <option>카테고리를 선택하세요.</option>
-                                    <option>필수 산출물</option>
-                                    <option>추가 산출물</option>
-                                </select>
 		                    </fieldset>
 		                </div>
    		                <div class="col-md-3">
 	                        <div class="input-group mb-3">
-	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요">
+	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요" id="keyword">
    	                            <button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 	                        </div>
                         </div>
@@ -66,46 +59,9 @@
 	                            <th>결재상태</th>
 	                            <th>요청자</th>
 	                            <th>결재요청일</th>
-	                            <th></th>
+	                            <th>처리</th>
 	                        </tr>
 	                    </thead>
-	                    <tbody>
-	                    	<c:forEach var="approval" items="${list}">
-		                    	<tr>
-		                            <td><div><a href="#">${approval.taskName}</a></div></td>
-		                            <td><div>${approval.projectName}</div></td>
-		                            <td>
-		                            	<c:choose>
-		                            		<c:when test="${approval.statusId eq '1'}">
-		                            			<span class="badge bg-secondary">승인대기</span>
-		                            		</c:when>
-		                            		<c:when test="${approval.statusId eq '2'}">
-		                            			<span class="badge bg-success">승인완료</span>
-		                            		</c:when>
-		                            		<c:when test="${approval.statusId eq '3'}">
-		                            			<span class="badge bg-danger">반려</span>
-		                            		</c:when>
-		                            		<c:when test="${approval.statusId eq '4'}">
-		                            			<span class="badge bg-warning">회수</span>
-		                            		</c:when>
-		                            	</c:choose>
-		                            </td>
-		                            <td>${approval.empName}</td>
-		                            <td><javatime:format value="${approval.approvalDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-   		                            <td>
-		                            <c:choose>
-		                            	<c:when test="${approval.statusId eq '1'}">
-			                            	<button type="button" id="approvalBtn" class="btn btn-success" data-id="${approval.approvalId}">승인</button>
-			                            	<button type="button" id="rejectBtn" class="btn btn-danger" data-id="${approval.approvalId}">반려</button>
-		                            	</c:when>
-		                            	<c:otherwise>
-		                            		<span></span>
-		                            	</c:otherwise>
-		                            </c:choose>
-		                            </td>
-		                        </tr>
-	                    	</c:forEach>
-	                    </tbody>
 	                </table>
 	            </div>
 	        </div>
@@ -117,45 +73,65 @@
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>
 <script>
-	//Jquery Datatable
-	$("#table1").DataTable({
-		"searching": false,
-		"info" : false,
-		"lengthChange": false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"}
-		]
-	});
-	
 	$(function() {
-		$('#approvalBtn').click(function() {
-			Swal.fire({
-			  title: '작업을 승인 처리하시겠습니까?',
-			  icon: 'info',
-			  showCancelButton: true,
-			  confirmButtonText: '승인',
-			  cancelButtonText: '취소'
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				  $.ajax({
-					  url: "${path}/approval/approval/" + $(this).data("id"),
-					  method: "post",
-					}).done(function(msg) {
-						console.log(msg);
-					  	Swal.fire('승인 완료', '승인 처리되었습니다.', 'success');
-						location.href = '${path}/approval/list.do';
-					}).fail(function(error) {
-						console.log(error);
-				  	});
-			    
-			  } else if (result.isDenied) {
-			    Swal.fire('취소', '취소합니다.', 'info')
-			  }
-			});
+		//Jquery Datatable
+		$("#table1").DataTable({
+			"searching": false,
+			"info" : false,
+			"lengthChange": false,
+			"serverSide": true,
+		    "processing": true, // 서버와 통신 시 응답을 받기 전이라는 ui를 띄울 것인지 여부
+		    "columns" : [
+		        {data: "taskName", render: function(c) {
+		        	return '<div><a href="#">' + c + '</a></div>';
+		        }},
+		        {data: "projectName"},
+		        {data: "statusId", render: function(c) {
+		        	return getStatusBadge(c);
+		        }},
+		        {data: "empName"},
+		        {data: "approvalDate", render: function(c) {
+		        	return dateFormat(new Date(c[0], c[1], c[2], c[3], c[4], c[5]));
+		        }},
+		        {data: "approvalId", render: function(data, type, row) {
+		        	console.log(row.statusId);
+		        	if (row.statusId === 1)
+		        		return '<button type="button" id="approvalBtn" class="btn btn-success" data-id="'+ data + '">승인</button><button type="button" id="rejectBtn" class="btn btn-danger" data-id="' + data + '">반려</button>';
+		        	else 
+	        			return '<span></span>';
+		        }}
+		 	],
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"}
+			],
+			"language": {
+		        "zeroRecords": "승인 요청이 없습니다."
+		    },
+		    "ajax": {
+		       url: '${path}/approval/api/list.do',
+		       type: "GET",
+		       data: function (data) {
+		    	   data.projectId = $('#projectId').val();
+		    	   data.keyword = $('#keyword').val();
+		           return data;
+		       }
+		   	 }
 		});
 		
-		$('#rejectBtn').click(function() {
-			Swal.fire({
+		$('#searchBtn').on('click', function() {
+			$('#table1').DataTable().ajax.reload();
+		});
+		
+		$('#keyword').on('keydown', function(e) {
+			if (e.keyCode === 13) {
+				$('#table1').DataTable().ajax.reload();
+			}
+		});
+		
+	});
+	
+	$(document).on('click', '#rejectBtn', function() {
+		Swal.fire({
 			  title: '작업을 반려 처리하시겠습니까?',
 			  icon: 'info',
 			  showCancelButton: true,
@@ -167,9 +143,11 @@
 					  url: "${path}/approval/reject/" + $(this).data("id"),
 					  method: "post",
 					}).done(function(msg) {
-					  	Swal.fire('반려 완료', '반려 처리되었습니다.', 'success');
+					  	Swal.fire('반려 완료', '반려 처리되었습니다.', 'success')
+					  	.then(() => {
+							location.href = '${path}/approval/list.do';
+					  	});
 
-						location.href = '${path}/approval/list.do';
 					}).fail(function(error) {
 						console.log(error);
 				  	});
@@ -177,9 +155,77 @@
 			  } else if (result.isDenied) {
 			    Swal.fire('취소', '취소합니다.', 'info')
 			  }
-			});
 		});
 	});
+	
+	$(document).on('click', '#approvalBtn', function() {
+		Swal.fire({
+			  title: '작업을 승인 처리하시겠습니까?',
+			  icon: 'info',
+			  showCancelButton: true,
+			  confirmButtonText: '승인',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				  $.ajax({
+					  url: "${path}/approval/approval/" + $(this).data("id"),
+					  method: "post",
+					}).done(function(msg) {
+					  	Swal.fire('승인 완료', '승인 처리되었습니다.', 'success')
+					  	.then(() => {
+							location.href = '${path}/approval/list.do';
+					  	});
+					}).fail(function(error) {
+						console.log(error);
+				  	});
+			    
+			  } else if (result.isDenied) {
+			    Swal.fire('취소', '취소합니다.', 'info')
+			  }
+		});
+	});
+	
+	const getStatusBadge = (statusId) => {
+		let html = '';
+		
+		switch (statusId) {
+		case 1:
+			html = '<span class="badge bg-secondary">승인대기</span>';
+			break;
+		case 2:
+			html = '<span class="badge bg-success">승인완료</span>';
+			break;
+		case 3:
+			html = '<span class="badge bg-danger">반려</span>';
+			break;
+		case 4:
+			html = '<span class="badge bg-warning">회수</span>';
+			break;
+		}
+		
+		return html;
+	}
+	
+	const getStatusBtn = (data, row) => {
+		if (row.statusId === 1)
+			return '<button type="button" id="approvalBtn" class="btn btn-success" data-id="'+ data + '">승인</button><button type="button" id="rejectBtn" class="btn btn-danger" data-id="' + data + '">반려</button>';
+	};
+	
+	const dateFormat = (date) => {
+		let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        hour = hour >= 10 ? hour : '0' + hour;
+        minute = minute >= 10 ? minute : '0' + minute;
+        second = second >= 10 ? second : '0' + second;
+
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+	};
     
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

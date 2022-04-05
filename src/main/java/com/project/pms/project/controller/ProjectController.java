@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.pms.project.service.ProjectService;
 import com.project.pms.project.vo.Project;
+import com.project.pms.project.vo.ProjectSearchCriteria;
 import com.project.pms.resource.service.ResourceService;
 
 @Controller
@@ -26,8 +27,6 @@ public class ProjectController {
 	@GetMapping("/list.do")
 	public String getList(Model model) {
 		
-		model.addAttribute("list", service.getList());
-		System.out.println(service.getList());
 		return "project/list";
 	}
 	

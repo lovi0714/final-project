@@ -15,6 +15,7 @@ import com.project.pms.output.vo.OutputDetail;
 import com.project.pms.output.vo.OutputFile;
 import com.project.pms.output.vo.OutputFileInfo;
 import com.project.pms.output.vo.OutputListForm;
+import com.project.pms.output.vo.OutputSearchCriteria;
 import com.project.pms.output.vo.OutputType;
 import com.project.pms.output.vo.ProjectInfo;
 import com.project.pms.utils.FileStore;
@@ -28,8 +29,8 @@ public class OutputService {
 	@Autowired
 	private FileStore fileStore;
 	
-	public List<OutputListForm> getOutputList() {
-		return dao.getOutputList();
+	public List<OutputListForm> getOutputList(OutputSearchCriteria sc) {
+		return dao.getOutputList(sc);
 	}
 	
 	@Transactional

@@ -71,13 +71,26 @@
 		<result column="save_name" property="saveName"/>
 	</resultMap>
 	
-	<select id="getOutputList" resultMap="outputListMap">
+	<sql id="search">
+		<if test='keyword != null and keyword neq ""'>
+		AND tof.original_name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test='projectId != null and projectId neq ""'>
+		AND tp.prj_id = #{projectId}
+		</if>
+		<if test="outputCategoryId != null">
+		AND to2.cat_id = #{outputCategoryId}
+		</if>
+	</sql>
+	
+	<select id="getOutputList" resultMap="outputListMap" parameterType="outputSearchCriteria">
 		SELECT to2.OUT_ID, tof.ORIGINAL_NAME, tof.VOLUME, tof.VOLUME_TEXT, te.NAME, to2.CAT_ID, tof.UPDATE_AT, tp.NAME AS project_name
 		FROM TBL_OUTPUT to2, TBL_OUT_FILE tof, TBL_EMP te, TBL_TASK tt, TBL_PROJECT tp 
 		WHERE to2.OUT_ID = tof.OUT_ID
 		AND to2.emp_id = te.emp_id
 		AND to2.TASK_ID = tt.TASK_ID
 		AND tt.PRJ_ID = tp.PRJ_ID
+		<include refid="search"></include>
 		ORDER BY to2.out_id desc
 	</select>
 	

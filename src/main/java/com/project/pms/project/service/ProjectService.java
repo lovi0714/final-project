@@ -14,6 +14,7 @@ import com.project.pms.project.vo.Project;
 import com.project.pms.project.vo.ProjectStatus;
 import com.project.pms.project.vo.ProjectType;
 import com.project.pms.project.vo.RndType;
+import com.project.pms.project.vo.ProjectSearchCriteria;
 import com.project.pms.project.vo.Task;
 import com.project.pms.resource.service.ResourceService;
 import com.project.pms.resource.vo.Resource;
@@ -27,8 +28,12 @@ public class ProjectService {
 	@Autowired
 	private ResourceService service;
 	
-	public List<Project> getList() {
-		return dao.getList();
+//	public List<Project> getList() {
+//		return dao.getList();
+//	}
+	
+	public List<Project> getList(ProjectSearchCriteria sc) {
+		return dao.getList(sc);
 	}
 	
 	@Transactional

@@ -11,11 +11,13 @@ import com.project.pms.project.vo.Project;
 import com.project.pms.project.vo.ProjectStatus;
 import com.project.pms.project.vo.ProjectType;
 import com.project.pms.project.vo.RndType;
+import com.project.pms.project.vo.ProjectSearchCriteria;
 import com.project.pms.project.vo.Task;
 
 @Repository
 public interface ProjectDAO {
-	public List<Project> getList();
+//	public List<Project> getList();
+	public List<Project> getList(ProjectSearchCriteria sc);
 	public void insertProject(Project project);
 	public void modifyProject(Project project);
 	public Project getProjectByProjectId(String projectId);
@@ -37,4 +39,5 @@ public interface ProjectDAO {
 	public Integer getTaskMaxId();
 	public void updateTask(Task task);
 	public void deleteTask(Integer taskId);
+	public int getProjectCount();
 }

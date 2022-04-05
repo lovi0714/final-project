@@ -69,10 +69,39 @@
 		<result column="prj_status" property="status"/>
 	</resultMap>
 	
+	<sql id="search">
+		<if test="keyword != null">
+		AND name LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="projectStatusId != null">
+		AND prj_status_id = #{projectStatusId}
+		</if>
+		<if test="projectTypeId != null">
+		AND prj_type_id = #{projectTypeId}
+		</if>
+	</sql>
+	
+	<!--  
 	<select id="getList" resultMap="projectMap">
 		SELECT *
 		FROM TBL_PROJECT
 		ORDER BY PRJ_ID DESC
+	</select>
+	-->
+	<select id="getList" resultMap="projectMap" parameterType="projectSearchCriteria">
+		SELECT prj_id, name, start_at, end_at, prj_status_id
+		FROM (
+			SELECT prj_id, name, start_at, end_at, prj_status_id, ROW_NUMBER() OVER(ORDER BY prj_id DESC) AS RNUM
+			FROM TBL_PROJECT
+			WHERE 1=1
+			<include refid="search"></include>
+		) MP
+		ORDER BY prj_id DESC
+	</select>
+	
+	<select id="getProjectCount">
+		SELECT COUNT(*)
+		FROM TBL_PROJECT
 	</select>
 	
 	<insert id="insertProject" parameterType="project" >

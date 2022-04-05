@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.pms.approval.repository.ApprovalDAO;
 import com.project.pms.approval.vo.ApprovalForm;
+import com.project.pms.approval.vo.ApprovalSearchCriteria;
 
 @Service
 public class ApprovalService {
@@ -14,9 +15,9 @@ public class ApprovalService {
 	@Autowired
 	private ApprovalDAO dao;
 	
-	public List<ApprovalForm> getApprovalList(Integer approverId) {
+	public List<ApprovalForm> getApprovalList(ApprovalSearchCriteria sc) {
 		
-		return dao.getApprovalList(approverId);
+		return dao.getApprovalList(sc);
 	}
 	
 	public int setApproval(Integer approvalId) {

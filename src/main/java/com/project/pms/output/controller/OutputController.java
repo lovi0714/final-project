@@ -1,6 +1,8 @@
 package com.project.pms.output.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +23,7 @@ import com.project.pms.output.vo.OutputDetail;
 import com.project.pms.output.vo.OutputFile;
 import com.project.pms.output.vo.OutputFileInfo;
 import com.project.pms.output.vo.OutputForm;
+import com.project.pms.output.vo.OutputSearchCriteria;
 import com.project.pms.utils.FileStore;
 
 @Controller
@@ -35,12 +38,26 @@ public class OutputController {
 	
 	@GetMapping("/list.do")
 	public String getList(Model model) {
-		model.addAttribute("list", service.getOutputList());
+		
 		model.addAttribute("category", service.getOutputCategory());
 		model.addAttribute("type", service.getOutputType());
 		model.addAttribute("project", service.getProjectInfo());
 		
 		return "output/list";
+	}
+	
+	@ResponseBody
+	@GetMapping("/api/list.do")
+	public Map<String, Object> getSearchList(OutputSearchCriteria sc) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("data", service.getOutputList(sc));
+		map.put("iTotalRecords", service.getOutputList(sc).size());
+		map.put("iTotalDisplayRecords", service.getOutputList(sc).size());
+		
+		return map;
+		
 	}
 	
 	@ResponseBody

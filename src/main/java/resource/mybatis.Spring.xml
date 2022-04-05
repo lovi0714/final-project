@@ -38,6 +38,9 @@
 		<typeAlias alias="outputFileInfo" type="com.project.pms.output.vo.OutputFileInfo"/>
 		<typeAlias alias="approvalForm" type="com.project.pms.approval.vo.ApprovalForm"/>
 		<typeAlias alias="projectStatus" type="com.project.pms.project.vo.ProjectStatus"/>
+		<typeAlias alias="projectSearchCriteria" type="com.project.pms.project.vo.ProjectSearchCriteria"/>
+		<typeAlias alias="outputSearchCriteria" type="com.project.pms.output.vo.OutputSearchCriteria"/>
+		<typeAlias alias="approvalSearchCriteria" type="com.project.pms.approval.vo.ApprovalSearchCriteria"/>
 	</typeAliases>
 	
 	<typeHandlers>

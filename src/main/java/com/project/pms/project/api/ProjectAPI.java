@@ -1,6 +1,8 @@
 package com.project.pms.project.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,11 +19,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.project.pms.project.service.ProjectService;
 import com.project.pms.project.vo.DeptType;
 import com.project.pms.project.vo.Link;
+import com.project.pms.project.vo.PageMaker;
 import com.project.pms.project.vo.Pm;
 import com.project.pms.project.vo.Project;
 import com.project.pms.project.vo.ProjectStatus;
 import com.project.pms.project.vo.ProjectType;
 import com.project.pms.project.vo.RndType;
+import com.project.pms.project.vo.ProjectSearchCriteria;
 import com.project.pms.project.vo.Task;
 
 
@@ -32,6 +36,19 @@ public class ProjectAPI {
 	
 	@Autowired
 	private ProjectService service;
+	
+	@ResponseBody
+	@GetMapping(value =  "/list.do")
+	public Map<String, Object> getList(ProjectSearchCriteria sc) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("data", service.getList(sc));
+		map.put("iTotalRecords", service.getList(sc).size());
+		map.put("iTotalDisplayRecords", service.getList(sc).size());
+		
+		return map;
+	}
 	
 	@ResponseBody
 	@GetMapping("/rndType.do")

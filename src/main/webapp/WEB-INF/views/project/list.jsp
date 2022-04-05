@@ -35,32 +35,29 @@
 	            	<div class="row pt-3" style="background-color: #f2f7ff;">
 		                <div class="col-md-3">
 		                    <fieldset class="form-group">
-		                        <select class="form-select" id="basicSelect">
-		                            <option>프로젝트 상태를 선택하세요.</option>
-		                            <option>시작전</option>
-		                            <option>정상진행</option>
-		                            <option>지연진행</option>
-		                            <option>완료</option>
-		                            <option>중단</option>
+		                        <select class="form-select" id="projectStatusId">
+		                            <option value="">프로젝트 상태를 선택하세요.</option>
+		                            <option value="1">시작전</option>
+		                            <option value="2">정상진행</option>
+		                            <option value="3">지연진행</option>
+		                            <option value="4">완료</option>
+		                            <option value="5">중단</option>
 		                        </select>
 		                    </fieldset>
 		                </div>
                          <div class="col-md-3">
 		                    <fieldset class="form-group">
-		                        <select class="form-select" id="basicSelect">
-   		                            <option>부서를 선택하세요.</option>
-                                    <option>인사</option>
-                                    <option>회계</option>
-                                    <option>경영지원</option>
-                                    <option>생산관리</option>
-                                    <option>기술지원</option>
-                                    <option>연구개발</option>
+		                        <select class="form-select" id="projectTypeId">
+   		                            <option value="">프로젝트 유형을 선택하세요.</option>
+                                    <option value="1">선행개발</option>
+                                    <option value="2">고객개발</option>
+                                    <option value="3">양산개발</option>
                                 </select>
 		                    </fieldset>
 		                </div>
    		                <div class="col-md-3">
 	                        <div class="input-group mb-3">
-	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요">
+	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요" id="keyword">
    	                            <button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 	                        </div>
                         </div>
@@ -80,47 +77,10 @@
 	                            <th>프로젝트</th>
 	                            <th>시작일</th>
 	                            <th>완료일</th>
-	                            <th>프로젝트 상태</th>
-	                            <th>산출물</th>
+	                            <th>진행상태</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                      	<c:choose>
-	                      		<c:when test="${list.size() > 0}">
-	                      			<c:forEach var="project" items="${list}">
-									<tr>
-			                            <td><a href="${path}/project/detail.do?projectId=${project.projectId}">${project.projectId}</a></td>
-			                            <td>${project.title}</td>
-			                            <td>${project.startAt}</td>
-			                            <td>${project.endAt}</td>
-			                            <td>
-			                            	<c:choose>
-			                            		<c:when test="${project.statusId eq 1}">
-			                            		<span class="badge bg-secondary">시작전</span>
-			                            		</c:when>
-			                            		<c:when test="${project.statusId eq 2}">
-			                            		<span class="badge bg-success">정상진행</span>
-			                            		</c:when>
-			                            		<c:when test="${project.statusId eq 3}">
-			                            		<span class="badge bg-danger">지연진행</span>
-			                            		</c:when>
-			                            		<c:when test="${project.statusId eq 4}">
-			                            		<span class="badge bg-primary">완료</span>
-			                            		</c:when>
-			                            		<c:when test="${project.statusId eq 5}">
-			                            		<span class="badge bg-warning">중단</span>
-			                            		</c:when>
-			                            	</c:choose>
-		                				</td>
-			                            <td>
-			                            	<div class="avatar bg-info me-3">
-							                    <span class="avatar-content">4</span>
-							                </div>
-		                				</td>
-	                        		</tr>
-	                       			</c:forEach>
-	                      		</c:when>
-	                      	</c:choose>
 	                    </tbody>
 	                </table>
 	            </div>
@@ -135,27 +95,100 @@
 <script>
 	$(function() {
 		//Jquery Datatable
-		let listSize = ${list.size()};
+		$("#table1").DataTable({
+			"searching": false,
+			"info" : false,
+			"lengthChange": false,
+			"serverSide": true,
+	        "processing": true, // 서버와 통신 시 응답을 받기 전이라는 ui를 띄울 것인지 여부
+	        "columns" : [
+                   {data: "projectId", render: function(c) {
+                		return '<a href="${path}/project/detail.do?projectId=' + c + '">' + c + '</a>';
+           			}
+                   },
+                   {data: "title"},
+                   {data: "startAt", render: function(c) {
+                    	return dateFormat(new Date(c[0], c[1], c[2]));
+                   	}
+                   },
+                   {data: "endAt", render: function(c) {
+                    	return dateFormat(new Date(c[0], c[1], c[2]));
+                   	}
+                   },
+                   {data: "statusId", render: function(c) {
+                   		return getProjectStatus(c);
+                   	}
+                   }
+            ],
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"}
+			],
+			"order": [0, 'desc']
+			,
+			"language": {
+		        "zeroRecords": "등록된 프로젝트가 없습니다."
+		    },
+		    "ajax": {
+	           url: '${path}/project/api/list.do',
+	           type: "GET",
+	           data: function (data) {
+	        	   console.log(data);
+	        	   data.projectStatusId = $('#projectStatusId').val();
+	        	   data.projectTypeId = $('#projectTypeId').val();
+	        	   data.keyword = $('#keyword').val();
+	             return data;
+	           }
+	         },
+	        
+
+		});
 		
-		if (listSize > 0) {
-			$("#table1").DataTable({
-				"searching": false,
-				"info" : false,
-				"lengthChange": false,
-				"columnDefs": [
-				    {"className": "dt-center", "targets": "_all"}
-				],
-				"order": [0, 'desc']
-				,
-				"language": {
-			        "zeroRecords": "등록된 프로젝트가 없습니다."
-			    }
-			});
+		function getProjectStatus(statusId) {
+			let html = '';
+    		switch(statusId) {
+    			case 1:
+    				html = '<td><span class="badge bg-secondary">시작전</span></td>';
+    				break;
+    			case 2:
+    				html = '<td><span class="badge bg-success">정상진행</span></td>';
+    				break;
+    			case 3:
+    				html = '<td><span class="badge bg-danger">지연진행</span></td>';
+    				break;
+    			case 4:
+    				html = '<td><span class="badge bg-primary">완료</span></td>';
+    				break;
+    			case 5:
+    				html = '<td><span class="badge bg-warning">중단</span></td>';
+    				break;
+    		}
+    		
+        	return html;
 		}
-			
+		
+		function dateFormat(date) {
+	        let month = date.getMonth() + 1;
+	        let day = date.getDate();
+
+	        month = month >= 10 ? month : '0' + month;
+	        day = day >= 10 ? day : '0' + day;
+
+	        return date.getFullYear() + '-' + month + '-' + day;
+		}
+		
 		$('#regBtn').click(function() {
 			console.log('click')
 			location.href = '${path}/project/create.do';
+		});
+		
+		$('#searchBtn').on('click', function() {
+			$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+		});
+		
+		$('#keyword').on('keydown', function(e) {
+			if (e.keyCode === 13) {
+				$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+			}
 		});
 	});
     

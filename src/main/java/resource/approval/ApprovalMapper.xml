@@ -13,10 +13,20 @@
 		<result column="create_at" property="approvalDate"/>
 	</resultMap>
 	
-	<select id="getApprovalList" resultMap="approvalFormMap" parameterType="int">
+	<sql id="search">
+		<if test='keyword != null and keyword neq ""'>
+		AND tt.TASK_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test='projectId != null and projectId neq ""'>
+		AND tt.prj_id = #{projectId}
+		</if>
+	</sql>
+	
+	<select id="getApprovalList" resultMap="approvalFormMap" parameterType="approvalSearchCriteria">
 		SELECT ta.APPROVAL_ID, tt.TASK_NAME, tp.NAME AS project_name, ta.AP_STATUS_ID, te.NAME AS emp_name, ta.CREATE_AT 
 		FROM TBL_APPROVAL ta, TBL_TASK tt, TBL_PROJECT tp, TBL_EMP te 
-		WHERE ta.TASK_ID = tt.TASK_ID AND tt.PRJ_ID = tp.PRJ_ID AND tt.MANAGER_ID = te.EMP_ID AND ta.APPROVER = #{approverId}
+		WHERE ta.TASK_ID = tt.TASK_ID AND tt.PRJ_ID = tp.PRJ_ID AND tt.MANAGER_ID = te.EMP_ID AND ta.APPROVER = #{empId}
+		<include refid="search"></include>
 		ORDER BY ta.APPROVAL_ID desc
 	</select>
 	
