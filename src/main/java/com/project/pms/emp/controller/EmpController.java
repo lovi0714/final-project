@@ -41,6 +41,7 @@ public class EmpController {
 	EmailManagement emailManagement;
 	
 	
+	
 	/* 로그인 화면 */
 	@GetMapping("/login.do")
 	public String login() {
@@ -51,7 +52,8 @@ public class EmpController {
 	@PostMapping("/loginProcess.do")
 	public String loginProcess(Emp emp, HttpServletRequest req) {
 		String rawPassword = emp.getPassword();
-		emp = empService.empInfo(emp.getEmpId());
+		
+		emp = empService.loginInfo(emp.getEmpId());
 		if(loginVerification.loginVerification(emp, rawPassword)) {
 			HttpSession session = req.getSession();
 			session.setAttribute("emp", emp);					
@@ -77,8 +79,11 @@ public class EmpController {
 	/* 사원정보 저장처리 */
 	@PostMapping("/addEmp.do")
 	public String joinEmp(Emp emp, Email vo) {
+		UUID uid = UUID.randomUUID();  
+		String randomPassword = uid.toString().substring(0,6);
+		emp.setPassword(randomPassword);
+		emailManagement.sendMail(emp, vo);	
 		empService.joinEmp(emp, vo);
-		emailManagement.sendMail(emp, vo);
 		return "redirect:/emp/addEmp.do";  
 					
 	}

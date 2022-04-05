@@ -26,11 +26,8 @@ public class EmpService {
 	
 	/* 사원추가 */
 	public boolean joinEmp(Emp emp, Email vo) { 
-		UUID uid = UUID.randomUUID();  
-		String randomPassword = uid.toString().substring(0,6);
-		emp.setPassword(randomPassword);
-//		String encryptPassword = passwordEncoder.encode(randomPassword);
-//		emp.setPassword(encryptPassword);
+		// String encryptPassword = passwordEncoder.encode(randomPassword);
+		// emp.setPassword(encryptPassword);
 		empDAO.saveEmp(emp);
 		return true;
 	}	
@@ -38,6 +35,10 @@ public class EmpService {
 	/* 사원정보조회 */	
 	public Emp empInfo(int empId) {
 		return empDAO.empInfo(empId);
+	}
+	
+	public Emp loginInfo(int empId) {
+		return empDAO.loginInfo(empId);
 	}
 	
 	/* 로그아웃 */

@@ -13,6 +13,9 @@ public interface EmpDAO {
 	// 사원정보조회
 	public Emp empInfo(int empId);
 	
+	// 로그인정보조회
+	public Emp loginInfo(int empId);
+	
 	// 사원추가
 	public void saveEmp(Emp emp);
 	
