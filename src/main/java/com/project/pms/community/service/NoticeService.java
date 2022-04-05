@@ -30,9 +30,8 @@ public class NoticeService {
 	@Value("${upload}")
 	private String uploadPath;
 	
-	public String insertNotice(Notice notice) {
+	public int insertNotice(Notice notice) {
 		dao.insertNotice(notice);
-		String msg = "success";
 		
 		if (notice.getReport() != null && notice.getReport().length > 0) {
 			
@@ -56,17 +55,17 @@ public class NoticeService {
 					}
 				}	
 			} catch (IllegalStateException e) { 
-				msg = e.getMessage();
+				System.out.println(e.getMessage());
 				
 			} catch (IOException e) {
-				msg = "파일전송오류: " + e.getMessage();	
+				System.out.println("파일 전송 오류: " + e.getMessage());
 				
 			} catch(Exception e) {
-				msg = "기타 예외: " + e.getMessage();
+				System.out.println("기타 예외: " + e.getMessage());
 			}
 		}
 		
-		return msg;	
+		return notice.getNoticeId();	
 		
 	}
 	
@@ -86,10 +85,10 @@ public class NoticeService {
 	}
 	
 	// 공지사항 수정
-	public boolean updateNotice(Notice notice) {
+	public int updateNotice(Notice notice) {
 		dao.updateNotice(notice);
 		
-		return true;
+		return notice.getNoticeId();
 	}
 	
 	// 공지사항 삭제

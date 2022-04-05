@@ -33,8 +33,11 @@
 	
 	<!-- 공지사항 등록 -->
 	<insert id="insertNotice" parameterType="notice">
+		<selectKey keyProperty="noticeId" resultType="int" order="BEFORE">  
+	    	SELECT notice_seq.nextVal FROM dual
+	    </selectKey> 
 		INSERT INTO TBL_NOTICE
-		VALUES (notice_seq.nextVal, '관리자', #{title}, #{content}, 0, sysdate, sysdate)
+		VALUES (#{noticeId}, #{writer}, #{title}, #{content}, 0, sysdate, sysdate)
 	</insert>
 	
 	<insert id="insertNoticeFileInfo" parameterType="noticeFile">

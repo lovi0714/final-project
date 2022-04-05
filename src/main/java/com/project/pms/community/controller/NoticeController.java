@@ -36,9 +36,9 @@ public class NoticeController {
 	
 	@PostMapping("/noticeInsert.do")
 	public String insertNotice(Notice notice, Model model) {
-		model.addAttribute("result", service.insertNotice(notice));
+		model.addAttribute("no", service.insertNotice(notice));
 		
-		return "community/noticeForm";
+		return "redirect:/community/noticeDetail.do";
 	}
 	
 	// 공지사항 조회
@@ -72,11 +72,10 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/noticeUpdate.do")
-	@ResponseBody
-	public String updateNotice(Notice notice) {
-		boolean result = service.updateNotice(notice);
-		
-		return result ? "success" : "false";
+	public String updateNotice(Notice notice, Model model) {
+		model.addAttribute("no", service.updateNotice(notice));
+	
+		return "redirect:/community/noticeDetail.do";
 	}
 	
 	// 공지사항 삭제

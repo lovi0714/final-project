@@ -165,7 +165,7 @@
 		});		
 	});
 	
-	// 일정 제목 및 내용 글자수 입력 제한
+	// 글자수 입력 제한
 	function textByte(obj, maxByte){
 		let str = obj.value;
 		let str_len = str.length;
@@ -176,7 +176,7 @@
 		let one_char = "";
 		let str2 = "";
 	
-		//문자 byte 계산
+		// 문자 byte 계산
 		for(var i=0; i<str_len; i++) {
 			one_char = str.charAt(i); 
 			
@@ -191,7 +191,7 @@
 			}
 		}
 	
-		//문자열 자르기
+		// 문자열 자르기
 		if(rbyte > maxByte){
 			Swal.fire({
 				title: '입력 실패',

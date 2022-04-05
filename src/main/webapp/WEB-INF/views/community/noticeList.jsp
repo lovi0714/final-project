@@ -18,7 +18,7 @@
 				</div>
 			</div>
 		</div>
-		<section class="section">
+		<section class="section"> 
 			<div class="card">
 				<div class="card-header">
 					<p class="fw-bold">공지사항</p>

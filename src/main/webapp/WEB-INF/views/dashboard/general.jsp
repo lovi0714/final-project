@@ -39,7 +39,7 @@
 						<tbody>
 	                      	<c:forEach var="list" items="${notice}">
 								<tr>
-				                	<td><a href="${path}/community/noticeDetail.do?noticeId=${list.noticeId}">${list.title}</a></td>
+				                	<td><a href="${path}/community/noticeDetail.do?no=${list.noticeId}">${list.title}</a></td>
 				                	<td>${list.writer}</td>
 				                    <td><fmt:formatDate value="${list.createAt}" pattern="yyyy-MM-dd"/></td>
 		                        </tr>

@@ -22,18 +22,17 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-12">
-										<p class="fw-bold">${noticeDetail.title}</p>
+										<h5>${noticeDetail.title}</h5>
 									</div>
 									<div class="col-12">
-										<p class="fw-bold">
-											<span class="badge bg-primary">${noticeDetail.writer}</span>
-											<span class="badge bg-success"><fmt:formatDate value="${noticeDetail.createAt}" pattern="yyyy-MM-dd"/></span> 
-											<span class="badge bg-secondary"><span class="fa-fw select-all fas"></span> ${noticeDetail.viewCount}</span>
-                        				</p>
+										<span class="badge bg-primary">${noticeDetail.writer}</span>
+										<span class="badge bg-secondary"><fmt:formatDate value="${noticeDetail.createAt}" pattern="yyyy-MM-dd"/></span> 
+										<span class="badge bg-secondary"><span class="fa-fw select-all fas"></span> ${noticeDetail.viewCount}</span>
 									</div>
+									<hr style="margin-top: 15px;">
 								    <div class="col-12">
-								    	<p style="height: 300px; border: 1px solid #dce7f1; border-radius: 0.25rem; padding: 15px 15px;">${noticeDetail.content}</p>
-                                   	</div>
+								    	<span>${noticeDetail.content}</span>
+								    </div>
                                    	<c:if test="${noticeFileInfo.originalName ne null}">
 	                                   	<div class="col-12">
 	                                   		<div class="form-group">
@@ -44,7 +43,8 @@
 									</c:if>
 									<div class="col-12 d-flex justify-content-end">
 										<button type="button" class="btn btn-primary me-1 mb-1" id="uptBtn">수정</button>
-										<button type="button" class="btn btn-secondary me-1 mb-1" id="cancelBtn">삭제</button>
+										<button type="button" class="btn btn-danger me-1 mb-1" id="cancelBtn">삭제</button>
+										<button type="button" class="btn btn-secondary me-1 mb-1" id="listBtn">목록</button>
 									</div>	
 								</div>
 							</div>
@@ -103,8 +103,13 @@
 				}
 			});
 		});
+		
+		// 공지사항 목록
+		$('#listBtn').click(function() {
+			location.href = '${path}/community/noticeList.do';
+		});
 	});	
-
+	
 	// 첨부파일 다운로드
 	function downFile(fileId) {
 		location.href="${path}/community/noticeFile.do?fileId=" + fileId;

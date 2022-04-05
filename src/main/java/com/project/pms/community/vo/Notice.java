@@ -1,6 +1,5 @@
 package com.project.pms.community.vo;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
