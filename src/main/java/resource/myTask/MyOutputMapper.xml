@@ -73,11 +73,9 @@
 	
 	<!-- 산출물 등록 프로젝트 선택 옵션 -->
 	<select id="getOutputProject" resultMap="projectInfoMap">
-		SELECT DISTINCT tp.prj_id, tp.name 
-		FROM TBL_PROJECT tp,
-				TBL_RESOURCE tr
-		WHERE tp.prj_id = tr.prj_id AND
-				tp.prj_status_id BETWEEN 1 AND 3 AND 
+		SELECT DISTINCT tp.prj_id, tp.name
+		FROM TBL_PROJECT tp, TBL_RESOURCE tr 
+		WHERE tp.prj_id = tr.prj_id AND 
 				tr.emp_id = #{empId}
 		ORDER BY tp.name
 	</select>
