@@ -304,7 +304,7 @@
 			                           		<div class="form-group">
 			                           			<input type="hidden" name="taskId">
 			                               		<label for="first-name-vertical" class="form-label">파일</label>
-			                               		<input type="file" name="file" id="first-name-vertical" class="form-control" >
+			                               		<input type="file" name="file" id="file1" class="form-control" >
 			                           </div>
 			                       	</div>
 			                   		<div class="col-md-6 col-12">
@@ -498,7 +498,7 @@
 	                       <div class="col-12">
 	                           <div class="form-group">
 	                               <label for="first-name-vertical" class="form-label">파일</label>
-	                               <input type="file" name="file" id="first-name-vertical" class="form-control" >
+	                               <input type="file" name="file" id="file2" class="form-control" >
 	                           </div>
 	                       </div>
 	                       <div class="col-md-6 col-12">
@@ -1058,7 +1058,7 @@
 		});
 		
 		$(document).on('click', '#saveBtn', function() {
-			var fileCheck = $("input[name=file]").val();
+			var fileCheck = $("#file1").val();
 			
 			if (!fileCheck) {
 				Swal.fire({
@@ -1070,18 +1070,15 @@
 				var form = $("#outputForm");
 				console.log(form);
 				
-			    // you can't pass Jquery form it has to be javascript form object
 			    var formData = new FormData(form[0]);
 			    console.log(formData);
 			    
 			    $.ajax({
 		            type: "POST",
 		            url: $(form).prop("action"),
-		            //dataType: 'json', //not sure but works for me without this
 		            data: formData,
-		            contentType: false, //this is requireded please see answers above
-		            processData: false, //this is requireded please see answers above
-		            //cache: false, //not sure but works for me without this
+		            contentType: false, 
+		            processData: false, 
 		            error: function(error) {
 		            	console.log(error);
 		            	if (error === 'fail') {
@@ -1111,25 +1108,25 @@
 		});
 		
 		$(document).on('click', '#saveBtn2', function() {
-			var fileCheck = $("input[name=file]").val();
+			var fileCheck2 = $("#file2").val();
 			
-			if (!fileCheck) {
+			if (!fileCheck2) {
 				Swal.fire({
       			  icon: 'error',
       			  title: '등록 실패',
       			  text: '파일을 첨부해주세요.'
       			});
 			} else {
-				// you can't pass Jquery form it has to be javascript form object
+				var form = $("#outputForm2");
+				console.log(form);
+				
 			    var formData = new FormData(form[0]);
 			    $.ajax({
 		            type: "POST",
 		            url: $(form).prop("action"),
-		            //dataType: 'json', //not sure but works for me without this
 		            data: formData,
-		            contentType: false, //this is requireded please see answers above
-		            processData: false, //this is requireded please see answers above
-		            //cache: false, //not sure but works for me without this
+		            contentType: false, 
+		            processData: false, 
 		            error: function(error) {
 		            	console.log(error);
 		            	if (error === 'fail') {
