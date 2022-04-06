@@ -514,7 +514,7 @@
 				$("input[name=pTitle]").val(myTaskDetail.pTitle);
 				$("input[name=startAt]").val(myTaskDetail.startAt);
 				$("input[name=endAt]").val(myTaskDetail.endAt);
-				$("input[name=progress]").val(myTaskDetail.progress);
+				$("input[name=progress]").val(myTaskDetail.progress*100);
 				$("input[name=pmName]").val(myTaskDetail.pmName);
 				$("textarea[name=content]").val(myTaskDetail.content);
 				

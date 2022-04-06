@@ -123,7 +123,7 @@
 				                            <td><fmt:formatDate value="${tl.endAt}" pattern="yyyy-MM-dd"/></td>
 				                            <td>
 												<div class="progress progress-primary">
-													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${tl.progress}%" 
+													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${tl.progress*100}%" 
 														aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</td>
@@ -625,7 +625,7 @@
 				$("input[name=pTitle]").val(myTaskDetail.pTitle);
 				$("input[name=startAt]").val(myTaskDetail.startAt);
 				$("input[name=endAt]").val(myTaskDetail.endAt);
-				$("input[name=progress]").val(myTaskDetail.progress);
+				$("input[name=progress]").val((myTaskDetail.progress)*100);
 				$("input[name=pmName]").val(myTaskDetail.pmName);
 				$("textarea[name=taskContent]").val(myTaskDetail.content);
 				$("#statusId").val(myTaskDetail.statusId);
@@ -703,7 +703,7 @@
 			}).then((result) => {
 				if (result.isConfirmed) {
 					let taskId = $("input[name=taskId").val();
-					let progress = $("input[name=progress]").val();
+					let progress = ($("input[name=progress]").val()) / 100;
 					let content = $("textarea[name=taskContent]").val();
 					let statusId = $("#statusId").val();
 					
@@ -732,7 +732,7 @@
 						}
 					});
 				}
-			})
+			});
 		} else {
 			Swal.fire({
 				icon: 'error',
