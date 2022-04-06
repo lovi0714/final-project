@@ -143,24 +143,17 @@
 	<!-- 참여 프로젝트 -->
 	<select id="getMyProjectList" resultMap="dashboardProjectMap" parameterType="int">
 		SELECT tp.prj_id,
-		      	tp.name AS prj_name,
-		      	td.dept_name,
-		      	te.name AS pm_name,
-		      	tps.prj_status, 
-		      	tp.start_at, 
-		      	tp.end_at
+			tp.name AS prj_name,
+			(SELECT dept_name FROM TBL_EMP te, TBL_DEPT td WHERE te.dept_id = td.dept_id AND te.emp_id = tp.pm_id) AS dept_name,
+			(SELECT name FROM TBL_EMP te WHERE te.emp_id = tp.pm_id) AS pm_name,
+			tps.prj_status, 
+			tp.start_at, 
+			tp.end_at
 		FROM TBL_PROJECT tp,
-		      TBL_RESOURCE tr,
-		      TBL_EMP te,
-		      TBL_DEPT td,
-		      TBL_PRJ_STATUS tps 
-		WHERE tp.prj_id = tr.prj_id AND
-		      tr.emp_id = te.emp_id AND
-		      te.dept_id = td.dept_id AND
-		      tp.prj_status_id = tps.prj_status_id AND
-		      tp.pm_id = tr.emp_id AND 
-		      tp.PRJ_ID IN (SELECT tr.prj_id FROM tbl_emp te, tbl_resource tr WHERE te.emp_id = tr.emp_id AND tr.emp_id = #{empId}) AND
-		      <![CDATA[rownum<=10]]>
+			TBL_PRJ_STATUS tps 
+		WHERE tp.prj_status_id = tps.prj_status_id AND 
+				tp.prj_id IN (SELECT tr.prj_id FROM tbl_emp te, tbl_resource tr WHERE te.emp_id = tr.emp_id AND tr.emp_id = #{empId}) AND
+				<![CDATA[rownum<=10]]>
 		ORDER BY tp.create_at DESC
 	</select>
 	
