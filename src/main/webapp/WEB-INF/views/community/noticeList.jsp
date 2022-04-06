@@ -83,7 +83,7 @@
 	
 	$(document).ready(function(){
 		// 관리자가 아닐 경우 공지사항 등록버튼 숨김 처리
-		if (${emp.authId} != 1) {
+		if (${emp.authId} != 3) {
 			$('#regBtn').hide();
 		}
 	

@@ -58,7 +58,7 @@
 <script>
 	$(document).ready(function(){	
 		// 관리자가 아닐 경우 수정 및 삭제버튼 숨김 처리
-		if (${emp.authId} != 1) {
+		if (${emp.authId} != 3) {
 			$('#uptBtn').hide();
 			$('#cancelBtn').hide();
 		}
