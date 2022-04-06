@@ -101,7 +101,7 @@
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">조치내용</label>
-                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="aContent"></textarea>
+                            				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="aContent" maxlength="900"></textarea>
                                         </div>
                                 	</div>
                                     <div class="col-12">

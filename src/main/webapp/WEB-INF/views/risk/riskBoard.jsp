@@ -72,7 +72,7 @@
             </div>
           
             <div class="card-body">
-                <table class="table" id="table1" style="text-align:center">
+                <table class="table" id="table1" style="text-align:center;">
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -88,14 +88,14 @@
                     <tbody>
 						<c:forEach items="${riskList }" var="list">
                         	<tr>
-	                            <td>${list.riskId }</td>
-	                            <td><a href="${path}/risk/detail.do?riskId=${list.riskId}">${list.title}</a></td>
-	                            <td>${list.pName }</td>
-	                            <td>${list.rType }</td>
-	                            <td>${list.presenter}</td>
-	                            <td>${list.activator}</td>
-	                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.dueAt}" /></td>
-	                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.comAt}" /></td>
+	                            <td width="5%">${list.riskId }</td>
+	                            <td style="max-width:70px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;"><a href="${path}/risk/detail.do?riskId=${list.riskId}">${list.title}</a></td>
+	                            <td width="15%">${list.pName }</td>
+	                            <td width="15%">${list.rType }</td>
+	                            <td width="15%">${list.presenter}</td>
+	                            <td width="15%">${list.activator}</td>
+	                            <td width="10%"><fmt:formatDate pattern="yyyy-MM-dd" value="${list.dueAt}" /></td>
+	                            <td width="10%"><fmt:formatDate pattern="yyyy-MM-dd" value="${list.comAt}" /></td>
                         	</tr>
                        </c:forEach>
                     </tbody>

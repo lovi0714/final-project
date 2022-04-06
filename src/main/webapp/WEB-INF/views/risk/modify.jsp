@@ -114,13 +114,13 @@
                                 	<div class="col-12">
                                     	<div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="form-label">조치내용</label>
-                            				<textarea class="form-control" id="aContent" name="aContent" rows="3">${risk.aContent }</textarea>
+                            				<textarea class="form-control" id="aContent" name="aContent" rows="3" maxlength="900">${risk.aContent }</textarea>
                                         </div>
                                 	</div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical" class="form-label">파일</label>
-                                            <input type="file" id="file" name="file" class="form-control" placeholder="산출물 제목을 입력하세요." maxlength="120">
+                                            <input type="file" id="file" name="file" class="form-control" >
                                         </div>
                                     </div>
                                     <div class="col-md-1">
