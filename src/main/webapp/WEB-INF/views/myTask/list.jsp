@@ -268,7 +268,7 @@
 									<div class="col-md-3 col-12">
 										<div class="form-group">
 											<label for="first-name-column" style="padding-bottom: 6px;">진행률(%)</label>
-                                            <input type="number" style="background-color: white;" id="first-name-column" class="form-control" name="progress" min="0" max="100"/>
+                                            <input type="number" style="background-color: white;" id="first-name-column" class="form-control" name="progress" min="0" max="100" onkeyPress="javascript:checkInputNum();"/>
 										</div>
 									</div>
 									<div class="col-12">
@@ -1200,6 +1200,13 @@
 			});
 		}
 	}
+	
+	// 숫자만 입력 가능
+	function checkInputNum(){
+      if ((event.keyCode < 48) || (event.keyCode > 57)){
+      	event.returnValue = false;
+      }
+  	}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
