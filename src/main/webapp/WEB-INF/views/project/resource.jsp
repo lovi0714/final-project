@@ -120,7 +120,7 @@ $(function() {
 		if (authId === 1) {
 			Swal.fire({
 				  title: '삭제 권한이 없습니다.',
-				  html: '실무진은 리소스를 삭제할 수 없습니다.<br> PM및 관라자에게 문의하세요.',
+				  html: '실무진은 리소스를 삭제할 수 없습니다.<br> PM및 관리자에게 문의하세요.',
 				  icon: 'error',
 				  confirmButtonColor: '#3085d6',
 				  confirmButtonText: '확인',

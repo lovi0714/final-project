@@ -111,7 +111,7 @@
                                 	</div>
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1" id="regBtn">등록</button>
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1" id="cancelBtn">취소</button>
                                     </div>
                                 </div>
                             </form>
@@ -255,7 +255,7 @@
 		            	date: '날짜형식을 확인하세요.'
 		            },
 		            endAt : {
-		            	required : '종료날짜를 지정하세요.',
+		            	required : '완료날짜를 지정하세요.',
 		            	date: '날짜형식을 확인하세요.'
 		            }
 			    }
@@ -295,6 +295,10 @@
 					console.log(error);
 				});
 			}
+		});
+		
+		$('#cancelBtn').click(function() {
+			location.href = '${path}/project/list.do';
 		});
 	});
 
