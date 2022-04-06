@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" name="modify" id="modify" action="${path}/risk/save.do" enctype="multipart/form-data" method="post">
+                            <form class="form" name="modify" id="modify" action="${path}/risk/save.do" onsubmit="return isValidForm()" enctype="multipart/form-data" method="post">
                                 <div class="row">
        								<input type="hidden" name="riskId" value="${risk.riskId}"/>
        								<input type="hidden" name="rFileId" value="${fileInfo.rFileId}"/>
@@ -135,14 +135,31 @@
 					                            <option value="5">조치완료</option>
 					                        </select>
 					                        <script>
-		                    						$('#rStatusId').val('${risk.rStatusId}').prop("selected",true);
+		                    						$('#rStatusId').val('${risk.rStatusId}').prop("selected",true);	
+		                    						function isValidForm(){
+		                    							var rv = true;
+		                    							if($('#rStatusId').val()=="5" && $('#activator').val()==""){
+		                    								 Swal.fire({
+		                    					                    icon: 'error',
+		                    					                    title: '조치자를 입력해주세요.',
+		                    					                   
+		                    					                });
+		                    								return rv = false;
+		                    							}
+		                    						}
+		                    						
+		                    						document.getElementById('modify').onsubmit = function(){
+		                    							return isValidForm();
+		                    						};
+		                    						
+		                    						
 		                    				</script>
 					                	</fieldset>
 					                </div>
                                     <div class="col-12 d-flex justify-content-end">
                                     <input type="hidden" name="empId" id="empId" value="${sessionScope.emp.empId}"/>
 					                <input type="hidden" name="presenter" id="presenter" value="${sessionScope.emp.name}"/>
-                                        <button type="submit" class="btn btn-primary me-1 mb-1">등록</button>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1" onclick="checkActivator()">등록</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1" onclick="window.history.back()">취소</button>
                                     </div>
                                 </div>
