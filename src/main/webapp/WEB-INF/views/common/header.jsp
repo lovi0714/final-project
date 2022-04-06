@@ -131,12 +131,14 @@
                                 <span>사원 현황</span>
                             </a>
                         </li>
-
+					<c:if test="${emp.authName=='관리자'}">	
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-pen-fill"></i>
                                 <span>관리자</span>
+                                
                             </a>
+                            
                             <ul class="submenu ">
                                 <li class="submenu-item ">
                                     <a href="${path}/emp/getEmpInfoList.do">사원 정보</a>
@@ -146,6 +148,7 @@
                                 </li>
                             </ul>
                         </li>
+                    </c:if>    
                     </ul>
                 </div>
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

@@ -92,8 +92,10 @@
 	<!-- 로그인 정보 조회 -->
 	<select id="loginInfo" resultMap="empMap">
 		select *
-		from TBL_EMP
-		where emp_id = #{empId}
+		from TBL_EMP te
+		JOIN TBL_AUTH ta 
+			on te.auth_id = ta.auth_id
+		WHERE emp_id = #{empId}
 	</select>
 		
 	<!-- 비밀번호 변경 -->
