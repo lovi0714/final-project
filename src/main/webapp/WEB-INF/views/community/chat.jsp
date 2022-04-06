@@ -4,8 +4,7 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm" var="today" />
+
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>    
 <link rel="stylesheet" href="${path}/resources/css/widgets/chat.css">
@@ -68,6 +67,18 @@
 			//메시지를 받으면 동작
 			var msg = data.data;
 			var deptInfo = $("#deptInfo").val();
+			var today = new Date();
+
+			var year = today.getFullYear();
+			var month = ('0' + (today.getMonth() + 1)).slice(-2);
+			var day = ('0' + today.getDate()).slice(-2);
+			var hours = ('0' + today.getHours()).slice(-2); 
+			var minutes = ('0' + today.getMinutes()).slice(-2);
+			var seconds = ('0' + today.getSeconds()).slice(-2); 
+
+
+			var dateString = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+			
 			if(msg != null && msg.trim() != ''){
 				var d = JSON.parse(msg);
 				if(d.type == "getId"){
@@ -83,14 +94,14 @@
 						$("#chating").append(
 							"<div class='chat'>"+
                         	"<div class='chat-body'>"+
-                        	"<div class='chat-message'>"+"<c:out value='${today}'/>"+"<br>"+d.msg+"</div>"+
+                        	"<div class='chat-message'>"+dateString+"<br>"+d.msg+"</div>"+
                     		"</div>"+
                				"</div>");	
 					}else{
 						$("#chating").append(
 						"<div class='chat chat-left'>"+
                         "<div class='chat-body'>"+ 
-                        "<div class='chat-message'>"+"<c:out value='${today}'/>"+"<br>"+"<strong>"+d.userName+"</strong>"+"<br>"+d.msg +"</div>" +                      
+                        "<div class='chat-message'>"+dateString+"<br>"+"<strong>"+d.userName+"</strong>"+"<br>"+d.msg +"</div>" +                      
                     	"</div>"+
                 		"</div>"
                 		);
