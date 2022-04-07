@@ -131,7 +131,7 @@
                                 <span>사원 현황</span>
                             </a>
                         </li>
-					<c:if test="${emp.authName=='관리자'}">	
+					<c:if test="${sessionScope.emp.authName=='관리자'}">	
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-pen-fill"></i>
