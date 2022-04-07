@@ -15,7 +15,7 @@
 	
 	<sql id="search">
 		<if test='keyword != null and keyword neq ""'>
-		AND tt.TASK_NAME LIKE '%' || #{keyword} || '%'
+		AND LOWER(tt.TASK_NAME) LIKE '%' || LOWER(#{keyword}) || '%'
 		</if>
 		<if test='projectId != null and projectId neq ""'>
 		AND tt.prj_id = #{projectId}
