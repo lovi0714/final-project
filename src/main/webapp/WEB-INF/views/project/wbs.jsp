@@ -212,7 +212,7 @@
 		console.log("태스크생성후 출력", id, item.id);
 		$.ajax({
 		    type: 'GET',
-		    url: '/pms/project/api/wbs/task/maxId',
+		    url: '${path}/project/api/wbs/task/maxId',
 		    dataType: 'text',
 		    contentType: 'application/json; charset=utf-8',
 		}).done(function (maxId) {
@@ -229,7 +229,7 @@
 		console.log("링크생성후 출력", id, item);
 		$.ajax({
 		    type: 'GET',
-		    url: '/pms/project/api/wbs/link/maxId',
+		    url: '${path}/project/api/wbs/link/maxId',
 		    //async: false,
 		    dataType: 'text',
 		    contentType: 'application/json; charset=utf-8',
