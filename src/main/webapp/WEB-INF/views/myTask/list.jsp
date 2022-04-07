@@ -579,6 +579,7 @@
 		"autoWidth" : false,
 		"columnDefs": [
 		    {"orderable": false, "targets": 0},
+		    {"orderable": false, "targets": 7},
 		    {"width": "20%", "targets": 1},
 		    {"width": "20%", "targets": 2},
 		    {"className": "dt-center", "targets": "_all"}
