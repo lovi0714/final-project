@@ -167,7 +167,7 @@
 		}
 		
 		function dateFormat(date) {
-	        let month = date.getMonth() + 1;
+	        let month = date.getMonth();
 	        let day = date.getDate();
 
 	        month = month >= 10 ? month : '0' + month;
