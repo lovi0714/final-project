@@ -150,11 +150,13 @@
                             				<textarea class="form-control" id="projectContent" rows="3" name="content" disabled><c:out value="${project.content}"></c:out></textarea>
                                         </div>
                                 	</div>
-                                    <div id="btnWrap" class="col-12 d-flex justify-content-end" style="display: none;">
-                                        <button type="button" id="deleteBtn" class="btn btn-danger me-1 mb-1">삭제</button>
-                                        <button type="button" id="saveBtn" class="btn btn-primary me-1 mb-1">수정</button>
-                                        <button type="button" id="cancleBtn" class="btn btn-light-secondary me-1 mb-1">취소</button>
-                                    </div>
+                                	<c:if test="${emp.authId ne '1'}">
+	                                    <div id="btnWrap" class="col-12 d-flex justify-content-end" style="display: none;">
+	                                        <button type="button" id="deleteBtn" class="btn btn-danger me-1 mb-1">삭제</button>
+	                                        <button type="button" id="saveBtn" class="btn btn-primary me-1 mb-1">수정</button>
+	                                        <button type="button" id="cancleBtn" class="btn btn-light-secondary me-1 mb-1">취소</button>
+	                                    </div>
+                                    </c:if>
                                 </div>
                             </form>
 					</div>

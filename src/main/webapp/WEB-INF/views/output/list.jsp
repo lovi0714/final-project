@@ -519,7 +519,7 @@
 				$('#content').val(data.content);
 				$('#outputId').val(data.outputId);
 				
-				if (authId !== 1 || empId === data.empId) {
+				if (authId === 3 || empId === data.empId) {
 					$('#closeBtn').before(
 							`<button type="button" id="editBtn" class="btn btn-primary ml-1" >
 		                    <i class="bx bx-check d-block d-sm-none"></i>
