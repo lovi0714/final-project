@@ -92,8 +92,8 @@
 	                            <td style="max-width:70px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;"><a href="${path}/risk/detail.do?riskId=${list.riskId}">${list.title}</a></td>
 	                            <td width="15%">${list.pName }</td>
 	                            <td width="15%">${list.rType }</td>
-	                            <td width="15%">${list.presenter}</td>
-	                            <td width="15%">${list.activator}</td>
+	                            <td width="10%">${list.presenter}</td>
+	                            <td width="10%">${list.activator}</td>
 	                            <td width="10%"><fmt:formatDate pattern="yyyy-MM-dd" value="${list.dueAt}" /></td>
 	                            <td width="10%"><fmt:formatDate pattern="yyyy-MM-dd" value="${list.comAt}" /></td>
                         	</tr>
