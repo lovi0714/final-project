@@ -68,11 +68,12 @@
 	                <table class="table" id="table1" style="text-align:center">
 	                    <thead>
 	                        <tr>
-	                            <th width="20%">사원 번호</th>
-	                            <th width="20%">권한</th>
-	                            <th width="20%">부서</th>
-	                            <th width="20%">이름</th>
-	                            <th width="20%">직급</th>
+	                            <th width="30%">사원 번호</th>
+	                            <th width="10%">권한</th>
+	                            <th width="10%">부서</th>
+	                            <th width="10%">직급</th>
+	                            <th width="10%">이름</th> 
+	                            <th width="30%">이메일</th>
 	                            	                            
 	                        </tr>
 	                    </thead>
@@ -82,8 +83,10 @@
 	                       		<td>${list.empId}</td>
 	                       		<td>${list.authName}</td>
 	                       		<td>${list.deptName}</td>
-	                       		<td>${list.name}</td>
 	                       		<td>${list.posName}</td>
+	                       		<td>${list.name}</td>
+	                       		<td>${list.empEmail}</td>
+	                       		
 	                       	</tr>	
 	                       </c:forEach>  	                            
 	                    </tbody>

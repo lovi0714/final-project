@@ -139,14 +139,14 @@ public class EmpController {
 		
 	}
 	
-	/* 사용자 현황 */
+	/* 사원 현황 */
 	@GetMapping("/empStatus.do")
 	public String status(Model m) {
 		m.addAttribute("empStatus", empService.getEmpStatus());
 		return "emp/status";
 	}
 	
-	/* 사용자 정보 화면 */
+	/* 사원 정보 화면 */
 	@GetMapping("/getEmpInfoList.do")
 	public String getEmpInfoList(Model m) {
 		m.addAttribute("empInfoList", empService.getEmpInfoList());

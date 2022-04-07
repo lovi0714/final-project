@@ -73,7 +73,7 @@
 	
 	<!-- 사원 정보목록 -->
 	<select id="getEmpInfoList" resultMap="empMap">
-		SELECT te.EMP_ID, te.NAME, te.DEPT_ID, te.POS_ID, te.auth_id, te.name, td.DEPT_NAME, tp.POS_NAME, ta.auth_name  
+		SELECT te.EMP_ID, te.NAME, te.DEPT_ID, te.POS_ID, te.auth_id, te.name, te.emp_email, td.DEPT_NAME, tp.POS_NAME, ta.auth_name  
 		FROM SCOTT.TBL_EMP te 
 		INNER JOIN SCOTT.TBL_DEPT td 
 				ON te.DEPT_ID = td.DEPT_ID
