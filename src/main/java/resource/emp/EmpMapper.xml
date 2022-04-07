@@ -47,6 +47,12 @@
  	 
 	<!-- 사원추가 -->
 	<insert id="saveEmp" parameterType="emp">
+		<selectKey keyProperty="empId" resultType="int" order="AFTER">
+			SELECT MAX(EMP_ID)
+			FROM TBL_EMP 
+		</selectKey>
+		
+	 
 		INSERT INTO TBL_EMP
 		(emp_id, dept_id, auth_id, pos_id, password, name, emp_email, phone, join_at, leave_at, is_leave, create_at, update_at)
 		VALUES(to_char(sysdate,'YYMMDD') || empId_seq.nextval, #{deptId}, #{authId}, #{posId}, #{password, jdbcType=VARCHAR}, #{name}, #{empEmail}, #{phone}, sysdate, null, 0, sysdate, null)
