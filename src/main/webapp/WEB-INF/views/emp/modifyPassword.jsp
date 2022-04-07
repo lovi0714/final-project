@@ -103,7 +103,18 @@ $(function() {
 		}
 		
 		if (password === checkPassword) {
-			$('#passwordForm').submit();
+			
+			
+			Swal.fire({
+  			  icon: 'success',
+  			  title: '비밀번호가 변경되었습니다.',
+  			  allowOutsideClick : false
+  			}).then((result) => {
+  				if (result.isConfirmed) {
+					$('#passwordForm').submit();
+  				}
+  			});
+			
 		}
 		
 	});
