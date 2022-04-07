@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -49,8 +51,9 @@ public class EmpController {
 	}
 	
 	/* 로그인 처리 */
+	@ResponseBody
 	@PostMapping("/loginProcess.do")
-	public String loginProcess(Emp emp, HttpServletRequest req) {
+	public ResponseEntity<String> loginProcess(Emp emp, HttpServletRequest req) {
 		String rawPassword = emp.getPassword();
 		
 		emp = empService.loginInfo(emp.getEmpId());
@@ -58,9 +61,9 @@ public class EmpController {
 			HttpSession session = req.getSession();
 			session.setAttribute("emp", emp);					
 			session.setMaxInactiveInterval(60 * 30);			
-			return "redirect:/dashboard/general.do";
+			return ResponseEntity.ok().body("success");
 		}
-		return "redirect:/emp/login.do";
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("failed");
 	}
 	
 	/* 로그아웃 처리 */

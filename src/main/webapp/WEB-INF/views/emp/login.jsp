@@ -21,52 +21,89 @@
 <link rel="stylesheet" href="${path}/resources/css/app.css">
 <link rel="shortcut icon" href="${path}/resources/images/favicon.svg" type="image/x-icon">
 
-<title>Login</title>    
+<link rel="stylesheet" href="${path}/resources/vendors/sweetalert2/sweetalert2.min.css">
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<title>CPMS:: 로그인</title>    
+
+<script type="text/javascript">
+$(function() {
+	var app = new Vue({
+	  el: '#auth',
+	  data: {
+	    empId : '',
+	    password: ''
+	  },
+	  methods: {
+		  loginBtn(e) {
+			  e.preventDefault();
+			  console.log(this.empId, this.password);
+			  axios.post('${path}/emp/loginProcess.do', null, { 
+				  params : 
+					  { 
+						empId: this.empId, 
+						password: this.password
+					  } 
+			  		})
+		        .then(function(response) {
+		          if (response.data === 'success' && response.status == 200) {
+		        	  location.href = '${path}/dashboard/general.do';
+		          }
+		        })
+		        .catch(function(error) {
+		          console.log(error);
+		          Swal.fire({
+        			  icon: 'error',
+        			  title: '아이디와 패스워드를 확인하세요.',
+        			});
+		          this.empId = '';
+		          this.password = '';
+		        });
+		  }
+	  }
+	})
+});
+</script>
 </head>
 
 <body>
-    <div id="auth">   
-<div class="row h-100">
-    <div class="col-lg-5 col-12" style="width: 70%; padding-left: 30%;">
-        <div id="auth-left">
-            <div class="auth-logo">
-                <h1>CPMS</h1>
-            </div>
-            <h1 class="auth-title">로그인</h1>
-            
-
-            <form name=loginForm action="${path}/emp/loginProcess.do" method="post">
-                <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="text" class="form-control form-control-xl" name="empId" id="empId" placeholder="아이디">
-                    <div class="form-control-icon">
-                        <i class="bi bi-person"></i>
-                    </div>
-                </div>
-                <div class="form-group position-relative has-icon-left mb-4">
-                    <input type="password" class="form-control form-control-xl" name="password" id="password" placeholder="비밀번호">
-                    <div class="form-control-icon">
-                        <i class="bi bi-shield-lock"></i>
-                    </div>
-                </div>
-                <div class="form-check form-check-lg d-flex align-items-end">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label text-gray-600" for="flexCheckDefault">
-                        로그인 유지하기
-                    </label>
-                </div>
-                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" onclick="btnLogin()">로그인</button>
-            	
-            	
-            </form>
-
-        </div>
-    </div>
-    
+<div id="auth">
+	<div class="row h-100">
+	    <div class="col-lg-5 col-12" style="width: 70%; padding-left: 30%;">
+	        <div id="auth-left">
+	            <div class="auth-logo">
+	                <h1>CPMS</h1>
+	            </div>
+	            <h1 class="auth-title">로그인</h1>
+	            <form name=loginForm action="${path}/emp/loginProcess.do" method="post">
+	                <div class="form-group position-relative has-icon-left mb-4">
+	                    <input type="text" class="form-control form-control-xl" name="empId" id="empId" v-model="empId" placeholder="아이디">
+	                    <div class="form-control-icon">
+	                        <i class="bi bi-person"></i>
+	                    </div>
+	                </div>
+	                <div class="form-group position-relative has-icon-left mb-4">
+	                    <input type="password" class="form-control form-control-xl" name="password" id="password" v-model="password" placeholder="비밀번호">
+	                    <div class="form-control-icon">
+	                        <i class="bi bi-shield-lock"></i>
+	                    </div>
+	                </div>
+	                <div class="form-check form-check-lg d-flex align-items-end">
+	                    <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
+	                    <label class="form-check-label text-gray-600" for="flexCheckDefault">
+	                        로그인 유지하기
+	                    </label>
+	                </div>
+	                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" @click="loginBtn">로그인</button>
+	              </form>
+        	</div>
+    	</div>
+	</div>
 </div>
 
-    </div>
-
+<script src="${path}/resources/js/extensions/sweetalert2.js"></script>
+<script src="${path}/resources/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 </body>
-
 </html>
