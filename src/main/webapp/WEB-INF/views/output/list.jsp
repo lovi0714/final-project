@@ -291,7 +291,7 @@
 	           data: function (data) {
 	        	   console.log(data);
 	        	   data.projectId = $('#projectId').val();
-	        	   data.outputCategory = $('#outputCategory').val();
+	        	   data.outputCategoryId = $('#outputCategory').val();
 	        	   data.keyword = $('#keyword').val();
 	               return data;
 	           }

@@ -78,7 +78,7 @@
 		<if test='projectId != null and projectId neq ""'>
 		AND tp.prj_id = #{projectId}
 		</if>
-		<if test="outputCategoryId != null">
+		<if test='outputCategoryId != null and outputCategoryId neq ""'>
 		AND to2.cat_id = #{outputCategoryId}
 		</if>
 	</sql>
