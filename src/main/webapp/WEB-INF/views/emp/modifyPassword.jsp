@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-horizontal" action="${path}/emp/modifyPassword.do" method="post">
+                            <form id="passwordForm" class="form form-horizontal" action="${path}/emp/modifyPassword.do" method="post">
                                 <div class="form-body">
                                     <div class="row">
                                         
@@ -34,19 +34,18 @@
                                             <label>새로운 비밀번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="password" id="first-name" class="form-control" name="password"
+                                            <input type="password" id="password" class="form-control" name="password"
                                                 placeholder="새로운 비밀번호를 입력해주세요.">
                                         </div><div class="col-md-4">
                                             <label>비밀번호 확인</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="password" id="first-name" class="form-control" name="CheckPassword"
+                                            <input type="password" id="checkPassword" class="form-control" name="CheckPassword"
                                                 placeholder="비밀번호를 확인해주세요.">
                                         </div>
                                                                             
                                         <div class="col-sm-12 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">변경</button>
-                                            
+                                            <button type="button" class="btn btn-primary me-1 mb-1" id="changeBtn">변경</button>
                                         </div>
                                     </div>
                                 </div>
@@ -67,6 +66,47 @@ let jquery_datatable = $("#table1").DataTable({
 	"searching" : false,
 	"lengthChange" : false,
 	"info" : false,
+});
+
+$(function() {
+	$('#changeBtn').click(function(e) {
+		e.preventDefault();
+		
+		const password = $('#password').val().replace(/\s/gi, "");
+		const checkPassword = $('#checkPassword').val().replace(/\s/gi, "");
+		
+		if (password === '') {
+			Swal.fire({
+  			  icon: 'error',
+  			  title: '변경할 패스워드를 입력하세요.',
+  			});
+			
+			return false;
+		}
+		
+		if (checkPassword === '') {
+			Swal.fire({
+  			  icon: 'error',
+  			  title: '패스워드 확인 입력하세요.',
+  			});
+			
+			return false;
+		}
+		
+		if (checkPassword !== password) {
+			Swal.fire({
+  			  icon: 'error',
+  			  title: '동일한 패스워드를 입력하세요.',
+  			});
+			
+			return false;
+		}
+		
+		if (password === checkPassword) {
+			$('#passwordForm').submit();
+		}
+		
+	});
 });
 </script>      
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
