@@ -27,7 +27,7 @@
 					<div class="row pt-3" style="background-color: #f2f7ff; height: 70px">
 						<div class="col-md-3">
 							<div class="input-group mb-6">
-								<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+								<input type="text" id="keyword" class="form-control" placeholder="제목을 입력하세요">
 								<button class="btn btn-primary" type="button" id="searchBtn">검색</button>		
 							</div>
 						</div>
@@ -91,6 +91,14 @@
 		$('#regBtn').click(function() {
 			location.href = '${path}/community/noticeForm.do';
 		});
+		
+		// 키워드 검색
+		$('#keyword').keyup(function() {
+			$("#noticeBoard > tbody > tr").hide();
+			var temp = $("#noticeBoard > tbody > tr > td:nth-child(4n+2):contains('" + $(this).val() + "')");
+			
+			$(temp).parent().show();
+		})
 	});	
 </script>
 

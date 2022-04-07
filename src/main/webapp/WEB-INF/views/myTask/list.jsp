@@ -47,27 +47,27 @@
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
-										<select class="form-select" id="basicSelect">
-											<option>프로젝트를 선택하세요</option>
+										<select class="form-select" id="projectSelect">
+											<option value="">프로젝트를 선택하세요</option>
 											<c:forEach var="p" items="${taskProject}">
-	                                    		<option value="${p.projectId}">${p.title}</option>
+	                                    		<option value="${p.title}">${p.title}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<fieldset class="form-group">
-										<select class="form-select" id="basicSelect">
-											<option>작업상태를 선택하세요</option>
+										<select class="form-select" id="statusSelect">
+											<option value="">작업상태를 선택하세요</option>
 											<c:forEach var="s" items="${status}" >
-	                                    		<option value="${s.statusId}">${s.status}</option>
+	                                    		<option value="${s.status}">${s.status}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+										<input type="text" class="form-control" id="keyword" placeholder="작업명을 입력하세요">
 										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 									</div>
 								</div>
@@ -141,28 +141,27 @@
 								<div class="row pt-3" style="background-color: #f2f7ff;">
 									<div class="col-md-3">
 										<fieldset class="form-group">
-											<select class="form-select" id="basicSelect">
-												<option>프로젝트를 선택하세요</option>
+											<select class="form-select" id="outputProjectSelect">
+												<option value="">프로젝트를 선택하세요</option>
 												<c:forEach var="op" items="${outputProject}">
-		                                    		<option value="${op.projectId}">${op.title}</option>
+		                                    		<option value="${op.title}">${op.title}</option>
 		                                    	</c:forEach>
 											</select>
 										</fieldset>
 									</div>
 									<div class="col-md-3">
 										<fieldset class="form-group">
-											<select class="form-select" id="basicSelect">
-												<option>카테고리를 선택하세요</option>
+											<select class="form-select" id="categorySelect">
+												<option value="">카테고리를 선택하세요</option>
 			   		                            <c:forEach var="c" items="${category}">
-				                                    <option value="${c.categoryId}">${c.categoryName}</option>
+				                                    <option value="${c.categoryName}">${c.categoryName}</option>
 					                        	</c:forEach>
 											</select>
 										</fieldset>
 									</div>
 									<div class="col-md-3">
 										<div class="input-group mb-3">
-											<input type="text" class="form-control"
-												placeholder="검색어를 입력하세요">
+											<input type="text" class="form-control" id="outputKeyword" placeholder="산출물 정보를 입력하세요">
 											<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 										</div>
 									</div>
@@ -590,6 +589,39 @@
 		"order": [5, 'desc']
 	});
 
+	// 프로젝트 현황 datatable 필터
+	$(document).ready(function(){
+		$('#projectSelect').change(function() {
+			$('#statusSelect').val('').prop("selected", true); // 변경 예정
+			$('#keyword').val(''); // 변경 예정
+			
+			$("#myTask > tbody > tr").hide();
+			var temp = $("#myTask > tbody > tr > td:nth-child(8n+3):contains('" + $("#projectSelect option:selected").val() + "')");	
+			
+			$(temp).parent().show();		
+		});
+		
+		$('#statusSelect').change(function() {
+			$('#projectSelect').val('').prop("selected", true); // 변경 예정
+			$('#keyword').val(''); // 변경 예정
+			
+			$("#myTask > tbody > tr").hide();
+			var temp = $("#myTask > tbody > tr > td:nth-child(8n+5):contains('" + $("#statusSelect option:selected").val() + "')");	
+			
+			$(temp).parent().show();	
+		});
+		
+		$('#keyword').keyup(function() {
+			$('#projectSelect').val('').prop("selected", true); // 변경 예정
+			$('#statusSelect').val('').prop("selected", true); // 변경 예정
+			
+			$("#myTask > tbody > tr").hide();
+			var temp = $("#myTask > tbody > tr > td:nth-child(8n+2):contains('" + $(this).val() + "')");
+			
+			$(temp).parent().show();
+		})
+	});	
+	
 	// 작업 체크박스 전체 선택 및 해제
 	$(document).ready(function() {
 		$("#checkAll").click(function() {	
@@ -855,6 +887,39 @@
 	    }
 	});
 
+	// 산출물 datatable 필터
+	$(document).ready(function(){
+		$('#outputProjectSelect').change(function() {
+			$('#categorySelect').val('').prop("selected", true); // 변경 예정
+			$('#outputKeyword').val(''); // 변경 예정
+			
+			$("#myOutput > tbody > tr").hide();
+			var temp = $("#myOutput > tbody > tr > td:nth-child(3n+3):contains('" + $("#outputProjectSelect option:selected").val() + "')");	
+			
+			$(temp).parent().show();		
+		});
+		
+		$('#categorySelect').change(function() {
+			$('#outputProjectSelect').val('').prop("selected", true); // 변경 예정
+			$('#outputKeyword').val(''); // 변경 예정
+			
+			$("#myOutput > tbody > tr").hide();
+			var temp = $("#myOutput > tbody > tr > td:nth-child(3n+1):contains('" + $("#categorySelect option:selected").val() + "')");	
+			
+			$(temp).parent().show();	
+		});
+		
+		$('#outputKeyword').keyup(function() {
+			$('#outputProjectSelect').val('').prop("selected", true); // 변경 예정
+			$('#categorySelect').val('').prop("selected", true); // 변경 예정
+			
+			$("#myOutput > tbody > tr").hide();
+			var temp = $("#myOutput > tbody > tr > td:nth-child(3n+2):contains('" + $(this).val() + "')");
+			
+			$(temp).parent().show();
+		})
+	});	
+	
 	// 권한 및 계정 확인
 	const authId = ${emp.authId};
 	const empId = ${emp.empId};

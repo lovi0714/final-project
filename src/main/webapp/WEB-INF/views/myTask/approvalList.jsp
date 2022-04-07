@@ -50,17 +50,17 @@
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
-										<select class="form-select" id="basicSelect">
-											<option>프로젝트를 선택하세요</option>
+										<select class="form-select" id="projectSelect">
+											<option value="">프로젝트를 선택하세요</option>
 											<c:forEach var="wp" items="${waitingProject}">
-	                                    		<option value="${wp.prjId}">${wp.prjName}</option>
+	                                    		<option value="${wp.prjName}">${wp.prjName}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+										<input type="text" id="keyword" class="form-control" placeholder="작업명을 입력하세요">
 										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 									</div>
 								</div>
@@ -106,17 +106,17 @@
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
-										<select class="form-select" id="basicSelect">
-											<option>프로젝트를 선택하세요</option>
+										<select class="form-select" id="projectSelect2">
+											<option value="">프로젝트를 선택하세요</option>
 											<c:forEach var="cp" items="${completedProject}">
-	                                    		<option value="${cp.prjId}">${cp.prjName}</option>
+	                                    		<option value="${cp.prjName}">${cp.prjName}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+										<input type="text" id="keyword2" class="form-control" placeholder="작업명을 입력하세요">
 										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 									</div>
 								</div>
@@ -153,17 +153,17 @@
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
-										<select class="form-select" id="basicSelect">
-											<option>프로젝트를 선택하세요</option>
+										<select class="form-select" id="projectSelect3">
+											<option value="">프로젝트를 선택하세요</option>
 											<c:forEach items="${rejectedProject}" var="rp">
-	                                    		<option value="${rp.prjId}">${rp.prjName}</option>
+	                                    		<option value="${rp.prjName}">${rp.prjName}</option>
 	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+										<input type="text" id="keyword3" class="form-control" placeholder="작업명을 입력하세요">
 										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
 									</div>
 								</div>
@@ -325,6 +325,27 @@
 		"order": [5, 'desc']
 	});
 
+	// 승인대기 datatable 필터 및 키워드 검색
+	$(document).ready(function(){
+		$('#projectSelect').change(function() {
+			$('#keyword').val(''); // 변경 예정
+			
+			$("#waitTable > tbody > tr").hide();
+			var temp = $("#waitTable > tbody > tr > td:nth-child(6n+3):contains('" + $("#projectSelect option:selected").val() + "')");	
+			
+			$(temp).parent().show();		
+		});
+	
+		$('#keyword').keyup(function() {
+			$('#projectSelect').val('').prop("selected", true); // 변경 예정
+			
+			$("#waitTable > tbody > tr").hide();
+			var temp = $("#waitTable > tbody > tr > td:nth-child(6n+2):contains('" + $(this).val() + "')");
+		
+			$(temp).parent().show();
+		})	
+	});	
+	
 	// 승인대기 체크박스 전체 선택 및 해제
 	$(document).ready(function() {
 		$("#checkAll1").click(function() {	
@@ -411,6 +432,27 @@
 		"order": [5, 'desc']
 	});
 	
+	// 승인완료 datatable 필터 및 키워드 검색
+	$(document).ready(function(){
+		$('#projectSelect2').change(function() {
+			$('#keyword2').val(''); // 변경 예정
+			
+			$("#completeTable > tbody > tr").hide();
+			var temp = $("#completeTable > tbody > tr > td:nth-child(6n+2):contains('" + $("#projectSelect2 option:selected").val() + "')");	
+			
+			$(temp).parent().show();		
+		});
+		
+		$('#keyword2').keyup(function() {
+			$('#projectSelect2').val('').prop("selected", true); // 변경 예정
+			
+			$("#completeTable > tbody > tr").hide();
+			var temp = $("#completeTable > tbody > tr > td:nth-child(6n+1):contains('" + $(this).val() + "')");
+			
+			$(temp).parent().show();
+		})
+	});	
+	
 	// 반려 datatable
 	$("#rejectTable").DataTable({
 		"searching": false,
@@ -429,6 +471,27 @@
 	    },
 		"order": [6, 'desc']
 	});
+	
+	// 반려 datatable 필터 및 키워드 검색
+	$(document).ready(function(){
+		$('#projectSelect3').change(function() {
+			$('#keyword3').val(''); // 변경 예정
+			
+			$("#rejectTable > tbody > tr").hide();
+			var temp = $("#rejectTable > tbody > tr > td:nth-child(6n+3):contains('" + $("#projectSelect3 option:selected").val() + "')");	
+			
+			$(temp).parent().show();		
+		});
+		
+		$('#keyword3').keyup(function() {
+			$('#projectSelect3').val('').prop("selected", true); // 변경 예정
+			
+			$("#rejectTable > tbody > tr").hide();
+			var temp = $("#rejectTable > tbody > tr > td:nth-child(6n+2):contains('" + $(this).val() + "')");
+			
+			$(temp).parent().show();
+		})
+	});	
 
 	// 반려 체크박스 전체 선택 및 해제
 	$(document).ready(function() {

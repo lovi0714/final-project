@@ -57,16 +57,16 @@
 				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
 					<p class="fw-bold">프로젝트 현황</p>
 					<div style="display: flex; justify-content: flex-end;">
-						<select class="form-select" style="width: 150px;">
-							<option selected>부서</option>
+						<select class="form-select" id="deptSelect" style="width: 150px;">
+							<option value="" selected>부서</option>
 							<c:forEach var="d" items="${dept}" >
-	                        	<option value="${d.pmDeptId}">${d.pmDeptName}</option>
+	                        	<option value="${d.pmDeptName}">${d.pmDeptName}</option>
 	                        </c:forEach>
 						</select> 
-						<select class="form-select" style="width: 150px; margin: 0 10px;">
-							<option selected>상태</option>
+						<select class="form-select" id="statusSelect" style="width: 150px; margin: 0 10px;">
+							<option value="" selected>상태</option>
 							<c:forEach var="s" items="${status}">
-	                        	<option value="${s.statusId}">${s.status}</option>
+	                        	<option value="${s.status}">${s.status}</option>
 	                        </c:forEach>
 						</select> 
 						<a href="${path}/project/list.do" style="margin-top: 7px">더보기</a>
@@ -207,6 +207,27 @@
 	    },
 		"order": [0, 'desc']
 	});
+	
+	// 프로젝트 현황 datatable 필터
+	$(document).ready(function(){
+		$('#deptSelect').change(function() {
+			$('#statusSelect').val('').prop("selected",true); // 변경 예정
+			
+			$("#projectList > tbody > tr").hide();
+			var temp = $("#projectList > tbody > tr > td:nth-child(7n+3):contains('" + $("#deptSelect option:selected").val() + "')");	
+			
+			$(temp).parent().show();		
+		});
+		
+		$('#statusSelect').change(function() {
+			$('#deptSelect').val('').prop("selected",true); // 변경 예정
+			
+			$("#projectList > tbody > tr").hide();
+			var temp = $("#projectList > tbody > tr > td:nth-child(7n+5):contains('" + $("#statusSelect option:selected").val() + "')");	
+			
+			$(temp).parent().show();		
+		});
+	});	
 	
 	// 부서별 프로젝트 현황 chart		
 	let projectCountList1 = [];
