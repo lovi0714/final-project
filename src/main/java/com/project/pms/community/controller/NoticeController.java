@@ -56,8 +56,8 @@ public class NoticeController {
 		
 		NoticeFile noticefile = service.getFileInfoByFileId(noticeFileId);
 		
-		model.addAttribute("storeFileName", noticefile.getOriginalName());
-		model.addAttribute("uploadFileName", noticefile.getSaveName());
+		model.addAttribute("storeFileName", noticefile.getSaveName());
+		model.addAttribute("uploadFileName", noticefile.getOriginalName());
 		
 		return "download";
 	}

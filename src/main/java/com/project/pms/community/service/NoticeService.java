@@ -47,7 +47,7 @@ public class NoticeService {
 						System.out.println("경로명: " + uploadPath);
 						System.out.println("첨부파일명: " + fname);
 						
-						File file = new File(uploadPath + fname);
+						File file = new File(uploadPath + saveName);
 						mf.transferTo(file);
 						
 						NoticeFile noticeFile = new NoticeFile(fname, saveName, ext, volume);
