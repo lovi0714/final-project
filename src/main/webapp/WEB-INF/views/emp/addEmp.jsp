@@ -40,15 +40,15 @@
                                             <label>발신자 이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="email-id" class="form-control" name="senderMail"
+                                            <input type="email" id="email-id" class="form-control" name="senderMail"
                                                 value="dahoonEmailTest@gmail.com" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label>사원 이메일</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="contact-info" class="form-control" name="empEmail"
-                                                placeholder="이메일을 입력해주세요.">
+                                            <input type="email" id="contact-info" class="form-control" name="empEmail"
+                                                placeholder="이메일을 입력해주세요." required>
                                         </div>
                                         
                                         <div class="col-md-4">
@@ -56,14 +56,14 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="contact-info" class="form-control" name="name"
-                                                placeholder="이름을 입력해주세요.">
+                                                placeholder="이름을 입력해주세요." required>
                                         </div>
                                         <div class="col-md-4">
                                             <label>전화번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="contact-info" class="form-control" name="phone"
-                                                placeholder="전화번호를 입력해주세요.">
+                                                placeholder="전화번호를 입력해주세요." required>
                                         </div>
                                         <div class="col-md-4">
                                             <label>권한</label>
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">	                                    
 		                                    <fieldset class="form-group">
-		                                        <select class="form-select" id="basicSelect" name="deptId">
+		                                        <select class="form-select" id="basicSelect" name="deptId" required>
 		                                            <option value="">부서를 선택해주세요.</option>
 		                                            <option value="1">인사</option>
 		                                            <option value="2">회계</option>
@@ -135,6 +135,9 @@ let jquery_datatable = $("#table1").DataTable({
 	"lengthChange" : false,
 	"info" : false,
 });
+
+
+
 
 </script>     
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 

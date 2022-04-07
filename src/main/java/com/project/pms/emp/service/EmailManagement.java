@@ -39,10 +39,10 @@ public class EmailManagement {
 	        msg.addFrom(new InternetAddress[] { new InternetAddress(vo.getSenderMail(), vo.getSenderName()) });
 	
 	        // 이메일 제목
-	        msg.setSubject("CPMS 가입 안내", "utf-8");
+	        msg.setSubject("CPMS 가입 인증 메일 양식입니다.", "utf-8");
 	        
 	        // 이메일 본문
-	        msg.setText("아이디 :" + emp.getEmpId() + ", 비밀번호:" + emp.getPassword(), "utf-8");
+	        msg.setText("아이디는" + emp.getEmpId() + "이며, 비밀번호는" + emp.getPassword(), "utf-8");
 	        
 	        // 이메일 보내기
 	        mailSender.send(msg);

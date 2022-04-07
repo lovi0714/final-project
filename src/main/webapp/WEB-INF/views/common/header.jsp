@@ -176,9 +176,9 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                                         <li>
-                                            <h6 class="dropdown-header">Mail</h6>
+                                            <h6 class="dropdown-header">이메일</h6>
                                         </li>
-                                        <li><a class="dropdown-item" href="#">No new mail</a></li>
+                                        <li><a class="dropdown-item" href="#">${sessionScope.emp.empEmail}</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown me-3">
@@ -188,9 +188,9 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                                         <li>
-                                            <h6 class="dropdown-header">Notifications</h6>
+                                            <h6 class="dropdown-header">알림</h6>
                                         </li>
-                                        <li><a class="dropdown-item">No notification available</a></li>
+                                        <li><a class="dropdown-item">알림이 없습니다.</a></li>
                                     </ul>
                                 </li>
                             </ul>
