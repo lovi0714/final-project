@@ -47,7 +47,7 @@
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
 									<fieldset class="form-group">
-										<select class="form-select" id="projectSelect">
+										<select class="form-select" id="prjSelect">
 											<option value="">프로젝트를 선택하세요</option>
 											<c:forEach var="p" items="${taskProject}">
 	                                    		<option value="${p.title}">${p.title}</option>
@@ -504,23 +504,23 @@
 		                       <div class="form-group">
 		                           <label for="basicSelect">프로젝트</label>
 		                           <fieldset class="form-group mt-2">
-		                               <select class="form-select" id="projectSelect">
-		                                   <c:forEach var="p" items="${project}">
-				                               <option value="${p.projectId}">${p.projectName}</option>
-			                        	   </c:forEach>
-			                           </select>
-			                        </fieldset>
-			                    </div>
-		                   	</div>
+                             			<select class="form-select" id="projectSelect" name="projectId">
+                                 			<c:forEach var="p" items="${project}">
+		                            			<option value="${p.projectId}">${p.projectName}</option>
+	                        	 			</c:forEach>
+                             			</select>
+                         			</fieldset>
+                           		</div>
+                   			</div>
 		                   	<div class="col-md-6 col-12">
 		                       	<div class="form-group">
-		                            <label for="basicSelect">작업</label>
-		                            <fieldset class="form-group mt-2">
-		                                <select class="form-select" id="taskSelect" name="taskId">
-		                                </select>
-		                         	</fieldset>
-		                    	</div>
-		                   	</div>
+			                        <label for="basicSelect">작업</label>
+			                        <fieldset class="form-group mt-2">
+			                        	<select class="form-select" id="taskSelect" name="taskId">
+			                            </select>
+			                        </fieldset>
+				              	</div>
+				           	</div>
 		                   	<div class="col-md-6 col-12">
 		                    	<div class="form-group">
 		                        	<label for="basicSelect">산출물 카테고리</label>
@@ -591,18 +591,18 @@
 
 	// 프로젝트 현황 datatable 필터
 	$(document).ready(function(){
-		$('#projectSelect').change(function() {
+		$('#prjSelect').change(function() {
 			$('#statusSelect').val('').prop("selected", true); // 변경 예정
 			$('#keyword').val(''); // 변경 예정
 			
 			$("#myTask > tbody > tr").hide();
-			var temp = $("#myTask > tbody > tr > td:nth-child(8n+3):contains('" + $("#projectSelect option:selected").val() + "')");	
+			var temp = $("#myTask > tbody > tr > td:nth-child(8n+3):contains('" + $("#prjSelect option:selected").val() + "')");	
 			
 			$(temp).parent().show();		
 		});
 		
 		$('#statusSelect').change(function() {
-			$('#projectSelect').val('').prop("selected", true); // 변경 예정
+			$('#prjSelect').val('').prop("selected", true); // 변경 예정
 			$('#keyword').val(''); // 변경 예정
 			
 			$("#myTask > tbody > tr").hide();
@@ -612,7 +612,7 @@
 		});
 		
 		$('#keyword').keyup(function() {
-			$('#projectSelect').val('').prop("selected", true); // 변경 예정
+			$('#prjSelect').val('').prop("selected", true); // 변경 예정
 			$('#statusSelect').val('').prop("selected", true); // 변경 예정
 			
 			$("#myTask > tbody > tr").hide();
@@ -1270,6 +1270,18 @@
       	event.returnValue = false;
       }
   	}
+	
+	/*
+	$("#test").click(function() {	
+		$("#task-tap").removeClass("active");
+		$("#task-tap").attr('aria-selected', false);
+		$("#task").removeClass("active show");
+		
+		$("#output-tap").addClass("active");
+		$("#output-tap").attr('aria-selected', true);
+		$("#output").addClass("active show");
+	});
+	*/
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
