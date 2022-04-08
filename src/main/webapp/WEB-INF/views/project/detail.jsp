@@ -451,6 +451,10 @@ $(function() {
 			console.log(error);
 		});
 	
+	jQuery.validator.addMethod("greaterStart", function (value, element, params) {
+	    return this.optional(element) || new Date(value) >= new Date($(params).val());
+	},'Must be greater than start date.');
+	
 	$('#prjForm').validate({
 		rules: {
 			title: {
@@ -469,7 +473,8 @@ $(function() {
 			},
 			endAt: {
 				required: true,
-				date: true
+				date: true,
+				greaterStart: "#projectStartAt"
 			}
 		},
 		messages : {
@@ -489,7 +494,8 @@ $(function() {
             },
             endAt : {
             	required : '종료날짜를 지정하세요.',
-            	date: '날짜형식을 확인하세요.'
+            	date: '날짜형식을 확인하세요.',
+            	greaterStart: '종료일은 시작일보다 커야합니다.'
             }
 	    }
 	});

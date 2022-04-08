@@ -215,6 +215,10 @@
 				console.log(error);
 			});
 		
+		jQuery.validator.addMethod("greaterStart", function (value, element, params) {
+		    return this.optional(element) || new Date(value) >= new Date($(params).val());
+		},'Must be greater than start date.');
+		
 		$('#regBtn').click(function(e) {
 			e.preventDefault();
 			
@@ -236,7 +240,8 @@
 					},
 					endAt: {
 						required: true,
-						date: true
+						date: true,
+						greaterStart: "#projectStartAt"
 					}
 				},
 				messages : {
@@ -252,11 +257,13 @@
 		            },
 		            startAt : {
 		            	required : '시작날짜를 지정하세요.',
-		            	date: '날짜형식을 확인하세요.'
+		            	date: '날짜형식을 확인하세요.',
+
 		            },
 		            endAt : {
 		            	required : '완료날짜를 지정하세요.',
-		            	date: '날짜형식을 확인하세요.'
+		            	date: '날짜형식을 확인하세요.',
+		            	greaterStart: '종료일은 시작일보다 커야합니다.'
 		            }
 			    }
 			});
