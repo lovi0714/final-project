@@ -62,7 +62,7 @@
                                             <label>전화번호</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="contact-info" class="form-control" name="phone"
+                                            <input type="text" id="contact-info" class="form-control" name="phone" minlength="11"
                                                 placeholder="전화번호를 입력해주세요." required>
                                         </div>
                                         <div class="col-md-4">
