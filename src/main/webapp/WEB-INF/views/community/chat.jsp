@@ -53,7 +53,7 @@
 	});
 
 	function wsOpen(){
-		ws = new WebSocket("ws:/49.238.195.70:8080/${path}/chat-ws.do");
+		ws = new WebSocket("ws:/49.238.195.70:7080/${path}/chat-ws.do");
 		wsEvt();
 	}
 		
