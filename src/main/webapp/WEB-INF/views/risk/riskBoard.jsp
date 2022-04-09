@@ -13,6 +13,9 @@
 	a{
 		text-decoration: none;
 	}
+	.dataTables_filter {
+   display: none;
+}
 </style>
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
@@ -33,36 +36,20 @@
 	        <div class="card-body">
 	                  <div class="row pt-3" style="background-color: #f2f7ff;">
 		                <div class="col-md-3">
-		                    <fieldset class="form-group">
+		                    <fieldset class="form-group" id="form-group">
 		                        <select class="form-select" id="basicSelect">
-		                            <option>프로젝트를 선택하세요.</option>
-		                            <option>CPMS</option>
-		                            <option>프로젝트 1</option>
-		                            <option>프로젝트 2</option>
-		                            <option>프로젝트 3</option>
+		                            <option value="">프로젝트를 선택하세요.</option>
 		                        </select>
-		                    </fieldset>
-		                </div>
-                         <div class="col-md-3">
-		                    <fieldset class="form-group">
-		                        <select class="form-select" id="basicSelect">
-   		                            <option>진행상황을 선택하세요.</option>
-                                    <option>오픈</option>
-                                    <option>진행</option>
-                                    <option>취소</option>
-                                    <option>홀드</option>
-                                    <option>조치완료</option>
-                                </select>
 		                    </fieldset>
 		                </div>
    		                <div class="col-md-3">
 	                        <div class="input-group mb-3">
-	                            <input type="text" class="form-control" placeholder="검색어를 입력하세요">
-   	                            <button class="btn btn-primary" type="button" id="searchBtn">검색</button>
+	                            <input type="search" class="form-control" id="searchbox" name="searchbox" placeholder="검색어를 입력하세요">
+   	                      
 	                        </div>
                         </div>
-                        <div class="col-md-3">
-   	                        <div class="input-group mb-3 justify-content-end">
+                        <div class="col-md-6" style="float:right">
+   	                        <div class="input-group mb-3 justify-content-end"">
                             	<button class="btn btn-primary" type="button" id="regBtn" 
                             	onclick="location.href='write.do'">리스크 등록</button>
                             </div>
@@ -109,16 +96,42 @@
 <script src="${path}/resources/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="${path}/resources/vendors/fontawesome/all.min.js"></script>    
 <script>
-// Jquery Datatable
-let jquery_datatable = $("#table1").DataTable({
-	"searching" : false,
-	"lengthChange" : false,
-	"info" : false,
-	"language": {
-        "zeroRecords": "등록된 리스크가 없습니다."
-    },
-    order: [[0, 'desc']],
-    ordering: true,
-});
+$(document).ready(function() {
+    let dataTable = $('#table1').DataTable( {
+    	
+    	"info" : false,
+    	"lengthChange" : false,
+    	"language" : {
+    		"zeroRecords" : "등록된 리스크가 없습니다."
+    	},
+    	order:[0, 'desc'],
+    	ordering : true,
+        initComplete: function () {
+            this.api().columns([2]).every( function () {
+                var column = this;
+                var select = $('#basicSelect')
+                    .appendTo( $('#form-group').empty())
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                        .search( val ? '^'+val+'$' : '', true, false )
+                        .draw();
+                } );
+                
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append('<option value="'+d+'">'+d+'</option>')
+                } );
+            } );
+        }
+    } );
+    $("#searchbox").on("keyup search input paste cut", function() {
+    	   dataTable.search(this.value).draw();
+    	});  
+
+} );
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
