@@ -1,6 +1,7 @@
 package com.project.pms.approval.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.pms.approval.service.ApprovalService;
+import com.project.pms.approval.vo.ApprovalForm;
 import com.project.pms.approval.vo.ApprovalSearchCriteria;
 import com.project.pms.emp.vo.Emp;
 import com.project.pms.output.service.OutputService;
+import com.project.pms.project.vo.Project;
 
 @Controller
 @RequestMapping("/approval")
@@ -41,15 +44,21 @@ public class ApprovalController {
 	@ResponseBody
 	@GetMapping("/api/list.do")
 	public Map<String, Object> getApprovalList(HttpSession session, Model model, ApprovalSearchCriteria sc) {
-		
-		Integer empId = ((Emp)session.getAttribute("emp")).getEmpId();
-		sc.setEmpId(empId);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
+		Integer empId = ((Emp)session.getAttribute("emp")).getEmpId();
+		int start = sc.getStart() + 1;
+		int length = sc.getStart() + 10;
 		
-		map.put("data", service.getApprovalList(sc));
-		map.put("iTotalRecords", service.getApprovalList(sc).size());
-		map.put("iTotalDisplayRecords", service.getApprovalList(sc).size());
+		sc.setEmpId(empId);
+		sc.setStart(start);
+		sc.setLength(length);
+		
+		List<ApprovalForm> list = service.getApprovalList(sc);
+		int size = service.getApprovalCount(sc);
+		
+		map.put("data", list);
+		map.put("iTotalRecords", size);
+		map.put("iTotalDisplayRecords", size);
 		
 		return map;
 	}

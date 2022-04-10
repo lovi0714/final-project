@@ -91,10 +91,10 @@
 		        }},
 		        {data: "empName"},
 		        {data: "approvalDate", render: function(c) {
+		        	if (c[5] === undefined) c[5] = '00';
 		        	return dateFormat(new Date(c[0], c[1], c[2], c[3], c[4], c[5]));
 		        }},
 		        {data: "approvalId", render: function(data, type, row) {
-		        	console.log(row.statusId);
 		        	if (row.statusId === 1)
 		        		return '<button type="button" id="approvalBtn" class="btn btn-success" data-id="'+ data + '">승인</button><button type="button" id="rejectBtn" class="btn btn-danger" data-id="' + data + '">반려</button>';
 		        	else 

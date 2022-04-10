@@ -22,12 +22,39 @@
 		</if>
 	</sql>
 	
+	<!--  
 	<select id="getApprovalList" resultMap="approvalFormMap" parameterType="approvalSearchCriteria">
 		SELECT ta.APPROVAL_ID, tt.TASK_NAME, tp.NAME AS project_name, ta.AP_STATUS_ID, te.NAME AS emp_name, ta.CREATE_AT 
 		FROM TBL_APPROVAL ta, TBL_TASK tt, TBL_PROJECT tp, TBL_EMP te 
 		WHERE ta.TASK_ID = tt.TASK_ID AND tt.PRJ_ID = tp.PRJ_ID AND tt.MANAGER_ID = te.EMP_ID AND ta.APPROVER = #{empId}
 		<include refid="search"></include>
 		ORDER BY ta.APPROVAL_ID desc
+	</select>
+	-->
+	
+	<select id="getApprovalList" resultMap="approvalFormMap" parameterType="approvalSearchCriteria">
+		SELECT MP.APPROVAL_ID, MP.TASK_NAME, MP.project_name AS project_name, MP.AP_STATUS_ID, MP.emp_name AS emp_name, MP.CREATE_AT
+		FROM
+		    (
+		        SELECT ta.APPROVAL_ID, tt.TASK_NAME, tp.NAME AS project_name, ta.AP_STATUS_ID, te.NAME AS emp_name, ta.CREATE_AT, ROW_NUMBER() OVER(ORDER BY APPROVAL_ID DESC) AS RNUM
+		    	FROM TBL_APPROVAL ta, TBL_TASK tt, TBL_PROJECT tp, TBL_EMP te
+		        WHERE ta.TASK_ID = tt.TASK_ID AND tt.PRJ_ID = tp.PRJ_ID AND tt.MANAGER_ID = te.EMP_ID AND ta.APPROVER = #{empId}
+       			<include refid="search"></include>
+		    ) MP
+		WHERE RNUM BETWEEN #{start} AND #{length}
+		ORDER BY MP.APPROVAL_ID desc
+	</select>
+	
+	<select id="getApprovalCount" resultType="int" parameterType="approvalSearchCriteria">
+		SELECT COUNT(*)
+		FROM
+		    (
+		        SELECT ta.APPROVAL_ID, tt.TASK_NAME, tp.NAME AS project_name, ta.AP_STATUS_ID, te.NAME AS emp_name, ta.CREATE_AT, ROW_NUMBER() OVER(ORDER BY APPROVAL_ID DESC) AS RNUM
+		    	FROM TBL_APPROVAL ta, TBL_TASK tt, TBL_PROJECT tp, TBL_EMP te
+		        WHERE ta.TASK_ID = tt.TASK_ID AND tt.PRJ_ID = tp.PRJ_ID AND tt.MANAGER_ID = te.EMP_ID AND ta.APPROVER = #{empId}
+       			<include refid="search"></include>
+		    ) MP
+		ORDER BY MP.APPROVAL_ID desc
 	</select>
 	
 	<!-- 승인 처리 -->

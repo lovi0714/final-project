@@ -34,4 +34,9 @@ public class ApprovalService {
 		
 		dao.deleteApprovalByTaskId(id);
 	}
+
+	public int getApprovalCount(ApprovalSearchCriteria sc) {
+		
+		return dao.getApprovalCount(sc);
+	}
 }

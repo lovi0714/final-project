@@ -4,16 +4,23 @@ public class ApprovalSearchCriteria {
 	private Integer empId;
 	private String projectId;
 	private String keyword;
+	private Integer start;
+	private Integer length;
+	
 	public ApprovalSearchCriteria() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ApprovalSearchCriteria(Integer empId, String projectId, String keyword) {
+	
+	public ApprovalSearchCriteria(Integer empId, String projectId, String keyword, Integer start, Integer length) {
 		super();
 		this.empId = empId;
 		this.projectId = projectId;
 		this.keyword = keyword;
+		this.start = start;
+		this.length = length;
 	}
+
 	public Integer getEmpId() {
 		return empId;
 	}
@@ -32,8 +39,27 @@ public class ApprovalSearchCriteria {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+
+	public Integer getStart() {
+		return start;
+	}
+
+	public void setStart(Integer start) {
+		this.start = start;
+	}
+
+	public Integer getLength() {
+		return length;
+	}
+
+	public void setLength(Integer length) {
+		this.length = length;
+	}
+
 	@Override
 	public String toString() {
-		return "ApprovalSearchCriteria [empId=" + empId + ", projectId=" + projectId + ", keyword=" + keyword + "]";
+		return "ApprovalSearchCriteria [empId=" + empId + ", projectId=" + projectId + ", keyword=" + keyword
+				+ ", start=" + start + ", length=" + length + "]";
 	}
+	
 }
