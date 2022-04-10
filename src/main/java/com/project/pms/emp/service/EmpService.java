@@ -21,8 +21,12 @@ public class EmpService {
 	
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
-	// @Autowired
-	// PasswordManagement passwordManagement;
+	/* 비밀번호 변경 */
+	public void modifyPassword(Emp emp, String rawPassword) {
+		String encryptPassword = passwordEncoder.encode(rawPassword);
+		emp.setPassword(encryptPassword);
+		empDAO.modifyPassword(emp);
+	}
 	
 	/* 사원추가 */
 	public boolean joinEmp(Emp emp, Email vo) { 
@@ -44,12 +48,6 @@ public class EmpService {
 		session.invalidate();
 	}
 	
-	/* 비밀번호 변경 */
-	public void modifyPassword(Emp emp, String rawPassword) {
-		String encryptPassword = passwordEncoder.encode(rawPassword);
-		emp.setPassword(encryptPassword);
-		empDAO.modifyPassword(emp);
-	}
 	
 	/* 프로필 수정 */
 	public void modifyProfile(Emp emp) {
@@ -64,6 +62,11 @@ public class EmpService {
 	/* 사원 현황 */
 	public List<Emp> getEmpStatus() {
 		return empDAO.getEmpStatus();
+	}
+	
+	/* 사원 상세정보 수정 */
+	public void modifyEmpInfo(Emp emp) {
+		empDAO.modifyEmpInfo(emp);
 	}
 	
 }

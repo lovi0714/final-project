@@ -31,4 +31,7 @@ public interface EmpDAO {
 	// 사원 현황
 	public List<Emp> getEmpStatus();
 	
+	// 사원 상세정보 수정
+	public void modifyEmpInfo(Emp emp);
+	
 }

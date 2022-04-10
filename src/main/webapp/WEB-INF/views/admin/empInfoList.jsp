@@ -80,7 +80,8 @@
 	                    <tbody>
 	                       <c:forEach items="${empInfoList}" var="list">
 	                       	<tr>
-	                       		<td>${list.empId}</td>
+	                  
+	                       		<td style="cursor:pointer;"><a href="${path}/admin/EmpInfoDetails.do?empId=${list.empId}">${list.empId}</a></td>
 	                       		<td>${list.authName}</td>
 	                       		<td>${list.deptName}</td>
 	                       		<td>${list.posName}</td>

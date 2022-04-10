@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,7 +56,6 @@ public class EmpController {
 	@PostMapping("/loginProcess.do")
 	public ResponseEntity<String> loginProcess(Emp emp, HttpServletRequest req) {
 		String rawPassword = emp.getPassword();
-		
 		emp = empService.loginInfo(emp.getEmpId());
 		if(loginVerification.loginVerification(emp, rawPassword)) {
 			HttpSession session = req.getSession();
@@ -135,7 +135,7 @@ public class EmpController {
 		
 		emp.setEmpId(empId);
 		empService.modifyPassword(emp, rawPassword);
-		return "redirect:/emp/modifyPassword.do";
+		return "redirect:/emp/login.do";
 		
 	}
 	
@@ -152,4 +152,21 @@ public class EmpController {
 		m.addAttribute("empInfoList", empService.getEmpInfoList());
 		return "/admin/empInfoList";
 	}
+	
+	/* 사원 정보 수정 화면 */
+	@GetMapping("/modifyEmpInfo.do")
+	public String modifyEmpInfo(Model m, @RequestParam int empId) {
+		m.addAttribute("emp", empService.empInfo(empId));
+		return "/admin/modifyEmpInfo";
+	}
+	
+	/* 사원 정보 수정 */
+	@PostMapping("/modifyEmpInfo.do")
+	public String modifyEmpInfo(Model m, @RequestParam int empId, Emp emp) {
+		m.addAttribute("emp", empService.empInfo(empId));
+		emp.setEmpId(empId);
+		empService.modifyEmpInfo(emp);
+		return "/admin/empInfoList";
+	}
+	
 }

@@ -121,6 +121,19 @@
 		where emp_id = #{empId}
 	</update>	
 	
+	<!-- 사원 정보 수정 -->
+	<update id="modifyEmpInfo" parameterType="emp">
+		update TBL_EMP
+		set emp_email = #{empEmail},
+			phone = #{phone},
+			name = #{name},
+			dept_id = #{deptId},
+			pos_id = #{posId},
+			auth_id = #{authId},
+			update_at = sysdate
+		where emp_id = #{empId}
+	</update>
+	
 	
 	
  </mapper>
