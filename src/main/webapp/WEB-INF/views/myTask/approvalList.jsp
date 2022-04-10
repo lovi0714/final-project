@@ -107,7 +107,7 @@
 								<div class="col-md-3">
 									<fieldset class="form-group" id="project-group2">
 										<select class="form-select" id="projectSelect2">
-											<option value="">프로젝트를 선택하세요</option>
+											<option value="">프로젝트를 선택하세요.</option>
 										</select>
 									</fieldset>
 								</div>
@@ -150,7 +150,7 @@
 								<div class="col-md-3">
 									<fieldset class="form-group" id="project-group3">
 										<select class="form-select" id="projectSelect3">
-											<option value="">프로젝트를 선택하세요</option>
+											<option value="">프로젝트를 선택하세요.</option>
 										</select>
 									</fieldset>
 								</div>

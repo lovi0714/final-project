@@ -53,14 +53,14 @@
 								<div class="col-md-3">
 									<fieldset class="form-group" id="prj-group">
 										<select class="form-select" id="prjSelect">
-											<option value="">프로젝트를 선택하세요</option>
+											<option value="">프로젝트를 선택하세요.</option>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<fieldset class="form-group" id="status-group">
 										<select class="form-select" id="statusSelect">
-											<option value="">작업상태를 선택하세요</option>
+											<option value="">작업상태를 선택하세요.</option>
 										</select>
 									</fieldset>
 								</div>
@@ -158,14 +158,14 @@
 									<div class="col-md-3">
 										<fieldset class="form-group" id="outputProject-group">
 											<select class="form-select" id="outputProjectSelect">
-												<option value="">프로젝트를 선택하세요</option>
+												<option value="">프로젝트를 선택하세요.</option>
 											</select>
 										</fieldset>
 									</div>
 									<div class="col-md-3">
 										<fieldset class="form-group" id="category-group">
 											<select class="form-select" id="categorySelect">
-												<option value="">카테고리를 선택하세요</option>
+												<option value="">카테고리를 선택하세요.</option>
 											</select>
 										</fieldset>
 									</div>
