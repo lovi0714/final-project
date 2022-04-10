@@ -16,6 +16,10 @@
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
 	background-color: #435ebe;
 }
+
+.dataTables_filter {
+   display: none;
+}
 </style>
 
 <div id="main-content" style="padding-top: 0">
@@ -49,21 +53,17 @@
 						<div class="tab-pane fade show active" id="wait" role="tabpanel" aria-labelledby="wait-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
-									<fieldset class="form-group">
-										<select class="form-select" id="projectSelect">
-											<option value="">프로젝트를 선택하세요</option>
-											<c:forEach var="wp" items="${waitingProject}">
-	                                    		<option value="${wp.prjName}">${wp.prjName}</option>
-	                                    	</c:forEach>
-										</select>
-									</fieldset>
+				                    <fieldset class="form-group" id="project-group">
+				                        <select class="form-select" id="projectSelect">
+				                            <option value="">프로젝트를 선택하세요.</option>
+				                        </select>
+				                    </fieldset>
 								</div>
-								<div class="col-md-3">
-									<div class="input-group mb-3">
-										<input type="text" id="keyword" class="form-control" placeholder="작업명을 입력하세요">
-										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
-									</div>
-								</div>
+		   		                <div class="col-md-3">
+			                        <div class="input-group mb-3">
+			                            <input type="search" class="form-control" id="searchbox" name="searchbox" placeholder="검색어를 입력하세요">
+			                        </div>
+		                        </div>
 								<div class="col-md-6">
 									<div class="input-group mb-3 justify-content-end">
 										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#primary2" id="cancelBtn" onclick="approvalCancel1();">회수</button>
@@ -105,19 +105,15 @@
 						<div class="tab-pane fade" id="complete" role="tabpanel" aria-labelledby="complete-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
-									<fieldset class="form-group">
+									<fieldset class="form-group" id="project-group2">
 										<select class="form-select" id="projectSelect2">
 											<option value="">프로젝트를 선택하세요</option>
-											<c:forEach var="cp" items="${completedProject}">
-	                                    		<option value="${cp.prjName}">${cp.prjName}</option>
-	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" id="keyword2" class="form-control" placeholder="작업명을 입력하세요">
-										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
+										<input type="search" class="form-control" id="searchbox2" name="searchbox" placeholder="검색어를 입력하세요">
 									</div>
 								</div>
 							</div>
@@ -152,19 +148,15 @@
 						<div class="tab-pane fade" id="reject" role="tabpanel" aria-labelledby="reject-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
-									<fieldset class="form-group">
+									<fieldset class="form-group" id="project-group3">
 										<select class="form-select" id="projectSelect3">
 											<option value="">프로젝트를 선택하세요</option>
-											<c:forEach items="${rejectedProject}" var="rp">
-	                                    		<option value="${rp.prjName}">${rp.prjName}</option>
-	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" id="keyword3" class="form-control" placeholder="작업명을 입력하세요">
-										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
+										<input type="search" class="form-control" id="searchbox3" name="searchbox" placeholder="검색어를 입력하세요">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -304,47 +296,52 @@
 		</div>
 	</div>
 	<!-- 작업정보 modal end -->
-	
-<script>
-	// 승인대기 datatable
-	$("#waitTable").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"autoWidth" : false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"},
-		    {"orderable": false, "targets": 0},
-		    {"width": "5%", "targets": 0},
-		    {"width": "20%", "targets": 1},
-		    {"width": "20%", "targets": 2}
-		],
-		"language": {
-	        "zeroRecords": "승인 대기중인 결재가 없습니다."
-	    },
-		"order": [5, 'desc']
-	});
 
-	// 승인대기 datatable 필터 및 키워드 검색
-	$(document).ready(function(){
-		$('#projectSelect').change(function() {
-			$('#keyword').val(''); // 변경 예정
-			
-			$("#waitTable > tbody > tr").hide();
-			var temp = $("#waitTable > tbody > tr > td:nth-child(6n+3):contains('" + $("#projectSelect option:selected").val() + "')");	
-			
-			$(temp).parent().show();		
+<script>
+	//승인대기 datatable
+	$(document).ready(function() {	
+		let waitTable = $("#waitTable").DataTable({
+			"info": false,
+			"lengthChange": false,
+			"autoWidth" : false,
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"},
+			    {"orderable": false, "targets": 0},
+			    {"width": "5%", "targets": 0},
+			    {"width": "20%", "targets": 1},
+			    {"width": "20%", "targets": 2}
+			],
+			"language": {
+		        "zeroRecords": "승인 대기중인 결재가 없습니다."
+		    },
+			"order": [5, 'desc'],
+			ordering : true,
+			initComplete: function () {
+	            this.api().columns([2]).every(function () {
+	                var column = this;
+	                var select = $('#projectSelect')
+	                    .appendTo($('#project-group').empty())
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	 
+	                        column
+	                        .search(val ? '^'+val+'$' : '', true, false)
+	                        .draw();
+	                });
+	                
+	                column.data().unique().sort().each(function (d, j) {
+	                    select.append('<option value="'+d+'">'+d+'</option>')
+	                });
+	            });
+	        }
 		});
 	
-		$('#keyword').keyup(function() {
-			$('#projectSelect').val('').prop("selected", true); // 변경 예정
-			
-			$("#waitTable > tbody > tr").hide();
-			var temp = $("#waitTable > tbody > tr > td:nth-child(6n+2):contains('" + $(this).val() + "')");
-		
-			$(temp).parent().show();
-		})	
-	});	
+		$("#searchbox").on("keyup search input paste cut", function() {
+			waitTable.search(this.value).draw();
+	 	});  
+	});
 	
 	// 승인대기 체크박스 전체 선택 및 해제
 	$(document).ready(function() {
@@ -416,83 +413,91 @@
 	}
 	
 	// 승인완료 datatable
-	$("#completeTable").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"autoWidth" : false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"},
-		    {"width": "20%", "targets": 0},
-		    {"width": "20%", "targets": 1}
-		],
-		"language": {
-	        "zeroRecords": "승인 완료된 결재가 없습니다."
-	    },
-		"order": [5, 'desc']
-	});
-	
-	// 승인완료 datatable 필터 및 키워드 검색
-	$(document).ready(function(){
-		$('#projectSelect2').change(function() {
-			$('#keyword2').val(''); // 변경 예정
-			
-			$("#completeTable > tbody > tr").hide();
-			var temp = $("#completeTable > tbody > tr > td:nth-child(6n+2):contains('" + $("#projectSelect2 option:selected").val() + "')");	
-			
-			$(temp).parent().show();		
+	$(document).ready(function() {
+		let completeTable = $("#completeTable").DataTable({
+			"info": false,
+			"lengthChange": false,
+			"autoWidth" : false,
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"},
+			    {"width": "20%", "targets": 0},
+			    {"width": "20%", "targets": 1}
+			],
+			"language": {
+		        "zeroRecords": "승인 완료된 결재가 없습니다."
+		    },
+			"order": [5, 'desc'],
+			initComplete: function () {
+	            this.api().columns([1]).every(function () {
+	                var column = this;
+	                var select = $('#projectSelect2')
+	                    .appendTo( $('#project-group2').empty())
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	 
+	                        column
+	                        .search(val ? '^'+val+'$' : '', true, false)
+	                        .draw();
+	                });
+	                
+	                column.data().unique().sort().each(function (d, j) {
+	                    select.append('<option value="'+d+'">'+d+'</option>')
+	                });
+	            });
+	        }
 		});
 		
-		$('#keyword2').keyup(function() {
-			$('#projectSelect2').val('').prop("selected", true); // 변경 예정
-			
-			$("#completeTable > tbody > tr").hide();
-			var temp = $("#completeTable > tbody > tr > td:nth-child(6n+1):contains('" + $(this).val() + "')");
-			
-			$(temp).parent().show();
-		})
-	});	
+		$("#searchbox2").on("keyup search input paste cut", function() {
+			completeTable.search(this.value).draw();
+	 	});  
+	});
 	
 	// 반려 datatable
-	$("#rejectTable").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"autoWidth" : false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"},
-		    {"orderable": false, "targets": 0},
-		    {"width": "5%", "targets": 0},
-		    {"width": "20%", "targets": 1},
-		    {"width": "20%", "targets": 2}
-		],
-		"language": {
-	        "zeroRecords": "반려된 결재가 없습니다."
-	    },
-		"order": [6, 'desc']
-	});
-	
-	// 반려 datatable 필터 및 키워드 검색
-	$(document).ready(function(){
-		$('#projectSelect3').change(function() {
-			$('#keyword3').val(''); // 변경 예정
-			
-			$("#rejectTable > tbody > tr").hide();
-			var temp = $("#rejectTable > tbody > tr > td:nth-child(6n+3):contains('" + $("#projectSelect3 option:selected").val() + "')");	
-			
-			$(temp).parent().show();		
+	$(document).ready(function() {
+		let rejectTable = $("#rejectTable").DataTable({
+			"info": false,
+			"lengthChange": false,
+			"autoWidth" : false,
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"},
+			    {"orderable": false, "targets": 0},
+			    {"width": "5%", "targets": 0},
+			    {"width": "20%", "targets": 1},
+			    {"width": "20%", "targets": 2}
+			],
+			"language": {
+		        "zeroRecords": "반려된 결재가 없습니다."
+		    },
+			"order": [6, 'desc'],
+			initComplete: function () {
+	            this.api().columns([2]).every(function () {
+	                var column = this;
+	                var select = $('#projectSelect3')
+	                    .appendTo($('#project-group3').empty())
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	 
+	                        column
+	                        .search(val ? '^'+val+'$' : '', true, false)
+	                        .draw();
+	                });
+	                
+	                column.data().unique().sort().each( function (d, j) {
+	                    select.append('<option value="'+d+'">'+d+'</option>')
+	                });
+	            });
+	        }
 		});
 		
-		$('#keyword3').keyup(function() {
-			$('#projectSelect3').val('').prop("selected", true); // 변경 예정
-			
-			$("#rejectTable > tbody > tr").hide();
-			var temp = $("#rejectTable > tbody > tr > td:nth-child(6n+2):contains('" + $(this).val() + "')");
-			
-			$(temp).parent().show();
-		})
-	});	
-
+		$("#searchbox3").on("keyup search input paste cut", function() {
+			rejectTable.search(this.value).draw();
+	 	});  
+	});
+	
 	// 반려 체크박스 전체 선택 및 해제
 	$(document).ready(function() {
 		$("#checkAll2").click(function() {	

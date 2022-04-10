@@ -19,12 +19,6 @@ public class MyApprovalService {
 		
 		return dao.getMyApprovalWaitingList(empId);
 	}
-	
-	// 승인대기 프로젝트 선택 옵션 리스트
-	public List<MyApproval> getWaitingProjectList(int empId) {
-		
-		return dao.getWaitingProjectList(empId);
-	}
 		
 	// 승인 완료
 	public List<MyApproval> getMyApprovalCompletedList(int empId) {
@@ -32,22 +26,10 @@ public class MyApprovalService {
 		return dao.getMyApprovalCompletedList(empId);
 	}
 	
-	// 승인완료 프로젝트 선택 옵션 리스트
-	public List<MyApproval> getCompletedProjectList(int empId) {
-		
-		return dao.getCompletedProjectList(empId);
-	}
-	
 	// 반려
 	public List<MyApproval> getMyApprovalRejectedList(int empId) {
 		
 		return dao.getMyApprovalRejectedList(empId);
-	}
-	
-	// 반려 프로젝트 선택 옵션 리스트
-	public List<MyApproval> getRejectedProjectList(int empId) {
-		
-		return dao.getRejectedProjectList(empId);
 	}
 	
 	// 회수 요청

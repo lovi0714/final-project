@@ -29,15 +29,12 @@ public class MyApprovalController {
 		
 		// 승인대기
 		model.addAttribute("waitingList", service.getMyApprovalWaitingList(empId));
-		model.addAttribute("waitingProject", service.getWaitingProjectList(empId));
-	
+		
 		// 승인완료
 		model.addAttribute("completedList", service.getMyApprovalCompletedList(empId));
-		model.addAttribute("completedProject", service.getCompletedProjectList(empId));
 		
 		// 반려
 		model.addAttribute("rejectedList", service.getMyApprovalRejectedList(empId));		
-		model.addAttribute("rejectedProject", service.getRejectedProjectList(empId));
 		
 		return "myTask/approvalList";
 	}
