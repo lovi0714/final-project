@@ -39,7 +39,7 @@ public interface ProjectDAO {
 	public Integer getTaskMaxId();
 	public void updateTask(Task task);
 	public void deleteTask(Integer taskId);
-	public int getProjectCount();
+	public int getProjectCount(ProjectSearchCriteria sc);
 	public int deleteProject(String projectId);
 	public void deleteTaskByProjectId(String projectId);
 }

@@ -178,4 +178,9 @@ public class ProjectService {
 		return result;
 	}
 
+	public int getProjectCount(ProjectSearchCriteria sc) {
+		
+		return dao.getProjectCount(sc);
+	}
+
 }

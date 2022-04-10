@@ -1,8 +1,12 @@
 package com.project.pms.project.api;
 
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,13 +44,26 @@ public class ProjectAPI {
 	
 	@ResponseBody
 	@GetMapping(value = "/list.do")
-	public Map<String, Object> getList(ProjectSearchCriteria sc) {
+	public Map<String, Object> getList(ProjectSearchCriteria sc, HttpServletRequest request) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("data", service.getList(sc));
-		map.put("iTotalRecords", service.getList(sc).size());
-		map.put("iTotalDisplayRecords", service.getList(sc).size());
+		int start = sc.getStart() + 1;
+		int length = sc.getStart() + 10;
+		
+		sc.setStart(start);
+		sc.setLength(length);
+		
+		List<Project> list = service.getList(sc);
+		int size = service.getProjectCount(sc);
+		
+		map.put("data", list);
+		map.put("iTotalRecords", size);
+		map.put("iTotalDisplayRecords", size);
+		map.put("start", sc.getStart());
+		map.put("length", sc.getLength());
+		
+		System.out.println(sc);
 		
 		return map;
 	}

@@ -99,6 +99,8 @@
 			"searching": false,
 			"info" : false,
 			"lengthChange": false,
+			"paging": true,
+	        "ordering": true,
 			"serverSide": true,
 	        "processing": true, // 서버와 통신 시 응답을 받기 전이라는 ui를 띄울 것인지 여부
 	        "columns" : [
@@ -182,12 +184,12 @@
 		});
 		
 		$('#searchBtn').on('click', function() {
-			$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+			$('#table1').DataTable().ajax.reload();
 		});
 		
 		$('#keyword').on('keydown', function(e) {
 			if (e.keyCode === 13) {
-				$('#table1').DataTable().ajax.reload();						// reload 를 받드시해야한다
+				$('#table1').DataTable().ajax.reload();
 			}
 		});
 	});

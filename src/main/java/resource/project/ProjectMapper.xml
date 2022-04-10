@@ -81,6 +81,7 @@
 		</if>
 	</sql>
 
+	<!-- 
 	<select id="getList" resultMap="projectMap" parameterType="projectSearchCriteria">
 		SELECT prj_id, name, start_at, end_at, prj_status_id
 		FROM (
@@ -91,10 +92,31 @@
 		) MP
 		ORDER BY prj_id DESC
 	</select>
+	 -->
+	 
+	<select id="getList" resultMap="projectMap" parameterType="projectSearchCriteria">
+		SELECT prj_id, name, start_at, end_at, prj_status_id
+		FROM
+		    (
+		        SELECT prj_id, name, start_at, end_at, prj_status_id, ROW_NUMBER() OVER(ORDER BY prj_id DESC) AS RNUM
+		    	FROM TBL_PROJECT
+		        WHERE 1=1
+       			<include refid="search"></include>
+       			AND <![CDATA[ ROWNUM <= #{length} ]]> 
+		    ) MP
+		WHERE
+		    <![CDATA[ #{start} <= RNUM ]]>
+	</select>
 	
-	<select id="getProjectCount">
+	<select id="getProjectCount" resultType="int" parameterType="projectSearchCriteria">
 		SELECT COUNT(*)
-		FROM TBL_PROJECT
+		FROM (
+			SELECT prj_id, name, start_at, end_at, prj_status_id, ROW_NUMBER() OVER(ORDER BY prj_id DESC) AS RNUM
+			FROM TBL_PROJECT
+			WHERE 1=1
+			<include refid="search"></include>
+		) MP
+		ORDER BY prj_id DESC
 	</select>
 	
 	<insert id="insertProject" parameterType="project" >
