@@ -22,15 +22,6 @@ public class DashboardService {
 		return dao.getNoticeList();
 	}
 	
-	// 프로젝트 현황
-	public List<DashboardProject> getDeptList() {
-		return dao.getDeptList(); // 부서 선택 옵션
-	}
-	
-	public List<DashboardProject> getStatusList() {
-		return dao.getStatusList(); // 상태 선택 옵션
-	}
-	
 	public List<DashboardProject> getProjectList() {
 		return dao.getProjectList();
 	}

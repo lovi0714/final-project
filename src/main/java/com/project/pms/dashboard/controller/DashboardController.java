@@ -26,8 +26,6 @@ public class DashboardController {
 		model.addAttribute("notice", service.getNoticeList());
 		
 		// 프로젝트 현황
-		model.addAttribute("dept", service.getDeptList()); // 부서 선택 옵션
-		model.addAttribute("status", service.getStatusList()); // 상태 선택 옵션
 		model.addAttribute("project", service.getProjectList());
 		
 		// 부서별 프로젝트 현황

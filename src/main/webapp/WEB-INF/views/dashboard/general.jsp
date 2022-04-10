@@ -10,6 +10,11 @@
 	<jsp:param name="isDashboardList" value="active"/>
 </jsp:include>
 
+<style>
+.dataTables_filter {
+   display: none;
+}
+</style>
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 		<div class="page-title">
@@ -57,19 +62,12 @@
 				<div class="card-header" style="display: flex; justify-content: space-between; padding-bottom: 0;">
 					<p class="fw-bold">프로젝트 현황</p>
 					<div style="display: flex; justify-content: flex-end;">
-						<select class="form-select" id="deptSelect" style="width: 150px;">
-							<option value="" selected>부서</option>
-							<c:forEach var="d" items="${dept}" >
-	                        	<option value="${d.pmDeptName}">${d.pmDeptName}</option>
-	                        </c:forEach>
-						</select> 
-						<select class="form-select" id="statusSelect" style="width: 150px; margin: 0 10px;">
-							<option value="" selected>상태</option>
-							<c:forEach var="s" items="${status}">
-	                        	<option value="${s.status}">${s.status}</option>
-	                        </c:forEach>
-						</select> 
-						<a href="${path}/project/list.do" style="margin-top: 7px">더보기</a>
+						<fieldset class="form-group" id="dept-group">
+							<select class="form-select" id="deptSelect" style="width: 150px;">
+								<option value="">부서</option>
+							</select> 
+						</fieldset>
+						<a href="${path}/project/list.do" style="margin: 7px 0 0 15px;">더보기</a>
 					</div>
 				</div>
 				<div class="card-body">
@@ -194,40 +192,40 @@
 	});
 	
 	// 프로젝트 현황 datatable
-	$("#projectList").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false, 
-		"paging": false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"}
-		],
-		"language": {
-	        "zeroRecords": "등록된 프로젝트가 없습니다."
-	    },
-		"order": [0, 'desc']
+	$(document).ready(function() {
+		let projectList = $("#projectList").DataTable({
+			"info": false,
+			"lengthChange": false, 
+			"paging": false,
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"}
+			],
+			"language": {
+		        "zeroRecords": "등록된 프로젝트가 없습니다."
+		    },
+			"order": [0, 'desc'],
+			initComplete: function () {
+	            this.api().columns([2]).every(function () {
+	                var column = this;
+	                var select = $('#deptSelect')
+	                    .appendTo( $('#dept-group').empty() )
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	  
+	                        column
+	                            .search( val ? '^'+val+'$' : '', true, false )
+	                            .draw();
+	                    } );
+	  
+	                column.data().unique().sort().each( function (d, j) {
+	                    select.append( '<option value="'+d+'">'+d+'</option>' )
+	                } );
+	            } );
+	        }
+		});
 	});
-	
-	// 프로젝트 현황 datatable 필터
-	$(document).ready(function(){
-		$('#deptSelect').change(function() {
-			$('#statusSelect').val('').prop("selected",true); // 변경 예정
-			
-			$("#projectList > tbody > tr").hide();
-			var temp = $("#projectList > tbody > tr > td:nth-child(7n+3):contains('" + $("#deptSelect option:selected").val() + "')");	
-			
-			$(temp).parent().show();		
-		});
-		
-		$('#statusSelect').change(function() {
-			$('#deptSelect').val('').prop("selected",true); // 변경 예정
-			
-			$("#projectList > tbody > tr").hide();
-			var temp = $("#projectList > tbody > tr > td:nth-child(7n+5):contains('" + $("#statusSelect option:selected").val() + "')");	
-			
-			$(temp).parent().show();		
-		});
-	});	
 	
 	// 부서별 프로젝트 현황 chart		
 	let projectCountList1 = [];

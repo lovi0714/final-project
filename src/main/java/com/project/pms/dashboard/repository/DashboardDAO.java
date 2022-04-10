@@ -16,8 +16,6 @@ public interface DashboardDAO {
 	public List<DashboardNotice> getNoticeList();
 	
 	// 프로젝트 현황
-	public List<DashboardProject> getDeptList(); // 부서 선택 옵션
-	public List<DashboardProject> getStatusList(); // 상태 선택 옵션
 	public List<DashboardProject> getProjectList();
 	
 	// 부서별 프로젝트 현황
