@@ -28,4 +28,5 @@ public interface OutputDAO {
 	public OutputFileInfo getOutputFileByTaskId(Integer taskId);
 	public int deleteOutputFileByTaskId(Integer taskId);
 	public int deleteOutputByTaskId(Integer taskId);
+	public int getOutputCount(OutputSearchCriteria sc);
 }

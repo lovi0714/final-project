@@ -83,6 +83,7 @@
 		</if>
 	</sql>
 	
+	<!-- 
 	<select id="getOutputList" resultMap="outputListMap" parameterType="outputSearchCriteria">
 		SELECT to2.OUT_ID, tof.ORIGINAL_NAME, tof.VOLUME, tof.VOLUME_TEXT, te.NAME, to2.CAT_ID, tof.UPDATE_AT, tp.NAME AS project_name
 		FROM TBL_OUTPUT to2, TBL_OUT_FILE tof, TBL_EMP te, TBL_TASK tt, TBL_PROJECT tp 
@@ -92,6 +93,38 @@
 		AND tt.PRJ_ID = tp.PRJ_ID
 		<include refid="search"></include>
 		ORDER BY to2.out_id desc
+	</select>
+ 	-->
+ 	
+	<select id="getOutputList" resultMap="outputListMap" parameterType="outputSearchCriteria">
+		SELECT MP.OUT_ID, MP.ORIGINAL_NAME, MP.VOLUME, MP.VOLUME_TEXT, MP.NAME, MP.CAT_ID, MP.UPDATE_AT, MP.project_name as project_name
+		FROM
+		    (
+		        SELECT to2.OUT_ID, tof.ORIGINAL_NAME, tof.VOLUME, tof.VOLUME_TEXT, te.NAME, to2.CAT_ID, tof.UPDATE_AT, tp.NAME AS project_name, ROW_NUMBER() OVER(ORDER BY to2.OUT_ID DESC) AS RNUM
+				FROM TBL_OUTPUT to2, TBL_OUT_FILE tof, TBL_EMP te, TBL_TASK tt, TBL_PROJECT tp 
+				WHERE to2.OUT_ID = tof.OUT_ID
+				AND to2.emp_id = te.emp_id
+				AND to2.TASK_ID = tt.TASK_ID
+				AND tt.PRJ_ID = tp.PRJ_ID
+				<include refid="search"></include>
+				AND <![CDATA[ROWNUM <= #{length}]]> 
+		    ) MP
+		WHERE <![CDATA[#{start} <= RNUM]]> 
+		ORDER BY MP.out_id desc
+	</select>
+	
+	<select id="getOutputCount" resultType="int" parameterType="outputSearchCriteria">
+		SELECT COUNT(*)
+		FROM
+		    (
+		        SELECT to2.OUT_ID, tof.ORIGINAL_NAME, tof.VOLUME, tof.VOLUME_TEXT, te.NAME, to2.CAT_ID, tof.UPDATE_AT, tp.NAME AS project_name, ROW_NUMBER() OVER(ORDER BY to2.OUT_ID DESC) AS RNUM
+				FROM TBL_OUTPUT to2, TBL_OUT_FILE tof, TBL_EMP te, TBL_TASK tt, TBL_PROJECT tp 
+				WHERE to2.OUT_ID = tof.OUT_ID
+				AND to2.emp_id = te.emp_id
+				AND to2.TASK_ID = tt.TASK_ID
+				AND tt.PRJ_ID = tp.PRJ_ID
+				<include refid="search"></include>
+		    ) MP
 	</select>
 	
 	<select id="getMaxOutputId" resultType="int">

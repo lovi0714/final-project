@@ -130,5 +130,10 @@ public class OutputService {
 	public boolean updateOutput(Output output) {
 		return (dao.updateOutput(output) == 1) ? true : false;
 	}
+
+	public int getOutputCount(OutputSearchCriteria sc) {
+		
+		return dao.getOutputCount(sc);
+	}
 	
 }

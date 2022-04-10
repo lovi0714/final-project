@@ -2,6 +2,7 @@ package com.project.pms.output.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import com.project.pms.output.vo.OutputDetail;
 import com.project.pms.output.vo.OutputFile;
 import com.project.pms.output.vo.OutputFileInfo;
 import com.project.pms.output.vo.OutputForm;
+import com.project.pms.output.vo.OutputListForm;
 import com.project.pms.output.vo.OutputSearchCriteria;
 import com.project.pms.utils.FileStore;
 
@@ -52,9 +54,18 @@ public class OutputController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("data", service.getOutputList(sc));
-		map.put("iTotalRecords", service.getOutputList(sc).size());
-		map.put("iTotalDisplayRecords", service.getOutputList(sc).size());
+		int start = sc.getStart() + 1;
+		int length = sc.getStart() + 10;
+		
+		sc.setStart(start);
+		sc.setLength(length);
+		
+		List<OutputListForm> list = service.getOutputList(sc);
+		int size = service.getOutputCount(sc);
+		
+		map.put("data", list);
+		map.put("iTotalRecords", size);
+		map.put("iTotalDisplayRecords", size);
 		
 		return map;
 		
