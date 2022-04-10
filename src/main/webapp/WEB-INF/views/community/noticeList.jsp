@@ -9,6 +9,12 @@
 	<jsp:param name="isCommunityList" value="active"/>
 </jsp:include>
 
+<style>
+.dataTables_filter {
+   display: none;
+}
+</style>
+
 <div id="main-content" style="padding-top: 0">
 	<div class="page-heading">
 		<div class="page-title">
@@ -27,8 +33,7 @@
 					<div class="row pt-3" style="background-color: #f2f7ff; height: 70px">
 						<div class="col-md-3">
 							<div class="input-group mb-6">
-								<input type="text" id="keyword" class="form-control" placeholder="제목을 입력하세요">
-								<button class="btn btn-primary" type="button" id="searchBtn">검색</button>		
+								<input type="search" class="form-control" id="searchbox" name="searchbox" placeholder="검색어를 입력하세요">
 							</div>
 						</div>
 						<div class="col-md-9">
@@ -63,25 +68,28 @@
 	</div>
 	
 <script>
-	// 공지사항 datatable
-	$("#noticeBoard").DataTable({
-		"searching": false,
-		"info" : false,
-		"lengthChange": false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"},
-		    {"width": "20%", "targets": 0},
-		    {"width": "40%", "targets": 1},
-		    {"width": "20%", "targets": 2},
-		    {"width": "20%", "targets": 3}
-		],
-		"language": {
-	        "zeroRecords": "등록된 공지사항이 없습니다."
-	    },
-		"order": [0, 'desc']
-	});    
-	
 	$(document).ready(function(){
+		// 공지사항 datatable
+		let noticeBoard = $("#noticeBoard").DataTable({
+			"info" : false,
+			"lengthChange": false,
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"},
+			    {"width": "20%", "targets": 0},
+			    {"width": "40%", "targets": 1},
+			    {"width": "20%", "targets": 2},
+			    {"width": "20%", "targets": 3}
+			],
+			"language": {
+		        "zeroRecords": "등록된 공지사항이 없습니다."
+		    },
+			"order": [0, 'desc']
+		});    
+	
+		$("#searchbox").on("keyup search input paste cut", function() {
+			noticeBoard.search(this.value).draw();
+	    });
+		
 		// 관리자가 아닐 경우 공지사항 등록버튼 숨김 처리
 		if (${emp.authId} != 3) {
 			$('#regBtn').hide();
@@ -91,14 +99,6 @@
 		$('#regBtn').click(function() {
 			location.href = '${path}/community/noticeForm.do';
 		});
-		
-		// 키워드 검색
-		$('#keyword').keyup(function() {
-			$("#noticeBoard > tbody > tr").hide();
-			var temp = $("#noticeBoard > tbody > tr > td:nth-child(4n+2):contains('" + $(this).val() + "')");
-			
-			$(temp).parent().show();
-		})
 	});	
 </script>
 
