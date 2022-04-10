@@ -11,7 +11,6 @@ import com.project.pms.project.vo.Project;
 public interface MyTaskDAO {
 
 	// 작업 목록
-	public List<Project> getProjectList(int empId);
 	public List<MyTask> getStatusList();
 	public List<MyTask> getMyTaskList(int empId);
 	

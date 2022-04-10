@@ -8,6 +8,7 @@
 	<jsp:param name="isTaskSide" value="active"/>
 	<jsp:param name="isTaskList" value="active"/>
 </jsp:include>
+
 <style>
 .nav-tabs .nav-link.active {
 	color: white;
@@ -15,6 +16,10 @@
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
 	background-color: #435ebe;
+}
+
+.dataTables_filter {
+   display: none;
 }
 </style>
 
@@ -46,29 +51,22 @@
 						<div class="tab-pane fade show active" id="task" role="tabpanel" aria-labelledby="task-tab">
 							<div class="row pt-3" style="background-color: #f2f7ff;">
 								<div class="col-md-3">
-									<fieldset class="form-group">
+									<fieldset class="form-group" id="prj-group">
 										<select class="form-select" id="prjSelect">
 											<option value="">프로젝트를 선택하세요</option>
-											<c:forEach var="p" items="${taskProject}">
-	                                    		<option value="${p.title}">${p.title}</option>
-	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
-									<fieldset class="form-group">
+									<fieldset class="form-group" id="status-group">
 										<select class="form-select" id="statusSelect">
 											<option value="">작업상태를 선택하세요</option>
-											<c:forEach var="s" items="${status}" >
-	                                    		<option value="${s.status}">${s.status}</option>
-	                                    	</c:forEach>
 										</select>
 									</fieldset>
 								</div>
 								<div class="col-md-3">
 									<div class="input-group mb-3">
-										<input type="text" class="form-control" id="keyword" placeholder="작업명을 입력하세요">
-										<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
+										 <input type="search" class="form-control" id="searchbox" name="searchbox" placeholder="검색어를 입력하세요">
 									</div>
 								</div>
 								<div class="col-md-3">
@@ -87,6 +85,7 @@
 										<th>프로젝트</th>
 										<th>승인자</th>
 										<th>상태</th>
+										<th style="display: none;">상태 필터</th>
 										<th>시작일</th>
 										<th>완료일</th>
 										<th>진행률(%)</th>
@@ -119,6 +118,23 @@
 				                            	 	<td><span class="badge bg-warning">${tl.status}</span></td>
 				                           		 </c:when>
 				                            </c:choose>
+				                            <c:choose>
+				                            	 <c:when test = "${tl.status eq '시작전'}">
+				                           			<td style="display: none;">${tl.status}</td>
+				                            	 </c:when>
+				                            	 <c:when test = "${tl.status eq '정상진행'}">
+				                            	 	<td style="display: none;">${tl.status}</td>
+				                           		 </c:when>
+				                            	 <c:when test = "${tl.status eq '지연진행'}">
+				                            	 	<td style="display: none;">${tl.status}</td>
+				                           		 </c:when>
+				                           		 <c:when test = "${tl.status eq '완료'}">
+				                            	 	<td style="display: none;">${tl.status}</td>
+				                           		 </c:when>
+				                            	 <c:when test = "${tl.status eq '중단'}">
+				                            	 	<td style="display: none;">${tl.status}</td>
+				                           		 </c:when>
+				                            </c:choose>
 				                            <td><fmt:formatDate value="${tl.startAt}" pattern="yyyy-MM-dd"/></td>
 				                            <td><fmt:formatDate value="${tl.endAt}" pattern="yyyy-MM-dd"/></td>
 				                            <td>
@@ -140,29 +156,22 @@
 							<div>
 								<div class="row pt-3" style="background-color: #f2f7ff;">
 									<div class="col-md-3">
-										<fieldset class="form-group">
+										<fieldset class="form-group" id="outputProject-group">
 											<select class="form-select" id="outputProjectSelect">
 												<option value="">프로젝트를 선택하세요</option>
-												<c:forEach var="op" items="${outputProject}">
-		                                    		<option value="${op.title}">${op.title}</option>
-		                                    	</c:forEach>
 											</select>
 										</fieldset>
 									</div>
 									<div class="col-md-3">
-										<fieldset class="form-group">
+										<fieldset class="form-group" id="category-group">
 											<select class="form-select" id="categorySelect">
 												<option value="">카테고리를 선택하세요</option>
-			   		                            <c:forEach var="c" items="${category}">
-				                                    <option value="${c.categoryName}">${c.categoryName}</option>
-					                        	</c:forEach>
 											</select>
 										</fieldset>
 									</div>
 									<div class="col-md-3">
 										<div class="input-group mb-3">
-											<input type="text" class="form-control" id="outputKeyword" placeholder="산출물 정보를 입력하세요">
-											<button class="btn btn-primary" type="button" id="searchBtn">검색</button>
+											<input type="search" class="form-control" id="searchbox2" name="searchbox" placeholder="검색어를 입력하세요">
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -175,6 +184,7 @@
 									<thead>
 										<tr>
 											<th>카테고리</th>
+											<th style="display: none;">카테고리 필터</th>
 											<th>산출물 정보</th>
 											<th>프로젝트</th>
 										</tr>
@@ -183,6 +193,7 @@
 			                  			<c:forEach var="list" items="${outputList}">
 											<tr>
 					                           <td><span class="badge bg-${list.categoryId == 1 ? 'primary">필수' : 'secondary">선택'}</span></td>
+					                           <td style="display: none;">${list.categoryId == 1 ? '필수' : '선택'}</td>
 					                           <td><div><a href="javascript:outputDetail(${list.outputId})">${list.originalName}</a></div>
 					                           <div>${list.empName} on ${list.updateAt} file size ${list.volumeText}</div></td>
 					                           <td>${list.projectName}</td>
@@ -571,56 +582,66 @@
 	
 <script>
 	// 작업 datatable
-	$("#myTask").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"autoWidth" : false,
-		"columnDefs": [
-		    {"orderable": false, "targets": 0},
-		    {"orderable": false, "targets": 7},
-		    {"width": "20%", "targets": 1},
-		    {"width": "20%", "targets": 2},
-		    {"className": "dt-center", "targets": "_all"}
-		],
-		"language": {
-	        "zeroRecords": "등록된 작업이 없습니다."
-	    },
-		"order": [5, 'desc']
-	});
-
-	// 프로젝트 현황 datatable 필터
 	$(document).ready(function(){
-		$('#prjSelect').change(function() {
-			$('#statusSelect').val('').prop("selected", true); // 변경 예정
-			$('#keyword').val(''); // 변경 예정
-			
-			$("#myTask > tbody > tr").hide();
-			var temp = $("#myTask > tbody > tr > td:nth-child(8n+3):contains('" + $("#prjSelect option:selected").val() + "')");	
-			
-			$(temp).parent().show();		
+		let taskTable = $("#myTask").DataTable({
+			"info": false,
+			"lengthChange": false,
+			"autoWidth" : false,
+			"columnDefs": [
+			    {"orderable": false, "targets": 0},
+			    {"orderable": false, "targets": 7},
+			    {"width": "20%", "targets": 1},
+			    {"width": "20%", "targets": 2},
+			    {"className": "dt-center", "targets": "_all"}
+			],
+			"language": {
+		        "zeroRecords": "등록된 작업이 없습니다."
+		    },
+			"order": [5, 'desc'],
+			initComplete: function () {
+	            this.api().columns([2]).every( function () {
+	                var column = this;
+	                var select = $('#prjSelect')
+	                    .appendTo( $('#prj-group').empty())
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	 
+	                        column
+	                        .search( val ? '^'+val+'$' : '', true, false )
+	                        .draw();
+	                });
+	                
+	                column.data().unique().sort().each(function (d, j) {
+	                    select.append('<option value="'+d+'">'+d+'</option>')
+	                });
+	            });
+	            this.api().columns([5]).every( function () {
+	                var column = this;
+	                var select = $('#statusSelect')
+	                    .appendTo( $('#status-group').empty())
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	 
+	                        column
+	                        .search( val ? '^'+val+'$' : '', true, false )
+	                        .draw();
+	                });
+	                
+	                column.data().unique().sort().each(function (d, j) {
+	                    select.append('<option value="'+d+'">'+d+'</option>')
+	                });
+	            });
+			}
 		});
 		
-		$('#statusSelect').change(function() {
-			$('#prjSelect').val('').prop("selected", true); // 변경 예정
-			$('#keyword').val(''); // 변경 예정
-			
-			$("#myTask > tbody > tr").hide();
-			var temp = $("#myTask > tbody > tr > td:nth-child(8n+5):contains('" + $("#statusSelect option:selected").val() + "')");	
-			
-			$(temp).parent().show();	
-		});
-		
-		$('#keyword').keyup(function() {
-			$('#prjSelect').val('').prop("selected", true); // 변경 예정
-			$('#statusSelect').val('').prop("selected", true); // 변경 예정
-			
-			$("#myTask > tbody > tr").hide();
-			var temp = $("#myTask > tbody > tr > td:nth-child(8n+2):contains('" + $(this).val() + "')");
-			
-			$(temp).parent().show();
-		})
-	});	
+		$("#searchbox").on("keyup search input paste cut", function() {
+			taskTable.search(this.value).draw();
+	 	});
+	});
 	
 	// 작업 체크박스 전체 선택 및 해제
 	$(document).ready(function() {
@@ -873,52 +894,62 @@
 	}
 
 	// 산출물 datatable
-	$("#myOutput").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"autoWidth" : false,
-		"columnDefs": [
-		    {"className": "dt-center", "targets": "_all"},
-		    {"width": "55%", "targets": 1}
-		],
-		"language": {
-	        "zeroRecords": "등록한 산출물이 없습니다."
-	    }
+	$(document).ready(function() {
+		let outputTable = $("#myOutput").DataTable({
+			"info": false,
+			"lengthChange": false,
+			"autoWidth" : false,
+			"columnDefs": [
+			    {"className": "dt-center", "targets": "_all"},
+			    {"width": "55%", "targets": 1}
+			],
+			"language": {
+		        "zeroRecords": "등록한 산출물이 없습니다."
+		    },
+		    initComplete: function () {
+	            this.api().columns([1]).every( function () {
+	                var column = this;
+	                var select = $('#categorySelect')
+	                    .appendTo( $('#category-group').empty())
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	 
+	                        column
+	                        .search( val ? '^'+val+'$' : '', true, false )
+	                        .draw();
+	                });
+	                
+	                column.data().unique().sort().each(function (d, j) {
+	                    select.append('<option value="'+d+'">'+d+'</option>')
+	                });
+	            });
+	            this.api().columns([3]).every( function () {
+	                var column = this;
+	                var select = $('#outputProjectSelect')
+	                    .appendTo( $('#outputProject-group').empty())
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	 
+	                        column
+	                        .search( val ? '^'+val+'$' : '', true, false )
+	                        .draw();
+	                });
+	                
+	                column.data().unique().sort().each(function (d, j) {
+	                    select.append('<option value="'+d+'">'+d+'</option>')
+	                });
+	            });
+	        }
+		});
+		
+		$("#searchbox2").on("keyup search input paste cut", function() {
+			outputTable.search(this.value).draw();
+	 	});  
 	});
-
-	// 산출물 datatable 필터
-	$(document).ready(function(){
-		$('#outputProjectSelect').change(function() {
-			$('#categorySelect').val('').prop("selected", true); // 변경 예정
-			$('#outputKeyword').val(''); // 변경 예정
-			
-			$("#myOutput > tbody > tr").hide();
-			var temp = $("#myOutput > tbody > tr > td:nth-child(3n+3):contains('" + $("#outputProjectSelect option:selected").val() + "')");	
-			
-			$(temp).parent().show();		
-		});
-		
-		$('#categorySelect').change(function() {
-			$('#outputProjectSelect').val('').prop("selected", true); // 변경 예정
-			$('#outputKeyword').val(''); // 변경 예정
-			
-			$("#myOutput > tbody > tr").hide();
-			var temp = $("#myOutput > tbody > tr > td:nth-child(3n+1):contains('" + $("#categorySelect option:selected").val() + "')");	
-			
-			$(temp).parent().show();	
-		});
-		
-		$('#outputKeyword').keyup(function() {
-			$('#outputProjectSelect').val('').prop("selected", true); // 변경 예정
-			$('#categorySelect').val('').prop("selected", true); // 변경 예정
-			
-			$("#myOutput > tbody > tr").hide();
-			var temp = $("#myOutput > tbody > tr > td:nth-child(3n+2):contains('" + $(this).val() + "')");
-			
-			$(temp).parent().show();
-		})
-	});	
 	
 	// 권한 및 계정 확인
 	const authId = ${emp.authId};

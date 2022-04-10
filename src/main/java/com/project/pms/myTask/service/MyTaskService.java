@@ -16,10 +16,6 @@ public class MyTaskService {
 	private MyTaskDAO dao;
 
 	// 작업 목록
-	public List<Project> getProjectList(int empId) {
-		return dao.getProjectList(empId);
-	}
-	
 	public List<MyTask> getStatusList() {		
 		return dao.getStatusList();
 	}	

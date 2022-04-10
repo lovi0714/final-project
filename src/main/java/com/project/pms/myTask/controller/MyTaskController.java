@@ -40,7 +40,6 @@ public class MyTaskController {
 		int empId = ((Emp)session.getAttribute("emp")).getEmpId();
 		
 		// 작업
-		model.addAttribute("taskProject", taskService.getProjectList(empId));
 		model.addAttribute("status", taskService.getStatusList());
 		model.addAttribute("taskList", taskService.getMyTaskList(empId));
 		
