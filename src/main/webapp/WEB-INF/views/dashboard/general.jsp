@@ -63,8 +63,13 @@
 					<p class="fw-bold">프로젝트 현황</p>
 					<div style="display: flex; justify-content: flex-end;">
 						<fieldset class="form-group" id="dept-group">
-							<select class="form-select" id="deptSelect" style="width: 150px;">
+							<select class="form-select" id="deptSelect" style="width: 150px; margin-right: 10px;">
 								<option value="">부서</option>
+							</select> 
+						</fieldset>
+						<fieldset class="form-group" id="status-group">
+							<select class="form-select" id="statusSelect" style="width: 150px;">
+								<option value="">상태</option>
 							</select> 
 						</fieldset>
 						<a href="${path}/project/list.do" style="margin: 7px 0 0 15px;">더보기</a>
@@ -79,6 +84,7 @@
 								<th>부서</th>
 								<th>PM</th>
 								<th>상태</th>
+								<th style="display: none;">상태 필터</th>
 								<th>시작일</th>
 								<th>완료일</th>
 							</tr>
@@ -105,6 +111,23 @@
 		                           		 </c:when>
 		                            	 <c:when test = "${list.status eq '중단'}">
 		                            	 	<td><span class="badge bg-warning">${list.status}</span></td>
+		                           		 </c:when>
+		                            </c:choose>
+		                            <c:choose>
+		                            	 <c:when test = "${list.status eq '시작전'}">
+		                           			<td style="display: none;">${list.status}</td>
+		                            	 </c:when>
+		                            	 <c:when test = "${list.status eq '정상진행'}">
+		                            	 	<td style="display: none;">${list.status}</td>
+		                           		 </c:when>
+		                            	 <c:when test = "${list.status eq '지연진행'}">
+		                            	 	<td style="display: none;">${list.status}</td>
+		                           		 </c:when>
+		                            	 <c:when test = "${list.status eq '완료'}">
+		                            	 	<td style="display: none;">${list.status}</td>
+		                           		 </c:when>
+		                            	 <c:when test = "${list.status eq '중단'}">
+		                            	 	<td style="display: none;">${list.status}</td>
 		                           		 </c:when>
 		                            </c:choose>
 		                            <td><fmt:formatDate value="${list.startAt}" pattern="yyyy-MM-dd"/></td>
@@ -217,13 +240,31 @@
 	                        column
 	                            .search( val ? '^'+val+'$' : '', true, false )
 	                            .draw();
-	                    } );
+	                    });
 	  
 	                column.data().unique().sort().each( function (d, j) {
 	                    select.append( '<option value="'+d+'">'+d+'</option>' )
-	                } );
-	            } );
-	        }
+	                });
+	            });
+	            this.api().columns([5]).every(function () {
+	                var column = this;
+	                var select = $('#statusSelect')
+	                    .appendTo( $('#status-group').empty() )
+	                    .on('change', function () {
+	                        var val = $.fn.dataTable.util.escapeRegex(
+	                            $(this).val()
+	                        );
+	  
+	                        column
+	                            .search( val ? '^'+val+'$' : '', true, false )
+	                            .draw();
+	                    });
+	  
+	                column.data().unique().sort().each( function (d, j) {
+	                    select.append( '<option value="'+d+'">'+d+'</option>' )
+	                });
+	            });
+			}
 		});
 	});
 	
