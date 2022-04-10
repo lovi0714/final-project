@@ -132,14 +132,14 @@
                             </a>
                         </li>
 					<c:if test="${sessionScope.emp.authName=='관리자'}">	
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item ${param.isAdminSide} has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-pen-fill"></i>
                                 <span>관리자</span>
                                 
                             </a>
                             
-                            <ul class="submenu ">
+                            <ul class="submenu ${param.isAdminList}">
                                 <li class="submenu-item ">
                                     <a href="${path}/emp/getEmpInfoList.do">사원 정보</a>
                                 </li>

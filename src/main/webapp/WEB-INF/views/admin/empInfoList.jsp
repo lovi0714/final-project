@@ -7,8 +7,8 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-   <jsp:param name="isDashboardSide" value="active" />
-   <jsp:param name="isDashboardList" value="active" />
+   <jsp:param name="isAdminSide" value="active" />
+   <jsp:param name="isAdminList" value="active" />
 </jsp:include>
 <link rel="stylesheet" href="${path}/resources/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="${path}/resources/vendors/fontawesome/all.min.css">
