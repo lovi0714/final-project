@@ -125,7 +125,7 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item  ${param.isEmpStatusSide}">
                             <a href="${path}/emp/empStatus.do" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-medical-fill"></i>
                                 <span>사원 현황</span>
