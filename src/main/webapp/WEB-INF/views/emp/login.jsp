@@ -2,7 +2,10 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<spring:message code="id" var="placeholder_id" />
+<spring:message code="pwd" var="placeholder_password" />
 <fmt:requestEncoding value="utf-8" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -30,11 +33,14 @@
 <script type="text/javascript">
 
 $(function() {
+	$("#selectLan").val("${param.lang}")
+	
 	var app = new Vue({
 	  el: '#auth',
 	  data: {
 	    empId : '',
-	    password: ''
+	    password: '',
+	    lang : '${param.lang}'
 	  },
 	  methods: {
 		  loginBtn(e) {
@@ -61,6 +67,11 @@ $(function() {
 		          this.empId = '';
 		          this.password = '';
 		        });
+		  },
+		  changeLang(e) {
+			if(this.lang != ""){
+				location.href="${path}/emp/login.do?lang="+this.lang;
+			}	
 		  }
 	  }
 	})
@@ -80,26 +91,41 @@ $(function() {
 	            <div class="auth-logo">
 	                <h1>CPMS</h1>
 	            </div>
-	            <h1 class="auth-title">로그인</h1>
+	            <h1 class="auth-title"><spring:message code="login"/></h1>
 	            <form name="login_form" action="${path}/emp/loginProcess.do" method="post">
 	                <div class="form-group position-relative has-icon-left mb-4">
-	                    <input type="text" class="form-control form-control-xl" name="empId" id="empId" v-model="empId" placeholder="아이디">
+	                    <input type="text" class="form-control form-control-xl" name="empId" id="empId" v-model="empId" placeholder="${placeholder_id}">
 	                    <div class="form-control-icon">
 	                        <i class="bi bi-person"></i>
 	                    </div>
 	                </div>
 	                <div class="form-group position-relative has-icon-left mb-4">
-	                    <input type="password" class="form-control form-control-xl" name="password" id="password" v-model="password" placeholder="비밀번호">
+	                    <input type="password" class="form-control form-control-xl" name="password" id="password" v-model="password" placeholder="${placeholder_password}">
 	                    <div class="form-control-icon">
 	                        <i class="bi bi-shield-lock"></i>
 	                    </div>
 	                </div>
-	                <div class="form-check form-check-lg d-flex align-items-end" style="padding: 0;">
-	                    
-	                <input type="checkbox" id="idSaveCheck" name="idSaveCheck" style="margin: 5px;"> 아이디 기억하기
+	                <div class="form-check form-check-lg d-flex align-items-end">
+                        <input class="form-check-input me-2" type="checkbox" name="idSaveCheck" value="" id="idSaveCheck">
+                        <label class="form-check-label text-gray-600" for="flexCheckDefault">
+                        <spring:message code="remember.id"/>
+                        </label>
 	                </div>
-	                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" @click="loginBtn" id="loginBtn" onclick="chk()">로그인</button>
+	                
+	                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-2" @click="loginBtn" id="loginBtn" onclick="chk()"><spring:message code="login"/></button>
 	              </form>
+	              <div class="mt-3">
+	              	<div class="row">
+					  <div class="col"><hr/></div>
+					  <div class="col-auto"><spring:message code="chlange"/></div>
+					  <div class="col"><hr/></div>
+					</div>
+	                <select class="form-control" id="selectLan" @change="changeLang" v-model="lang">
+						<option value=""><spring:message code="chlange"/></option>
+					  	<option value="ko"><spring:message code="ko"/></option>
+					  	<option value="en"><spring:message code="en"/></option>
+					</select>
+                  </div>
         	</div>
     	</div>
 	</div>

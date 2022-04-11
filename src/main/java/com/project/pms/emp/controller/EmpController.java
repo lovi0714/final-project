@@ -2,9 +2,11 @@ package com.project.pms.emp.controller;
 
 
 import java.net.PasswordAuthentication;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
@@ -43,11 +46,18 @@ public class EmpController {
 	@Autowired
 	EmailManagement emailManagement;
 	
-	
-	
+	@Autowired(required=false)
+	private LocaleResolver localeResolver;
+		
 	/* 로그인 화면 */
 	@GetMapping("/login.do")
-	public String login() {
+	public String login(@RequestParam(value = "lang", defaultValue = "ko") String lang,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Locale locale = new Locale(lang);
+		localeResolver.setLocale(request, response, locale);
+		
 		return "emp/login";
 	}
 	

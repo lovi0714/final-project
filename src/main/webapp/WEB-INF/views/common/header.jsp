@@ -4,6 +4,7 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
@@ -52,14 +53,14 @@
                         <li class="sidebar-item ${param.isDashboardSide} has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
-                                <span>대시보드</span>
+                                <span><spring:message code="dashboard"/></span>
                             </a>
                             <ul class="submenu ${param.isDashboardList}">
                                 <li class="submenu-item ">
-                                    <a href="${path}/dashboard/general.do">종합 대시보드</a>
+                                    <a href="${path}/dashboard/general.do"><spring:message code="dashboard.general"/></a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/dashboard/personal.do">개인 대시보드</a>
+                                    <a href="${path}/dashboard/personal.do"><spring:message code="dashboard.personal"/></a>
                                 </li>
                             </ul>
                         </li>
@@ -67,17 +68,17 @@
                         <li class="sidebar-item ${param.isProjectSide}  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
-                                <span>프로젝트</span>
+                                <span><spring:message code="project"/></span>
                             </a>
                             <ul class="submenu ${param.isList}">
                                 <li class="submenu-item">
-                                    <a href="${path}/project/list.do">프로젝트 현황</a>
+                                    <a href="${path}/project/list.do"><spring:message code="project.list"/></a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="${path}/output/list.do">프로젝트 산출물</a>
+                                    <a href="${path}/output/list.do"><spring:message code="project.file"/></a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/approval/list.do">프로젝트 작업승인</a>
+                                    <a href="${path}/approval/list.do"><spring:message code="project.approval"/></a>
                                 </li>
                             </ul>
                         </li>
@@ -85,17 +86,17 @@
                         <li class="sidebar-item ${param.isTaskSide}  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
-                                <span>내 작업</span>
+                                <span><spring:message code="task.my"/></span>
                             </a>
                             <ul class="submenu ${param.isTaskList} ">
                                 <li class="submenu-item ">
-                                    <a href="${path}/myTask/list.do">내 작업</a>
+                                    <a href="${path}/myTask/list.do"><spring:message code="task.my"/></a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/myTask/approvalList.do">내 결재</a>
+                                    <a href="${path}/myTask/approvalList.do"><spring:message code="approval.my"/></a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/myTask/calendar.do">일정관리</a>
+                                    <a href="${path}/myTask/calendar.do"><spring:message code="calendar"/></a>
                                 </li>
                             </ul>
                         </li>
@@ -103,7 +104,7 @@
                         <li class="sidebar-item ${param.isRiskSide} ">
                             <a href="${path}/risk/riskBoard.do" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
-                                <span>리스크 관리</span>
+                                <span><spring:message code="risk.management"/></span>
                             </a>
 
                         </li>
@@ -113,14 +114,14 @@
                         <li class="sidebar-item ${param.isCommunitySide}   has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-hexagon-fill"></i>
-                                <span>커뮤니티</span>
+                                <span><spring:message code="community"/></span>
                             </a>
                             <ul class="submenu ${param.isCommunityList} ">
                                  <li class="submenu-item ">
-                                    <a href="${path}/community/noticeList.do">공지사항</a>
+                                    <a href="${path}/community/noticeList.do"><spring:message code="notice"/></a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/community/chat.do">팀챗</a>
+                                    <a href="${path}/community/chat.do"><spring:message code="teamchat"/></a>
                                 </li>
                             </ul>
                         </li>
@@ -128,23 +129,23 @@
                         <li class="sidebar-item  ${param.isEmpStatusSide}">
                             <a href="${path}/emp/empStatus.do" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-medical-fill"></i>
-                                <span>사원 현황</span>
+                                <span><spring:message code="resources"/></span>
                             </a>
                         </li>
 					<c:if test="${sessionScope.emp.authName=='관리자'}">	
                         <li class="sidebar-item ${param.isAdminSide} has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-pen-fill"></i>
-                                <span>관리자</span>
+                                <span><spring:message code="admin"/></span>
                                 
                             </a>
                             
                             <ul class="submenu ${param.isAdminList}">
                                 <li class="submenu-item ">
-                                    <a href="${path}/emp/getEmpInfoList.do">사원 정보</a>
+                                    <a href="${path}/emp/getEmpInfoList.do"><spring:message code="employee"/></a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="${path}/emp/addEmp.do">사원 추가</a>
+                                    <a href="${path}/emp/addEmp.do"><spring:message code="employee.add"/></a>
                                 </li>
                             </ul>
                         </li>
@@ -213,8 +214,8 @@
                                         </c:if>
                                            
                                     </li>
-                                    <li><a class="dropdown-item" href="${path}/emp/profile.do"><i class="icon-mid bi bi-person me-2"></i>프로필</a></li>
-                                    <li><a class="dropdown-item" href="${path}/emp/modifyPassword.do"><i class="icon-mid bi bi-person me-2"></i>비밀번호 변경</a></li>
+                                    <li><a class="dropdown-item" href="${path}/emp/profile.do"><i class="icon-mid bi bi-person me-2"></i><spring:message code="profile"/></a></li>
+                                    <li><a class="dropdown-item" href="${path}/emp/modifyPassword.do"><i class="icon-mid bi bi-person me-2"></i><spring:message code="pwd.mod"/></a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -222,7 +223,7 @@
                                     <li>
                                     
                                     <a class="dropdown-item" href="${path}/emp/logout.do"><i
-                                                class="icon-mid bi bi-box-arrow-left me-2"></i>로그아웃</a>
+                                                class="icon-mid bi bi-box-arrow-left me-2"></i><spring:message code="logout"/></a>
                                                 </li>
                                 </ul>
                             </div>
