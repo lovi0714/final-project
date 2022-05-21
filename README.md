@@ -8,3 +8,5 @@
 > 
 > 참여 인원 : 4명
 
+## ERD
+![ERD](https://user-images.githubusercontent.com/95499211/169630531-cd8845de-ffd7-4407-ab89-b6757a07dca7.png)
