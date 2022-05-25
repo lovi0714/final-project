@@ -7,6 +7,8 @@
 > 작업 기간 : 22.03.08 - 22.04.12 (약 5주)
 > 
 > 참여 인원 : 4명
+> 
+> 담당 부분 (이호인) - 리스크 관리 / 팀챗
 
 ## ERD
 ![ERD](https://user-images.githubusercontent.com/95499211/169630531-cd8845de-ffd7-4407-ab89-b6757a07dca7.png)
